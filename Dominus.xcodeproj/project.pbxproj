@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A3725FF1C5789CE00449498 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3725FE1C5789CE00449498 /* Cocoa.framework */; };
-		3A3726011C5789D500449498 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3726001C5789D500449498 /* IOKit.framework */; };
-		3A3726031C5789DE00449498 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A3726021C5789DE00449498 /* CoreVideo.framework */; };
 		3A7AA0B21C577E9F00C45A2A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */; };
 		92677A7D1C5665F900899024 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92677A7C1C5665F900899024 /* main.cpp */; };
 /* End PBXBuildFile section */
@@ -40,9 +37,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A3726031C5789DE00449498 /* CoreVideo.framework in Frameworks */,
-				3A3726011C5789D500449498 /* IOKit.framework in Frameworks */,
-				3A3725FF1C5789CE00449498 /* Cocoa.framework in Frameworks */,
 				3A7AA0B21C577E9F00C45A2A /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

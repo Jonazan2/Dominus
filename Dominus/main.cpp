@@ -10,8 +10,6 @@
 #include <GLFW/glfw3.h>
 #include <OpenGL/gl3.h>
 
-
-
 int main(int argc, const char * argv[]) {
     if (!glfwInit ()) {
         fprintf (stderr, "ERROR: could not start GLFW3\n");
