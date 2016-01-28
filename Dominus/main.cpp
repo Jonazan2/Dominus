@@ -9,11 +9,15 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include <OpenGL/gl3.h>
-
-int main(int argc, const char * argv[]) {
+#include <thread>
+#include "Engine.h"
+const int FPS = 60; //Overall max frame rate
+const double DELAY_TIME = 1000.0f / FPS;
+const int MS_PER_UPDATE = 40; //25 FPS
+void openglExample(){
     if (!glfwInit ()) {
         fprintf (stderr, "ERROR: could not start GLFW3\n");
-        return 1;
+        return ;
     }
     glfwWindowHint (GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint (GLFW_CONTEXT_VERSION_MINOR, 2);
@@ -24,7 +28,7 @@ int main(int argc, const char * argv[]) {
     if (!window) {
         fprintf (stderr, "ERROR: could not open window with GLFW3\n");
         glfwTerminate();
-        return 1;
+        return ;
     }
     glfwMakeContextCurrent (window);
     
@@ -95,8 +99,36 @@ int main(int argc, const char * argv[]) {
         // put the stuff we've been drawing onto the display
         glfwSwapBuffers (window);
     }
-
+    
     // close GL context and any other GLFW resources
     glfwTerminate();
+
+}
+
+int main(int argc, const char * argv[]) {
+    Engine * engine = new Engine();
+    std::chrono::time_point<std::chrono::system_clock> current, previous;
+    previous = std::chrono::system_clock::now();
+    double lag = 0.0;
+    
+    while(engine->isRunning()){
+        current = std::chrono::system_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds> (current - previous);
+        previous = current;
+        lag += elapsed.count();
+        
+        engine->processInput();
+        while (lag >= MS_PER_UPDATE) {
+            engine->update();
+            lag -= MS_PER_UPDATE;
+        }
+        engine->render();
+        std::cout << "elapsed time: " << elapsed.count() << "\n";
+        if(elapsed.count() < DELAY_TIME){
+            int waitTime = (int)(DELAY_TIME - elapsed.count());
+            std::this_thread::sleep_for(std::chrono::milliseconds(waitTime));
+        }
+    }
+    
     return 0;
 }
