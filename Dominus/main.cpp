@@ -11,6 +11,7 @@
 #include <OpenGL/gl3.h>
 #include <thread>
 #include "Engine.h"
+#include "Renderer.h"
 const int FPS = 60; //Overall max frame rate
 const double DELAY_TIME = 1000.0f / FPS;
 const int MS_PER_UPDATE = 40; //25 FPS
@@ -64,8 +65,9 @@ void openglExample(){
     const char* vertex_shader =
     "#version 400\n"
     "in vec3 vp;"
+    "uniform mat4 mvp;"
     "void main () {"
-    "  gl_Position = vec4 (vp, 1.0);"
+    "  gl_Position = mvp * vec4 (vp, 1.0);"
     "}";
     
     const char* fragment_shader =
@@ -86,11 +88,20 @@ void openglExample(){
     glAttachShader (shader_programme, fs);
     glAttachShader (shader_programme, vs);
     glLinkProgram (shader_programme);
+    GLuint mvp = glGetUniformLocation(shader_programme, "mvp");
     
     while (!glfwWindowShouldClose (window)) {
         // wipe the drawing surface clear
         glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0,0,10),
+                                           glm::vec3(0,0,0),
+                                           glm::vec3(0.0f, 1.0f, 0.0f)
+                                           );
+        glm::mat4 projectionMatrix = glm::perspective(0.78f, (float)640/480, 0.01f, 1.0f);
+        glm::mat4 mvpMatrix = projectionMatrix * viewMatrix;
+        
         glUseProgram (shader_programme);
+        glUniformMatrix4fv(mvp, 1, GL_FALSE, &mvpMatrix[0][0]);
         glBindVertexArray (vao);
         // draw points 0-3 from the currently bound VAO with current in-use shader
         glDrawArrays (GL_TRIANGLES, 0, 3);
@@ -106,11 +117,16 @@ void openglExample(){
 }
 
 int main(int argc, const char * argv[]) {
+    openglExample();
     Engine * engine = new Engine();
     std::chrono::time_point<std::chrono::system_clock> current, previous;
     previous = std::chrono::system_clock::now();
     double lag = 0.0;
-    
+//    Renderer* renderer = new Renderer;
+//    renderer->init();
+//    Mesh* mesh = new Mesh;
+//    mesh->loadObj("cube.obj");
+//    renderer->loadMesh(mesh);
     while(engine->isRunning()){
         current = std::chrono::system_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds> (current - previous);
@@ -123,7 +139,7 @@ int main(int argc, const char * argv[]) {
             lag -= MS_PER_UPDATE;
         }
         engine->render();
-        std::cout << "elapsed time: " << elapsed.count() << "\n";
+//        renderer->render();
         if(elapsed.count() < DELAY_TIME){
             int waitTime = (int)(DELAY_TIME - elapsed.count());
             std::this_thread::sleep_for(std::chrono::milliseconds(waitTime));
