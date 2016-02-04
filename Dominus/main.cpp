@@ -117,16 +117,13 @@ void openglExample(){
 }
 
 int main(int argc, const char * argv[]) {
-    openglExample();
+    //openglExample();
     Engine * engine = new Engine();
     std::chrono::time_point<std::chrono::system_clock> current, previous;
     previous = std::chrono::system_clock::now();
     double lag = 0.0;
-//    Renderer* renderer = new Renderer;
-//    renderer->init();
-//    Mesh* mesh = new Mesh;
-//    mesh->loadObj("cube.obj");
-//    renderer->loadMesh(mesh);
+    Renderer* renderer = new Renderer;
+    renderer->init();
     while(engine->isRunning()){
         current = std::chrono::system_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds> (current - previous);
@@ -139,7 +136,7 @@ int main(int argc, const char * argv[]) {
             lag -= MS_PER_UPDATE;
         }
         engine->render();
-//        renderer->render();
+        renderer->render();
         if(elapsed.count() < DELAY_TIME){
             int waitTime = (int)(DELAY_TIME - elapsed.count());
             std::this_thread::sleep_for(std::chrono::milliseconds(waitTime));

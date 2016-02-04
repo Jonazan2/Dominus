@@ -22,7 +22,6 @@ public:
     Renderer();
     ~Renderer();
     void init();
-    void loadMesh(Mesh* mesh);
     void render();
 private:
     GLFWwindow* window;
