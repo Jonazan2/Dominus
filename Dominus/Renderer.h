@@ -29,6 +29,7 @@ private:
     GLuint shader_programme;
     GLuint mvp;
     Mesh* mesh;
+    float delta;
 };
 
 #endif /* defined(__Dominus__Renderer__) */

@@ -45,7 +45,6 @@ void Renderer::init(){
     glDepthFunc (GL_LESS); // depth-testing interprets a smaller value as
     
     //create vao and set as current
-    GLuint vao;
     glGenVertexArrays (1, &vao);
     glBindVertexArray (vao);
     
@@ -90,27 +89,33 @@ void Renderer::init(){
     //buffer data
     mesh = new Mesh;
     mesh->loadObj("cube.obj");
+
     glBufferData (GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * mesh->getVertices().size(), &mesh->getVertices()[0], GL_STATIC_DRAW);
-    
+    //glBufferData (GL_ARRAY_BUFFER, 9 * sizeof (float), points, GL_STATIC_DRAW);
     //set vertex array layout for shader attibute and enable attibute
     glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(positionAttribute);
 }
 
 void Renderer::render(){
+    delta+= 0.5;
     glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0,0,-10),
                                        glm::vec3(0,0,0),
                                        glm::vec3(0.0f, 1.0f, 0.0f)
                                        );
     glm::mat4 projectionMatrix = glm::perspective(0.78f, (float)640/480, 0.01f, 100.0f);
-    glm::mat4 mvpMatrix = projectionMatrix * viewMatrix;
+    glm::mat4 scaleMatrix = glm::scale(glm::vec3(1,1, 1));
+    glm::mat4 rotationMatrix = glm::rotate( delta * 0.5f, glm::vec3(1.0f,1.0f,0.0f));
+    glm::mat4 modelMatrix = rotationMatrix * scaleMatrix;
+    glm::mat4 mvpMatrix = projectionMatrix * viewMatrix * modelMatrix;
+    //glm::mat4 mvpMatrix = glm::mat4(1);
     // wipe the drawing surface clear
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram (shader_programme);
     glUniformMatrix4fv(mvp, 1, GL_FALSE, &mvpMatrix[0][0]);
     glBindVertexArray (vao);
     // draw points 0-3 from the currently bound VAO with current in-use shader
-    glDrawArrays (GL_TRIANGLES, 0, 35);
+    glDrawArrays (GL_TRIANGLES, 0, mesh->getVertices().size());
     // update other events like input handling
     glfwPollEvents ();
     // put the stuff we've been drawing onto the display
