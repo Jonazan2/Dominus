@@ -98,7 +98,7 @@ void Renderer::init(){
 }
 
 void Renderer::render(){
-    delta+= 0.5;
+    delta+= 0.1;
     glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0,0,-10),
                                        glm::vec3(0,0,0),
                                        glm::vec3(0.0f, 1.0f, 0.0f)
