@@ -22,7 +22,6 @@ public:
     Renderer();
     ~Renderer();
     void init();
-    void loadMesh(Mesh* mesh);
     void render();
 private:
     GLFWwindow* window;
@@ -30,6 +29,7 @@ private:
     GLuint shader_programme;
     GLuint mvp;
     Mesh* mesh;
+    float delta;
 };
 
 #endif /* defined(__Dominus__Renderer__) */
