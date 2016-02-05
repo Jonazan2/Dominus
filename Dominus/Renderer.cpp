@@ -58,16 +58,19 @@ void Renderer::init(){
     const char* vertex_shader =
     "#version 400\n"
     "in vec3 vp;"
+    "out vec4 color;"
     "uniform mat4 mvp;"
     "void main () {"
     "  gl_Position = mvp * vec4 (vp, 1.0);"
+    "  color = vec4(vp, 1.0);"
     "}";
     
     const char* fragment_shader =
     "#version 400\n"
+    "in vec4 color;"
     "out vec4 frag_colour;"
     "void main () {"
-    "  frag_colour = vec4 (0.5, 0.0, 0.5, 1.0);"
+    "  frag_colour = color;"
     "}";
     
     GLuint vs = glCreateShader (GL_VERTEX_SHADER);
