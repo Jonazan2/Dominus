@@ -12,6 +12,8 @@
 #include <thread>
 #include "Engine.h"
 #include "Renderer.h"
+#include <Log.hpp>
+
 const int FPS = 60; //Overall max frame rate
 const double DELAY_TIME = 1000.0f / FPS;
 const int MS_PER_UPDATE = 40; //25 FPS
