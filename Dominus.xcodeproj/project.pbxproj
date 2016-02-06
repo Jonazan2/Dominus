@@ -12,7 +12,6 @@
 		3A37260C1C620A5300449498 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A37260A1C620A5300449498 /* Renderer.cpp */; };
 		3A7AA0B21C577E9F00C45A2A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */; };
 		92677A7D1C5665F900899024 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92677A7C1C5665F900899024 /* main.cpp */; };
-		92E3453B1C638FE800308A63 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E3453A1C638FE800308A63 /* Logger.cpp */; };
 		92E3453D1C639EAC00308A63 /* Log.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345391C638EAE00308A63 /* Log.hpp */; };
 		92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E3453C1C6393D200308A63 /* Logger.hpp */; };
 		92E345411C64E04A00308A63 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345401C64E04A00308A63 /* Log.cpp */; };
@@ -41,7 +40,6 @@
 		92677A791C5665F900899024 /* Dominus */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Dominus; sourceTree = BUILT_PRODUCTS_DIR; };
 		92677A7C1C5665F900899024 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		92E345391C638EAE00308A63 /* Log.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Log.hpp; sourceTree = "<group>"; };
-		92E3453A1C638FE800308A63 /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Logger.cpp; path = Core/Log/Logger.cpp; sourceTree = "<group>"; };
 		92E3453C1C6393D200308A63 /* Logger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Logger.hpp; path = Headers/Core/Log/Logger.hpp; sourceTree = "<group>"; };
 		92E3453F1C64CCE700308A63 /* LoggerTerminal.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = LoggerTerminal.hpp; path = Headers/Core/Log/LoggerTerminal.hpp; sourceTree = "<group>"; };
 		92E345401C64E04A00308A63 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = Core/Log/Log.cpp; sourceTree = "<group>"; };
@@ -129,7 +127,6 @@
 		92E345381C638E0C00308A63 /* Log */ = {
 			isa = PBXGroup;
 			children = (
-				92E3453A1C638FE800308A63 /* Logger.cpp */,
 				92E345401C64E04A00308A63 /* Log.cpp */,
 			);
 			name = Log;
@@ -195,7 +192,6 @@
 				92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */,
 				92E345411C64E04A00308A63 /* Log.cpp in Sources */,
 				3A37260C1C620A5300449498 /* Renderer.cpp in Sources */,
-				92E3453B1C638FE800308A63 /* Logger.cpp in Sources */,
 				3A3726091C6209E200449498 /* Mesh.cpp in Sources */,
 				92677A7D1C5665F900899024 /* main.cpp in Sources */,
 				3A3726061C58FE7100449498 /* Engine.cpp in Sources */,
