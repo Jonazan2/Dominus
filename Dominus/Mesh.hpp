@@ -33,6 +33,7 @@ public:
     void setVertices(std::vector<glm::vec3> vertices);
     void loadObj(std::string fileName);
     std::vector<glm::vec2> getUvs();
+    std::vector<glm::vec3> getNormals();
     int getNumTriangles();
 private:
     std::string name;

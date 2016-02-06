@@ -115,6 +115,11 @@ std::vector<glm::vec2> Mesh::getUvs()
     return uvs;
 }
 
+std::vector<glm::vec3> Mesh::getNormals()
+{
+    return normals;
+}
+
 int Mesh::getNumTriangles()
 {
     return numTriangles;

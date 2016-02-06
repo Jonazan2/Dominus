@@ -49,28 +49,29 @@ void Renderer::init(){
     glBindVertexArray (vao);
     
     //create buffer object and set as current
-    GLuint buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    GLuint buffers[2];
+    glGenBuffers(2, buffers);
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     
     //Load shaders
     
     const char* vertex_shader =
     "#version 400\n"
     "in vec3 vp;"
-    "out vec4 color;"
+    "in vec3 normal;"
+    "out vec3 color;"
     "uniform mat4 mvp;"
     "void main () {"
     "  gl_Position = mvp * vec4 (vp, 1.0);"
-    "  color = vec4(vp, 1.0);"
+    "  color = normal;"
     "}";
     
     const char* fragment_shader =
     "#version 400\n"
-    "in vec4 color;"
+    "in vec3 color;"
     "out vec4 frag_colour;"
     "void main () {"
-    "  frag_colour = color;"
+    "  frag_colour = vec4(color, 1.0);"
     "}";
     
     GLuint vs = glCreateShader (GL_VERTEX_SHADER);
@@ -88,16 +89,27 @@ void Renderer::init(){
     //retrieve shader uniforms and attributes ids
     mvp = glGetUniformLocation(shader_programme, "mvp");
     GLuint positionAttribute = glGetAttribLocation(shader_programme, "vp");
+    GLuint normalAttribute = glGetAttribLocation(shader_programme, "normal");
     
     //buffer data
     mesh = new Mesh;
     mesh->loadObj("cube.obj");
 
+    //buffer vertex
     glBufferData (GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * mesh->getVertices().size(), &mesh->getVertices()[0], GL_STATIC_DRAW);
-    //glBufferData (GL_ARRAY_BUFFER, 9 * sizeof (float), points, GL_STATIC_DRAW);
+    
     //set vertex array layout for shader attibute and enable attibute
     glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(positionAttribute);
+    
+    //set normal frame buffer as current
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+    //buffer normals into current buffer
+    glBufferData(GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * mesh->getNormals().size(), &mesh->getNormals()[0],
+                 GL_STATIC_DRAW);
+    //set normal array layout for shader attribute and enable attribute
+    glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(normalAttribute);
 }
 
 void Renderer::render(){
