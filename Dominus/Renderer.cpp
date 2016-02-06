@@ -14,6 +14,23 @@ Renderer::Renderer(){
 Renderer::~Renderer(){
 }
 
+void Renderer::compileShader(GLuint shader){
+    glCompileShader(shader);
+    
+    GLint isCompiled = 0;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+    if(isCompiled == GL_FALSE)
+    {
+        GLint maxLength = 0;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+        
+        // The maxLength includes the NULL character
+        std::vector<GLchar> errorLog(maxLength);
+        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
+        std::cout << &errorLog[0] << std::endl;
+    }
+}
+
 void Renderer::init(){
     //Init window
     
@@ -54,32 +71,39 @@ void Renderer::init(){
     glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     
     //Load shaders
-    
+ 
     const char* vertex_shader =
     "#version 400\n"
     "in vec3 vp;"
-    "in vec3 normal;"
-    "out vec3 color;"
-    "uniform mat4 mvp;"
+    "in vec3 normalAttribute;"
+    "out vec3 lightColor;"
+    "uniform mat3 normalMatrix;"
+    "uniform mat4 modelViewMatrix;"
+    "uniform mat4 projectionMatrix;"
+    "uniform vec3 lightPosition;"
     "void main () {"
-    "  gl_Position = mvp * vec4 (vp, 1.0);"
-    "  color = normal;"
+    "  vec3 position = vec3(modelViewMatrix * vec4(vp, 1.0));"
+    "  vec3 normal = normalize(normalMatrix * normalAttribute);"
+    "  vec3 lightDirection = normalize(lightPosition - position);"
+    "  float ndotl = max(dot(normal, lightDirection), 0.0);"
+    "  lightColor = ndotl * vec3( 1.0 );"
+    "  gl_Position = projectionMatrix * vec4 (position, 1.0);"
     "}";
     
     const char* fragment_shader =
     "#version 400\n"
-    "in vec3 color;"
+    "in vec3 lightColor;"
     "out vec4 frag_colour;"
     "void main () {"
-    "  frag_colour = vec4(color, 1.0);"
+    "  frag_colour = vec4(lightColor, 1.0);"
     "}";
     
     GLuint vs = glCreateShader (GL_VERTEX_SHADER);
     glShaderSource (vs, 1, &vertex_shader, NULL);
-    glCompileShader (vs);
+    compileShader(vs);
     GLuint fs = glCreateShader (GL_FRAGMENT_SHADER);
     glShaderSource (fs, 1, &fragment_shader, NULL);
-    glCompileShader (fs);
+    compileShader(fs);
     
     shader_programme = glCreateProgram ();
     glAttachShader (shader_programme, fs);
@@ -87,9 +111,12 @@ void Renderer::init(){
     glLinkProgram (shader_programme);
     
     //retrieve shader uniforms and attributes ids
-    mvp = glGetUniformLocation(shader_programme, "mvp");
+    modelViewMatrix = glGetUniformLocation(shader_programme, "modelViewMatrix");
+    projectionMatrix = glGetUniformLocation(shader_programme, "projectionMatrix");
+    normalMatrix = glGetUniformLocation(shader_programme, "normalMatrix");
+    lightPosition = glGetUniformLocation(shader_programme, "lightPosition");
     GLuint positionAttribute = glGetAttribLocation(shader_programme, "vp");
-    GLuint normalAttribute = glGetAttribLocation(shader_programme, "normal");
+    GLuint normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
     
     //buffer data
     mesh = new Mesh;
@@ -118,19 +145,26 @@ void Renderer::render(){
                                        glm::vec3(0,0,0),
                                        glm::vec3(0.0f, 1.0f, 0.0f)
                                        );
-    glm::mat4 projectionMatrix = glm::perspective(0.78f, (float)640/480, 0.01f, 100.0f);
+    glm::mat4 projectionMat = glm::perspective(0.78f, (float)640/480, 0.01f, 100.0f);
     glm::mat4 scaleMatrix = glm::scale(glm::vec3(1,1, 1));
     glm::mat4 rotationMatrix = glm::rotate( delta * 0.5f, glm::vec3(1.0f,1.0f,0.0f));
     glm::mat4 modelMatrix = rotationMatrix * scaleMatrix;
-    glm::mat4 mvpMatrix = projectionMatrix * viewMatrix * modelMatrix;
+    glm::mat4 modelViewMat = viewMatrix * modelMatrix;
+    glm::mat4 normalMat = glm::inverse(modelViewMat);
+    normalMat = glm::transpose(normalMat);
+    glm::mat3 normalMat3 = glm::mat3(normalMat);
+    glm::vec3 lightPos = glm::vec3(0.0, 0.0, 0.0);
     //glm::mat4 mvpMatrix = glm::mat4(1);
     // wipe the drawing surface clear
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram (shader_programme);
-    glUniformMatrix4fv(mvp, 1, GL_FALSE, &mvpMatrix[0][0]);
+    glUniformMatrix4fv(projectionMatrix, 1, GL_FALSE, &projectionMat[0][0]);
+    glUniformMatrix4fv(modelViewMatrix, 1, GL_FALSE, &modelViewMat[0][0]);
+    glUniformMatrix3fv(normalMatrix, 1, GL_FALSE, &normalMat3[0][0]);
+    glUniform3fv(lightPosition, 1, &lightPos[0]);
     glBindVertexArray (vao);
-    // draw points 0-3 from the currently bound VAO with current in-use shader
-    glDrawArrays (GL_TRIANGLES, 0, mesh->getVertices().size());
+    // draw points from the currently bound VAO with current in-use shader
+    glDrawArrays (GL_TRIANGLES, 0, (int)mesh->getVertices().size());
     // update other events like input handling
     glfwPollEvents ();
     // put the stuff we've been drawing onto the display

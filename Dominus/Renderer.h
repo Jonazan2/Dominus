@@ -23,11 +23,15 @@ public:
     ~Renderer();
     void init();
     void render();
+    void compileShader(GLuint shader);
 private:
     GLFWwindow* window;
     GLuint vao;
     GLuint shader_programme;
-    GLuint mvp;
+    GLuint modelViewMatrix;
+    GLuint projectionMatrix;
+    GLuint lightPosition;
+    GLuint normalMatrix;
     Mesh* mesh;
     float delta;
 };
