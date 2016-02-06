@@ -3,7 +3,6 @@
 
 #include <string>
 #include <iostream>
-#include <chrono>
 #include <ctime>
 #include <sstream>
 #include "Logger.hpp"
@@ -18,15 +17,17 @@ enum LogLevel {
 
 class Log {
     public:
-        static void initialise(LogLevel level, Logger *logger) {
-            Log::instance = new Log(level, logger);
+        static void initialise(LogLevel warningLevel, Logger *logLogger) {
+            logger = logLogger;
+            level = warningLevel;
         }
     
         static Log& getInstance() {
-            if (instance == nullptr) {
+            if (logger == nullptr) {
                 initialise(LOG_INFO, new LoggerTerminal());
             }
-            return *instance;
+            static Log log;
+            return log;
         }
     
         void i(const std::string);
@@ -36,13 +37,12 @@ class Log {
         void operator<<(const std::string);
     
     private:
-        static Log *instance;
-        Logger *logger;
-        LogLevel Level;
+        static Logger *logger;
+        static LogLevel level;
     
-        Log(LogLevel, Logger *);
-        LogLevel level;
-        void write(const std::string);
+    	Log() {};
+        void write(const LogLevel, const std::string) const;
+        std::string getLogLevelName(const LogLevel) const;
 };
 
 #endif /* Log_h */
