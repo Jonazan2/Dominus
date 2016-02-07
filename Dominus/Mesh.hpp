@@ -33,11 +33,15 @@ public:
     void setVertices(std::vector<glm::vec3> vertices);
     void loadObj(std::string fileName);
     std::vector<glm::vec2> getUvs();
+    std::vector<glm::vec3> getNormals();
     int getNumTriangles();
+    float getRotationAngle();
+    void setRotationAngle(float);
 private:
     std::string name;
     glm::vec3 position;
     glm::vec3 rotation;
+    float rotationAngle;
     int vertexIndices;
     int uvIndices;
     int normalIndices;

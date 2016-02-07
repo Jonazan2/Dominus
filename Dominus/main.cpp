@@ -20,6 +20,7 @@ const int MS_PER_UPDATE = 40; //25 FPS
 
 int main(int argc, const char * argv[]) {    
     Engine * engine = new Engine();
+    
     std::chrono::time_point<std::chrono::system_clock> current, previous;
     previous = std::chrono::system_clock::now();
     double lag = 0.0;

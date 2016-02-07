@@ -7,11 +7,96 @@
 //
 
 #include "Renderer.h"
+#include "Log.hpp"
 
-Renderer::Renderer(){
+Renderer* classPointer = nullptr;
+
+Renderer::Renderer() : xPos(0), yPos(0){
+    classPointer = this;
 }
 
 Renderer::~Renderer(){
+}
+
+void Renderer::compileShader(GLuint shader){
+    glCompileShader(shader);
+    
+    GLint isCompiled = 0;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+    if(isCompiled == GL_FALSE)
+    {
+        GLint maxLength = 0;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+        
+        // The maxLength includes the NULL character
+        std::vector<GLchar> errorLog(maxLength);
+        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
+        Log::getInstance().e(&errorLog[0]);
+    }
+}
+
+static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    if(classPointer){
+        classPointer->onMouseMoved(xpos, ypos);
+    }
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    double xpos, ypos;
+    double xrelease, yrelease;
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS){
+        Log::getInstance() << "right button clicked";
+        glfwGetCursorPos(window, &xpos, &ypos);
+        std::cout << xpos << std::endl;
+        std::cout << ypos << std::endl;
+    }else if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+        Log::getInstance() << "left button clicked";
+        glfwGetCursorPos(window, &xpos, &ypos);
+        std::cout << xpos << std::endl;
+        std::cout << ypos << std::endl;
+        if(classPointer){
+            classPointer->onMouseClicked(xpos, ypos);
+        }
+    }else if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE){
+        Log::getInstance() << "left button released";
+        glfwGetCursorPos(window, &xrelease, &yrelease);
+        std::cout << xrelease - xpos << std::endl;
+        std::cout << yrelease - ypos << std::endl;
+        if(classPointer){
+            classPointer->onMouseReleased(xrelease - xpos, yrelease - ypos);
+        }
+    }
+}
+
+void window_close_callback(GLFWwindow* window)
+{
+    Log::getInstance() << "window closed";
+}
+
+void Renderer::onMouseMoved(double x, double y){
+    if(xPos != 0 && yPos != 0){
+        double xRel = x - xPos;
+        double yRel = y - yPos;
+        onMouseDragged(xRel, yRel);
+    }
+}
+
+void Renderer::onMouseClicked(double x, double y){
+    xPos = x;
+    yPos = y;
+}
+
+void Renderer::onMouseReleased(double x, double y){
+    xPos = 0;
+    yPos = 0;
+}
+
+void Renderer::onMouseDragged(double xRel, double yRel){
+    float rotationx = (mesh->getRotation().x + (yRel)) * 0.1;
+    float rotationz = (mesh->getRotation().z + (xRel)) * 0.1;
+    mesh->setRotation(glm::vec3(rotationx, 0.0, rotationz));
 }
 
 void Renderer::init(){
@@ -33,6 +118,9 @@ void Renderer::init(){
         return ;
     }
     glfwMakeContextCurrent (window);
+    glfwSetCursorPosCallback(window, cursor_position_callback);
+    glfwSetMouseButtonCallback(window,mouse_button_callback);
+    glfwSetWindowCloseCallback(window, window_close_callback);
     
     // get version info
     const GLubyte* renderer = glGetString (GL_RENDERER); // get renderer string
@@ -49,36 +137,44 @@ void Renderer::init(){
     glBindVertexArray (vao);
     
     //create buffer object and set as current
-    GLuint buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    GLuint buffers[2];
+    glGenBuffers(2, buffers);
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     
     //Load shaders
-    
+ 
     const char* vertex_shader =
     "#version 400\n"
     "in vec3 vp;"
-    "out vec4 color;"
-    "uniform mat4 mvp;"
+    "in vec3 normalAttribute;"
+    "out vec3 lightColor;"
+    "uniform mat3 normalMatrix;"
+    "uniform mat4 modelViewMatrix;"
+    "uniform mat4 projectionMatrix;"
+    "uniform vec3 lightPosition;"
     "void main () {"
-    "  gl_Position = mvp * vec4 (vp, 1.0);"
-    "  color = vec4(vp, 1.0);"
+    "  vec3 position = vec3(modelViewMatrix * vec4(vp, 1.0));"
+    "  vec3 normal = normalize(normalMatrix * normalAttribute);"
+    "  vec3 lightDirection = normalize(lightPosition - position);"
+    "  float ndotl = max(dot(normal, lightDirection), 0.0);"
+    "  lightColor = ndotl * vec3( 1.0 );"
+    "  gl_Position = projectionMatrix * vec4 (position, 1.0);"
     "}";
     
     const char* fragment_shader =
     "#version 400\n"
-    "in vec4 color;"
+    "in vec3 lightColor;"
     "out vec4 frag_colour;"
     "void main () {"
-    "  frag_colour = color;"
+    "  frag_colour = vec4(lightColor, 1.0);"
     "}";
     
     GLuint vs = glCreateShader (GL_VERTEX_SHADER);
     glShaderSource (vs, 1, &vertex_shader, NULL);
-    glCompileShader (vs);
+    compileShader(vs);
     GLuint fs = glCreateShader (GL_FRAGMENT_SHADER);
     glShaderSource (fs, 1, &fragment_shader, NULL);
-    glCompileShader (fs);
+    compileShader(fs);
     
     shader_programme = glCreateProgram ();
     glAttachShader (shader_programme, fs);
@@ -86,18 +182,32 @@ void Renderer::init(){
     glLinkProgram (shader_programme);
     
     //retrieve shader uniforms and attributes ids
-    mvp = glGetUniformLocation(shader_programme, "mvp");
+    modelViewMatrix = glGetUniformLocation(shader_programme, "modelViewMatrix");
+    projectionMatrix = glGetUniformLocation(shader_programme, "projectionMatrix");
+    normalMatrix = glGetUniformLocation(shader_programme, "normalMatrix");
+    lightPosition = glGetUniformLocation(shader_programme, "lightPosition");
     GLuint positionAttribute = glGetAttribLocation(shader_programme, "vp");
+    GLuint normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
     
     //buffer data
     mesh = new Mesh;
-    mesh->loadObj("cube.obj");
+    mesh->loadObj("momo.obj");
 
+    //buffer vertex
     glBufferData (GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * mesh->getVertices().size(), &mesh->getVertices()[0], GL_STATIC_DRAW);
-    //glBufferData (GL_ARRAY_BUFFER, 9 * sizeof (float), points, GL_STATIC_DRAW);
+    
     //set vertex array layout for shader attibute and enable attibute
     glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(positionAttribute);
+    
+    //set normal frame buffer as current
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+    //buffer normals into current buffer
+    glBufferData(GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * mesh->getNormals().size(), &mesh->getNormals()[0],
+                 GL_STATIC_DRAW);
+    //set normal array layout for shader attribute and enable attribute
+    glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(normalAttribute);
 }
 
 void Renderer::render(){
@@ -106,21 +216,30 @@ void Renderer::render(){
                                        glm::vec3(0,0,0),
                                        glm::vec3(0.0f, 1.0f, 0.0f)
                                        );
-    glm::mat4 projectionMatrix = glm::perspective(0.78f, (float)640/480, 0.01f, 100.0f);
-    glm::mat4 scaleMatrix = glm::scale(glm::vec3(1,1, 1));
-    glm::mat4 rotationMatrix = glm::rotate( delta * 0.5f, glm::vec3(1.0f,1.0f,0.0f));
+    glm::mat4 projectionMat = glm::perspective(0.78f, (float)640/480, 0.01f, 100.0f);
+    glm::mat4 scaleMatrix = glm::scale(glm::vec3(3,3,3));
+    glm::mat4 rotationXMatrix = glm::rotate( mesh->getRotation().x, glm::vec3(1.0f,0.0f,0.0f));
+    glm::mat4 rotationZMatrix = glm::rotate(mesh->getRotation().z, glm::vec3(0.0f,0.0f,1.0f));
+    glm::mat4 rotationMatrix = rotationXMatrix * rotationZMatrix;
     glm::mat4 modelMatrix = rotationMatrix * scaleMatrix;
-    glm::mat4 mvpMatrix = projectionMatrix * viewMatrix * modelMatrix;
-    //glm::mat4 mvpMatrix = glm::mat4(1);
+    glm::mat4 modelViewMat = viewMatrix * modelMatrix;
+    glm::mat4 normalMat = glm::inverse(modelViewMat);
+    normalMat = glm::transpose(normalMat);
+    glm::mat3 normalMat3 = glm::mat3(normalMat);
+    glm::vec3 lightPos = glm::vec3(0.0, 0.0,0.0);
     // wipe the drawing surface clear
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram (shader_programme);
-    glUniformMatrix4fv(mvp, 1, GL_FALSE, &mvpMatrix[0][0]);
+    glUniformMatrix4fv(projectionMatrix, 1, GL_FALSE, &projectionMat[0][0]);
+    glUniformMatrix4fv(modelViewMatrix, 1, GL_FALSE, &modelViewMat[0][0]);
+    glUniformMatrix3fv(normalMatrix, 1, GL_FALSE, &normalMat3[0][0]);
+    glUniform3fv(lightPosition, 1, &lightPos[0]);
     glBindVertexArray (vao);
-    // draw points 0-3 from the currently bound VAO with current in-use shader
-    glDrawArrays (GL_TRIANGLES, 0, mesh->getVertices().size());
+    // draw points from the currently bound VAO with current in-use shader
+    glDrawArrays (GL_TRIANGLES, 0, (int)mesh->getVertices().size());
     // update other events like input handling
     glfwPollEvents ();
     // put the stuff we've been drawing onto the display
     glfwSwapBuffers (window);
 }
+
