@@ -7,8 +7,12 @@
 //
 
 #include "Renderer.h"
+#include "Log.hpp"
 
-Renderer::Renderer(){
+Renderer* classPointer = nullptr;
+
+Renderer::Renderer() : xPos(0), yPos(0){
+    classPointer = this;
 }
 
 Renderer::~Renderer(){
@@ -27,8 +31,72 @@ void Renderer::compileShader(GLuint shader){
         // The maxLength includes the NULL character
         std::vector<GLchar> errorLog(maxLength);
         glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
-        std::cout << &errorLog[0] << std::endl;
+        Log::getInstance().e(&errorLog[0]);
     }
+}
+
+static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    if(classPointer){
+        classPointer->onMouseMoved(xpos, ypos);
+    }
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    double xpos, ypos;
+    double xrelease, yrelease;
+    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS){
+        Log::getInstance() << "right button clicked";
+        glfwGetCursorPos(window, &xpos, &ypos);
+        std::cout << xpos << std::endl;
+        std::cout << ypos << std::endl;
+    }else if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+        Log::getInstance() << "left button clicked";
+        glfwGetCursorPos(window, &xpos, &ypos);
+        std::cout << xpos << std::endl;
+        std::cout << ypos << std::endl;
+        if(classPointer){
+            classPointer->onMouseClicked(xpos, ypos);
+        }
+    }else if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE){
+        Log::getInstance() << "left button released";
+        glfwGetCursorPos(window, &xrelease, &yrelease);
+        std::cout << xrelease - xpos << std::endl;
+        std::cout << yrelease - ypos << std::endl;
+        if(classPointer){
+            classPointer->onMouseReleased(xrelease - xpos, yrelease - ypos);
+        }
+    }
+}
+
+void window_close_callback(GLFWwindow* window)
+{
+    Log::getInstance() << "window closed";
+}
+
+void Renderer::onMouseMoved(double x, double y){
+    if(xPos != 0 && yPos != 0){
+        double xRel = x - xPos;
+        double yRel = y - yPos;
+        onMouseDragged(xRel, yRel);
+    }
+}
+
+void Renderer::onMouseClicked(double x, double y){
+    xPos = x;
+    yPos = y;
+}
+
+void Renderer::onMouseReleased(double x, double y){
+    xPos = 0;
+    yPos = 0;
+}
+
+void Renderer::onMouseDragged(double xRel, double yRel){
+    float rotationx = (mesh->getRotation().x + (yRel)) * 0.1;
+    float rotationz = (mesh->getRotation().z + (xRel)) * 0.1;
+    mesh->setRotation(glm::vec3(rotationx, 0.0, rotationz));
 }
 
 void Renderer::init(){
@@ -50,6 +118,9 @@ void Renderer::init(){
         return ;
     }
     glfwMakeContextCurrent (window);
+    glfwSetCursorPosCallback(window, cursor_position_callback);
+    glfwSetMouseButtonCallback(window,mouse_button_callback);
+    glfwSetWindowCloseCallback(window, window_close_callback);
     
     // get version info
     const GLubyte* renderer = glGetString (GL_RENDERER); // get renderer string
@@ -120,7 +191,7 @@ void Renderer::init(){
     
     //buffer data
     mesh = new Mesh;
-    mesh->loadObj("cube.obj");
+    mesh->loadObj("momo.obj");
 
     //buffer vertex
     glBufferData (GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * mesh->getVertices().size(), &mesh->getVertices()[0], GL_STATIC_DRAW);
@@ -146,15 +217,16 @@ void Renderer::render(){
                                        glm::vec3(0.0f, 1.0f, 0.0f)
                                        );
     glm::mat4 projectionMat = glm::perspective(0.78f, (float)640/480, 0.01f, 100.0f);
-    glm::mat4 scaleMatrix = glm::scale(glm::vec3(1,1, 1));
-    glm::mat4 rotationMatrix = glm::rotate( delta * 0.5f, glm::vec3(1.0f,1.0f,0.0f));
+    glm::mat4 scaleMatrix = glm::scale(glm::vec3(3,3,3));
+    glm::mat4 rotationXMatrix = glm::rotate( mesh->getRotation().x, glm::vec3(1.0f,0.0f,0.0f));
+    glm::mat4 rotationZMatrix = glm::rotate(mesh->getRotation().z, glm::vec3(0.0f,0.0f,1.0f));
+    glm::mat4 rotationMatrix = rotationXMatrix * rotationZMatrix;
     glm::mat4 modelMatrix = rotationMatrix * scaleMatrix;
     glm::mat4 modelViewMat = viewMatrix * modelMatrix;
     glm::mat4 normalMat = glm::inverse(modelViewMat);
     normalMat = glm::transpose(normalMat);
     glm::mat3 normalMat3 = glm::mat3(normalMat);
-    glm::vec3 lightPos = glm::vec3(0.0, 0.0, 0.0);
-    //glm::mat4 mvpMatrix = glm::mat4(1);
+    glm::vec3 lightPos = glm::vec3(0.0, 0.0,0.0);
     // wipe the drawing surface clear
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram (shader_programme);
@@ -170,3 +242,4 @@ void Renderer::render(){
     // put the stuff we've been drawing onto the display
     glfwSwapBuffers (window);
 }
+

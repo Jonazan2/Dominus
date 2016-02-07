@@ -11,12 +11,12 @@
 Mesh::Mesh()
 {}
 
-Mesh::Mesh(int numVertices)
+Mesh::Mesh(int numVertices) : rotationAngle(0)
 {
     vertices = std::vector<glm::vec3>(numVertices);
 }
 
-Mesh::Mesh(std::string filePath)
+Mesh::Mesh(std::string filePath) : rotationAngle(0)
 {
     vertexIndices = 0;
     uvIndices = 0;
@@ -78,6 +78,14 @@ void Mesh::loadObj(std::string filePath)
     }
     numTriangles = (int)tempIndices.size() / 9;
     file.close();
+}
+
+float Mesh::getRotationAngle(){
+    return rotationAngle;
+}
+
+void Mesh::setRotationAngle( float rotationAngle ){
+    this->rotationAngle = rotationAngle;
 }
 
 glm::vec3 Mesh::getPosition()

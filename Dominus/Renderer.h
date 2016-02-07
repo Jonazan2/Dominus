@@ -24,7 +24,13 @@ public:
     void init();
     void render();
     void compileShader(GLuint shader);
+    void onMouseDragged(double xRel, double yRel);
+    void onMouseClicked(double x, double y);
+    void onMouseReleased(double x, double y);
+    void onMouseMoved(double x, double y);
 private:
+    double xPos;
+    double yPos;
     GLFWwindow* window;
     GLuint vao;
     GLuint shader_programme;
