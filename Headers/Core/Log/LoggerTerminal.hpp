@@ -6,8 +6,8 @@
 //  Copyright © 2016 frikazos. All rights reserved.
 //
 
-#ifndef LoggerTerminal_h
-#define LoggerTerminal_h
+#ifndef LoggerTerminal_hpp
+#define LoggerTerminal_hpp
 
 #include <string>
 #include <iostream>
@@ -23,4 +23,4 @@ class LoggerTerminal : public Logger {
 };
 
 
-#endif /* LoggerTerminal_h */
+#endif /* LoggerTerminal_hpp */

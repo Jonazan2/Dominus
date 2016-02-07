@@ -58,3 +58,7 @@ void Log::write(const LogLevel level, const std::string msg) const {
     << currentTime->tm_sec <<"]: " << msg;
     Log::logger->write(ss.str());
 }
+
+Log::~Log() {
+    delete logger;
+};

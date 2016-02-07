@@ -41,6 +41,7 @@ class Log {
         static LogLevel level;
     
     	Log() {};
+        ~Log();
         void write(const LogLevel, const std::string) const;
         std::string getLogLevelName(const LogLevel) const;
 };
