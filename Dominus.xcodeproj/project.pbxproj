@@ -15,6 +15,7 @@
 		92E3453D1C639EAC00308A63 /* Log.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345391C638EAE00308A63 /* Log.hpp */; };
 		92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E3453C1C6393D200308A63 /* Logger.hpp */; };
 		92E345411C64E04A00308A63 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345401C64E04A00308A63 /* Log.cpp */; };
+		9CDB79611C6A69A60023C7A5 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB795F1C6A69A60023C7A5 /* Node.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +44,8 @@
 		92E3453C1C6393D200308A63 /* Logger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Logger.hpp; path = Headers/Core/Log/Logger.hpp; sourceTree = "<group>"; };
 		92E3453F1C64CCE700308A63 /* LoggerTerminal.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = LoggerTerminal.hpp; path = Headers/Core/Log/LoggerTerminal.hpp; sourceTree = "<group>"; };
 		92E345401C64E04A00308A63 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = Core/Log/Log.cpp; sourceTree = "<group>"; };
+		9CDB795F1C6A69A60023C7A5 /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Node.cpp; path = Dominus/Engine/Node.cpp; sourceTree = "<group>"; };
+		9CDB79631C6A6A150023C7A5 /* Node.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Node.hpp; path = Headers/Engine/Node.hpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,7 @@
 		92E345351C638CA100308A63 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				9CDB795E1C6A69890023C7A5 /* Engine */,
 				92E345361C638CA700308A63 /* Log */,
 			);
 			name = Core;
@@ -119,6 +123,7 @@
 		92E345371C638E0100308A63 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				9CDB79621C6A69AF0023C7A5 /* Engine */,
 				92E345381C638E0C00308A63 /* Log */,
 			);
 			name = Core;
@@ -130,6 +135,22 @@
 				92E345401C64E04A00308A63 /* Log.cpp */,
 			);
 			name = Log;
+			sourceTree = "<group>";
+		};
+		9CDB795E1C6A69890023C7A5 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				9CDB795F1C6A69A60023C7A5 /* Node.cpp */,
+			);
+			name = Engine;
+			sourceTree = "<group>";
+		};
+		9CDB79621C6A69AF0023C7A5 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				9CDB79631C6A6A150023C7A5 /* Node.hpp */,
+			);
+			name = Engine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +216,7 @@
 				3A3726091C6209E200449498 /* Mesh.cpp in Sources */,
 				92677A7D1C5665F900899024 /* main.cpp in Sources */,
 				3A3726061C58FE7100449498 /* Engine.cpp in Sources */,
+				9CDB79611C6A69A60023C7A5 /* Node.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

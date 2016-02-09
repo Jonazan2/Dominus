@@ -16,6 +16,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Node.hpp"
 
 class Renderer{
 public:
@@ -38,8 +39,8 @@ private:
     GLuint projectionMatrix;
     GLuint lightPosition;
     GLuint normalMatrix;
-    Mesh* mesh;
     float delta;
+    std::vector<Node*> nodes;
 };
 
 #endif /* defined(__Dominus__Renderer__) */

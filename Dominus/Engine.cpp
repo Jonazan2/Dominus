@@ -20,7 +20,7 @@ void Engine::processInput(){
 
 }
 
-void Engine::update(){
+void Engine::update(double delta){
 
 }
 

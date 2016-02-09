@@ -17,7 +17,7 @@ public:
     ~Engine();
     
     void processInput();
-    void update();
+    void update(double delta);
     void render();
     
     bool isRunning();

@@ -34,7 +34,7 @@ int main(int argc, const char * argv[]) {
         
         engine->processInput();
         while (lag >= MS_PER_UPDATE) {
-            engine->update();
+            engine->update(MS_PER_UPDATE);
             lag -= MS_PER_UPDATE;
         }
         engine->render();
