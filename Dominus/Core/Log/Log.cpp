@@ -3,38 +3,38 @@
 Logger *Log::logger = nullptr;
 LogLevel Log::level = LOG_INFO;
 
-void Log::i(const std::string msg) {
-    if (LOG_INFO >= Log::level) {
+void Log::i( const std::string msg ) {
+    if ( LOG_INFO >= Log::level ) {
         write(LOG_INFO, msg);
     }
 }
 
-void Log::d(const std::string msg) {
-    if (LOG_DEBUG >= Log::level) {
+void Log::d( const std::string msg ) {
+    if ( LOG_DEBUG >= Log::level ) {
         write(LOG_DEBUG, msg);
     }
 }
 
-void Log::w(const std::string msg) {
-    if (LOG_WARNING >= Log::level) {
+void Log::w( const std::string msg ) {
+    if ( LOG_WARNING >= Log::level ) {
         write(LOG_WARNING, msg);
     }
 }
 
-void Log::e(const std::string msg) {
-    if (LOG_ERROR >= Log::level) {
+void Log::e( const std::string msg ) {
+    if ( LOG_ERROR >= Log::level ) {
         write(LOG_ERROR, msg);
     }
 }
 
-void Log::operator<<(const std::string msg) {
-    if (LOG_DEBUG >= Log::level) {
+void Log::operator<<( const std::string msg ) {
+    if ( LOG_DEBUG >= Log::level ) {
         write(LOG_DEBUG, msg);
     }
 }
 
-std::string Log::getLogLevelName(const LogLevel level) const {
-    switch (level) {
+std::string Log::getLogLevelName( const LogLevel level ) const {
+    switch ( level ) {
         case LOG_INFO:
             return "INFO";
         case LOG_DEBUG:
@@ -48,7 +48,7 @@ std::string Log::getLogLevelName(const LogLevel level) const {
     }
 }
 
-void Log::write(const LogLevel level, const std::string msg) const {
+void Log::write( const LogLevel level, const std::string msg ) const {
     time_t now = time(0);
     tm *currentTime = localtime(&now);
     std::stringstream ss;

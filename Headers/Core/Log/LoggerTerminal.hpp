@@ -1,11 +1,3 @@
-//
-//  LoggerTerminal.h
-//  Dominus
-//
-//  Created by Jonathan Contreras on 05/02/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
-
 #ifndef LoggerTerminal_hpp
 #define LoggerTerminal_hpp
 
@@ -13,9 +5,15 @@
 #include <iostream>
 #include "Logger.hpp"
 
+/**
+ *  \brief     Logger class that logs strings to the terminal
+ *
+ *  \author    Jonathan Maldonado
+ *  \date      09/02/2016
+ */
 class LoggerTerminal : public Logger {
     public:
-        void write(const std::string& msg) {
+        void write( const std::string& msg ) {
             std::cout << msg << std::endl;
         }
     
