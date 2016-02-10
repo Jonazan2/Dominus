@@ -10,13 +10,14 @@
 #define Node_hpp
 
 #include <stdio.h>
+#include "INode.h"
 #include "Mesh.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-class Node {
+class Node : public INode{
 public:
     Node();
     ~Node();

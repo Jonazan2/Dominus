@@ -38,7 +38,6 @@ int main(int argc, const char * argv[]) {
             lag -= MS_PER_UPDATE;
         }
         engine->render();
-        renderer->render();
         if(elapsed.count() < DELAY_TIME){
             int waitTime = (int)(DELAY_TIME - elapsed.count());
             std::this_thread::sleep_for(std::chrono::milliseconds(waitTime));

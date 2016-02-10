@@ -131,6 +131,7 @@ void Renderer::init(){
     printf ("Renderer: %s\n", renderer);
     printf ("OpenGL version supported %s\n", version);
     
+    glViewport(0, 0, 640, 480);
     // opengl states
     glEnable (GL_DEPTH_TEST); // enable depth-testing
     glDepthFunc (GL_LESS); // depth-testing interprets a smaller value as
