@@ -9,7 +9,9 @@
 #ifndef Scene_h
 #define Scene_h
 
-#include "INode.h"
+#include "Renderer.h"
+#include <glm/glm.hpp>
+#include <stack>
 
 class Scene {
 public:
@@ -17,8 +19,12 @@ public:
     ~Scene();
     
     void render();
+    void pushMatrix( glm::mat4 matrix );
+    glm::mat4 popMatrix();
 private:
+    Renderer* renderer;
     INode* rootNode;
+    std::stack<glm::mat4> matrixStack;
 };
 
 #endif /* Scene_h */

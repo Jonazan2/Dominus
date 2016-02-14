@@ -17,5 +17,17 @@ Scene::~Scene() {
 }
 
 void Scene::render() {
-    
+    rootNode->onRender( this );
+    rootNode->onRenderChildrends( this );
+    rootNode->onPostRender( this );
+}
+
+void Scene::pushMatrix( glm::mat4 matrix ) {
+    matrixStack.push( matrix );
+}
+
+glm::mat4 Scene::popMatrix() {
+    glm::mat4 result = matrixStack.top();
+    matrixStack.pop();
+    return result;
 }

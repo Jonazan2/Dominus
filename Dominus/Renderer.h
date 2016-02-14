@@ -29,15 +29,22 @@ public:
     void onMouseClicked(double x, double y);
     void onMouseReleased(double x, double y);
     void onMouseMoved(double x, double y);
+    
+    void updateProjection( glm::mat4 projectionMatrix );
+    void updateLightSource( glm::vec3 lightSource );
+    void updateCamera( glm::mat4 viewMatrix );
+    void loadMesh( Node* node );
+    void draw( Node* node );
+    void present();
 private:
     double xPos;
     double yPos;
     GLFWwindow* window;
     GLuint vao;
     GLuint shader_programme;
-    GLuint modelViewMatrix;
-    GLuint projectionMatrix;
-    GLuint lightPosition;
+    glm::mat4 viewMatrix;
+    glm::mat4 projectionMatrix;
+    glm::vec3 lightPosition;
     GLuint normalMatrix;
     float delta;
     std::vector<Node*> nodes;

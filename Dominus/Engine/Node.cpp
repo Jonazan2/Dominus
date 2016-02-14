@@ -7,6 +7,7 @@
 //
 
 #include "Node.hpp"
+#include "Scene.h"
 
 Node::Node()
             :   modelMatrix( glm::mat4( 1 ) ),
@@ -18,12 +19,30 @@ Node::~Node(){
 
 }
 
-void Node::setModelMatrix( const glm::mat4 modelMatrix ) {
-    this->modelMatrix = modelMatrix;
+void Node::onRestore( Renderer *renderer ) {
+    renderer->loadMesh(this);
 }
 
-glm::mat4 Node::getModelMatrix() {
-    return modelMatrix;
+void Node::onRender( Scene* scene ) {
+    glm::mat4 parent = scene->popMatrix();
+    modelMatrix = modelMatrix * parent;
+    scene->pushMatrix( modelMatrix );
+}
+
+void Node::onRenderChildrends( Scene* scene ) {
+    for ( INode * node :  childNodes ) {
+        node->onRender( scene );
+        node->onRenderChildrends( scene );
+        node->onPostRender( scene );
+    }
+}
+
+void Node::onPostRender( Scene* scene ) {
+    //vuelta
+}
+
+glm::mat4 * Node::getModelMatrix() {
+    return &modelMatrix;
 }
 
 void Node::setMesh( Mesh *mesh ) {
@@ -35,10 +54,15 @@ Mesh* Node::getMesh() {
 }
 
 void Node::rotate( const glm::vec3 rotation ) {
-    glm::mat4 rotationX = glm::rotate( rotation.x , glm::vec3( 1.0, 0.0, 0.0 ));
-    glm::mat4 rotationY = glm::rotate( rotation.y , glm::vec3( 0.0, 1.0, 0.0 ));
-    glm::mat4 rotationZ = glm::rotate( rotation.z , glm::vec3( 0.0, 0.0, 1.0 ));
+    glm::mat4 rotationX = glm::rotate( rotation.x , glm::vec3( 1.0, 0.0, 0.0 ) );
+    glm::mat4 rotationY = glm::rotate( rotation.y , glm::vec3( 0.0, 1.0, 0.0 ) );
+    glm::mat4 rotationZ = glm::rotate( rotation.z , glm::vec3( 0.0, 0.0, 1.0 ) );
     
     glm::mat4 total = rotationZ * rotationY * rotationX;
     modelMatrix = modelMatrix * total;
+}
+
+void Node::translate( const glm::vec3 translation ) {
+    glm::mat4 translationMatrix = glm::translate( translation );
+    modelMatrix = modelMatrix * translationMatrix;
 }
