@@ -9,7 +9,7 @@
 #include "Engine.h"
 
 Engine::Engine() : running( true ){
-
+    scene = new Scene;
 }
 
 Engine::~Engine(){
@@ -25,7 +25,7 @@ void Engine::update(double delta){
 }
 
 void Engine::render(){
-
+    scene->render();
 }
 
 bool Engine::isRunning(){

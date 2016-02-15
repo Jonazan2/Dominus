@@ -24,7 +24,7 @@ public:
     Node();
     ~Node();
     
-    void onRestore( Renderer* renderer );
+    void onRestore( Scene* scene );
     void onRender( Scene* scene );
     void onRenderChildrends( Scene* scene );
     void onPostRender( Scene* scene );

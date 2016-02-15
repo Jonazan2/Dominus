@@ -9,7 +9,7 @@
 #ifndef __Dominus__Engine__
 #define __Dominus__Engine__
 
-#include <stdio.h>
+#include "Scene.h"
 
 class Engine {
 public:
@@ -23,6 +23,7 @@ public:
     bool isRunning();
 private:
     bool running;
+    Scene* scene;
 };
 
 #endif /* defined(__Dominus__Engine__) */

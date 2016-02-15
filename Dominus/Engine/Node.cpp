@@ -19,8 +19,11 @@ Node::~Node(){
 
 }
 
-void Node::onRestore( Renderer *renderer ) {
-    renderer->loadMesh(this);
+void Node::onRestore( Scene* scene ) {
+    scene->addToBatch( this );
+    for ( INode* node : childNodes ) {
+        node->onRestore( scene );
+    }
 }
 
 void Node::onRender( Scene* scene ) {
@@ -38,7 +41,7 @@ void Node::onRenderChildrends( Scene* scene ) {
 }
 
 void Node::onPostRender( Scene* scene ) {
-    //vuelta
+    scene->addToBatch( this );
 }
 
 glm::mat4 * Node::getModelMatrix() {

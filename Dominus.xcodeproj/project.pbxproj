@@ -15,6 +15,7 @@
 		92E3453D1C639EAC00308A63 /* Log.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345391C638EAE00308A63 /* Log.hpp */; };
 		92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E3453C1C6393D200308A63 /* Logger.hpp */; };
 		92E345411C64E04A00308A63 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345401C64E04A00308A63 /* Log.cpp */; };
+		9C500C741C7287E000D7C60D /* RenderScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C500C731C7287E000D7C60D /* RenderScene.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CDB79611C6A69A60023C7A5 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB795F1C6A69A60023C7A5 /* Node.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CDB79681C6BC2C30023C7A5 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB79671C6BC2C30023C7A5 /* Scene.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CDB796C1C6D165E0023C7A5 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB796B1C6D165E0023C7A5 /* Camera.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -46,6 +47,8 @@
 		92E3453C1C6393D200308A63 /* Logger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Logger.hpp; path = Headers/Core/Log/Logger.hpp; sourceTree = "<group>"; };
 		92E3453F1C64CCE700308A63 /* LoggerTerminal.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = LoggerTerminal.hpp; path = Headers/Core/Log/LoggerTerminal.hpp; sourceTree = "<group>"; };
 		92E345401C64E04A00308A63 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = Core/Log/Log.cpp; sourceTree = "<group>"; };
+		9C500C721C7287CE00D7C60D /* RenderScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RenderScene.h; path = Headers/Scenes/RenderScene.h; sourceTree = "<group>"; };
+		9C500C731C7287E000D7C60D /* RenderScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderScene.cpp; path = Scenes/RenderScene.cpp; sourceTree = "<group>"; };
 		9CDB795F1C6A69A60023C7A5 /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Node.cpp; path = Engine/Node.cpp; sourceTree = "<group>"; };
 		9CDB79631C6A6A150023C7A5 /* Node.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Node.hpp; path = Headers/Engine/Node.hpp; sourceTree = SOURCE_ROOT; };
 		9CDB79651C6BC2280023C7A5 /* INode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = INode.h; path = Headers/Engine/INode.h; sourceTree = "<group>"; };
@@ -106,6 +109,7 @@
 		92E345351C638CA100308A63 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				9C500C701C72873600D7C60D /* Scenes */,
 				9CDB795E1C6A69890023C7A5 /* Engine */,
 				92E345361C638CA700308A63 /* Log */,
 			);
@@ -125,6 +129,7 @@
 		92E345371C638E0100308A63 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				9C500C711C72876100D7C60D /* Scenes */,
 				9CDB79621C6A69AF0023C7A5 /* Engine */,
 				92E345381C638E0C00308A63 /* Log */,
 			);
@@ -137,6 +142,22 @@
 				92E345401C64E04A00308A63 /* Log.cpp */,
 			);
 			name = Log;
+			sourceTree = "<group>";
+		};
+		9C500C701C72873600D7C60D /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				9C500C721C7287CE00D7C60D /* RenderScene.h */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		9C500C711C72876100D7C60D /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				9C500C731C7287E000D7C60D /* RenderScene.cpp */,
+			);
+			name = Scenes;
 			sourceTree = "<group>";
 		};
 		9CDB795E1C6A69890023C7A5 /* Engine */ = {
@@ -226,6 +247,7 @@
 				92E3453D1C639EAC00308A63 /* Log.hpp in Sources */,
 				92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */,
 				9CDB796C1C6D165E0023C7A5 /* Camera.cpp in Sources */,
+				9C500C741C7287E000D7C60D /* RenderScene.cpp in Sources */,
 				92E345411C64E04A00308A63 /* Log.cpp in Sources */,
 				3A37260C1C620A5300449498 /* Renderer.cpp in Sources */,
 				3A3726091C6209E200449498 /* Mesh.cpp in Sources */,

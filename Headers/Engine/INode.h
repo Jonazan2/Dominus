@@ -14,7 +14,7 @@ class Renderer;
 
 class INode {
 public:
-    virtual void onRestore( Renderer* renderer ) = 0;
+    virtual void onRestore( Scene* scene ) = 0;
     virtual void onRender( Scene* scene ) = 0;
     virtual void onRenderChildrends( Scene* scene ) = 0;
     virtual void onPostRender( Scene* scene ) = 0;
