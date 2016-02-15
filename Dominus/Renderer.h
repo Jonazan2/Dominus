@@ -33,8 +33,8 @@ public:
     void updateProjection( glm::mat4 projectionMatrix );
     void updateLightSource( glm::vec3 lightSource );
     void updateCamera( glm::mat4 viewMatrix );
-    void loadMesh( Node* node );
-    void draw( Node* node );
+    void loadMesh( std::vector<Node*> renderBatch );
+    void draw( std::vector<Node*> renderBatch );
     void present();
 private:
     double xPos;
@@ -45,9 +45,14 @@ private:
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
     glm::vec3 lightPosition;
-    GLuint normalMatrix;
     float delta;
     std::vector<Node*> nodes;
+    GLuint positionAttribute;
+    GLuint normalAttribute;
+    GLuint modelViewUID;
+    GLuint projectionUID;
+    GLuint normalUID;
+    GLuint lightPositionUID;
 };
 
 #endif /* defined(__Dominus__Renderer__) */

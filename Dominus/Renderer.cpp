@@ -190,8 +190,8 @@ void Renderer::init(){
     projectionUID = glGetUniformLocation(shader_programme, "projectionMatrix");
     normalUID = glGetUniformLocation(shader_programme, "normalMatrix");
     lightPositionUID = glGetUniformLocation(shader_programme, "lightPosition");
-    GLuint positionAttribute = glGetAttribLocation(shader_programme, "vp");
-    GLuint normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
+    positionAttribute = glGetAttribLocation(shader_programme, "vp");
+    normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
     
     //buffer data
     Mesh * momoMesh = new Mesh;
@@ -245,57 +245,75 @@ void Renderer::updateLightSource( glm::vec3 lightSource ) {
     this->lightPosition = lightSource;
 }
 
-void Renderer::loadMesh( Node* node ) {
+void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
     //create buffer object and set as current
-    GLuint buffer;
-    glGenBuffers(1, &buffer);
+    GLuint buffers[2];
+    glGenBuffers(1, buffers);
     glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     
     //allocate buffer memory to load all the vertex
+    GLsizeiptr vertexBufferSize = 0;
+    GLsizeiptr normalBufferSize = 0;
+    for ( int i = 0; i < renderBatch.size(); i++ ) {
+        Node* node = renderBatch.at(i);
+        Mesh* mesh = node->getMesh();
+        vertexBufferSize += mesh->getSize();
+        normalBufferSize += mesh->getNormalSize();
+    }
     glBufferData (GL_ARRAY_BUFFER,
-                  sizeVertex + sizeNormals,
+                  vertexBufferSize,
                   NULL,
                   GL_STATIC_DRAW);
     //buffer vertex data
-    glBufferSubData(GL_ARRAY_BUFFER, // target
-                    0, // offset
-                    node->getMesh()->getSize(), // size
-                    node->getMesh()->getVertices()[0]); // data
-    glBufferSubData(GL_ARRAY_BUFFER, // target
-                    node->getMesh()->getSize(), // offset
-                    node->getMesh()->getNormalSize(), // size
-                    node->getMesh()->getNormals()[0]); // data
+    GLuint offset = 0;
+    for ( int i = 0; i < renderBatch.size(); i++ ) {
+        Node* node = renderBatch.at(i);
+        glBufferSubData(GL_ARRAY_BUFFER, // target
+                        offset, // offset
+                        node->getMesh()->getSize(), // size
+                        &node->getMesh()->getVertices()[0]); // data
+        offset += node->getMesh()->getSize();
+    }
     
     //set vertex array layout for shader attibute and enable attibute
     glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(positionAttribute);
+    
+    //buffer vertex data
+    GLuint normalOffset = 0;
+    for ( int i = 0; i < renderBatch.size(); i++ ) {
+        Node* node = renderBatch.at(i);
+        glBufferSubData(GL_ARRAY_BUFFER, // target
+                        offset, // offset
+                        node->getMesh()->getNormalSize(), // size
+                        &node->getMesh()->getNormals()[0]); // data
+        normalOffset += node->getMesh()->getNormalSize();
+    }
+    
     //set normal array layout for shader attribute and enable attribute
-    glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0,
-                          node->getMesh()->getSize());
+    glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(normalAttribute);
 }
 
-void Renderer::draw( Node *node ) {
+void Renderer::draw( std::vector<Node*> renderBatch ) {
     glUseProgram (shader_programme);
-    glUniformMatrix4fv(projectionMatrix, 1, GL_FALSE, &projectionMat[0][0]);
-    glUniform3fv(lightPosition, 1, &lightPos[0]);
+    glUniformMatrix4fv(projectionUID, 1, GL_FALSE, &projectionMatrix[0][0]);
+    glUniform3fv(lightPositionUID, 1, &lightPosition[0]);
     glBindVertexArray (vao);
-     //for each mesh draw arrays with his movelview matrix and his normal matrix
-    glm::mat4 modelViewMat = viewMatrix * nodes.at( i )->getModelMatrix();
-    glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMat ) );
-    glm::mat3 normalMat3 = glm::mat3(normalMat);
     GLuint offset = 0;
-    for ( int i = 0 ; i < 3 ; i++ ) {
-        
-        
-        glUniformMatrix4fv(modelViewMatrix, 1, GL_FALSE, &modelViewMat[0][0]);
-        glUniformMatrix3fv(normalMatrix, 1, GL_FALSE, &normalMat3[0][0]);
-        
+     //for each mesh draw arrays with his movelview matrix and his normal matrix
+    for ( int i = 0; i < renderBatch.size(); i++ ) {
+        Node* node = renderBatch.at( i );
+        glm::mat4 modelViewMatrix = viewMatrix * *node->getModelMatrix();
+        glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
+        glm::mat3 normalMat3 = glm::mat3(normalMat);
+        glUniformMatrix4fv(modelViewUID, 1, GL_FALSE, &modelViewMatrix[0][0]);
+        glUniformMatrix3fv(normalUID, 1, GL_FALSE, &normalMat3[0][0]);
         // draw points from the currently bound VAO with current in-use shader
         glDrawArrays (GL_TRIANGLES,
                       offset,
-                      (int)nodes.at( i )->getMesh()->getVertices().size());
-        offset += (int)nodes.at( i )->getMesh()->getVertices().size();
+                      (int)node->getMesh()->getVertices().size());
+        offset += (int)node->getMesh()->getVertices().size();
     }
     
     // update other events like input handling
