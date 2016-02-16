@@ -28,6 +28,7 @@ public:
     void onRender( Scene* scene );
     void onRenderChildrends( Scene* scene );
     void onPostRender( Scene* scene );
+    void addNode( INode* node );
     
     glm::mat4 * getModelMatrix();
     void setMesh( Mesh* mesh );

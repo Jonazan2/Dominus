@@ -10,10 +10,15 @@
 
 Engine::Engine() : running( true ){
     scene = new Scene;
+    gameScene = new GameScene;
 }
 
 Engine::~Engine(){
 
+}
+
+void Engine::init() {
+    gameScene->onSceneCreated( scene );
 }
 
 void Engine::processInput(){

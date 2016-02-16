@@ -10,6 +10,7 @@
 
 Scene::Scene() {
     renderer = new Renderer;
+    rootNode = new Node;
 }
 
 Scene::~Scene() {
@@ -20,6 +21,10 @@ void Scene::load() {
     rootNode->onRestore( this );
     renderer->loadMesh( renderBatch );
     renderBatch.clear();
+}
+
+void Scene::addNode( INode *node ) {
+    rootNode->addNode( node );
 }
 
 void Scene::render() {

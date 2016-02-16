@@ -19,6 +19,10 @@ Node::~Node(){
 
 }
 
+void Node::addNode( INode *node ) {
+    childNodes.push_back( node );
+}
+
 void Node::onRestore( Scene* scene ) {
     scene->addToBatch( this );
     for ( INode* node : childNodes ) {

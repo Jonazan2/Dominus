@@ -9,14 +9,14 @@
 #ifndef RenderScene_h
 #define RenderScene_h
 
-#include "Scene.h"
+#include "GameScene.h"
 
-class RenderScene {
+class RenderScene : public GameScene {
 public:
     RenderScene();
     ~RenderScene();
     
-    loadScene( Scene* scene );
+    void onSceneCreated( Scene* scene );
 };
 
 #endif /* RenderScene_h */

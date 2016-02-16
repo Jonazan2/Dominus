@@ -192,41 +192,7 @@ void Renderer::init(){
     lightPositionUID = glGetUniformLocation(shader_programme, "lightPosition");
     positionAttribute = glGetAttribLocation(shader_programme, "vp");
     normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
-    
-    //buffer data
-    Mesh * momoMesh = new Mesh;
-    momoMesh->loadObj( "momo.obj" );
-    
-    Mesh* jokerMesh = new Mesh;
-    jokerMesh->loadObj( "joker.obj" );
-    
-    Mesh* cubeMesh = new Mesh;
-    cubeMesh->loadObj( "cube.obj" );
-    std::vector<Mesh*> meshes = std::vector<Mesh*> ();
-    meshes.push_back( momoMesh );
-    meshes.push_back( jokerMesh );
-    meshes.push_back( cubeMesh );
-    
-    std::vector<glm::mat4> modelMatrix = std::vector<glm::mat4> ();
-    glm::mat4 scaleMatrix = glm::scale(glm::vec3(1,1,1));
-    glm::mat4 rotationXMatrix = glm::rotate( 180.0f,
-                                             glm::vec3( 1.0f, 0.0f, 0.0f ) );
-    glm::mat4 translationMatrix = glm::translate( glm::vec3( 0.0, 2.5, 0.0 ) );
-    modelMatrix.push_back( translationMatrix * rotationXMatrix * scaleMatrix );
-    translationMatrix = glm::translate( glm::vec3 ( 0.0, 0.0, 0.0 ) );
-    modelMatrix.push_back( translationMatrix * rotationXMatrix * scaleMatrix );
-    translationMatrix = glm::translate( glm::vec3( 0.0, 0.0, 0.0 ) );
-    modelMatrix.push_back( translationMatrix * rotationXMatrix * scaleMatrix );
-    
-    for ( int i = 0 ; i < 3 ; i++ ) {
-        Node* node = new Node;
-        node->setMesh( meshes.at( i ) );
-        node->setModelMatrix( modelMatrix.at( i ) );
-        nodes.push_back( node );
-    }
 }
-
-
 
 void Renderer::render(){
     delta+= 0.1;

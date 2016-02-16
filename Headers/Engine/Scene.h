@@ -24,9 +24,10 @@ public:
     void pushMatrix( glm::mat4 matrix );
     glm::mat4 popMatrix();
     void addToBatch( Node* node );
+    void addNode( INode* node );
 private:
     Renderer* renderer;
-    INode* rootNode;
+    Node* rootNode;
     std::stack<glm::mat4> matrixStack;
     std::vector< Node* > renderBatch;
 };
