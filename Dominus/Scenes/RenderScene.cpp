@@ -24,26 +24,39 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     Mesh* jokerMesh = new Mesh;
     jokerMesh->loadObj( "joker.obj" );
     
-    Mesh* cubeMesh = new Mesh;
-    cubeMesh->loadObj( "cube.obj" );
-    std::vector<Mesh*> meshes = std::vector<Mesh*> ();
-    meshes.push_back( momoMesh );
-    meshes.push_back( jokerMesh );
-    meshes.push_back( cubeMesh );
+    Mesh* momoHolder = new Mesh;
+    momoHolder->loadObj( "cube.obj" );
     
-    std::vector<glm::mat4> modelMatrix = std::vector<glm::mat4> ();
-    glm::mat4 scaleMatrix = glm::scale(glm::vec3(1,1,1));
-    glm::mat4 rotationXMatrix = glm::rotate( 180.0f,
-                                            glm::vec3( 1.0f, 0.0f, 0.0f ) );
-    glm::mat4 translationMatrix = glm::translate( glm::vec3( 0.0, 2.5, 0.0 ) );
-    modelMatrix.push_back( translationMatrix * rotationXMatrix * scaleMatrix );
-    translationMatrix = glm::translate( glm::vec3 ( 0.0, 0.0, 0.0 ) );
-    modelMatrix.push_back( translationMatrix * rotationXMatrix * scaleMatrix );
-    translationMatrix = glm::translate( glm::vec3( 0.0, 0.0, 0.0 ) );
-    modelMatrix.push_back( translationMatrix * rotationXMatrix * scaleMatrix );
+    Mesh* jokerHolder = new Mesh;
+    jokerHolder->loadObj( "cube.obj" );
+    
+    Mesh* plane = new Mesh;
+    plane->loadObj( "cube.obj" );
     
     //populate scene
-    Node* momoNode = new Node;
-    Node* jokerNode = new Node;
-    Node* cubeNode = new Node;
+    Node* momoNode = new Node( momoMesh );
+    Node* jokerNode = new Node( jokerMesh );
+    
+    Node* momoHolderNode = new Node( momoHolder );
+    Node* jokerHolderNode = new Node( jokerHolder );
+    Node* planeNode = new Node( plane );
+    
+    //planeNode->setModelMatrix( glm::scale( glm::vec3( 5.0f, 0.1f, 5.0f ) ) );
+    momoHolderNode->setModelMatrix( glm::translate( glm::vec3( 5.0f, 0.0f, 0.0f ) ) *
+                                    glm::scale( glm::vec3 ( 1.0f, 0.5f, 1.0f ) ) );
+    jokerHolderNode->setModelMatrix( glm::translate( glm::vec3( -5.0f, 0.0f, 0.0f ) ) *
+                                     glm::scale( glm::vec3 ( 1.0f, 0.5f, 1.0f ) ) );
+    
+    momoNode->setModelMatrix( glm::translate( glm::vec3( 0.0f, 5.0f, 0.0f ) ) *
+                             glm::rotate( 90.0f , glm::vec3( 0.0f, 1.0f, 0.0f ) ) );
+    jokerNode->setModelMatrix( glm::translate( glm::vec3( 0.0f, 5.0f, 0.0f ) ) );
+    
+    //planeNode->addNode( momoHolderNode );
+    //planeNode->addNode( jokerHolderNode );
+    
+    momoHolderNode->addNode( momoNode );
+    jokerHolderNode->addNode( jokerNode );
+    
+    scene->addNode( planeNode );
+    scene->load();
 }

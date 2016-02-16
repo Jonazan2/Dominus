@@ -9,7 +9,7 @@
 #ifndef __Dominus__Engine__
 #define __Dominus__Engine__
 
-#include "GameScene.h"
+#include "RenderScene.h"
 
 class Engine {
 public:

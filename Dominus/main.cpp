@@ -20,12 +20,10 @@ const int MS_PER_UPDATE = 40; //25 FPS
 
 int main(int argc, const char * argv[]) {    
     Engine * engine = new Engine();
-    
+    engine->init();
     std::chrono::time_point<std::chrono::system_clock> current, previous;
     previous = std::chrono::system_clock::now();
     double lag = 0.0;
-    Renderer* renderer = new Renderer;
-    renderer->init();
     while(engine->isRunning()){
         current = std::chrono::system_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds> (current - previous);

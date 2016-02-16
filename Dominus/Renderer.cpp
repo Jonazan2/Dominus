@@ -94,12 +94,7 @@ void Renderer::onMouseReleased(double x, double y){
 }
 
 void Renderer::onMouseDragged(double xRel, double yRel){
-    for ( int i = 0 ; i < 3 ; i++ ) {
-        Mesh* mesh = nodes.at( i )->getMesh();
-        float rotationx = (mesh->getRotation().x + (yRel)) * 0.01;
-        float rotationz = (mesh->getRotation().z + (xRel)) * 0.01;
-        nodes.at( i )->rotate(glm::vec3(rotationx, 0.0, rotationz));
-    }
+ 
 }
 
 void Renderer::init(){
@@ -139,11 +134,6 @@ void Renderer::init(){
     //create vao and set as current
     glGenVertexArrays (1, &vao);
     glBindVertexArray (vao);
-    
-    //create buffer object and set as current
-    GLuint buffers[2];
-    glGenBuffers(2, buffers);
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     
     //Load shaders
  
@@ -214,7 +204,7 @@ void Renderer::updateLightSource( glm::vec3 lightSource ) {
 void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
     //create buffer object and set as current
     GLuint buffers[2];
-    glGenBuffers(1, buffers);
+    glGenBuffers( 2, buffers );
     glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     
     //allocate buffer memory to load all the vertex
@@ -246,11 +236,16 @@ void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
     glEnableVertexAttribArray(positionAttribute);
     
     //buffer vertex data
+    glBindBuffer( GL_ARRAY_BUFFER, buffers[1] );
+    glBufferData (GL_ARRAY_BUFFER,
+                  normalBufferSize,
+                  NULL,
+                  GL_STATIC_DRAW);
     GLuint normalOffset = 0;
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Node* node = renderBatch.at(i);
         glBufferSubData(GL_ARRAY_BUFFER, // target
-                        offset, // offset
+                        normalOffset, // offset
                         node->getMesh()->getNormalSize(), // size
                         &node->getMesh()->getNormals()[0]); // data
         normalOffset += node->getMesh()->getNormalSize();
@@ -272,7 +267,7 @@ void Renderer::draw( std::vector<Node*> renderBatch ) {
         Node* node = renderBatch.at( i );
         glm::mat4 modelViewMatrix = viewMatrix * *node->getModelMatrix();
         glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
-        glm::mat3 normalMat3 = glm::mat3(normalMat);
+        glm::mat3 normalMat3 = glm::mat3( normalMat );
         glUniformMatrix4fv(modelViewUID, 1, GL_FALSE, &modelViewMatrix[0][0]);
         glUniformMatrix3fv(normalUID, 1, GL_FALSE, &normalMat3[0][0]);
         // draw points from the currently bound VAO with current in-use shader

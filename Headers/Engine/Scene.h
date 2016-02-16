@@ -10,6 +10,7 @@
 #define Scene_h
 
 #include "Renderer.h"
+#include "Camera.h"
 #include <vector>
 #include <glm/glm.hpp>
 #include <stack>
@@ -28,6 +29,9 @@ public:
 private:
     Renderer* renderer;
     Node* rootNode;
+    Camera* camera = new Camera;
+    glm::vec3 lightPosition;
+    glm::mat4 projectionMatrix;
     std::stack<glm::mat4> matrixStack;
     std::vector< Node* > renderBatch;
 };

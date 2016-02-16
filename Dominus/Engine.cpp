@@ -10,7 +10,6 @@
 
 Engine::Engine() : running( true ){
     scene = new Scene;
-    gameScene = new GameScene;
 }
 
 Engine::~Engine(){
@@ -18,6 +17,7 @@ Engine::~Engine(){
 }
 
 void Engine::init() {
+    gameScene = new RenderScene;
     gameScene->onSceneCreated( scene );
 }
 

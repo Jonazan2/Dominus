@@ -22,6 +22,7 @@ class Scene;
 class Node : public INode{
 public:
     Node();
+    Node( Mesh* mesh );
     ~Node();
     
     void onRestore( Scene* scene );
@@ -31,6 +32,7 @@ public:
     void addNode( INode* node );
     
     glm::mat4 * getModelMatrix();
+    void setModelMatrix( glm::mat4 modelMatrix );
     void setMesh( Mesh* mesh );
     Mesh* getMesh();
     void rotate(  const glm::vec3 rotation );

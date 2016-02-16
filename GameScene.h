@@ -13,6 +13,6 @@
 
 class GameScene {
 public:
-    virtual void onSceneCreated( Scene* scene );
+    virtual void onSceneCreated( Scene* scene ) = 0;
 };
 #endif

@@ -11,8 +11,13 @@
 
 Node::Node()
             :   modelMatrix( glm::mat4( 1 ) ),
-                mesh( nullptr ){
+                mesh( new Mesh ){
 
+}
+
+Node::Node( Mesh* mesh )
+            :   modelMatrix( glm::mat4( 1 ) ),
+                mesh( mesh ) {
 }
 
 Node::~Node(){
@@ -24,10 +29,10 @@ void Node::addNode( INode *node ) {
 }
 
 void Node::onRestore( Scene* scene ) {
-    scene->addToBatch( this );
     for ( INode* node : childNodes ) {
         node->onRestore( scene );
     }
+    scene->addToBatch( this );
 }
 
 void Node::onRender( Scene* scene ) {
@@ -58,6 +63,10 @@ void Node::setMesh( Mesh *mesh ) {
 
 Mesh* Node::getMesh() {
     return mesh;
+}
+
+void Node::setModelMatrix( glm::mat4 modelMatrix ) {
+    this->modelMatrix = modelMatrix;
 }
 
 void Node::rotate( const glm::vec3 rotation ) {

@@ -9,11 +9,11 @@
 #include "Camera.h"
 
 Camera::Camera()
-                :   viewMatrix( 1 ),
-                    position( 0 ),
-                    target( 0 ),
-                    up( 0 ) {
-
+                :   viewMatrix( glm::mat4( 1 ) ),
+                    position( glm::vec3 ( 0.0f, 0.0f, -10.0f ) ),
+                    target( 0.0f, 0.0f, 0.0f ),
+                    up( 0.0f, 1.0f, 0.0f ) {
+    viewMatrix = glm::lookAt( position, target, up );
 }
 
 Camera::~Camera() {
