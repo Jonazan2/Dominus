@@ -26,6 +26,10 @@ private:
     bool running;
     Scene* scene;
     GameScene* gameScene;
+    
+    Renderer* renderer;
+    Node* node;
+    std::vector<Node*> nodes;
 };
 
 #endif /* defined(__Dominus__Engine__) */
