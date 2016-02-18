@@ -8,6 +8,8 @@
 
 #include "Node.hpp"
 #include "Scene.h"
+#include "Log.hpp"
+#include "glm/ext.hpp"
 
 Node::Node()
             :   toWorldMatrix( glm::mat4( 1 ) ),
@@ -37,9 +39,11 @@ void Node::onRestore( Scene* scene ) {
 }
 
 void Node::onRender( Scene* scene ) {
-    glm::mat4 parent = scene->popMatrix();
+    glm::mat4 parent = scene->getStack()->top();
+    std::cout << glm::to_string( parent ) << std::endl;
     toWorldMatrix = parent * modelMatrix;
-    scene->pushMatrix( modelMatrix );
+    std::cout << glm::to_string( toWorldMatrix ) << std::endl;
+    scene->pushMatrix( toWorldMatrix );
 }
 
 void Node::onRenderChildrends( Scene* scene ) {
@@ -51,6 +55,7 @@ void Node::onRenderChildrends( Scene* scene ) {
 }
 
 void Node::onPostRender( Scene* scene ) {
+    scene->getStack()->pop();
     scene->addToBatch( this );
 }
 

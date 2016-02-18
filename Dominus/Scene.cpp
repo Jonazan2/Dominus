@@ -18,6 +18,7 @@ Scene::Scene() {
     renderer->updateLightSource( lightPosition );
     renderer->updateProjection( projectionMatrix );
     renderer->init();
+    pushMatrix( glm::mat4( 1 ) );
 }
 
 Scene::~Scene() {
@@ -35,7 +36,6 @@ void Scene::addNode( INode *node ) {
 }
 
 void Scene::render() {
-    pushMatrix( glm::mat4( 1 ) );
     rootNode->onRender( this );
     rootNode->onRenderChildrends( this );
     rootNode->onPostRender( this );
@@ -45,13 +45,19 @@ void Scene::render() {
     renderer->present();
 }
 
+std::stack<glm::mat4> * Scene::getStack() {
+    return &matrixStack;
+}
+
 void Scene::pushMatrix( glm::mat4 matrix ) {
     matrixStack.push( matrix );
+    std::cout << "stack: " << matrixStack.size() << std::endl;
 }
 
 glm::mat4 Scene::popMatrix() {
     glm::mat4 result = matrixStack.top();
     matrixStack.pop();
+    std::cout << "stack: " << matrixStack.size() << std::endl;
     return result;
 }
 

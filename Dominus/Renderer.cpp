@@ -264,7 +264,7 @@ void Renderer::draw( std::vector<Node*> renderBatch ) {
     GLuint offset = 0;
     for ( int i = 0; i < renderBatch.size() ; i++ ) {
         Node* node = renderBatch.at( i );
-        glm::mat4 modelViewMatrix = viewMatrix * *node->getModelMatrix();
+        glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
         glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
         glm::mat3 normalMat3 = glm::mat3( normalMat );
         glUniformMatrix4fv(modelViewUID, 1, GL_FALSE, &modelViewMatrix[0][0]);
