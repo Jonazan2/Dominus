@@ -45,9 +45,6 @@ private:
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
     glm::vec3 lightPosition;
-    float delta;
-    Mesh* cubeMesh;
-    std::vector<Node*> nodes;
     GLuint positionAttribute;
     GLuint normalAttribute;
     GLuint modelViewUID;

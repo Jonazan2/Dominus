@@ -10,7 +10,7 @@
 
 Camera::Camera()
                 :   viewMatrix( glm::mat4( 1 ) ),
-                    position( glm::vec3 ( 0.0f, 0.0f, -10.0f ) ),
+                    position( glm::vec3 ( 0.0f, 0.0f, -15.0f ) ),
                     target( 0.0f, 0.0f, 0.0f ),
                     up( 0.0f, 1.0f, 0.0f ) {
     viewMatrix = glm::lookAt( position, target, up );

@@ -10,7 +10,8 @@
 #include "Scene.h"
 
 Node::Node()
-            :   modelMatrix( glm::mat4( 1 ) ),
+            :   toWorldMatrix( glm::mat4( 1 ) ),
+                modelMatrix( glm::mat4( 1 ) ),
                 mesh( new Mesh ){
 
 }
@@ -37,7 +38,7 @@ void Node::onRestore( Scene* scene ) {
 
 void Node::onRender( Scene* scene ) {
     glm::mat4 parent = scene->popMatrix();
-    modelMatrix = modelMatrix * parent;
+    toWorldMatrix = parent * modelMatrix;
     scene->pushMatrix( modelMatrix );
 }
 
@@ -51,6 +52,10 @@ void Node::onRenderChildrends( Scene* scene ) {
 
 void Node::onPostRender( Scene* scene ) {
     scene->addToBatch( this );
+}
+
+glm::mat4 * Node::getToWorldMatrix() {
+    return &toWorldMatrix;
 }
 
 glm::mat4 * Node::getModelMatrix() {

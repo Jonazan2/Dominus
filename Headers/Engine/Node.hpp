@@ -33,6 +33,8 @@ public:
     
     glm::mat4 * getModelMatrix();
     void setModelMatrix( glm::mat4 modelMatrix );
+    glm::mat4 * getToWorldMatrix();
+    
     void setMesh( Mesh* mesh );
     Mesh* getMesh();
     void rotate(  const glm::vec3 rotation );
@@ -40,6 +42,7 @@ public:
 private:
     std::vector< INode * > childNodes;
     glm::mat4 modelMatrix;
+    glm::mat4 toWorldMatrix;
     Mesh* mesh;
 
 };
