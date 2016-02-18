@@ -43,9 +43,10 @@ private:
     GLuint vao;
     GLuint shader_programme;
     glm::mat4 viewMatrix;
-    glm::mat4 projectionMatrix;
-    glm::vec3 lightPosition;
+    //glm::mat4 projectionMatrix;
+    //glm::vec3 lightPosition;
     float delta;
+    Mesh* cubeMesh;
     std::vector<Node*> nodes;
     GLuint positionAttribute;
     GLuint normalAttribute;
@@ -53,6 +54,11 @@ private:
     GLuint projectionUID;
     GLuint normalUID;
     GLuint lightPositionUID;
+    
+    GLuint modelViewMatrix;
+    GLuint projectionMatrix;
+    GLuint lightPosition;
+    GLuint normalMatrix;
 };
 
 #endif /* defined(__Dominus__Renderer__) */
