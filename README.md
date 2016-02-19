@@ -156,3 +156,14 @@ brew install glfw
 ```
 
 After this the project will look for the library at /usr/local/ which is already included in the build path.
+
+### How to install GLM
+
+GLM can be installed using brew with the next commands:
+
+```shell
+brew tap homebrew/versions
+brew install glm
+```
+
+After this the project will look for the library at /usr/local/ which is already included in the build path.
