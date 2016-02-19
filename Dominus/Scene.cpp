@@ -51,13 +51,11 @@ std::stack<glm::mat4> * Scene::getStack() {
 
 void Scene::pushMatrix( glm::mat4 matrix ) {
     matrixStack.push( matrix );
-    std::cout << "stack: " << matrixStack.size() << std::endl;
 }
 
 glm::mat4 Scene::popMatrix() {
     glm::mat4 result = matrixStack.top();
     matrixStack.pop();
-    std::cout << "stack: " << matrixStack.size() << std::endl;
     return result;
 }
 

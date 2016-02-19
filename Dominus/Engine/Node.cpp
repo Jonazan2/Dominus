@@ -40,9 +40,7 @@ void Node::onRestore( Scene* scene ) {
 
 void Node::onRender( Scene* scene ) {
     glm::mat4 parent = scene->getStack()->top();
-    std::cout << glm::to_string( parent ) << std::endl;
     toWorldMatrix = parent * modelMatrix;
-    std::cout << glm::to_string( toWorldMatrix ) << std::endl;
     scene->pushMatrix( toWorldMatrix );
 }
 
