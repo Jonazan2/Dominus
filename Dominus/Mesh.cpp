@@ -16,7 +16,7 @@ Mesh::Mesh(int numVertices) : rotationAngle(0)
     vertices = std::vector<glm::vec3>(numVertices);
 }
 
-Mesh::Mesh(std::string filePath) : rotationAngle(0)
+Mesh::Mesh(std::string filePath) : rotationAngle(0), name( filePath )
 {
     vertexIndices = 0;
     uvIndices = 0;
@@ -31,6 +31,7 @@ Mesh::~Mesh()
 
 void Mesh::loadObj(std::string filePath)
 {
+    name = filePath;
     std::string line;
     std::ifstream file(filePath);
     std::vector<glm::vec3> tempVertices;
@@ -131,4 +132,12 @@ std::vector<glm::vec3> Mesh::getNormals()
 int Mesh::getNumTriangles()
 {
     return numTriangles;
+}
+
+GLsizeiptr Mesh::getSize() {
+    return (sizeof (GLfloat) * 3) * vertices.size();
+}
+
+GLsizeiptr Mesh::getNormalSize() {
+    return (sizeof (GLfloat) * 3) * normals.size();
 }

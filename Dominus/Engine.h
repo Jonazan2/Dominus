@@ -9,20 +9,27 @@
 #ifndef __Dominus__Engine__
 #define __Dominus__Engine__
 
-#include <stdio.h>
+#include "RenderScene.h"
 
 class Engine {
 public:
     Engine();
     ~Engine();
     
+    void init();
     void processInput();
-    void update();
+    void update(double delta);
     void render();
     
     bool isRunning();
 private:
     bool running;
+    Scene* scene;
+    GameScene* gameScene;
+    
+    Renderer* renderer;
+    Node* node;
+    std::vector<Node*> nodes;
 };
 
 #endif /* defined(__Dominus__Engine__) */

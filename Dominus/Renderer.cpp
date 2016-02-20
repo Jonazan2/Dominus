@@ -94,14 +94,11 @@ void Renderer::onMouseReleased(double x, double y){
 }
 
 void Renderer::onMouseDragged(double xRel, double yRel){
-    float rotationx = (mesh->getRotation().x + (yRel)) * 0.1;
-    float rotationz = (mesh->getRotation().z + (xRel)) * 0.1;
-    mesh->setRotation(glm::vec3(rotationx, 0.0, rotationz));
+ 
 }
 
 void Renderer::init(){
     //Init window
-    
     if (!glfwInit ()) {
         fprintf (stderr, "ERROR: could not start GLFW3\n");
         return ;
@@ -136,13 +133,8 @@ void Renderer::init(){
     glGenVertexArrays (1, &vao);
     glBindVertexArray (vao);
     
-    //create buffer object and set as current
-    GLuint buffers[2];
-    glGenBuffers(2, buffers);
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
-    
     //Load shaders
- 
+    
     const char* vertex_shader =
     "#version 400\n"
     "in vec3 vp;"
@@ -182,64 +174,110 @@ void Renderer::init(){
     glLinkProgram (shader_programme);
     
     //retrieve shader uniforms and attributes ids
-    modelViewMatrix = glGetUniformLocation(shader_programme, "modelViewMatrix");
-    projectionMatrix = glGetUniformLocation(shader_programme, "projectionMatrix");
-    normalMatrix = glGetUniformLocation(shader_programme, "normalMatrix");
-    lightPosition = glGetUniformLocation(shader_programme, "lightPosition");
-    GLuint positionAttribute = glGetAttribLocation(shader_programme, "vp");
-    GLuint normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
-    
-    //buffer data
-    mesh = new Mesh;
-    mesh->loadObj("momo.obj");
+    modelViewUID = glGetUniformLocation(shader_programme, "modelViewMatrix");
+    projectionUID = glGetUniformLocation(shader_programme, "projectionMatrix");
+    normalUID = glGetUniformLocation(shader_programme, "normalMatrix");
+    lightPositionUID = glGetUniformLocation(shader_programme, "lightPosition");
+    positionAttribute = glGetAttribLocation(shader_programme, "vp");
+    normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
 
-    //buffer vertex
-    glBufferData (GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * mesh->getVertices().size(), &mesh->getVertices()[0], GL_STATIC_DRAW);
+}
+
+void Renderer::render(){
+    
+}
+
+void Renderer::updateProjection( glm::mat4 projectionMatrix ) {
+    this->projectionMatrix = projectionMatrix;
+}
+
+void Renderer:: updateCamera( glm::mat4 viewMatrix ) {
+    this->viewMatrix = viewMatrix;
+}
+
+void Renderer::updateLightSource( glm::vec3 lightSource ) {
+    this->lightPosition = lightSource;
+}
+
+void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
+    //create buffer object and set as current
+    GLuint buffers[2];
+    glGenBuffers( 2, buffers );
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+    
+    //allocate buffer memory to load all the vertex
+    GLsizeiptr vertexBufferSize = 0;
+    GLsizeiptr normalBufferSize = 0;
+    for ( int i = 0; i < renderBatch.size(); i++ ) {
+        Node* node = renderBatch.at(i);
+        Mesh* mesh = node->getMesh();
+        vertexBufferSize += mesh->getSize();
+        normalBufferSize += mesh->getNormalSize();
+    }
+    glBufferData (GL_ARRAY_BUFFER,
+                  vertexBufferSize,
+                  NULL,
+                  GL_STATIC_DRAW);
+    //buffer vertex data
+    GLuint offset = 0;
+    for ( int i = 0; i < renderBatch.size(); i++ ) {
+        Node* node = renderBatch.at(i);
+        glBufferSubData(GL_ARRAY_BUFFER, // target
+                        offset, // offset
+                        node->getMesh()->getSize(), // size
+                        &node->getMesh()->getVertices()[0]); // data
+        offset += node->getMesh()->getSize();
+    }
     
     //set vertex array layout for shader attibute and enable attibute
     glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(positionAttribute);
     
-    //set normal frame buffer as current
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
-    //buffer normals into current buffer
-    glBufferData(GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * mesh->getNormals().size(), &mesh->getNormals()[0],
-                 GL_STATIC_DRAW);
+    //buffer vertex data
+    glBindBuffer( GL_ARRAY_BUFFER, buffers[1] );
+    glBufferData (GL_ARRAY_BUFFER,
+                  normalBufferSize,
+                  NULL,
+                  GL_STATIC_DRAW);
+    GLuint normalOffset = 0;
+    for ( int i = 0; i < renderBatch.size(); i++ ) {
+        Node* node = renderBatch.at(i);
+        glBufferSubData(GL_ARRAY_BUFFER, // target
+                        normalOffset, // offset
+                        node->getMesh()->getNormalSize(), // size
+                        &node->getMesh()->getNormals()[0]); // data
+        normalOffset += node->getMesh()->getNormalSize();
+    }
+    
     //set normal array layout for shader attribute and enable attribute
     glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(normalAttribute);
 }
 
-void Renderer::render(){
-    delta+= 0.1;
-    glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0,0,-10),
-                                       glm::vec3(0,0,0),
-                                       glm::vec3(0.0f, 1.0f, 0.0f)
-                                       );
-    glm::mat4 projectionMat = glm::perspective(0.78f, (float)640/480, 0.01f, 100.0f);
-    glm::mat4 scaleMatrix = glm::scale(glm::vec3(3,3,3));
-    glm::mat4 rotationXMatrix = glm::rotate( mesh->getRotation().x, glm::vec3(1.0f,0.0f,0.0f));
-    glm::mat4 rotationZMatrix = glm::rotate(mesh->getRotation().z, glm::vec3(0.0f,0.0f,1.0f));
-    glm::mat4 rotationMatrix = rotationXMatrix * rotationZMatrix;
-    glm::mat4 modelMatrix = rotationMatrix * scaleMatrix;
-    glm::mat4 modelViewMat = viewMatrix * modelMatrix;
-    glm::mat4 normalMat = glm::inverse(modelViewMat);
-    normalMat = glm::transpose(normalMat);
-    glm::mat3 normalMat3 = glm::mat3(normalMat);
-    glm::vec3 lightPos = glm::vec3(0.0, 0.0,0.0);
+void Renderer::draw( std::vector<Node*> renderBatch ) {
     // wipe the drawing surface clear
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram (shader_programme);
-    glUniformMatrix4fv(projectionMatrix, 1, GL_FALSE, &projectionMat[0][0]);
-    glUniformMatrix4fv(modelViewMatrix, 1, GL_FALSE, &modelViewMat[0][0]);
-    glUniformMatrix3fv(normalMatrix, 1, GL_FALSE, &normalMat3[0][0]);
-    glUniform3fv(lightPosition, 1, &lightPos[0]);
+    glUniformMatrix4fv(projectionUID, 1, GL_FALSE, &projectionMatrix[0][0]);
+    glUniform3fv(lightPositionUID, 1, &lightPosition[0]);
     glBindVertexArray (vao);
-    // draw points from the currently bound VAO with current in-use shader
-    glDrawArrays (GL_TRIANGLES, 0, (int)mesh->getVertices().size());
-    // update other events like input handling
-    glfwPollEvents ();
+    GLuint offset = 0;
+    for ( int i = 0; i < renderBatch.size() ; i++ ) {
+        Node* node = renderBatch.at( i );
+        glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
+        glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
+        glm::mat3 normalMat3 = glm::mat3( normalMat );
+        glUniformMatrix4fv(modelViewUID, 1, GL_FALSE, &modelViewMatrix[0][0]);
+        glUniformMatrix3fv(normalUID, 1, GL_FALSE, &normalMat3[0][0]);
+        // draw points from the currently bound VAO with current in-use shader
+        glDrawArrays (GL_TRIANGLES,
+                        offset,
+                        (int)node->getMesh()->getVertices().size());
+        offset += (int)node->getMesh()->getVertices().size();
+    }
+}
+
+void Renderer::present() {
     // put the stuff we've been drawing onto the display
     glfwSwapBuffers (window);
 }
-

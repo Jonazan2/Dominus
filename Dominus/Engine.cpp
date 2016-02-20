@@ -9,23 +9,29 @@
 #include "Engine.h"
 
 Engine::Engine() : running( true ){
-
+    scene = new Scene;
 }
 
 Engine::~Engine(){
 
 }
 
-void Engine::processInput(){
-
+void Engine::init() {
+    gameScene = new RenderScene;
+    gameScene->onSceneCreated( scene );
 }
 
-void Engine::update(){
+void Engine::processInput(){
+    // update other events like input handling
+    glfwPollEvents ();
+}
+
+void Engine::update(double delta){
 
 }
 
 void Engine::render(){
-
+    scene->render();
 }
 
 bool Engine::isRunning(){

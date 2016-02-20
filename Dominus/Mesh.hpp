@@ -10,6 +10,7 @@
 #define Mesh_hpp
 
 #include <glm/glm.hpp>
+#include <OpenGL/gl3.h>
 #include <string>
 #include <vector>
 #include <iostream> 
@@ -37,6 +38,8 @@ public:
     int getNumTriangles();
     float getRotationAngle();
     void setRotationAngle(float);
+    GLsizeiptr getSize();
+    GLsizeiptr getNormalSize();
 private:
     std::string name;
     glm::vec3 position;
