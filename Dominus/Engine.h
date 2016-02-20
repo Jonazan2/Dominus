@@ -20,7 +20,7 @@ public:
     
     void init();
     void processInput();
-    void update(double delta);
+    void update( double delta );
     void render();
     
     bool isRunning();

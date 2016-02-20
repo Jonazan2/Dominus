@@ -12,6 +12,7 @@
 #include "InputHandler.h"
 #include "Window.h"
 #include <GLFW/glfw3.h>
+#include <vector>
 
 class GLFWInputHandler : public InputHandler {
 public:
@@ -24,6 +25,7 @@ public:
     void onMouseClicked( double x, double y );
     void onMouseReleased( double x, double y );
     void onMouseMoved( double x, double y );
+    void onKeyEvent( int key, int scancode, int action, int mode );
     void onWindowClosed();
 private:
     bool onDrag;

@@ -13,6 +13,7 @@ Event::Event()
                     y( 0 ),
                     xRelative( 0 ),
                     yRelative( 0 ),
+                    keyCode( 0 ),
                     type( EVENT_NONE ){
 
 }

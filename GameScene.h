@@ -14,9 +14,11 @@
 class GameScene {
 public:
     virtual void onSceneCreated( Scene* scene ) = 0;
-    virtual void onMouseDragged(double xRel, double yRel) = 0;
-    virtual void onMouseClicked(double x, double y) = 0;
-    virtual void onMouseReleased(double x, double y) = 0;
-    virtual void onMouseMoved(double x, double y) = 0;
+    virtual void onUpdate( double delta ) = 0;
+    virtual void onKeyDown( int key ) = 0;
+    virtual void onMouseDragged( double xRel, double yRel ) = 0;
+    virtual void onMouseClicked( double x, double y ) = 0;
+    virtual void onMouseReleased( double x, double y ) = 0;
+    virtual void onMouseMoved( double x, double y ) = 0;
 };
 #endif

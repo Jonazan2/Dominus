@@ -1,4 +1,4 @@
-//
+ //
 //  Engine.cpp
 //  Dominus
 //
@@ -18,7 +18,7 @@ Engine::~Engine(){
 }
 
 void Engine::init() {
-    window = new Window( 640,480 );
+    window = new Window( 640, 480 );
     window->initWindow();
     inputHandler = new GLFWInputHandler( window->windowHandler() );
     inputHandler->init();
@@ -44,13 +44,17 @@ void Engine::processInput(){
         case ON_CLICK_RELEASE:
             gameScene->onMouseReleased( event->x, event->y );
             break;
+        case ON_KEY_EVENT:
+            gameScene->onKeyDown( event->key );
+            break;
         default:
             break;
     }
 }
 
-void Engine::update(double delta){
-
+void Engine::update( double delta ){
+    gameScene->onUpdate( delta );
+    scene->update( delta );
 }
 
 void Engine::render(){

@@ -13,7 +13,7 @@ Scene::Scene( Renderer* renderer ) : renderer( renderer ) {
     rootNode = new Node;
     projectionMatrix = glm::perspective( 0.78f, (float)640/480, 0.01f, 100.0f );
     lightPosition = glm::vec3( 0.0, 0.0, 0.0 );
-    renderer->updateCamera( *camera->getViewMatrix() );
+    renderer->updateCamera( camera->viewMatrix );
     renderer->updateLightSource( lightPosition );
     renderer->updateProjection( projectionMatrix );
     renderer->init();
@@ -22,6 +22,14 @@ Scene::Scene( Renderer* renderer ) : renderer( renderer ) {
 
 Scene::~Scene() {
 
+}
+
+void Scene::update( double delta ) {
+    renderer->updateCamera( camera->viewMatrix );
+}
+
+Camera* Scene::getCamera() {
+    return camera;
 }
 
 void Scene::load() {

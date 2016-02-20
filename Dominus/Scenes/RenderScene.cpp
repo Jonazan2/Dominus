@@ -18,6 +18,7 @@ RenderScene::~RenderScene() {
 }
 
 void RenderScene::onSceneCreated( Scene* scene ) {
+    this->scene = scene;
     //buffer data
     Mesh * momoMesh = new Mesh;
     momoMesh->loadObj( "momo.obj" );
@@ -61,6 +62,37 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     
     scene->addNode( planeNode );
     scene->load();
+}
+
+void RenderScene::onUpdate( double delta ) {
+    this->delta = delta;
+}
+
+void RenderScene::onKeyDown( int key ) {
+    // Camera controls
+    GLfloat cameraSpeed = 0.01f * delta;
+    Camera* camera = scene->getCamera();
+    switch ( key ) {
+        case GLFW_KEY_UP:
+            camera->position += cameraSpeed * camera->front;
+            break;
+        case GLFW_KEY_DOWN:
+           camera->position -= cameraSpeed * camera->front;
+            break;
+        case GLFW_KEY_LEFT:
+           camera->position -= glm::normalize(glm::cross(
+                                            camera->front,
+                                            camera->up)) * cameraSpeed;
+            break;
+        case GLFW_KEY_RIGHT:
+            camera->position += glm::normalize(glm::cross(
+                                            camera->front,
+                                            camera->up)) * cameraSpeed;
+            break;
+        default:
+            break;
+    }
+    camera->update();
 }
 
 void RenderScene::onMouseDragged( double xRel, double yRel ) {

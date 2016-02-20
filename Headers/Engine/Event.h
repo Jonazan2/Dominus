@@ -14,6 +14,7 @@ enum EventType {
     ON_CLICK_DOWN,
     ON_CLICK_RELEASE,
     ON_MOUSE_DRAG,
+    ON_KEY_EVENT,
     EVENT_NONE
 };
 
@@ -25,9 +26,12 @@ public:
     EventType type;
     int x;
     int y;
+    int keyCode;
     
     int xRelative;
     int yRelative;
+    
+    int key;
 };
 
 #endif /* Event_h */

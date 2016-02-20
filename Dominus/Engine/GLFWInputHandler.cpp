@@ -51,11 +51,26 @@ void mouse_button_callback( GLFWwindow* window,
     }
 }
 
+void key_callback(GLFWwindow* window, int key,
+                  int scancode, int action, int mode) {
+    if( instance != nullptr ){
+        if( action == GLFW_PRESS ){
+            instance->onKeyEvent( key, scancode, action, mode );
+        }
+    }
+}
+
 void window_close_callback( GLFWwindow* window ) {
     Log::getInstance() << "window closed";
     if( instance != nullptr ) {
         instance->onWindowClosed();
     }
+}
+
+void GLFWInputHandler::onKeyEvent(  int key, int scancode,
+                                    int action, int mode ) {
+    event->type = ON_KEY_EVENT;
+    event->key = key;
 }
 
 void GLFWInputHandler::onMouseMoved( double x, double y ){
@@ -91,6 +106,7 @@ void GLFWInputHandler::onMouseDragged( double xRel, double yRel ){
 }
 
 void GLFWInputHandler::init() {
+    glfwSetKeyCallback(window, key_callback);
     glfwSetCursorPosCallback(window, cursor_position_callback);
     glfwSetMouseButtonCallback(window,mouse_button_callback);
     glfwSetWindowCloseCallback(window, window_close_callback);
