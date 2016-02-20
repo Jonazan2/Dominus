@@ -7,6 +7,7 @@
 //
 
 #include "RenderScene.h"
+#include "Log.hpp"
 
 RenderScene::RenderScene() {
 
@@ -60,4 +61,26 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     
     scene->addNode( planeNode );
     scene->load();
+}
+
+void RenderScene::onMouseDragged( double xRel, double yRel ) {
+    Log::getInstance() << "mouseDragegd";
+    std::cout << xRel << std::endl;
+    std::cout << yRel << std::endl;
+}
+
+void RenderScene::onMouseClicked( double x, double y ) {
+    Log::getInstance() << "left button clicked";
+    std::cout << x << std::endl;
+    std::cout << y << std::endl;
+}
+
+void RenderScene::onMouseReleased( double x, double y ) {
+    Log::getInstance() << "left button released";
+    std::cout << x << std::endl;
+    std::cout << y << std::endl;
+}
+
+void RenderScene::onMouseMoved( double x, double y ) {
+
 }

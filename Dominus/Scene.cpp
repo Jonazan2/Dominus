@@ -8,8 +8,7 @@
 
 #include "Scene.h"
 
-Scene::Scene() {
-    renderer = new Renderer;
+Scene::Scene( Renderer* renderer ) : renderer( renderer ) {
     camera = new Camera();
     rootNode = new Node;
     projectionMatrix = glm::perspective( 0.78f, (float)640/480, 0.01f, 100.0f );

@@ -17,6 +17,10 @@ public:
     ~RenderScene();
     
     void onSceneCreated( Scene* scene );
+    void onMouseDragged(double xRel, double yRel);
+    void onMouseClicked(double x, double y);
+    void onMouseReleased(double x, double y);
+    void onMouseMoved(double x, double y);
 };
 
 #endif /* RenderScene_h */

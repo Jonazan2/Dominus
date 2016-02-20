@@ -17,7 +17,7 @@
 
 class Scene {
 public:
-    Scene();
+    Scene( Renderer* renderer );
     ~Scene();
     
     void render();

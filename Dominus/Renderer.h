@@ -20,10 +20,9 @@
 
 class Renderer{
 public:
-    Renderer();
+    Renderer( GLFWwindow* window );
     ~Renderer();
     void init();
-    void render();
     void compileShader(GLuint shader);
     void onMouseDragged(double xRel, double yRel);
     void onMouseClicked(double x, double y);
@@ -37,8 +36,6 @@ public:
     void draw( std::vector<Node*> renderBatch );
     void present();
 private:
-    double xPos;
-    double yPos;
     GLFWwindow* window;
     GLuint vao;
     GLuint shader_programme;

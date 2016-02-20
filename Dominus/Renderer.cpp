@@ -9,10 +9,8 @@
 #include "Renderer.h"
 #include "Log.hpp"
 
-Renderer* classPointer = nullptr;
+Renderer::Renderer( GLFWwindow* window ) : window( window ) {
 
-Renderer::Renderer() : xPos(0), yPos(0){
-    classPointer = this;
 }
 
 Renderer::~Renderer(){
@@ -35,90 +33,7 @@ void Renderer::compileShader(GLuint shader){
     }
 }
 
-static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
-{
-    if(classPointer){
-        classPointer->onMouseMoved(xpos, ypos);
-    }
-}
-
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
-{
-    double xpos, ypos;
-    double xrelease, yrelease;
-    if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS){
-        Log::getInstance() << "right button clicked";
-        glfwGetCursorPos(window, &xpos, &ypos);
-        std::cout << xpos << std::endl;
-        std::cout << ypos << std::endl;
-    }else if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
-        Log::getInstance() << "left button clicked";
-        glfwGetCursorPos(window, &xpos, &ypos);
-        std::cout << xpos << std::endl;
-        std::cout << ypos << std::endl;
-        if(classPointer){
-            classPointer->onMouseClicked(xpos, ypos);
-        }
-    }else if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE){
-        Log::getInstance() << "left button released";
-        glfwGetCursorPos(window, &xrelease, &yrelease);
-        std::cout << xrelease - xpos << std::endl;
-        std::cout << yrelease - ypos << std::endl;
-        if(classPointer){
-            classPointer->onMouseReleased(xrelease - xpos, yrelease - ypos);
-        }
-    }
-}
-
-void window_close_callback(GLFWwindow* window)
-{
-    Log::getInstance() << "window closed";
-}
-
-void Renderer::onMouseMoved(double x, double y){
-    if(xPos != 0 && yPos != 0){
-        double xRel = x - xPos;
-        double yRel = y - yPos;
-        onMouseDragged(xRel, yRel);
-    }
-}
-
-void Renderer::onMouseClicked(double x, double y){
-    xPos = x;
-    yPos = y;
-}
-
-void Renderer::onMouseReleased(double x, double y){
-    xPos = 0;
-    yPos = 0;
-}
-
-void Renderer::onMouseDragged(double xRel, double yRel){
- 
-}
-
 void Renderer::init(){
-    //Init window
-    if (!glfwInit ()) {
-        fprintf (stderr, "ERROR: could not start GLFW3\n");
-        return ;
-    }
-    glfwWindowHint (GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint (GLFW_CONTEXT_VERSION_MINOR, 2);
-    glfwWindowHint (GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    
-    window = glfwCreateWindow (640, 480, "Hello Triangle", NULL, NULL);
-    if (!window) {
-        fprintf (stderr, "ERROR: could not open window with GLFW3\n");
-        glfwTerminate();
-        return ;
-    }
-    glfwMakeContextCurrent (window);
-    glfwSetCursorPosCallback(window, cursor_position_callback);
-    glfwSetMouseButtonCallback(window,mouse_button_callback);
-    glfwSetWindowCloseCallback(window, window_close_callback);
-    
     // get version info
     const GLubyte* renderer = glGetString (GL_RENDERER); // get renderer string
     const GLubyte* version = glGetString (GL_VERSION); // version as a string
@@ -181,10 +96,6 @@ void Renderer::init(){
     positionAttribute = glGetAttribLocation(shader_programme, "vp");
     normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
 
-}
-
-void Renderer::render(){
-    
 }
 
 void Renderer::updateProjection( glm::mat4 projectionMatrix ) {
