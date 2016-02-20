@@ -13,7 +13,8 @@ GLFWInputHandler* instance;
 
 GLFWInputHandler::GLFWInputHandler( GLFWwindow* window ) :
                                                         window( window ),
-                                                        onDrag( false ){
+                                                        onDrag( false ),
+                                                        onHoldKey( false ){
     instance = this;
     event = new Event;
 }
@@ -51,12 +52,10 @@ void mouse_button_callback( GLFWwindow* window,
     }
 }
 
-void key_callback(GLFWwindow* window, int key,
-                  int scancode, int action, int mode) {
+void key_callback( GLFWwindow* window, int key,
+                  int scancode, int action, int mode ) {
     if( instance != nullptr ){
-        if( action == GLFW_PRESS ){
-            instance->onKeyEvent( key, scancode, action, mode );
-        }
+        instance->onKeyEvent( key, scancode, action, mode );
     }
 }
 
@@ -69,11 +68,16 @@ void window_close_callback( GLFWwindow* window ) {
 
 void GLFWInputHandler::onKeyEvent(  int key, int scancode,
                                     int action, int mode ) {
-    event->type = ON_KEY_EVENT;
-    event->key = key;
+    if ( action == GLFW_PRESS ) {
+        event->type = ON_KEY_EVENT;
+        event->keyCode = key;
+        onHoldKey = true;
+    } else if ( action == GLFW_RELEASE ) {
+        onHoldKey = false;
+    }
 }
 
-void GLFWInputHandler::onMouseMoved( double x, double y ){
+void GLFWInputHandler::onMouseMoved( double x, double y ) {
     if( onDrag ){
         double xRel = x - event->x;
         double yRel = y - event->y;
@@ -85,21 +89,21 @@ void GLFWInputHandler::onWindowClosed() {
     event->type = ON_WINDOW_CLOSED;
 }
 
-void GLFWInputHandler::onMouseClicked( double x, double y ){
+void GLFWInputHandler::onMouseClicked( double x, double y ) {
     event->type = ON_CLICK_DOWN;
     event->x = x;
     event->y = y;
     onDrag = true;
 }
 
-void GLFWInputHandler::onMouseReleased( double x, double y ){
+void GLFWInputHandler::onMouseReleased( double x, double y ) {
     event->type = ON_CLICK_RELEASE;
     event->x = x;
     event->y = y;
     onDrag = false;
 }
 
-void GLFWInputHandler::onMouseDragged( double xRel, double yRel ){
+void GLFWInputHandler::onMouseDragged( double xRel, double yRel ) {
     event->type = ON_MOUSE_DRAG;
     event->xRelative = xRel;
     event->yRelative = yRel;
@@ -115,5 +119,11 @@ void GLFWInputHandler::init() {
 Event* GLFWInputHandler::poolEvent() {
     // update other events like input handling
     glfwPollEvents ();
+    Event* pooledEvent;
+    if( !onHoldKey ){
+        pooledEvent = new Event( event );
+        event = new Event;
+        return pooledEvent;
+    }
     return event;
 }

@@ -20,6 +20,7 @@ enum EventType {
 
 class Event {
 public:
+    Event( Event* event );
     Event();
     ~Event();
     
@@ -30,8 +31,6 @@ public:
     
     int xRelative;
     int yRelative;
-    
-    int key;
 };
 
 #endif /* Event_h */

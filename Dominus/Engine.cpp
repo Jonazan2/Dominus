@@ -45,7 +45,7 @@ void Engine::processInput(){
             gameScene->onMouseReleased( event->x, event->y );
             break;
         case ON_KEY_EVENT:
-            gameScene->onKeyDown( event->key );
+            gameScene->onKeyDown( event->keyCode );
             break;
         default:
             break;

@@ -12,7 +12,7 @@
 #include "InputHandler.h"
 #include "Window.h"
 #include <GLFW/glfw3.h>
-#include <vector>
+#include <stack>
 
 class GLFWInputHandler : public InputHandler {
 public:
@@ -28,6 +28,7 @@ public:
     void onKeyEvent( int key, int scancode, int action, int mode );
     void onWindowClosed();
 private:
+    bool onHoldKey;
     bool onDrag;
     GLFWwindow* window;
     Event* event;

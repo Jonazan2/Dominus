@@ -18,6 +18,15 @@ Event::Event()
 
 }
 
+Event::Event( Event* event ) {
+    this->x = event->x;
+    this->y = event->y;
+    this->xRelative = event->xRelative;
+    this->yRelative = event->yRelative;
+    this->keyCode = event->keyCode;
+    this->type = event->type;
+}
+
 Event::~Event() {
 
 }
