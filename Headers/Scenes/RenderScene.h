@@ -25,6 +25,8 @@ public:
     void onMouseMoved(double x, double y);
     
     double delta;
+    float yaw;
+    float pitch;
     Scene* scene;
 };
 

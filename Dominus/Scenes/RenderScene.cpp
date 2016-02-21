@@ -10,7 +10,8 @@
 #include "Log.hpp"
 
 RenderScene::RenderScene() {
-
+    yaw = -90.0f;
+    pitch = 0;
 }
 
 RenderScene::~RenderScene() {
@@ -97,8 +98,26 @@ void RenderScene::onKeyDown( int key ) {
 
 void RenderScene::onMouseDragged( double xRel, double yRel ) {
     Log::getInstance() << "mouseDragegd";
-    std::cout << xRel << std::endl;
-    std::cout << yRel << std::endl;
+    GLfloat sensitivity = 0.01;
+    double xoffset = xRel * sensitivity;
+    double yoffset = yRel * sensitivity;
+    
+    yaw += xoffset;
+    pitch += yoffset;
+    
+    if(pitch > 89.0f)
+        pitch = 89.0f;
+    if(pitch < -89.0f)
+        pitch = -89.0f;
+    std::cout << yaw << std::endl;
+    std::cout << pitch << std::endl;
+    
+    glm::vec3 front = scene->getCamera()->front;
+    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    front.y = sin(glm::radians(pitch));
+    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    scene->getCamera()->front = glm::normalize(front);
+    scene->getCamera()->update();
 }
 
 void RenderScene::onMouseClicked( double x, double y ) {

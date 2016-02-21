@@ -17,6 +17,8 @@ GLFWInputHandler::GLFWInputHandler( GLFWwindow* window ) :
                                                         onHoldKey( false ){
     instance = this;
     event = new Event;
+    xSaved = 0;
+    ySaved = 0;
 }
 
 GLFWInputHandler::~GLFWInputHandler() {
@@ -79,8 +81,8 @@ void GLFWInputHandler::onKeyEvent(  int key, int scancode,
 
 void GLFWInputHandler::onMouseMoved( double x, double y ) {
     if( onDrag ){
-        double xRel = x - event->x;
-        double yRel = y - event->y;
+        double xRel = x - xSaved;
+        double yRel = ySaved - y;
         onMouseDragged( xRel, yRel );
     }
 }
@@ -93,6 +95,8 @@ void GLFWInputHandler::onMouseClicked( double x, double y ) {
     event->type = ON_CLICK_DOWN;
     event->x = x;
     event->y = y;
+    xSaved = x;
+    ySaved = y;
     onDrag = true;
 }
 
@@ -100,6 +104,8 @@ void GLFWInputHandler::onMouseReleased( double x, double y ) {
     event->type = ON_CLICK_RELEASE;
     event->x = x;
     event->y = y;
+    xSaved = 0;
+    xSaved = 0;
     onDrag = false;
 }
 

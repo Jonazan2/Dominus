@@ -96,6 +96,7 @@ void Renderer::init(){
     positionAttribute = glGetAttribLocation(shader_programme, "vp");
     normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
 
+    glClearColor( 0.5f, 0.5f, 1.0f, 1.0f );
 }
 
 void Renderer::updateProjection( glm::mat4 projectionMatrix ) {

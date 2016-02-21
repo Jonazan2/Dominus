@@ -32,6 +32,8 @@ private:
     bool onDrag;
     GLFWwindow* window;
     Event* event;
+    double xSaved;
+    double ySaved;
 };
 
 #endif /* GLFWInputHandler_h */
