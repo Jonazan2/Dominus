@@ -17,9 +17,10 @@
 
 class Scene {
 public:
-    Scene();
+    Scene( Renderer* renderer );
     ~Scene();
     
+    void update( double delta );
     void render();
     void load();
     void pushMatrix( glm::mat4 matrix );
@@ -27,10 +28,11 @@ public:
     glm::mat4 popMatrix();
     void addToBatch( Node* node );
     void addNode( INode* node );
+    Camera* getCamera();
 private:
     Renderer* renderer;
     Node* rootNode;
-    Camera* camera = new Camera;
+    Camera* camera;
     glm::vec3 lightPosition;
     glm::mat4 projectionMatrix;
     std::stack<glm::mat4> matrixStack;

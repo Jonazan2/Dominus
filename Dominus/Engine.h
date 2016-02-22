@@ -10,6 +10,8 @@
 #define __Dominus__Engine__
 
 #include "RenderScene.h"
+#include "InputHandler.h"
+#include "Window.h"
 
 class Engine {
 public:
@@ -18,7 +20,7 @@ public:
     
     void init();
     void processInput();
-    void update(double delta);
+    void update( double delta );
     void render();
     
     bool isRunning();
@@ -26,10 +28,12 @@ private:
     bool running;
     Scene* scene;
     GameScene* gameScene;
+    InputHandler* inputHandler;
     
     Renderer* renderer;
     Node* node;
     std::vector<Node*> nodes;
+    Window* window;
 };
 
 #endif /* defined(__Dominus__Engine__) */

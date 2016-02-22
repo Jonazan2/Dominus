@@ -1,4 +1,4 @@
-//
+ //
 //  Engine.cpp
 //  Dominus
 //
@@ -7,9 +7,10 @@
 //
 
 #include "Engine.h"
+#include "GLFWInputHandler.h"
 
 Engine::Engine() : running( true ){
-    scene = new Scene;
+
 }
 
 Engine::~Engine(){
@@ -17,17 +18,43 @@ Engine::~Engine(){
 }
 
 void Engine::init() {
+    window = new Window( 640, 480 );
+    window->initWindow();
+    inputHandler = new GLFWInputHandler( window->windowHandler() );
+    inputHandler->init();
+    renderer = new Renderer( window->windowHandler() );
+    scene = new Scene( renderer );
     gameScene = new RenderScene;
     gameScene->onSceneCreated( scene );
 }
 
 void Engine::processInput(){
-    // update other events like input handling
-    glfwPollEvents ();
+    Event* event = inputHandler->poolEvent();
+    switch ( event->type ) {
+        case ON_WINDOW_CLOSED:
+            running = false;
+            break;
+        case ON_MOUSE_DRAG:
+            gameScene->onMouseDragged( event->xRelative,
+                                       event->yRelative );
+            break;
+        case ON_CLICK_DOWN:
+            gameScene->onMouseClicked( event->x, event->y );
+            break;
+        case ON_CLICK_RELEASE:
+            gameScene->onMouseReleased( event->x, event->y );
+            break;
+        case ON_KEY_EVENT:
+            gameScene->onKeyDown( event->keyCode );
+            break;
+        default:
+            break;
+    }
 }
 
-void Engine::update(double delta){
-
+void Engine::update( double delta ){
+    gameScene->onUpdate( delta );
+    scene->update( delta );
 }
 
 void Engine::render(){

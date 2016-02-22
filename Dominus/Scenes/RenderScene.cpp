@@ -7,9 +7,11 @@
 //
 
 #include "RenderScene.h"
+#include "Log.hpp"
 
 RenderScene::RenderScene() {
-
+    yaw = -90.0f;
+    pitch = 0;
 }
 
 RenderScene::~RenderScene() {
@@ -17,6 +19,7 @@ RenderScene::~RenderScene() {
 }
 
 void RenderScene::onSceneCreated( Scene* scene ) {
+    this->scene = scene;
     //buffer data
     Mesh * momoMesh = new Mesh;
     momoMesh->loadObj( "momo.obj" );
@@ -60,4 +63,75 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     
     scene->addNode( planeNode );
     scene->load();
+}
+
+void RenderScene::onUpdate( double delta ) {
+    this->delta = delta;
+}
+
+void RenderScene::onKeyDown( int key ) {
+    // Camera controls
+    GLfloat cameraSpeed = 0.01f * delta;
+    Camera* camera = scene->getCamera();
+    switch ( key ) {
+        case GLFW_KEY_UP:
+            camera->position += cameraSpeed * camera->front;
+            break;
+        case GLFW_KEY_DOWN:
+           camera->position -= cameraSpeed * camera->front;
+            break;
+        case GLFW_KEY_LEFT:
+           camera->position -= glm::normalize(glm::cross(
+                                            camera->front,
+                                            camera->up)) * cameraSpeed;
+            break;
+        case GLFW_KEY_RIGHT:
+            camera->position += glm::normalize(glm::cross(
+                                            camera->front,
+                                            camera->up)) * cameraSpeed;
+            break;
+        default:
+            break;
+    }
+    camera->update();
+}
+
+void RenderScene::onMouseDragged( double xRel, double yRel ) {
+    Log::getInstance() << "mouseDragegd";
+    GLfloat sensitivity = 0.01;
+    double xoffset = xRel * sensitivity;
+    double yoffset = yRel * sensitivity;
+    
+    yaw += xoffset;
+    pitch += yoffset;
+    
+    if(pitch > 89.0f)
+        pitch = 89.0f;
+    if(pitch < -89.0f)
+        pitch = -89.0f;
+    std::cout << yaw << std::endl;
+    std::cout << pitch << std::endl;
+    
+    glm::vec3 front = scene->getCamera()->front;
+    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    front.y = sin(glm::radians(pitch));
+    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    scene->getCamera()->front = glm::normalize(front);
+    scene->getCamera()->update();
+}
+
+void RenderScene::onMouseClicked( double x, double y ) {
+    Log::getInstance() << "left button clicked";
+    std::cout << x << std::endl;
+    std::cout << y << std::endl;
+}
+
+void RenderScene::onMouseReleased( double x, double y ) {
+    Log::getInstance() << "left button released";
+    std::cout << x << std::endl;
+    std::cout << y << std::endl;
+}
+
+void RenderScene::onMouseMoved( double x, double y ) {
+
 }

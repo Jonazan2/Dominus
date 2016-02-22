@@ -19,14 +19,12 @@ public:
     Camera();
     ~Camera();
     
-    glm::vec3 * getUp();
-    glm::vec3 * getPosition();
-    glm::vec3 * getTarget();
-    glm::mat4 * getViewMatrix();
-private:
+    void update();
+    
     glm::mat4 viewMatrix;
     glm::vec3 up;
     glm::vec3 position;
+    glm::vec3 front;
     glm::vec3 target;
 };
 
