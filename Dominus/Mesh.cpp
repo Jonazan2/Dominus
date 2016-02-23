@@ -72,8 +72,10 @@ void Mesh::loadObj(std::string filePath)
         int indice = tempIndices[i];
         vertices.push_back(tempVertices[indice - 1]);
         i++;
+        indice = tempIndices[i];
         uvs.push_back(tempUvs[indice -1]);
         i++;
+        indice = tempIndices[i];
         normals.push_back(tempNormals[indice -1]);
         i++;
     }
