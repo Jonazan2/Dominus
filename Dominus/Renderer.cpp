@@ -8,6 +8,7 @@
 
 #include "Renderer.h"
 #include "Log.hpp"
+#include "Texture.h"
 
 Renderer::Renderer( GLFWwindow* window ) : window( window ) {
 
