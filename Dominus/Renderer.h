@@ -44,10 +44,13 @@ private:
     glm::vec3 lightPosition;
     GLuint positionAttribute;
     GLuint normalAttribute;
+    GLuint textureAttribute;
     GLuint modelViewUID;
     GLuint projectionUID;
     GLuint normalUID;
     GLuint lightPositionUID;
+    GLuint textureUID;
+    GLuint texture;
 };
 
 #endif /* defined(__Dominus__Renderer__) */

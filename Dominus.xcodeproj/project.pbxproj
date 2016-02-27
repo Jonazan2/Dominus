@@ -21,6 +21,7 @@
 		9C470C2C1C7F896400558755 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C470C2B1C7F896400558755 /* Texture.cpp */; settings = {ASSET_TAGS = (); }; };
 		9C500C741C7287E000D7C60D /* RenderScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C500C731C7287E000D7C60D /* RenderScene.cpp */; };
 		9C834B301C786BF4000F2D1F /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C834B2F1C786BF4000F2D1F /* Event.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CB474A91C81A3BA00612545 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CB474A81C81A3BA00612545 /* SDL2_image.framework */; };
 		9CDB79611C6A69A60023C7A5 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB795F1C6A69A60023C7A5 /* Node.cpp */; };
 		9CDB79681C6BC2C30023C7A5 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB79671C6BC2C30023C7A5 /* Scene.cpp */; };
 		9CDB796C1C6D165E0023C7A5 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB796B1C6D165E0023C7A5 /* Camera.cpp */; };
@@ -64,6 +65,7 @@
 		9C500C731C7287E000D7C60D /* RenderScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderScene.cpp; path = Scenes/RenderScene.cpp; sourceTree = "<group>"; };
 		9C834B2E1C786BDD000F2D1F /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Event.h; path = Headers/Engine/Event.h; sourceTree = "<group>"; };
 		9C834B2F1C786BF4000F2D1F /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Event.cpp; path = Engine/Event.cpp; sourceTree = "<group>"; };
+		9CB474A81C81A3BA00612545 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
 		9CDB795F1C6A69A60023C7A5 /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Node.cpp; path = Engine/Node.cpp; sourceTree = "<group>"; };
 		9CDB79631C6A6A150023C7A5 /* Node.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Node.hpp; path = Headers/Engine/Node.hpp; sourceTree = SOURCE_ROOT; };
 		9CDB79651C6BC2280023C7A5 /* INode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = INode.h; path = Headers/Engine/INode.h; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CB474A91C81A3BA00612545 /* SDL2_image.framework in Frameworks */,
 				9C470C291C7F849F00558755 /* libz.1.2.5.tbd in Frameworks */,
 				3A7AA0B21C577E9F00C45A2A /* OpenGL.framework in Frameworks */,
 			);
@@ -92,6 +95,7 @@
 		92677A701C5665F900899024 = {
 			isa = PBXGroup;
 			children = (
+				9CB474A81C81A3BA00612545 /* SDL2_image.framework */,
 				9C470C281C7F849F00558755 /* libz.1.2.5.tbd */,
 				3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */,
 				92E345341C638C9700308A63 /* Headers */,
@@ -378,6 +382,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -396,6 +404,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

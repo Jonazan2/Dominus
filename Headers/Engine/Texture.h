@@ -19,11 +19,14 @@ public:
     Texture( std::string filePath );
     ~Texture();
     
+    void loadImage( std::string file );
     GLubyte* getImageData();
+    int getWidth();
+    int getHeight();
 private:
     bool loadPngImage( const char *name, int &outWidth, int &outHeight,
                       bool &outHasAlpha, GLubyte **outData );
-    GLubyte* image;
+    unsigned char* image;
     int width;
     int height;
     bool hasAlpha;

@@ -7,9 +7,10 @@
 //
 
 #include "Texture.h"
+#include <SDL2_image/SDL_image.h>
 
 Texture::Texture( std::string filePath ) : filePath( filePath ) {
-    loadPngImage( filePath.c_str() , width, height, hasAlpha, &image);
+    bool result = loadPngImage( filePath.c_str() , width, height, hasAlpha, &image);
 }
 
 Texture::~Texture() {
@@ -18,6 +19,25 @@ Texture::~Texture() {
 
 GLubyte* Texture::getImageData() {
     return image;
+}
+
+int Texture::getWidth() {
+    return width;
+}
+
+int Texture::getHeight() {
+    return height;
+}
+
+void Texture::loadImage( std::string resource ) {
+    SDL_Surface* pTempSurface = IMG_Load(resource.c_str());
+    if(pTempSurface == 0){
+        std::cout << "surface creation failed: resource" <<"\n";
+    }else {
+        width = pTempSurface->w;
+        height = pTempSurface->h;
+        image = (unsigned char*)pTempSurface->pixels;
+    }
 }
 
 bool Texture::loadPngImage( const char *name, int &outWidth, int &outHeight,

@@ -137,9 +137,13 @@ int Mesh::getNumTriangles()
 }
 
 GLsizeiptr Mesh::getSize() {
-    return (sizeof (GLfloat) * 3) * vertices.size();
+    return ( sizeof ( GLfloat ) * 3 ) * vertices.size();
 }
 
 GLsizeiptr Mesh::getNormalSize() {
-    return (sizeof (GLfloat) * 3) * normals.size();
+    return ( sizeof ( GLfloat ) * 3 ) * normals.size();
+}
+
+GLsizeiptr Mesh::getUVSize() {
+    return ( sizeof( GLfloat ) * 2 ) * uvs.size();
 }

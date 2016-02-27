@@ -61,7 +61,7 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     momoHolderNode->addNode( momoNode );
     jokerHolderNode->addNode( jokerNode );
     
-    scene->addNode( planeNode );
+    scene->addNode( momoNode );
     scene->load();
 }
 

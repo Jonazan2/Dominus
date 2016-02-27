@@ -40,6 +40,7 @@ public:
     void setRotationAngle(float);
     GLsizeiptr getSize();
     GLsizeiptr getNormalSize();
+    GLsizeiptr getUVSize();
 private:
     std::string name;
     glm::vec3 position;
