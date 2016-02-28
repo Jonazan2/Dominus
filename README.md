@@ -2,7 +2,7 @@
 
 Dominus is an opensource strategy game developed from scratch using C++ and OpenGL.
 
-# Target
+# Goal
 Dominus has started been developed for MAC OS but will be released in Windows and Linux as well.
   
 # Code style conventions
