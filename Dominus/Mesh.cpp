@@ -7,6 +7,7 @@
 //
 
 #include "Mesh.hpp"
+#include <OpenGL/OpenGL.h>
 
 Mesh::Mesh()
 {}
@@ -81,6 +82,14 @@ void Mesh::loadObj(std::string filePath)
     }
     numTriangles = (int)tempIndices.size() / 9;
     file.close();
+}
+
+std::string Mesh::getTexture() {
+    return texture;
+}
+
+void Mesh::setTexture( std::string texture ) {
+    this->texture = texture;
 }
 
 float Mesh::getRotationAngle(){

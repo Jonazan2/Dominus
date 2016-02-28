@@ -50,7 +50,6 @@ private:
     GLuint normalUID;
     GLuint lightPositionUID;
     GLuint textureUID;
-    GLuint texture;
 };
 
 #endif /* defined(__Dominus__Renderer__) */

@@ -79,7 +79,8 @@ void Renderer::init(){
     "out vec4 frag_colour;"
     "uniform sampler2D textureData;"
     "void main () {"
-    "  frag_colour = texture( textureData, fragTextureCoord );"
+   // "  frag_colour = texture( textureData, fragTextureCoord );"
+    " frag_colour = vec4( lightColor, 1.0 ) * texture( textureData, fragTextureCoord );"
     "}";
     //"  //frag_colour = vec4( lightColor, 1.0 );"
     GLuint vs = glCreateShader (GL_VERTEX_SHADER);
@@ -169,32 +170,48 @@ void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
                         &node->getMesh()->getNormals()[0]); // data
         normalOffset += node->getMesh()->getNormalSize();
     }
-    
     //set normal array layout for shader attribute and enable attribute
     glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(normalAttribute);
     
-    //Texture loading
-    Texture* textureData = new Texture("diffuse.png");
-    //textureData->loadImage("diffuse.png");
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    // Set the texture wrapping/filtering options (on the currently bound texture object)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    int numTextures = 0;
+    for ( int i = 0; i < renderBatch.size(); i++ ) {
+        Mesh* mesh = renderBatch.at( i )->getMesh();
+        if( !mesh->getTexture().empty() ) {
+            numTextures++;
+        }
+    }
+    GLuint textures [numTextures];
+    glGenTextures(numTextures, textures);
     
-    // Load and generate the texture
-    glTexImage2D( GL_TEXTURE_2D,
-                 0,
-                 GL_RGBA,
-                 textureData->getWidth(),
-                 textureData->getHeight(),
-                 0,
-                 GL_RGBA,
-                 GL_UNSIGNED_BYTE,
-                 textureData->getImageData() );
+    GLuint actualTexture = 0;
+    //Texture loading
+    for ( int i = 0;  i < renderBatch.size(); i++ ) {
+        Mesh* mesh = renderBatch.at( i )->getMesh();
+        if( !mesh->getTexture().empty() ) {
+            Texture* textureData = new Texture( mesh->getTexture() );
+            mesh->textureUID = textures[actualTexture];
+            glBindTexture( GL_TEXTURE_2D, textures[actualTexture] );
+            // Set the texture wrapping/filtering options (on the currently bound texture object)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            
+            // Load and generate the texture
+            glTexImage2D( GL_TEXTURE_2D,
+                         0,
+                         GL_RGBA,
+                         textureData->getWidth(),
+                         textureData->getHeight(),
+                         0,
+                         GL_RGBA,
+                         GL_UNSIGNED_BYTE,
+                         textureData->getImageData() );
+            glBindTexture( GL_TEXTURE, 0 );
+            actualTexture++;
+        }
+    }
     
     glBindBuffer( GL_ARRAY_BUFFER, buffers[2] );
     glBufferData ( GL_ARRAY_BUFFER,
@@ -226,12 +243,12 @@ void Renderer::draw( std::vector<Node*> renderBatch ) {
     
     GLuint offset = 0;
     for ( int i = 0; i < renderBatch.size() ; i++ ) {
+        Node* node = renderBatch.at( i );
         // bind the texture and set the "tex" uniform in the fragment shader
         glActiveTexture(GL_TEXTURE0);
         glUniform1i(textureUID, 0); //set to 0 because the texture is bound to GL_TEXTURE0
-        glBindTexture(GL_TEXTURE_2D, texture);
+        glBindTexture(GL_TEXTURE_2D, node->getMesh()->textureUID);
         //
-        Node* node = renderBatch.at( i );
         glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
         glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
         glm::mat3 normalMat3 = glm::mat3( normalMat );
@@ -242,6 +259,7 @@ void Renderer::draw( std::vector<Node*> renderBatch ) {
                         offset,
                         (int)node->getMesh()->getVertices().size());
         offset += (int)node->getMesh()->getVertices().size();
+        glBindTexture( GL_TEXTURE_2D , 0 );
     }
 }
 
