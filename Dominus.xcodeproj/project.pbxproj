@@ -20,11 +20,15 @@
 		9C470C291C7F849F00558755 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C470C281C7F849F00558755 /* libz.1.2.5.tbd */; };
 		9C470C2C1C7F896400558755 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C470C2B1C7F896400558755 /* Texture.cpp */; settings = {ASSET_TAGS = (); }; };
 		9C500C741C7287E000D7C60D /* RenderScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C500C731C7287E000D7C60D /* RenderScene.cpp */; };
+		9C777FBE1C84E153005C48A5 /* ShaderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C777FBD1C84E153005C48A5 /* ShaderTest.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C777FBF1C84E16F005C48A5 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FB61C84D30F0066C313 /* Shader.cpp */; };
+		9C777FC01C84E2B4005C48A5 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345401C64E04A00308A63 /* Log.cpp */; };
+		9C777FC11C84E2BF005C48A5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */; };
 		9C834B301C786BF4000F2D1F /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C834B2F1C786BF4000F2D1F /* Event.cpp */; settings = {ASSET_TAGS = (); }; };
-
 		9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FA81C82F92D0066C313 /* main.cpp */; };
 		9CCB2FAF1C82F95E0066C313 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9D1C82F7FE0066C313 /* gtest.framework */; };
 		9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9F1C82F8790066C313 /* gmock.framework */; };
+		9CCB2FB71C84D30F0066C313 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FB61C84D30F0066C313 /* Shader.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CDB79611C6A69A60023C7A5 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB795F1C6A69A60023C7A5 /* Node.cpp */; };
 		9CDB79681C6BC2C30023C7A5 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB79671C6BC2C30023C7A5 /* Scene.cpp */; };
 		9CDB796C1C6D165E0023C7A5 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB796B1C6D165E0023C7A5 /* Camera.cpp */; };
@@ -75,15 +79,16 @@
 		9C470C2B1C7F896400558755 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = Engine/Texture.cpp; sourceTree = "<group>"; };
 		9C500C721C7287CE00D7C60D /* RenderScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RenderScene.h; path = Headers/Scenes/RenderScene.h; sourceTree = "<group>"; };
 		9C500C731C7287E000D7C60D /* RenderScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderScene.cpp; path = Scenes/RenderScene.cpp; sourceTree = "<group>"; };
+		9C777FBD1C84E153005C48A5 /* ShaderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderTest.cpp; sourceTree = "<group>"; };
 		9C834B2E1C786BDD000F2D1F /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Event.h; path = Headers/Engine/Event.h; sourceTree = "<group>"; };
 		9C834B2F1C786BF4000F2D1F /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Event.cpp; path = Engine/Event.cpp; sourceTree = "<group>"; };
-
 		9CCB2F9D1C82F7FE0066C313 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = ../../../../Library/Frameworks/gtest.framework; sourceTree = "<group>"; };
 		9CCB2F9F1C82F8790066C313 /* gmock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gmock.framework; path = ../../../../Library/Frameworks/gmock.framework; sourceTree = "<group>"; };
 		9CCB2FA61C82F92D0066C313 /* UnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CCB2FA81C82F92D0066C313 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9CCB2FB31C82FFA60066C313 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = UnitTest/main.cpp; sourceTree = "<group>"; };
-
+		9CCB2FB51C84D2FC0066C313 /* Shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Shader.h; path = Headers/Engine/Shader.h; sourceTree = "<group>"; };
+		9CCB2FB61C84D30F0066C313 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shader.cpp; path = Engine/Shader.cpp; sourceTree = "<group>"; };
 		9CDB795F1C6A69A60023C7A5 /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Node.cpp; path = Engine/Node.cpp; sourceTree = "<group>"; };
 		9CDB79631C6A6A150023C7A5 /* Node.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Node.hpp; path = Headers/Engine/Node.hpp; sourceTree = SOURCE_ROOT; };
 		9CDB79651C6BC2280023C7A5 /* INode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = INode.h; path = Headers/Engine/INode.h; sourceTree = "<group>"; };
@@ -101,7 +106,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CB474A91C81A3BA00612545 /* SDL2_image.framework in Frameworks */,
 				9C470C291C7F849F00558755 /* libz.1.2.5.tbd in Frameworks */,
 				3A7AA0B21C577E9F00C45A2A /* OpenGL.framework in Frameworks */,
 			);
@@ -111,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C777FC11C84E2BF005C48A5 /* OpenGL.framework in Frameworks */,
 				9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */,
 				9CCB2FAF1C82F95E0066C313 /* gtest.framework in Frameworks */,
 			);
@@ -122,12 +127,9 @@
 		92677A701C5665F900899024 = {
 			isa = PBXGroup;
 			children = (
-
 				9C470C281C7F849F00558755 /* libz.1.2.5.tbd */,
-
 				9CCB2F9F1C82F8790066C313 /* gmock.framework */,
 				9CCB2F9D1C82F7FE0066C313 /* gtest.framework */,
-
 				3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */,
 				92E345341C638C9700308A63 /* Headers */,
 				92677A7B1C5665F900899024 /* Dominus */,
@@ -232,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				9CCB2FA81C82F92D0066C313 /* main.cpp */,
+				9C777FBD1C84E153005C48A5 /* ShaderTest.cpp */,
 			);
 			path = UnitTest;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				9C2071EF1C7862F500926F21 /* Window.h */,
 				9C834B2E1C786BDD000F2D1F /* Event.h */,
 				9C470C2A1C7F88E600558755 /* Texture.h */,
+				9CCB2FB51C84D2FC0066C313 /* Shader.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -268,6 +272,7 @@
 				9C2071F01C78630C00926F21 /* Window.cpp */,
 				9C834B2F1C786BF4000F2D1F /* Event.cpp */,
 				9C470C2B1C7F896400558755 /* Texture.cpp */,
+				9CCB2FB61C84D30F0066C313 /* Shader.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -351,6 +356,7 @@
 			files = (
 				9C470C2C1C7F896400558755 /* Texture.cpp in Sources */,
 				92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */,
+				9CCB2FB71C84D30F0066C313 /* Shader.cpp in Sources */,
 				9CDB796C1C6D165E0023C7A5 /* Camera.cpp in Sources */,
 				9C500C741C7287E000D7C60D /* RenderScene.cpp in Sources */,
 				92E345411C64E04A00308A63 /* Log.cpp in Sources */,
@@ -371,6 +377,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C777FC01C84E2B4005C48A5 /* Log.cpp in Sources */,
+				9C777FBF1C84E16F005C48A5 /* Shader.cpp in Sources */,
+				9C777FBE1C84E153005C48A5 /* ShaderTest.cpp in Sources */,
 				9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

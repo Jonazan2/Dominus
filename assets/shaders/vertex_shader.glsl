@@ -16,4 +16,4 @@ void main () {
     float ndotl = max(dot(normal, lightDirection), 0.0);
     lightColor = ndotl * vec3( 1.0 );
     gl_Position = projectionMatrix * vec4 (position, 1.0);
-}
+};
