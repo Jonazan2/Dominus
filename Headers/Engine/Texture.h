@@ -19,7 +19,6 @@ public:
     Texture( std::string filePath );
     ~Texture();
     
-    void loadImage( std::string file );
     GLubyte* getImageData();
     int getWidth();
     int getHeight();
