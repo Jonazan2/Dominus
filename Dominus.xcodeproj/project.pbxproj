@@ -22,7 +22,6 @@
 		9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FA81C82F92D0066C313 /* main.cpp */; };
 		9CCB2FAF1C82F95E0066C313 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9D1C82F7FE0066C313 /* gtest.framework */; };
 		9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9F1C82F8790066C313 /* gmock.framework */; };
-		9CCB2FB41C82FFA60066C313 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FB31C82FFA60066C313 /* main.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CDB79611C6A69A60023C7A5 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB795F1C6A69A60023C7A5 /* Node.cpp */; };
 		9CDB79681C6BC2C30023C7A5 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB79671C6BC2C30023C7A5 /* Scene.cpp */; };
 		9CDB796C1C6D165E0023C7A5 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB796B1C6D165E0023C7A5 /* Camera.cpp */; };
@@ -347,7 +346,6 @@
 				9CDB79681C6BC2C30023C7A5 /* Scene.cpp in Sources */,
 				3A3726061C58FE7100449498 /* Engine.cpp in Sources */,
 				3A8CBB471C73794E005A52BF /* GameScene.cpp in Sources */,
-				9CCB2FB41C82FFA60066C313 /* main.cpp in Sources */,
 				9CDB79611C6A69A60023C7A5 /* Node.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -532,6 +530,7 @@
 				9CCB2FAC1C82F92D0066C313 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
