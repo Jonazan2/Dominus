@@ -38,8 +38,13 @@ public:
     int getNumTriangles();
     float getRotationAngle();
     void setRotationAngle(float);
+    void setTexture( std::string );
+    std::string getTexture();
     GLsizeiptr getSize();
     GLsizeiptr getNormalSize();
+    GLsizeiptr getUVSize();
+    
+    GLuint textureUID;
 private:
     std::string name;
     glm::vec3 position;
@@ -52,6 +57,7 @@ private:
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
+    std::string texture;
 };
 
 #endif /* Mesh_hpp */

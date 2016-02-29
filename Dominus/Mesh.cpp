@@ -7,6 +7,7 @@
 //
 
 #include "Mesh.hpp"
+#include <OpenGL/OpenGL.h>
 
 Mesh::Mesh()
 {}
@@ -83,6 +84,14 @@ void Mesh::loadObj(std::string filePath)
     file.close();
 }
 
+std::string Mesh::getTexture() {
+    return texture;
+}
+
+void Mesh::setTexture( std::string texture ) {
+    this->texture = texture;
+}
+
 float Mesh::getRotationAngle(){
     return rotationAngle;
 }
@@ -137,9 +146,13 @@ int Mesh::getNumTriangles()
 }
 
 GLsizeiptr Mesh::getSize() {
-    return (sizeof (GLfloat) * 3) * vertices.size();
+    return ( sizeof ( GLfloat ) * 3 ) * vertices.size();
 }
 
 GLsizeiptr Mesh::getNormalSize() {
-    return (sizeof (GLfloat) * 3) * normals.size();
+    return ( sizeof ( GLfloat ) * 3 ) * normals.size();
+}
+
+GLsizeiptr Mesh::getUVSize() {
+    return ( sizeof( GLfloat ) * 2 ) * uvs.size();
 }

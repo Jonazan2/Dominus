@@ -23,9 +23,11 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     //buffer data
     Mesh * momoMesh = new Mesh;
     momoMesh->loadObj( "momo.obj" );
+    momoMesh->setTexture( "diffuse.png" );
     
     Mesh* jokerMesh = new Mesh;
-    jokerMesh->loadObj( "joker.obj" );
+    jokerMesh->loadObj( "capsule.obj" );
+    jokerMesh->setTexture( "capsule.png" );
     
     Mesh* momoHolder = new Mesh;
     momoHolder->loadObj( "cube.obj" );
@@ -48,12 +50,11 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     jokerHolderNode->setModelMatrix( glm::translate( glm::vec3( -5.0f, 1.0f, 1.0f ) ) );
     
     momoNode->setModelMatrix( glm::translate( glm::vec3( 0.0f, 2.0f, 0.0f ) ) *
-                             glm::rotate( 180.0f , glm::vec3( 0.0f, 1.0f, 0.0f ) ) *
-                             glm::rotate( -90.0f , glm::vec3( 1.0f, 0.0f, 0.0f ) ) *
+                             glm::rotate( -360.0f , glm::vec3( 1.0f, 0.0f, 0.0f ) ) *
                              glm::scale( glm::vec3( 1.0f, 1.0f, 1.0f ) ) );
     
-    jokerNode->setModelMatrix( glm::translate( glm::vec3( 0.0f, 1.0f, 0.0f ) ) *
-                              glm::rotate( 90.0f , glm::vec3( 0.0f, 1.0f, 0.0f ) ));
+    jokerNode->setModelMatrix( glm::translate( glm::vec3( 0.0f, 2.0f, 0.0f ) ) *
+                              glm::rotate( -360.0f , glm::vec3( 1.0f, 0.0f, 0.0f ) ));
     
     planeNode->addNode( momoHolderNode );
     planeNode->addNode( jokerHolderNode );

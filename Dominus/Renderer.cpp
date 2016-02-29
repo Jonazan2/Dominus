@@ -8,6 +8,7 @@
 
 #include "Renderer.h"
 #include "Log.hpp"
+#include "Texture.h"
 
 Renderer::Renderer( GLFWwindow* window ) : window( window ) {
 
@@ -54,12 +55,15 @@ void Renderer::init(){
     "#version 400\n"
     "in vec3 vp;"
     "in vec3 normalAttribute;"
+    "in vec2 textureCoord;"
     "out vec3 lightColor;"
+    "out vec2 fragTextureCoord;"
     "uniform mat3 normalMatrix;"
     "uniform mat4 modelViewMatrix;"
     "uniform mat4 projectionMatrix;"
     "uniform vec3 lightPosition;"
     "void main () {"
+    "  fragTextureCoord = textureCoord;"
     "  vec3 position = vec3(modelViewMatrix * vec4(vp, 1.0));"
     "  vec3 normal = normalize(normalMatrix * normalAttribute);"
     "  vec3 lightDirection = normalize(lightPosition - position);"
@@ -71,11 +75,14 @@ void Renderer::init(){
     const char* fragment_shader =
     "#version 400\n"
     "in vec3 lightColor;"
+    "in vec2 fragTextureCoord;"
     "out vec4 frag_colour;"
+    "uniform sampler2D textureData;"
     "void main () {"
-    "  frag_colour = vec4(lightColor, 1.0);"
+   // "  frag_colour = texture( textureData, fragTextureCoord );"
+    " frag_colour = vec4( lightColor, 1.0 ) * texture( textureData, fragTextureCoord );"
     "}";
-    
+    //"  //frag_colour = vec4( lightColor, 1.0 );"
     GLuint vs = glCreateShader (GL_VERTEX_SHADER);
     glShaderSource (vs, 1, &vertex_shader, NULL);
     compileShader(vs);
@@ -89,13 +96,14 @@ void Renderer::init(){
     glLinkProgram (shader_programme);
     
     //retrieve shader uniforms and attributes ids
+       textureUID = glGetUniformLocation(shader_programme, "textureData");
     modelViewUID = glGetUniformLocation(shader_programme, "modelViewMatrix");
     projectionUID = glGetUniformLocation(shader_programme, "projectionMatrix");
     normalUID = glGetUniformLocation(shader_programme, "normalMatrix");
     lightPositionUID = glGetUniformLocation(shader_programme, "lightPosition");
     positionAttribute = glGetAttribLocation(shader_programme, "vp");
     normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
-
+    textureAttribute = glGetAttribLocation(shader_programme, "textureCoord");
     glClearColor( 0.5f, 0.5f, 1.0f, 1.0f );
 }
 
@@ -113,18 +121,20 @@ void Renderer::updateLightSource( glm::vec3 lightSource ) {
 
 void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
     //create buffer object and set as current
-    GLuint buffers[2];
-    glGenBuffers( 2, buffers );
+    GLuint buffers[3];
+    glGenBuffers( 3, buffers );
     glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     
     //allocate buffer memory to load all the vertex
     GLsizeiptr vertexBufferSize = 0;
     GLsizeiptr normalBufferSize = 0;
+    GLsizeiptr uvBufferSize = 0;
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Node* node = renderBatch.at(i);
         Mesh* mesh = node->getMesh();
         vertexBufferSize += mesh->getSize();
         normalBufferSize += mesh->getNormalSize();
+        uvBufferSize += mesh->getUVSize();
     }
     glBufferData (GL_ARRAY_BUFFER,
                   vertexBufferSize,
@@ -160,10 +170,67 @@ void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
                         &node->getMesh()->getNormals()[0]); // data
         normalOffset += node->getMesh()->getNormalSize();
     }
-    
     //set normal array layout for shader attribute and enable attribute
     glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(normalAttribute);
+    
+    int numTextures = 0;
+    for ( int i = 0; i < renderBatch.size(); i++ ) {
+        Mesh* mesh = renderBatch.at( i )->getMesh();
+        if( !mesh->getTexture().empty() ) {
+            numTextures++;
+        }
+    }
+    GLuint textures [numTextures];
+    glGenTextures(numTextures, textures);
+    
+    GLuint actualTexture = 0;
+    //Texture loading
+    for ( int i = 0;  i < renderBatch.size(); i++ ) {
+        Mesh* mesh = renderBatch.at( i )->getMesh();
+        if( !mesh->getTexture().empty() ) {
+            Texture* textureData = new Texture( mesh->getTexture() );
+            mesh->textureUID = textures[actualTexture];
+            glBindTexture( GL_TEXTURE_2D, textures[actualTexture] );
+            // Set the texture wrapping/filtering options (on the currently bound texture object)
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            
+            // Load and generate the texture
+            glTexImage2D( GL_TEXTURE_2D,
+                         0,
+                         GL_RGBA,
+                         textureData->getWidth(),
+                         textureData->getHeight(),
+                         0,
+                         GL_RGBA,
+                         GL_UNSIGNED_BYTE,
+                         textureData->getImageData() );
+            glBindTexture( GL_TEXTURE, 0 );
+            actualTexture++;
+        }
+    }
+    
+    glBindBuffer( GL_ARRAY_BUFFER, buffers[2] );
+    glBufferData ( GL_ARRAY_BUFFER,
+                  uvBufferSize,
+                  NULL,
+                  GL_STATIC_DRAW );
+    GLuint textureOffset = 0;
+    for ( int i = 0; i < renderBatch.size(); i++ ) {
+        Node* node = renderBatch.at( i );
+        glBufferSubData(GL_ARRAY_BUFFER, // target
+                        textureOffset, // offset
+                        node->getMesh()->getUVSize(), // size
+                        &node->getMesh()->getUvs()[0]); // data
+        textureOffset += node->getMesh()->getUVSize();
+    }
+    
+    //set uvs array layout for shader attribute and enable attribute
+    glVertexAttribPointer( textureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
+    glEnableVertexAttribArray( textureAttribute );
 }
 
 void Renderer::draw( std::vector<Node*> renderBatch ) {
@@ -173,9 +240,15 @@ void Renderer::draw( std::vector<Node*> renderBatch ) {
     glUniformMatrix4fv(projectionUID, 1, GL_FALSE, &projectionMatrix[0][0]);
     glUniform3fv(lightPositionUID, 1, &lightPosition[0]);
     glBindVertexArray (vao);
+    
     GLuint offset = 0;
     for ( int i = 0; i < renderBatch.size() ; i++ ) {
         Node* node = renderBatch.at( i );
+        // bind the texture and set the "tex" uniform in the fragment shader
+        glActiveTexture(GL_TEXTURE0);
+        glUniform1i(textureUID, 0); //set to 0 because the texture is bound to GL_TEXTURE0
+        glBindTexture(GL_TEXTURE_2D, node->getMesh()->textureUID);
+        //
         glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
         glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
         glm::mat3 normalMat3 = glm::mat3( normalMat );
@@ -186,6 +259,7 @@ void Renderer::draw( std::vector<Node*> renderBatch ) {
                         offset,
                         (int)node->getMesh()->getVertices().size());
         offset += (int)node->getMesh()->getVertices().size();
+        glBindTexture( GL_TEXTURE_2D , 0 );
     }
 }
 
