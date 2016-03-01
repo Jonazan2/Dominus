@@ -9,6 +9,7 @@
 #include "Renderer.h"
 #include "Log.hpp"
 #include "Texture.h"
+#include "Shader.h"
 
 Renderer::Renderer( GLFWwindow* window ) : window( window ) {
 
@@ -49,54 +50,19 @@ void Renderer::init(){
     glGenVertexArrays (1, &vao);
     glBindVertexArray (vao);
     
-    //Load shaders
+    Shader* vertexShader = new Shader( "vertex_shader.glsl", GL_VERTEX_SHADER );
+    vertexShader->compile();
     
-    const char* vertex_shader =
-    "#version 400\n"
-    "in vec3 vp;"
-    "in vec3 normalAttribute;"
-    "in vec2 textureCoord;"
-    "out vec3 lightColor;"
-    "out vec2 fragTextureCoord;"
-    "uniform mat3 normalMatrix;"
-    "uniform mat4 modelViewMatrix;"
-    "uniform mat4 projectionMatrix;"
-    "uniform vec3 lightPosition;"
-    "void main () {"
-    "  fragTextureCoord = textureCoord;"
-    "  vec3 position = vec3(modelViewMatrix * vec4(vp, 1.0));"
-    "  vec3 normal = normalize(normalMatrix * normalAttribute);"
-    "  vec3 lightDirection = normalize(lightPosition - position);"
-    "  float ndotl = max(dot(normal, lightDirection), 0.0);"
-    "  lightColor = ndotl * vec3( 1.0 );"
-    "  gl_Position = projectionMatrix * vec4 (position, 1.0);"
-    "}";
-    
-    const char* fragment_shader =
-    "#version 400\n"
-    "in vec3 lightColor;"
-    "in vec2 fragTextureCoord;"
-    "out vec4 frag_colour;"
-    "uniform sampler2D textureData;"
-    "void main () {"
-   // "  frag_colour = texture( textureData, fragTextureCoord );"
-    " frag_colour = vec4( lightColor, 1.0 ) * texture( textureData, fragTextureCoord );"
-    "}";
-    //"  //frag_colour = vec4( lightColor, 1.0 );"
-    GLuint vs = glCreateShader (GL_VERTEX_SHADER);
-    glShaderSource (vs, 1, &vertex_shader, NULL);
-    compileShader(vs);
-    GLuint fs = glCreateShader (GL_FRAGMENT_SHADER);
-    glShaderSource (fs, 1, &fragment_shader, NULL);
-    compileShader(fs);
+    Shader* fragmentShader = new Shader( "fragment_shader.glsl", GL_FRAGMENT_SHADER );
+    fragmentShader->compile();
     
     shader_programme = glCreateProgram ();
-    glAttachShader (shader_programme, fs);
-    glAttachShader (shader_programme, vs);
-    glLinkProgram (shader_programme);
+    glAttachShader ( shader_programme, fragmentShader->getUID() );
+    glAttachShader ( shader_programme, vertexShader->getUID() );
+    glLinkProgram ( shader_programme );
     
     //retrieve shader uniforms and attributes ids
-       textureUID = glGetUniformLocation(shader_programme, "textureData");
+    textureUID = glGetUniformLocation(shader_programme, "textureData");
     modelViewUID = glGetUniformLocation(shader_programme, "modelViewMatrix");
     projectionUID = glGetUniformLocation(shader_programme, "projectionMatrix");
     normalUID = glGetUniformLocation(shader_programme, "normalMatrix");

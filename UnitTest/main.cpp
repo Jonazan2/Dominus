@@ -7,18 +7,10 @@
 //
 
 #include "gtest/gtest.h"
-#include <gmock/gmock.h>
-
-TEST (Calculator, Addition)
-{
-    // equal to 20
-    EXPECT_EQ(20, 20);
-    
-}
 
 int main(int argc, char * argv[])
 {
-    ::testing::InitGoogleMock(&argc, argv);
-    //::testing::InitGoogleTest(&argc, argv);
+    //::testing::InitGoogleMock(&argc, argv);
+    ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
