@@ -18,45 +18,56 @@
 #include <istream>
 #include <sstream>
 #include <list>
+#include <Material.hpp>
 
 class Mesh{
 public:
     Mesh();
-    Mesh(std::string filePath);
-    Mesh(int numVertices);
-    ~Mesh();
+    Mesh( std::string filePath );
     
-    glm::vec3 getPosition();
-    void setPosition(glm::vec3 position);
-    glm::vec3 getRotation();
-    void setRotation(glm::vec3 rotation);
-    std::vector<glm::vec3> getVertices();
-    void setVertices(std::vector<glm::vec3> vertices);
     void loadObj(std::string fileName);
-    std::vector<glm::vec2> getUvs();
-    std::vector<glm::vec3> getNormals();
-    int getNumTriangles();
-    float getRotationAngle();
+    
+    glm::vec3 getPosition() const;
+    void setPosition(glm::vec3 position);
+    glm::vec3 getRotation() const;
+    void setRotation(glm::vec3 rotation);
+    std::vector<glm::vec3> getVertices() const;
+    void setVertices(std::vector<glm::vec3> vertices);
+    std::vector<glm::vec2> getUvs() const;
+    std::vector<glm::vec3> getNormals() const;
+    float getRotationAngle() const;
     void setRotationAngle(float);
-    void setTexture( std::string );
-    std::string getTexture();
-    GLsizeiptr getSize();
-    GLsizeiptr getNormalSize();
-    GLsizeiptr getUVSize();
+    void setTexture( const std::string );
+    std::string getTexture() const;
+    int getNumTriangles();
+    void setMaterial( const Material material );
+    Material getMaterial() const;
+    
+    GLsizeiptr getSize() const;
+    GLsizeiptr getNormalVerticesSize() const;
+    GLsizeiptr getTextureVerticesSize() const;
     
     GLuint textureUID;
+    
+    ~Mesh();
 private:
-    std::string name;
+    std::string fileName;
     glm::vec3 position;
     glm::vec3 rotation;
+    
+    // TODO (jonathan): move this method to a Utils inline file ?
+    std::vector<std::string> split( const std::string, const char ) const;
+    
     float rotationAngle;
     int vertexIndices;
     int uvIndices;
     int normalIndices;
     int numTriangles;
+    
+    Material material;
     std::vector<glm::vec3> vertices;
-    std::vector<glm::vec2> uvs;
-    std::vector<glm::vec3> normals;
+    std::vector<glm::vec2> textureVertices;
+    std::vector<glm::vec3> normalVertices;
     std::string texture;
 };
 

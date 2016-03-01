@@ -133,8 +133,8 @@ void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
         Node* node = renderBatch.at(i);
         Mesh* mesh = node->getMesh();
         vertexBufferSize += mesh->getSize();
-        normalBufferSize += mesh->getNormalSize();
-        uvBufferSize += mesh->getUVSize();
+        normalBufferSize += mesh->getNormalVerticesSize();
+        uvBufferSize += mesh->getTextureVerticesSize();
     }
     glBufferData (GL_ARRAY_BUFFER,
                   vertexBufferSize,
@@ -166,9 +166,9 @@ void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
         Node* node = renderBatch.at(i);
         glBufferSubData(GL_ARRAY_BUFFER, // target
                         normalOffset, // offset
-                        node->getMesh()->getNormalSize(), // size
+                        node->getMesh()->getNormalVerticesSize(), // size
                         &node->getMesh()->getNormals()[0]); // data
-        normalOffset += node->getMesh()->getNormalSize();
+        normalOffset += node->getMesh()->getNormalVerticesSize();
     }
     //set normal array layout for shader attribute and enable attribute
     glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
@@ -223,9 +223,9 @@ void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
         Node* node = renderBatch.at( i );
         glBufferSubData(GL_ARRAY_BUFFER, // target
                         textureOffset, // offset
-                        node->getMesh()->getUVSize(), // size
+                        node->getMesh()->getTextureVerticesSize(), // size
                         &node->getMesh()->getUvs()[0]); // data
-        textureOffset += node->getMesh()->getUVSize();
+        textureOffset += node->getMesh()->getTextureVerticesSize();
     }
     
     //set uvs array layout for shader attribute and enable attribute
