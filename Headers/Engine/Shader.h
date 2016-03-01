@@ -21,7 +21,7 @@ public:
     bool compile();
     const GLuint getUID();
 private:
-    void compileShader( GLuint shader );
+    bool compileShader( GLuint shader );
     GLuint uid;
     std::string filePath;
     const char * data;

@@ -28,22 +28,17 @@ const GLuint Shader::getUID() {
 }
 
 bool Shader::compile() {
-    bool result;
-    //Reserve name
     uid = glCreateShader ( type );
-    //load file in memory
     std::ifstream file( filePath );
     std::stringstream buffer;
     buffer << file.rdbuf();
     const std::string& tmp = buffer.str();
     data = tmp.c_str();
     glShaderSource ( uid, 1, &data, NULL );
-    //compile
-    compileShader( uid );
-    return result;
+    return compileShader( uid );
 }
 
-void Shader::compileShader(GLuint shader){
+bool Shader::compileShader(GLuint shader){
     glCompileShader(shader);
     
     GLint isCompiled = 0;
@@ -52,9 +47,10 @@ void Shader::compileShader(GLuint shader){
         GLint maxLength = 0;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
         
-        // The maxLength includes the NULL character
         std::vector<GLchar> errorLog( maxLength );
         glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
         Log::getInstance().e(&errorLog[0]);
+        return false;
     }
+    return true;
 }
