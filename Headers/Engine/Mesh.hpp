@@ -18,6 +18,7 @@
 #include <istream>
 #include <sstream>
 #include <list>
+#include <Material.hpp>
 
 class Mesh{
 public:
@@ -39,6 +40,8 @@ public:
     void setTexture( const std::string );
     std::string getTexture() const;
     int getNumTriangles();
+    void setMaterial( const Material material );
+    Material getMaterial() const;
     
     GLsizeiptr getSize() const;
     GLsizeiptr getNormalVerticesSize() const;
@@ -53,7 +56,7 @@ private:
     glm::vec3 rotation;
     
     // TODO (jonathan): move this method to a Utils inline file ?
-    std::vector<std::string> split( const std::string, const char ) const ;
+    std::vector<std::string> split( const std::string, const char ) const;
     
     float rotationAngle;
     int vertexIndices;
@@ -61,6 +64,7 @@ private:
     int normalIndices;
     int numTriangles;
     
+    Material material;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> textureVertices;
     std::vector<glm::vec3> normalVertices;

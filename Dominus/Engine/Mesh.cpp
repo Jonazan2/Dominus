@@ -1,7 +1,7 @@
 #include "Mesh.hpp"
 #include <OpenGL/OpenGL.h>
 
-Mesh::Mesh() {}
+Mesh::Mesh() : rotationAngle( 0 ) {}
 
 Mesh::Mesh( std::string filePath ) : rotationAngle( 0 ), fileName( filePath ) {
     vertexIndices = 0;
@@ -56,6 +56,12 @@ void Mesh::loadObj( std::string filePath ) {
                             tempIndices->push_back(std::stoi(elements.at(2))); // vn
                         }
                     }
+                } else if ( type == "mtlib" || type == "usemtl" ) {
+                    // We handle just one material per obj, but there could be
+                    // multiple ones
+                    std::string name;
+                    in >> name;
+                    material.loadMaterial(name);
                 }
             }
         }
@@ -94,7 +100,7 @@ void Mesh::loadObj( std::string filePath ) {
     }
     file.close();
 }
-                            
+    
 std::vector<std::string> Mesh::split( const std::string s, const char delimiter ) const {
     std::vector<std::string> elements;
     if ( !s.empty() ) {
@@ -173,6 +179,14 @@ GLsizeiptr Mesh::getNormalVerticesSize() const {
 
 GLsizeiptr Mesh::getTextureVerticesSize() const {
     return ( sizeof( GLfloat ) * 2 ) * textureVertices.size();
+}
+
+void Mesh::setMaterial( const Material material ) {
+    this->material = material;
+}
+
+Material Mesh::getMaterial() const {
+    return material;
 }
 
 Mesh::~Mesh() {}

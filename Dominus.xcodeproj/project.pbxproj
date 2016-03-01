@@ -23,6 +23,8 @@
 		9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9F1C82F8790066C313 /* gmock.framework */; };
 		9CDB79611C6A69A60023C7A5 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB795F1C6A69A60023C7A5 /* Node.cpp */; };
 		9CDB796C1C6D165E0023C7A5 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDB796B1C6D165E0023C7A5 /* Camera.cpp */; };
+		AB210A4A1C852F440009D948 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB210A491C852F440009D948 /* Material.cpp */; };
+		AB210A4B1C852F440009D948 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB210A491C852F440009D948 /* Material.cpp */; };
 		ABC2ABC81C850C4A0058FB8A /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABC2ABC51C850C4A0058FB8A /* Engine.cpp */; };
 		ABC2ABC91C850C4A0058FB8A /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABC2ABC61C850C4A0058FB8A /* Mesh.cpp */; };
 		ABC2ABCA1C850C4A0058FB8A /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABC2ABC71C850C4A0058FB8A /* Renderer.cpp */; };
@@ -79,6 +81,8 @@
 		9CDB79651C6BC2280023C7A5 /* INode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = INode.h; path = Headers/Engine/INode.h; sourceTree = "<group>"; };
 		9CDB79661C6BC2B20023C7A5 /* Scene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Scene.h; path = Headers/Engine/Scene.h; sourceTree = "<group>"; };
 		9CDB796B1C6D165E0023C7A5 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camera.cpp; path = Engine/Camera.cpp; sourceTree = "<group>"; };
+		AB210A481C8528000009D948 /* Material.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Material.hpp; path = Headers/Engine/Material.hpp; sourceTree = "<group>"; };
+		AB210A491C852F440009D948 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = Engine/Material.cpp; sourceTree = "<group>"; };
 		AB628D511C67796A00929E54 /* LoggerFile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = LoggerFile.hpp; path = Headers/Core/Log/LoggerFile.hpp; sourceTree = "<group>"; };
 		AB717A2F1C6A94E0008ACF83 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Log.hpp; path = Headers/Core/Log/Log.hpp; sourceTree = "<group>"; };
 		AB9839CB1C84F5BC00F11EAE /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = Headers/Scenes/GameScene.h; sourceTree = "<group>"; };
@@ -245,6 +249,7 @@
 				9C2071EF1C7862F500926F21 /* Window.h */,
 				9C834B2E1C786BDD000F2D1F /* Event.h */,
 				9C470C2A1C7F88E600558755 /* Texture.h */,
+				AB210A481C8528000009D948 /* Material.hpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -261,6 +266,7 @@
 				9C2071F01C78630C00926F21 /* Window.cpp */,
 				9C834B2F1C786BF4000F2D1F /* Event.cpp */,
 				9C470C2B1C7F896400558755 /* Texture.cpp */,
+				AB210A491C852F440009D948 /* Material.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -354,6 +360,7 @@
 				9C834B301C786BF4000F2D1F /* Event.cpp in Sources */,
 				9C2071EE1C78601800926F21 /* GLFWInputHandler.cpp in Sources */,
 				ABC2ABC91C850C4A0058FB8A /* Mesh.cpp in Sources */,
+				AB210A4A1C852F440009D948 /* Material.cpp in Sources */,
 				3A8CBB471C73794E005A52BF /* GameScene.cpp in Sources */,
 				ABC2ABC81C850C4A0058FB8A /* Engine.cpp in Sources */,
 				9CDB79611C6A69A60023C7A5 /* Node.cpp in Sources */,
@@ -364,6 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB210A4B1C852F440009D948 /* Material.cpp in Sources */,
 				9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
