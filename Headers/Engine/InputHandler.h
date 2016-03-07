@@ -10,10 +10,11 @@
 #define InputHandler_h
 
 #include "Event.h"
+#include <vector>
 
 class InputHandler {
 public:
-    virtual Event* poolEvent() = 0;
+    virtual std::vector<Event*> * poolEvents() = 0;
     virtual void init() = 0;
 };
 

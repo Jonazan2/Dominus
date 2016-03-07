@@ -17,17 +17,17 @@ public:
     ~RenderScene();
     
     void onUpdate( double delta );
-    void onKeyDown( int key );
     void onSceneCreated( Scene* scene );
-    void onMouseDragged(double xRel, double yRel);
-    void onMouseClicked(double x, double y);
-    void onMouseReleased(double x, double y);
-    void onMouseMoved(double x, double y);
+    void onCosumeInput( std::vector<Event*>* );
+    
+    void onKeyDown( Event* event );
+    void onMouseDragged( double xRel, double yRel );
     
     double delta;
-    float yaw;
-    float pitch;
     Scene* scene;
+    
+    double yaw;
+    double pitch;
 };
 
 #endif /* RenderScene_h */

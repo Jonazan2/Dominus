@@ -29,26 +29,19 @@ void Engine::init() {
 }
 
 void Engine::processInput(){
-    Event* event = inputHandler->poolEvent();
-    switch ( event->type ) {
-        case ON_WINDOW_CLOSED:
+    std::vector<Event*> * events = inputHandler->poolEvents();
+    consumeEvents( events );
+    gameScene->onCosumeInput( events );
+    events->clear();
+}
+
+void Engine::consumeEvents( std::vector<Event *> * events) {
+    for ( int i = 0; i < events->size(); i++ ) {
+        Event* event = events->at( i );
+        if( event->type == ON_WINDOW_CLOSED ) {
             running = false;
-            break;
-        case ON_MOUSE_DRAG:
-            gameScene->onMouseDragged( event->xRelative,
-                                       event->yRelative );
-            break;
-        case ON_CLICK_DOWN:
-            gameScene->onMouseClicked( event->x, event->y );
-            break;
-        case ON_CLICK_RELEASE:
-            gameScene->onMouseReleased( event->x, event->y );
-            break;
-        case ON_KEY_EVENT:
-            gameScene->onKeyDown( event->keyCode );
-            break;
-        default:
-            break;
+            event->consumed = true;
+        }
     }
 }
 

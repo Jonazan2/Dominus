@@ -70,26 +70,26 @@ void RenderScene::onUpdate( double delta ) {
     this->delta = delta;
 }
 
-void RenderScene::onKeyDown( int key ) {
+void RenderScene::onKeyDown( Event* event ) {
     // Camera controls
     GLfloat cameraSpeed = 0.01f * delta;
     Camera* camera = scene->getCamera();
-    switch ( key ) {
+    switch ( event->keyCode ) {
         case GLFW_KEY_UP:
             camera->position += cameraSpeed * camera->front;
             break;
         case GLFW_KEY_DOWN:
-           camera->position -= cameraSpeed * camera->front;
+            camera->position -= cameraSpeed * camera->front;
             break;
         case GLFW_KEY_LEFT:
-           camera->position -= glm::normalize(glm::cross(
-                                            camera->front,
-                                            camera->up)) * cameraSpeed;
+            camera->position -= glm::normalize(glm::cross(
+                                                          camera->front,
+                                                          camera->up)) * cameraSpeed;
             break;
         case GLFW_KEY_RIGHT:
             camera->position += glm::normalize(glm::cross(
-                                            camera->front,
-                                            camera->up)) * cameraSpeed;
+                                                          camera->front,
+                                                          camera->up)) * cameraSpeed;
             break;
         default:
             break;
@@ -98,7 +98,6 @@ void RenderScene::onKeyDown( int key ) {
 }
 
 void RenderScene::onMouseDragged( double xRel, double yRel ) {
-    Log::getInstance() << "mouseDragegd";
     GLfloat sensitivity = 0.01;
     double xoffset = xRel * sensitivity;
     double yoffset = yRel * sensitivity;
@@ -121,18 +120,17 @@ void RenderScene::onMouseDragged( double xRel, double yRel ) {
     scene->getCamera()->update();
 }
 
-void RenderScene::onMouseClicked( double x, double y ) {
-    Log::getInstance() << "left button clicked";
-    std::cout << x << std::endl;
-    std::cout << y << std::endl;
-}
-
-void RenderScene::onMouseReleased( double x, double y ) {
-    Log::getInstance() << "left button released";
-    std::cout << x << std::endl;
-    std::cout << y << std::endl;
-}
-
-void RenderScene::onMouseMoved( double x, double y ) {
-
+void RenderScene::onCosumeInput( std::vector<Event *>* events ) {
+    for ( int i = 0; i < events->size(); i++ ) {
+        Event* event = events->at( i );
+        if ( event->type == ON_RIGHT_CLICK_PRESS ) {
+            event->consumed = true;
+        } else if ( event->type == ON_LEFT_CLICK_RELEASE ) {
+            event->consumed = true;
+        } else if ( event->type == ON_KEY_PRESS ) {
+            event->consumed = true;
+        } else if ( event->type == ON_KEY_RELEASE ) {
+            event->consumed = true;
+        }
+    }
 }

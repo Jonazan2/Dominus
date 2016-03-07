@@ -10,15 +10,13 @@
 #define Dominus_GameScene_h
 
 #include "Scene.h"
+#include <vector>
+#include "Event.h"
 
 class GameScene {
 public:
     virtual void onSceneCreated( Scene* scene ) = 0;
     virtual void onUpdate( double delta ) = 0;
-    virtual void onKeyDown( int key ) = 0;
-    virtual void onMouseDragged( double xRel, double yRel ) = 0;
-    virtual void onMouseClicked( double x, double y ) = 0;
-    virtual void onMouseReleased( double x, double y ) = 0;
-    virtual void onMouseMoved( double x, double y ) = 0;
+    virtual void onCosumeInput( std::vector<Event*>* ) = 0;
 };
 #endif
