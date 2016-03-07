@@ -12,6 +12,12 @@
 RenderScene::RenderScene() {
     yaw = -90.0f;
     pitch = 0;
+    upPressed = false;
+    downPressed = false;
+    leftPressed = false;
+    rightPressed = false;
+    
+    rightPressed = false;
 }
 
 RenderScene::~RenderScene() {
@@ -67,34 +73,61 @@ void RenderScene::onSceneCreated( Scene* scene ) {
 }
 
 void RenderScene::onUpdate( double delta ) {
-    this->delta = delta;
+    GLfloat cameraSpeed = 0.01f * delta;
+    Camera* camera = scene->getCamera();
+    if( upPressed ) {
+        camera->position += cameraSpeed * camera->front;
+    }
+    if( downPressed ){
+        camera->position -= cameraSpeed * camera->front;
+    }
+    if( leftPressed ) {
+        camera->position -= glm::normalize(glm::cross(
+                                                      camera->front,
+                                                      camera->up)) * cameraSpeed;
+    }
+    if( rightPressed ) {
+        camera->position += glm::normalize(glm::cross(
+                                                      camera->front,
+                                                      camera->up)) * cameraSpeed;
+    }
+    camera->update();
 }
 
 void RenderScene::onKeyDown( Event* event ) {
-    // Camera controls
-    GLfloat cameraSpeed = 0.01f * delta;
-    Camera* camera = scene->getCamera();
     switch ( event->keyCode ) {
         case GLFW_KEY_UP:
-            camera->position += cameraSpeed * camera->front;
+            if ( event->type == ON_KEY_PRESS ) {
+                upPressed = true;
+            } else if ( event->type == ON_KEY_RELEASE ) {
+                upPressed = false;
+            }
             break;
         case GLFW_KEY_DOWN:
-            camera->position -= cameraSpeed * camera->front;
+            if ( event->type == ON_KEY_PRESS ) {
+                downPressed = true;
+            } else if ( event->type == ON_KEY_RELEASE ) {
+                downPressed = false;
+            }
             break;
         case GLFW_KEY_LEFT:
-            camera->position -= glm::normalize(glm::cross(
-                                                          camera->front,
-                                                          camera->up)) * cameraSpeed;
+            if ( event->type == ON_KEY_PRESS ) {
+                leftPressed = true;
+            } else if ( event->type == ON_KEY_RELEASE ) {
+                leftPressed = false;
+            }
             break;
         case GLFW_KEY_RIGHT:
-            camera->position += glm::normalize(glm::cross(
-                                                          camera->front,
-                                                          camera->up)) * cameraSpeed;
+            if ( event->type == ON_KEY_PRESS ) {
+                rightPressed = true;
+            } else if ( event->type == ON_KEY_RELEASE ) {
+                rightPressed = false;
+            }
             break;
         default:
             break;
     }
-    camera->update();
+    
 }
 
 void RenderScene::onMouseDragged( double xRel, double yRel ) {
@@ -125,12 +158,25 @@ void RenderScene::onCosumeInput( std::vector<Event *>* events ) {
         Event* event = events->at( i );
         if ( event->type == ON_RIGHT_CLICK_PRESS ) {
             event->consumed = true;
-        } else if ( event->type == ON_LEFT_CLICK_RELEASE ) {
+            xSaved = event->x;
+            ySaved = event->y;
+            rightClickPressed = true;
+        } else if ( event->type == ON_RIGHT_CLICK_RELEASE ) {
             event->consumed = true;
+            xSaved = 0;
+            ySaved = 0;
+            rightClickPressed = false;
         } else if ( event->type == ON_KEY_PRESS ) {
             event->consumed = true;
+            onKeyDown( event );
         } else if ( event->type == ON_KEY_RELEASE ) {
             event->consumed = true;
+            onKeyDown( event );
+        } else if ( event->type == ON_MOUSE_MOVED ) {
+            event->consumed = true;
+            if ( rightClickPressed ) {
+                onMouseDragged( event->x - xSaved, ySaved - event->y );
+            }
         }
     }
 }

@@ -22,12 +22,20 @@ public:
     
     void onKeyDown( Event* event );
     void onMouseDragged( double xRel, double yRel );
-    
-    double delta;
+
     Scene* scene;
     
     double yaw;
     double pitch;
+    
+    bool upPressed;
+    bool downPressed;
+    bool leftPressed;
+    bool rightPressed;
+    
+    bool rightClickPressed;
+    float xSaved;
+    float ySaved;
 };
 
 #endif /* RenderScene_h */
