@@ -144,7 +144,7 @@ void Point::memoryCopy( void *dest, const void *src, size n );
 
 # Dependencies
 
-Dominus is using *OpenGL* (ver 4.1) and *GLFW*. While OpenGL is included in Xcode development kit, we need to install GLFW for Mac OS manually.
+Dominus is using *OpenGL* (ver 4.1.x) and *GLFW*. While OpenGL is included in Xcode development kit, we need to install GLFW for Mac OS manually.
 
 ### How to install GLFW
 
