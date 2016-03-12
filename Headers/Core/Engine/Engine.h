@@ -23,6 +23,8 @@ public:
     void update( double delta );
     void render();
     
+    void consumeEvents( std::vector<Event*> * );
+    
     bool isRunning();
 private:
     bool running;

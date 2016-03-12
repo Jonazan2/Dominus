@@ -14,7 +14,8 @@ Event::Event()
                     xRelative( 0 ),
                     yRelative( 0 ),
                     keyCode( 0 ),
-                    type( EVENT_NONE ){
+                    type( EVENT_NONE ),
+                    consumed( false ){
 
 }
 

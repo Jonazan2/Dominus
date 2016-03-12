@@ -12,7 +12,6 @@
 #include "InputHandler.h"
 #include "Window.h"
 #include <GLFW/glfw3.h>
-#include <stack>
 
 class GLFWInputHandler : public InputHandler {
 public:
@@ -20,20 +19,16 @@ public:
     ~GLFWInputHandler();
     
     void init();
-    Event* poolEvent();
-    void onMouseDragged( double xRel, double yRel );
-    void onMouseClicked( double x, double y );
-    void onMouseReleased( double x, double y );
+    std::vector<Event*> * poolEvents();
+
+    void onRightClickEvent( int action, double x, double y );
+    void onLeftClickEvent( int action, double x, double y );
     void onMouseMoved( double x, double y );
     void onKeyEvent( int key, int scancode, int action, int mode );
     void onWindowClosed();
 private:
-    bool onHoldKey;
-    bool onDrag;
     GLFWwindow* window;
-    Event* event;
-    double xSaved;
-    double ySaved;
+    std::vector<Event*> events;
 };
 
 #endif /* GLFWInputHandler_h */
