@@ -24,3 +24,19 @@ Camera::~Camera() {
 void Camera::update() {
     viewMatrix = glm::lookAt( position, position + front, up );
 }
+
+void Camera::onRestore( Scene* scene ) {
+    
+}
+
+void Camera::onRender( Scene* scene ) {
+    
+}
+
+void Camera::onRenderChildrends( Scene* scene ) {
+    
+}
+
+void Camera::onPostRender( Scene* scene ) {
+
+}
