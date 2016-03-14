@@ -26,6 +26,13 @@ void Engine::init() {
     scene = new Scene( renderer );
     gameScene = new RenderScene;
     gameScene->onSceneCreated( scene );
+    renderer->initUI();
+    
+    UIComponent* uiComponent = new UIComponent;
+    Texture* texture = new Texture("diffuse.png");
+    uiComponent->setTexture( texture );
+    uiComponents.push_back( uiComponent );
+    renderer->loadUI( uiComponents );
 }
 
 void Engine::processInput(){
@@ -52,6 +59,7 @@ void Engine::update( double delta ){
 
 void Engine::render(){
     scene->render();
+    renderer->drawUI( uiComponents );
 }
 
 bool Engine::isRunning(){

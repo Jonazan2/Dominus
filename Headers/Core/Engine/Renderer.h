@@ -17,6 +17,7 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Node.hpp"
+#include "UIComponent.h"
 
 class Renderer{
 public:
@@ -34,6 +35,9 @@ public:
     void updateCamera( glm::mat4 viewMatrix );
     void loadMesh( std::vector<Node*> renderBatch );
     void draw( std::vector<Node*> renderBatch );
+    void initUI();
+    void loadUI( std::vector<UIComponent*> uiComponents );
+    void drawUI( std::vector<UIComponent*> uiComponents );
     void present();
 private:
     GLFWwindow* window;
@@ -50,6 +54,12 @@ private:
     GLuint normalUID;
     GLuint lightPositionUID;
     GLuint textureUID;
+    
+    GLuint uiShaderProgram;
+    GLuint uiPositionAttribute;
+    GLuint uiMVPMatrix;
+    GLuint uiTextureAttribute;
+    GLuint uiTextureData;
 };
 
 #endif /* defined(__Dominus__Renderer__) */
