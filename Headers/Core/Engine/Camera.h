@@ -9,17 +9,23 @@
 #ifndef Camera_h
 #define Camera_h
 
+#include <INode.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-class Camera {
+class Camera : public INode{
 public:
     Camera();
     ~Camera();
     
     void update();
+    
+    void onRestore( Scene* scene );
+    void onRender( Scene* scene );
+    void onRenderChildrends( Scene* scene );
+    void onPostRender( Scene* scene ) ;
     
     glm::mat4 viewMatrix;
     glm::vec3 up;

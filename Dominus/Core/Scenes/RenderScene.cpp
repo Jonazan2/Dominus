@@ -26,6 +26,8 @@ RenderScene::~RenderScene() {
 
 void RenderScene::onSceneCreated( Scene* scene ) {
     this->scene = scene;
+    Camera* camera = new Camera;
+    scene->setCamera( camera );
     //buffer data
     Mesh * momoMesh = new Mesh;
     momoMesh->loadObj( "momo.obj" );
