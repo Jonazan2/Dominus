@@ -17,17 +17,25 @@ public:
     ~RenderScene();
     
     void onUpdate( double delta );
-    void onKeyDown( int key );
     void onSceneCreated( Scene* scene );
-    void onMouseDragged(double xRel, double yRel);
-    void onMouseClicked(double x, double y);
-    void onMouseReleased(double x, double y);
-    void onMouseMoved(double x, double y);
+    void onCosumeInput( std::vector<Event*>* );
     
-    double delta;
-    float yaw;
-    float pitch;
+    void onKeyDown( Event* event );
+    void onMouseDragged( double xRel, double yRel );
+
     Scene* scene;
+    
+    double yaw;
+    double pitch;
+    
+    bool upPressed;
+    bool downPressed;
+    bool leftPressed;
+    bool rightPressed;
+    
+    bool rightClickPressed;
+    float xSaved;
+    float ySaved;
 };
 
 #endif /* RenderScene_h */

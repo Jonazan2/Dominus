@@ -9,11 +9,9 @@
 #include "Scene.h"
 
 Scene::Scene( Renderer* renderer ) : renderer( renderer ) {
-    camera = new Camera();
     rootNode = new Node;
     projectionMatrix = glm::perspective( 0.78f, (float)640/480, 0.01f, 100.0f );
     lightPosition = glm::vec3( 0.0, 0.0, 0.0 );
-    renderer->updateCamera( camera->viewMatrix );
     renderer->updateLightSource( lightPosition );
     renderer->updateProjection( projectionMatrix );
     renderer->init();
@@ -32,6 +30,12 @@ Camera* Scene::getCamera() {
     return camera;
 }
 
+void Scene::setCamera( Camera* camera ) {
+    this->camera = camera;
+    renderer->updateCamera( camera->viewMatrix );
+    rootNode->addNode( camera );
+}
+
 void Scene::load() {
     rootNode->onRestore( this );
     renderer->loadMesh( renderBatch );
@@ -43,13 +47,15 @@ void Scene::addNode( INode *node ) {
 }
 
 void Scene::render() {
-    rootNode->onRender( this );
-    rootNode->onRenderChildrends( this );
-    rootNode->onPostRender( this );
-    
-    renderer->draw( renderBatch );
-    renderBatch.clear();
-    renderer->present();
+    if( camera != nullptr ){
+        rootNode->onRender( this );
+        rootNode->onRenderChildrends( this );
+        rootNode->onPostRender( this );
+        
+        renderer->draw( renderBatch );
+        renderBatch.clear();
+        renderer->present();
+    }
 }
 
 std::stack<glm::mat4> * Scene::getStack() {

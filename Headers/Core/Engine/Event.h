@@ -11,10 +11,13 @@
 
 enum EventType {
     ON_WINDOW_CLOSED,
-    ON_CLICK_DOWN,
-    ON_CLICK_RELEASE,
-    ON_MOUSE_DRAG,
-    ON_KEY_EVENT,
+    ON_RIGHT_CLICK_PRESS,
+    ON_RIGHT_CLICK_RELEASE,
+    ON_LEFT_CLICK_PRESS,
+    ON_LEFT_CLICK_RELEASE,
+    ON_KEY_PRESS,
+    ON_KEY_RELEASE,
+    ON_MOUSE_MOVED,
     EVENT_NONE
 };
 
@@ -31,6 +34,8 @@ public:
     
     int xRelative;
     int yRelative;
+    
+    bool consumed;
 };
 
 #endif /* Event_h */

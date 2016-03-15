@@ -29,6 +29,7 @@ public:
     void addToBatch( Node* node );
     void addNode( INode* node );
     Camera* getCamera();
+    void setCamera( Camera* camera );
 private:
     Renderer* renderer;
     Node* rootNode;
