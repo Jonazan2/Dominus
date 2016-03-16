@@ -26,10 +26,13 @@ public:
 private:
     GLFWwindow* window;
     GLuint vao;
+    GLuint uiVao;
     GLuint shader_programme;
+    GLuint uiShaderProgram;
     GLuint mvp;
     Mesh* mesh;
     float delta;
+    std::vector<glm::vec3> vertices;
 };
 
 #endif /* defined(__Dominus__Renderer__) */
