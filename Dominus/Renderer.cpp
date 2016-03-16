@@ -7,12 +7,31 @@
 //
 
 #include "Renderer.h"
+#include "Texture.hpp"
 
 Renderer::Renderer(){
 }
 
 Renderer::~Renderer(){
 }
+
+void Renderer::compileShader(GLuint shader){
+    glCompileShader(shader);
+    
+    GLint isCompiled = 0;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+    if(isCompiled == GL_FALSE)
+    {
+        GLint maxLength = 0;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+        
+        // The maxLength includes the NULL character
+        std::vector<GLchar> errorLog(maxLength);
+        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
+        std::cout << &errorLog[0] << std::endl;
+    }
+}
+
 
 void Renderer::init(){
     //Init window
@@ -72,26 +91,31 @@ void Renderer::init(){
     
     const char* ui_vertex_shader =
     "#version 400\n"
-    "in vec3 vp;"
+    "in vec3 vertexCoord;"
+    "in vec2 textureCoord;"
+    "out vec2 fragmentTextureCoord;"
     "uniform mat4 mvp;"
     "void main () {"
-    "  gl_Position = mvp * vec4 (vp, 1.0);"
+    "  fragmentTextureCoord = textureCoord;"
+    "  gl_Position = mvp * vec4 (vertexCoord, 1.0);"
     "}";
     
     const char* ui_fragment_shader =
     "#version 400\n"
-    "out vec4 frag_colour;"
+    "in vec2 fragmentTextureCoord;"
+    "out vec4 fragmentColor;"
+    "uniform sampler2D textureData;"
     "void main () {"
-    "  frag_colour = vec4 (0.5, 0.5, 0.5, 1.0);"
+    "  fragmentColor = texture( textureData, fragmentTextureCoord );"
     "}";
     
     //Setting 3d shaders
     GLuint vs = glCreateShader (GL_VERTEX_SHADER);
     glShaderSource (vs, 1, &vertex_shader, NULL);
-    glCompileShader (vs);
+    compileShader(vs);
     GLuint fs = glCreateShader (GL_FRAGMENT_SHADER);
     glShaderSource (fs, 1, &fragment_shader, NULL);
-    glCompileShader (fs);
+    compileShader(fs);
     
     shader_programme = glCreateProgram ();
     glAttachShader (shader_programme, fs);
@@ -105,19 +129,22 @@ void Renderer::init(){
     //setting ui shaders
     GLuint ui_vs = glCreateShader (GL_VERTEX_SHADER);
     glShaderSource (ui_vs, 1, &ui_vertex_shader, NULL);
-    glCompileShader (ui_vs);
+    compileShader(ui_vs);
     GLuint ui_fs = glCreateShader (GL_FRAGMENT_SHADER);
     glShaderSource (ui_fs, 1, &ui_fragment_shader, NULL);
-    glCompileShader (ui_fs);
+    compileShader (ui_fs);
     
     uiShaderProgram = glCreateProgram ();
+    glUseProgram(uiShaderProgram);
     glAttachShader (uiShaderProgram, ui_fs);
     glAttachShader (uiShaderProgram, ui_vs);
     glLinkProgram (uiShaderProgram);
     
     //retrieve shader uniforms and attributes ids
-    mvp = glGetUniformLocation(uiShaderProgram, "mvp");
-    GLuint uiPositionAttribute = glGetAttribLocation(uiShaderProgram, "vp");
+    uiMvp = glGetUniformLocation(uiShaderProgram, "mvp");
+    textureDataUniform = glGetUniformLocation(uiShaderProgram, "textureData");
+    GLuint uiPositionAttribute = glGetAttribLocation(uiShaderProgram, "vertexCoord");
+    GLuint uiTextureAttribute = glGetAttribLocation(uiShaderProgram, "textureCoord");
     
     //buffer data
     mesh = new Mesh;
@@ -133,15 +160,14 @@ void Renderer::init(){
     glGenVertexArrays (1, &uiVao);
     glBindVertexArray (uiVao);
     
-    //create buffer object and set as current
-    GLuint uiBuffer;
-    glGenBuffers(1, &uiBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, uiBuffer);
+    GLuint buffers[2];
+    glGenBuffers(2, buffers);
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     
     glm::vec3 topLeft = glm::vec3( 0, 0, 0 );
-    glm::vec3 topRight = glm::vec3( 100, 0, 0 );
-    glm::vec3 bottomLeft = glm::vec3( 0, 100, 0 );
-    glm::vec3 bottomRight = glm::vec3( 100, 100, 0 );
+    glm::vec3 topRight = glm::vec3( 64, 0, 0 );
+    glm::vec3 bottomLeft = glm::vec3( 0, 64, 0 );
+    glm::vec3 bottomRight = glm::vec3( 64, 64, 0 );
     
     vertices.push_back( topLeft );
     vertices.push_back( topRight );
@@ -150,10 +176,49 @@ void Renderer::init(){
     vertices.push_back( topRight );
     vertices.push_back( bottomRight );
     
+    glm::vec2 uvTopLeft = glm::vec2( 0.0, 0.0 );
+    glm::vec2 uvTopRight = glm::vec2( 1.0, 0.0 );
+    glm::vec2 uvBottomLeft = glm::vec2( 0.0, 1.0 );
+    glm::vec2 uvBottomRight = glm::vec2( 1.0, 1.0 );
+    
+    uvs.push_back( uvTopLeft );
+    uvs.push_back( uvTopRight );
+    uvs.push_back( uvBottomLeft );
+    uvs.push_back( uvBottomLeft );
+    uvs.push_back( uvTopRight );
+    uvs.push_back( uvBottomRight );
+    
     glBufferData (GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
     //set vertex array layout for shader attibute and enable attibute
     glVertexAttribPointer (uiPositionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(uiPositionAttribute);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+    glBufferData (GL_ARRAY_BUFFER, (sizeof (GLfloat) * 2) * uvs.size(), &uvs[0], GL_STATIC_DRAW);
+    //set vertex array layout for shader attibute and enable attibute
+    glVertexAttribPointer (uiTextureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(uiTextureAttribute);
+    
+    glGenTextures(1, &textureUID);
+    
+    glBindTexture( GL_TEXTURE_2D, textureUID );
+    // Set the texture wrapping/filtering options (on the currently bound texture object)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    Texture* textureData = new Texture( "g_bubble_red.png" );
+    // Load and generate the texture
+    glTexImage2D( GL_TEXTURE_2D,
+                 0,
+                 GL_RGBA,
+                 textureData->getWidth(),
+                 textureData->getHeight(),
+                 0,
+                 GL_RGBA,
+                 GL_UNSIGNED_BYTE,
+                 textureData->getImageData() );
+    glBindTexture( GL_TEXTURE, 0 );
 }
 
 void Renderer::render(){
@@ -173,10 +238,17 @@ void Renderer::render(){
     glBindVertexArray (vao);
     // draw points 0-3 from the currently bound VAO with current in-use shader
     glDrawArrays (GL_TRIANGLES, 0, mesh->getVertices().size());
+    
+    
     glUseProgram(uiShaderProgram);
     glBindVertexArray (uiVao);
+    
+    glActiveTexture(GL_TEXTURE0);
+    glUniform1i(textureDataUniform, 0); //set to 0 because the texture is bound to GL_TEXTURE0
+    glBindTexture(GL_TEXTURE_2D, textureUID);
+    
     glm::mat4 orthoMatrix = glm::ortho(0.0, 640.0, 480.0, 0.0 );
-    glUniformMatrix4fv(mvp, 1, GL_FALSE, &orthoMatrix[0][0]);
+    glUniformMatrix4fv(uiMvp, 1, GL_FALSE, &orthoMatrix[0][0]);
     // draw points 0-3 from the currently bound VAO with current in-use shader
     glDrawArrays (GL_TRIANGLES, 0, vertices.size());
     

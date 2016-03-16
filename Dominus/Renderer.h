@@ -23,6 +23,7 @@ public:
     ~Renderer();
     void init();
     void render();
+    void compileShader(GLuint shader);
 private:
     GLFWwindow* window;
     GLuint vao;
@@ -30,9 +31,13 @@ private:
     GLuint shader_programme;
     GLuint uiShaderProgram;
     GLuint mvp;
+    GLuint uiMvp;
     Mesh* mesh;
     float delta;
+    GLuint textureDataUniform;
+    GLuint textureUID;
     std::vector<glm::vec3> vertices;
+    std::vector<glm::vec2> uvs;
 };
 
 #endif /* defined(__Dominus__Renderer__) */

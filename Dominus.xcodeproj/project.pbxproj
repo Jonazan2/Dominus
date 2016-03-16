@@ -12,6 +12,8 @@
 		3A37260C1C620A5300449498 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A37260A1C620A5300449498 /* Renderer.cpp */; };
 		3A7AA0B21C577E9F00C45A2A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */; };
 		92677A7D1C5665F900899024 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92677A7C1C5665F900899024 /* main.cpp */; };
+		9C85C31D1C99EADB0076D0ED /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C85C31B1C99EADB0076D0ED /* Texture.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C85C31F1C99EECF0076D0ED /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C85C31E1C99EECF0076D0ED /* libz.1.2.5.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,6 +38,9 @@
 		3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		92677A791C5665F900899024 /* Dominus */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Dominus; sourceTree = BUILT_PRODUCTS_DIR; };
 		92677A7C1C5665F900899024 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		9C85C31B1C99EADB0076D0ED /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = Engine/Texture.cpp; sourceTree = "<group>"; };
+		9C85C31C1C99EADB0076D0ED /* Texture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Texture.hpp; path = Engine/Texture.hpp; sourceTree = "<group>"; };
+		9C85C31E1C99EECF0076D0ED /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C85C31F1C99EECF0076D0ED /* libz.1.2.5.tbd in Frameworks */,
 				3A7AA0B21C577E9F00C45A2A /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,6 +59,7 @@
 		92677A701C5665F900899024 = {
 			isa = PBXGroup;
 			children = (
+				9C85C31E1C99EECF0076D0ED /* libz.1.2.5.tbd */,
 				3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */,
 				92677A7B1C5665F900899024 /* Dominus */,
 				92677A7A1C5665F900899024 /* Products */,
@@ -77,6 +84,8 @@
 				3A3726051C58FE7100449498 /* Engine.h */,
 				3A37260A1C620A5300449498 /* Renderer.cpp */,
 				3A37260B1C620A5300449498 /* Renderer.h */,
+				9C85C31B1C99EADB0076D0ED /* Texture.cpp */,
+				9C85C31C1C99EADB0076D0ED /* Texture.hpp */,
 			);
 			path = Dominus;
 			sourceTree = "<group>";
@@ -137,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C85C31D1C99EADB0076D0ED /* Texture.cpp in Sources */,
 				3A37260C1C620A5300449498 /* Renderer.cpp in Sources */,
 				3A3726091C6209E200449498 /* Mesh.cpp in Sources */,
 				92677A7D1C5665F900899024 /* main.cpp in Sources */,
@@ -236,7 +246,10 @@
 					/usr/local/include,
 				);
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
-				OTHER_LDFLAGS = "-lglfw3";
+				OTHER_LDFLAGS = (
+					"-lglfw3",
+					"-lpng",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -251,7 +264,10 @@
 					/usr/local/include,
 				);
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
-				OTHER_LDFLAGS = "-lglfw3";
+				OTHER_LDFLAGS = (
+					"-lglfw3",
+					"-lpng",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
