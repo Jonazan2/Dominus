@@ -70,6 +70,21 @@ void Renderer::init(){
     "  frag_colour = vec4 (0.5, 0.0, 0.5, 1.0);"
     "}";
     
+    const char* white_vertex_shader =
+    "#version 400\n"
+    "in vec3 vertexCoord;"
+    "uniform mat4 mvp2;"
+    "void main () {"
+    "  gl_Position = mvp2 * vec4 (vertexCoord, 1.0);"
+    "}";
+    
+    const char* white_fragment_shader =
+    "#version 400\n"
+    "out vec4 fragment_colour;"
+    "void main () {"
+    "  fragment_colour = vec4 (1.0, 1.0, 1.0, 1.0);"
+    "}";
+    
     GLuint vs = glCreateShader (GL_VERTEX_SHADER);
     glShaderSource (vs, 1, &vertex_shader, NULL);
     glCompileShader (vs);
@@ -86,15 +101,72 @@ void Renderer::init(){
     mvp = glGetUniformLocation(shader_programme, "mvp");
     GLuint positionAttribute = glGetAttribLocation(shader_programme, "vp");
     
-    //buffer data
-    mesh = new Mesh;
-    mesh->loadObj("cube.obj");
+    GLuint vs1 = glCreateShader (GL_VERTEX_SHADER);
+    glShaderSource (vs1, 1, &white_vertex_shader, NULL);
+    glCompileShader (vs1);
+    GLuint fs1 = glCreateShader (GL_FRAGMENT_SHADER);
+    glShaderSource (fs1, 1, &white_fragment_shader, NULL);
+    glCompileShader (fs1);
+    
+    shaderProgram = glCreateProgram ();
+    glAttachShader (shaderProgram, fs1);
+    glAttachShader (shaderProgram, vs1);
+    glLinkProgram (shaderProgram);
+    
+    //retrieve shader uniforms and attributes ids
+    mvp2 = glGetUniformLocation(shaderProgram, "mvp2");
+    GLuint positionAttribute2 =
+        glGetAttribLocation(shaderProgram, "vertexCoord");
 
-    glBufferData (GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * mesh->getVertices().size(), &mesh->getVertices()[0], GL_STATIC_DRAW);
-    //glBufferData (GL_ARRAY_BUFFER, 9 * sizeof (float), points, GL_STATIC_DRAW);
+    //buffer data
+//    mesh = new Mesh;
+//    mesh->loadObj("cube.obj");
+    mesh = getTriangleMesh();
+    mesh2 = getTriangleMesh2();
+    mesh->setPosition(glm::vec3(1.0,1.0,0.0));
+    
+    glBufferData(
+                 GL_ARRAY_BUFFER,
+                 (sizeof (GLfloat) * 3) * mesh->getVertices().size() +
+                 (sizeof (GLfloat) * 3) * mesh2->getVertices().size(),
+                 NULL, GL_STATIC_DRAW);
+    
+    glBufferSubData(GL_ARRAY_BUFFER,
+                    0 ,
+                    (sizeof (GLfloat) * 3) * mesh->getVertices().size() ,
+                    &mesh->getVertices()[0]);
+    glBufferSubData(GL_ARRAY_BUFFER,
+                    (sizeof (GLfloat) * 3) * mesh->getVertices().size() ,
+                    (sizeof (GLfloat) * 3) * mesh2->getVertices().size() ,
+                    &mesh2->getVertices()[0]);
+
     //set vertex array layout for shader attibute and enable attibute
     glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(positionAttribute);
+    
+    //set vertex array layout for shader attibute and enable attibute
+    glVertexAttribPointer (positionAttribute2, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(positionAttribute2);
+}
+
+Mesh* Renderer::getTriangleMesh() {
+    Mesh* mesh = new Mesh;
+    std::vector<glm::vec3> vertices = mesh->getVertices();
+    vertices.push_back(glm::vec3( -1.0, -1.0, 0.0 ));
+    vertices.push_back(glm::vec3( 1.0, -1.0, 0.0 ));
+    vertices.push_back(glm::vec3( 0.0, 1.0, 0.0 ));
+    mesh->setVertices(vertices);
+    return mesh;
+}
+
+Mesh* Renderer::getTriangleMesh2() {
+    Mesh* mesh = new Mesh;
+    std::vector<glm::vec3> vertices = mesh->getVertices();
+    vertices.push_back(glm::vec3( -1.0, -0.5, 0.0 ));
+    vertices.push_back(glm::vec3( 1.0, -1.0, 0.0 ));
+    vertices.push_back(glm::vec3( 0.0, 1.0, 0.0 ));
+    mesh->setVertices(vertices);
+    return mesh;
 }
 
 void Renderer::render(){
@@ -105,17 +177,23 @@ void Renderer::render(){
                                        );
     glm::mat4 projectionMatrix = glm::perspective(0.78f, (float)640/480, 0.01f, 100.0f);
     glm::mat4 scaleMatrix = glm::scale(glm::vec3(1,1, 1));
-    glm::mat4 rotationMatrix = glm::rotate( delta * 0.5f, glm::vec3(1.0f,1.0f,0.0f));
-    glm::mat4 modelMatrix = rotationMatrix * scaleMatrix;
+    glm::mat4 rotationMatrix = glm::rotate( delta * 0.05f, glm::vec3(0.0f,1.0f,0.0f));
+    glm::mat4 translate = glm::translate( mesh->getPosition() );
+    glm::mat4 modelMatrix = translate * rotationMatrix * scaleMatrix;
     glm::mat4 mvpMatrix = projectionMatrix * viewMatrix * modelMatrix;
-    //glm::mat4 mvpMatrix = glm::mat4(1);
-    // wipe the drawing surface clear
+
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram (shader_programme);
     glUniformMatrix4fv(mvp, 1, GL_FALSE, &mvpMatrix[0][0]);
     glBindVertexArray (vao);
-    // draw points 0-3 from the currently bound VAO with current in-use shader
+
     glDrawArrays (GL_TRIANGLES, 0, mesh->getVertices().size());
+
+    mvpMatrix = projectionMatrix * viewMatrix;
+    glUniformMatrix4fv(mvp, 1, GL_FALSE, &mvpMatrix[0][0]);
+    glDrawArrays (GL_TRIANGLES,
+                  mesh->getVertices().size() ,
+                  mesh2->getVertices().size());
     // update other events like input handling
     glfwPollEvents ();
     // put the stuff we've been drawing onto the display

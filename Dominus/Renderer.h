@@ -23,12 +23,17 @@ public:
     ~Renderer();
     void init();
     void render();
+    Mesh* getTriangleMesh();
+    Mesh* getTriangleMesh2();
 private:
     GLFWwindow* window;
     GLuint vao;
     GLuint shader_programme;
+    GLuint shaderProgram;
     GLuint mvp;
+    GLuint mvp2;
     Mesh* mesh;
+    Mesh* mesh2;
     float delta;
 };
 
