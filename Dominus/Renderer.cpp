@@ -65,30 +65,26 @@ void Renderer::init(){
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glViewport(0, 0, 640, 480);
-    //create vao and set as current
-    glGenVertexArrays (1, &vao);
-    glBindVertexArray (vao);
-    
-    //create buffer object and set as current
-    GLuint buffer;
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
     
     //Load shaders
     
     const char* vertex_shader =
     "#version 400\n"
-    "in vec3 vp;"
+    "in vec3 attribute0;"
+    "in vec3 attribute1;"
+    "out vec3 fragmentNormal;"
     "uniform mat4 mvp;"
     "void main () {"
-    "  gl_Position = mvp * vec4 (vp, 1.0);"
+    "  fragmentNormal = attribute0;"
+    "  gl_Position = mvp * vec4 (attribute1, 1.0);"
     "}";
     
     const char* fragment_shader =
     "#version 400\n"
+    "in vec3 fragmentNormal;"
     "out vec4 frag_colour;"
     "void main () {"
-    "  frag_colour = vec4 (1.0, 1.0, 1.0, 1.0);"
+    "  frag_colour = vec4 (fragmentNormal, 1.0);"
     "}";
     
     const char* ui_vertex_shader =
@@ -108,7 +104,7 @@ void Renderer::init(){
     "out vec4 fragmentColor;"
     "uniform sampler2D textureData;"
     "void main () {"
-    "  fragmentColor = texture( textureData, fragmentTextureCoord );"
+    "  fragmentColor = texture( textureData , fragmentTextureCoord );"
     "}";
     
     //Setting 3d shaders
@@ -126,7 +122,8 @@ void Renderer::init(){
     
     //retrieve shader uniforms and attributes ids
     mvp = glGetUniformLocation(shader_programme, "mvp");
-    GLuint positionAttribute = glGetAttribLocation(shader_programme, "vp");
+    GLuint attribute0 = glGetAttribLocation(shader_programme, "attribute0");
+    GLuint attribute1 = glGetAttribLocation(shader_programme, "attribute1");
     
     //setting ui shaders
     GLuint ui_vs = glCreateShader (GL_VERTEX_SHADER);
@@ -152,15 +149,35 @@ void Renderer::init(){
     mesh = new Mesh;
     mesh->loadObj("cube.obj");
     
+    //create vao and set as current
+    glGenVertexArrays (1, &vao);
+    glBindVertexArray (vao);
+    
+    GLuint buffer0;
+    glGenBuffers(1, &buffer0);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer0);
+    
+    glBufferData (GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * mesh->getNormals().size(), &mesh->getNormals()[0], GL_STATIC_DRAW);
+
+    
+    glVertexAttribPointer (attribute0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(attribute0);
+    
+    //create buffer object and set as current
+    GLuint buffer;
+    glGenBuffers(1, &buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    
     glBufferData (GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * mesh->getVertices().size(), &mesh->getVertices()[0], GL_STATIC_DRAW);
-    //glBufferData (GL_ARRAY_BUFFER, 9 * sizeof (float), points, GL_STATIC_DRAW);
-    //set vertex array layout for shader attibute and enable attibute
-    glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(positionAttribute);
+    
+    glVertexAttribPointer (attribute1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(attribute1);
+    
     
     //create vao and set as current
-    glGenVertexArrays (1, &uiVao);
-    glBindVertexArray (uiVao);
+//    glGenVertexArrays (1, &uiVao);
+//    glBindVertexArray (uiVao);
+    glUseProgram(uiShaderProgram);
     
     GLuint buffers[2];
     glGenBuffers(2, buffers);
@@ -183,12 +200,12 @@ void Renderer::init(){
     glm::vec2 uvBottomLeft = glm::vec2( 0.0, 1.0 );
     glm::vec2 uvBottomRight = glm::vec2( 1.0, 1.0 );
     
-    uvs.push_back( uvTopLeft );
-    uvs.push_back( uvTopRight );
     uvs.push_back( uvBottomLeft );
-    uvs.push_back( uvBottomLeft );
-    uvs.push_back( uvTopRight );
     uvs.push_back( uvBottomRight );
+    uvs.push_back( uvTopLeft );
+    uvs.push_back( uvTopLeft );
+    uvs.push_back( uvBottomRight );
+    uvs.push_back( uvTopRight );
     
     glBufferData (GL_ARRAY_BUFFER, (sizeof (GLfloat) * 3) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
     //set vertex array layout for shader attibute and enable attibute
@@ -221,29 +238,39 @@ void Renderer::init(){
                  GL_UNSIGNED_BYTE,
                  textureData->getImageData() );
     glBindTexture( GL_TEXTURE, 0 );
+    
+//    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+//    float* mapVertex = (float *) glMapBuffer( GL_ARRAY_BUFFER, GL_READ_ONLY );
+//    for (int i = 0; i < 36 * 3; i++) {
+//        if(i % 3 == 0){
+//            std::cout << std::endl;
+//        }
+//        std::cout << mapVertex[i] << ", ";
+//    }
 }
 
 void Renderer::render(){
     delta+= 0.5;
     glBindVertexArray (vao);
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    glUseProgram (shader_programme);
     glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0,0,-10),
                                        glm::vec3(0,0,0),
                                        glm::vec3(0.0f, 1.0f, 0.0f)
                                        );
     glm::mat4 projectionMatrix = glm::perspective(0.78f, (float)640/480, 0.01f, 100.0f);
-    glm::mat4 mvpMatrix = projectionMatrix * viewMatrix;
+    glm::mat4 rotation = glm::rotate(delta*0.1f, glm::vec3( 1.0, 1.0, 0.0 ) );
+    glm::mat4 mvpMatrix = projectionMatrix * viewMatrix * rotation;
     //glm::mat4 mvpMatrix = glm::mat4(1);
     // wipe the drawing surface clear
-    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glUseProgram (shader_programme);
     glUniformMatrix4fv(mvp, 1, GL_FALSE, &mvpMatrix[0][0]);
-    glBindVertexArray (vao);
     // draw points 0-3 from the currently bound VAO with current in-use shader
     glDrawArrays (GL_TRIANGLES, 0, mesh->getVertices().size());
     
     
     glUseProgram(uiShaderProgram);
-    glBindVertexArray (uiVao);
+    //glBindVertexArray (uiVao);
     
     glActiveTexture(GL_TEXTURE0);
     glUniform1i(textureDataUniform, 0); //set to 0 because the texture is bound to GL_TEXTURE0
@@ -253,7 +280,7 @@ void Renderer::render(){
     glUniformMatrix4fv(uiMvp, 1, GL_FALSE, &orthoMatrix[0][0]);
     // draw points 0-3 from the currently bound VAO with current in-use shader
     glDrawArrays (GL_TRIANGLES, 0, vertices.size());
-    
+
     // update other events like input handling
     glfwPollEvents ();
     // put the stuff we've been drawing onto the display
