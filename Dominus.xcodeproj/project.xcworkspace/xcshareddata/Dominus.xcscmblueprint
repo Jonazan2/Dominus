@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "B69B84C6461BE5B81BEA4C01D0A7510BCE382FC6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "B69B84C6461BE5B81BEA4C01D0A7510BCE382FC6" : 0,
+    "0C7BB797BD2DA6C3207E5AE60786C9CBAEAD46F3" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "FDCDE479-E3B0-4186-B76C-624BF145F237",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "B69B84C6461BE5B81BEA4C01D0A7510BCE382FC6" : "Dominus\/",
+    "0C7BB797BD2DA6C3207E5AE60786C9CBAEAD46F3" : "Software%20Renderer\/software-renderer\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Dominus",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Dominus.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/AlvaroChambi\/SoftwareRenderer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0C7BB797BD2DA6C3207E5AE60786C9CBAEAD46F3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Jonazan2\/Dominus.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B69B84C6461BE5B81BEA4C01D0A7510BCE382FC6"
+    }
+  ]
+}

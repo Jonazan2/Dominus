@@ -16,7 +16,7 @@ Renderer::~Renderer(){
 
 void Renderer::init(){
     //Init window
-    
+    delta = 0;
     if (!glfwInit ()) {
         fprintf (stderr, "ERROR: could not start GLFW3\n");
         return ;
@@ -57,7 +57,7 @@ void Renderer::init(){
     
     const char* vertex_shader =
     "#version 400\n"
-    "in vec3 vp;"
+    "layout(location = 1) in vec3 vp;"
     "uniform mat4 mvp;"
     "void main () {"
     "  gl_Position = mvp * vec4 (vp, 1.0);"
@@ -72,7 +72,7 @@ void Renderer::init(){
     
     const char* white_vertex_shader =
     "#version 400\n"
-    "in vec3 vertexCoord;"
+    "layout(location = 2) in vec3 vertexCoord;"
     "uniform mat4 mvp2;"
     "void main () {"
     "  gl_Position = mvp2 * vec4 (vertexCoord, 1.0);"
@@ -99,7 +99,8 @@ void Renderer::init(){
     
     //retrieve shader uniforms and attributes ids
     mvp = glGetUniformLocation(shader_programme, "mvp");
-    GLuint positionAttribute = glGetAttribLocation(shader_programme, "vp");
+   // GLuint positionAttribute = glGetAttribLocation(shader_programme, "vp");
+    GLuint positionAttribute = 1;
     
     GLuint vs1 = glCreateShader (GL_VERTEX_SHADER);
     glShaderSource (vs1, 1, &white_vertex_shader, NULL);
@@ -115,8 +116,10 @@ void Renderer::init(){
     
     //retrieve shader uniforms and attributes ids
     mvp2 = glGetUniformLocation(shaderProgram, "mvp2");
-    GLuint positionAttribute2 =
-        glGetAttribLocation(shaderProgram, "vertexCoord");
+//    GLuint positionAttribute2 =
+//        glGetAttribLocation(shaderProgram, "vertexCoord");
+    GLuint positionAttribute2 = 2;
+    //mvp2 = 3;
 
     //buffer data
 //    mesh = new Mesh;
@@ -145,7 +148,8 @@ void Renderer::init(){
     glEnableVertexAttribArray(positionAttribute);
     
     //set vertex array layout for shader attibute and enable attibute
-    glVertexAttribPointer (positionAttribute2, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glVertexAttribPointer (positionAttribute2, 3, GL_FLOAT, GL_FALSE, 0,
+                           (void*)((sizeof (GLfloat) * 3) * mesh->getVertices().size()) );
     glEnableVertexAttribArray(positionAttribute2);
 }
 
@@ -187,13 +191,14 @@ void Renderer::render(){
     glUniformMatrix4fv(mvp, 1, GL_FALSE, &mvpMatrix[0][0]);
     glBindVertexArray (vao);
 
-    glDrawArrays (GL_TRIANGLES, 0, mesh->getVertices().size());
+    glDrawArrays (GL_TRIANGLES, 0, (int)mesh->getVertices().size());
 
+    glUseProgram(shaderProgram);
     mvpMatrix = projectionMatrix * viewMatrix;
-    glUniformMatrix4fv(mvp, 1, GL_FALSE, &mvpMatrix[0][0]);
+    glUniformMatrix4fv(mvp2, 1, GL_FALSE, &mvpMatrix[0][0]);
     glDrawArrays (GL_TRIANGLES,
-                  mesh->getVertices().size() ,
-                  mesh2->getVertices().size());
+                  0,
+                  (int)mesh2->getVertices().size());
     // update other events like input handling
     glfwPollEvents ();
     // put the stuff we've been drawing onto the display
