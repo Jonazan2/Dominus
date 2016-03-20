@@ -29,6 +29,7 @@ void Button::render(Renderer *renderer)
 //    
 //    texture->setPosition(this->getPosition());
 //    renderer->drawTexture(texture, this->getWidth(), this->getHeight());
+    renderer->drawtexture( this );
 }
 
 void Button::setTexture(Texture *texture)
@@ -36,6 +37,7 @@ void Button::setTexture(Texture *texture)
     //TODO: update texture logic
 //    texture->hud = this->isHUD();
 //    this->texture = texture;
+    this->texture = texture;
 }
 
 void Button::setImageResource(std::string resource)

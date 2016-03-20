@@ -23,6 +23,7 @@ public:
     int getWidth();
     int getHeight();
     GLuint textureUID;
+    
 private:
     bool loadPngImage( const char *name, int &outWidth, int &outHeight,
                       bool &outHasAlpha, GLubyte **outData );

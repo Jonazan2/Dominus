@@ -17,6 +17,8 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Node.hpp"
+#include "Texture.h"
+class UIComponent;
 
 class Renderer{
 public:
@@ -35,8 +37,11 @@ public:
     void loadMesh( std::vector<Node*> renderBatch );
     void draw( std::vector<Node*> renderBatch );
     void initUI();
-    //void loadUI( std::vector<UIComponent*> uiComponents );
-    //void drawUI( std::vector<UIComponent*> uiComponents );
+    void loadUI( );
+    void drawUI(  );
+    
+    void drawtexture( UIComponent* component );
+    
     void present();
     void clear();
 private:
@@ -60,6 +65,8 @@ private:
     GLuint uiMVPMatrix;
     GLuint uiTextureAttribute;
     GLuint uiTextureData;
+    
+    std::vector<UIComponent*> uiComponents;
 };
 
 #endif /* defined(__Dominus__Renderer__) */

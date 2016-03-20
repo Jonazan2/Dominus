@@ -8,6 +8,9 @@
 
 #include "RenderScene.h"
 #include "Log.hpp"
+#include "HorizontalLayout.h"
+#include "VerticalLayout.h"
+#include "Button.h"
 
 RenderScene::RenderScene() {
     yaw = -90.0f;
@@ -72,6 +75,31 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     
     scene->addNode( planeNode );
     scene->load();
+    
+    VerticalLayout* root = new VerticalLayout;
+    Params params = Params();
+    params.disposition = WEIGHT_DISPOSITION;
+    root->setParams(params);
+    Button* button = new Button;
+    button->weight = 1;
+    Button* button2 = new Button;
+    button2->weight = 1;
+    Texture* buttonTexture = new Texture("token.png");
+    Texture* button2Texture = new Texture("token.png");
+    Params buttonParams = Params();
+    buttonParams.width = WRAP;
+    buttonParams.height = WRAP;
+    buttonParams.gravity = DOWN;
+    
+    button2->setParams(buttonParams);
+    button->setParams(buttonParams);
+    button2->setTexture(button2Texture);
+    button->setTexture( buttonTexture );
+    
+    scene->setSceneHUD( root );
+    root->addComponent(button);
+    root->addComponent(button2);
+    scene->renderUI();
 }
 
 void RenderScene::onUpdate( double delta ) {

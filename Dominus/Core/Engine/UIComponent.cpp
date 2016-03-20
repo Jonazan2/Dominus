@@ -11,6 +11,7 @@
 UIComponent::UIComponent() : width(0), height(0), weight(0),hud(false), visible(true), texture(nullptr), parent(nullptr)
                 , listener(nullptr)
 {
+    mesh = new Mesh;
 }
 
 UIComponent::~UIComponent()
@@ -29,8 +30,7 @@ void UIComponent::onMeasureChanged()
 }
 
 //TODO: Update event handling
-bool UIComponent::handleEvent(const Event event)
-{
+bool UIComponent::handleEvent( const Event event ) {
 //    bool result = false;
 //    Point position = Point(event.x, event.y);
 //    if (texture->matchPosition(position)) {
@@ -52,6 +52,7 @@ void UIComponent::render(Renderer *renderer)
 //        texture->setPosition(position);
 //        renderer->drawTexture(texture, width, height);
 //    }
+    renderer->drawtexture( this );
 }
 
 UIComponent* UIComponent::matchEvent(glm::vec2 position)

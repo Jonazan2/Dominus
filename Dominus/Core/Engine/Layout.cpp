@@ -40,6 +40,9 @@ void Layout::render(Renderer* renderer)
 //            component->render(renderer);
 //        }
 //    }
+    for (UIComponent* component : components) {
+        component->render(renderer);
+    }
 }
 
 //When the layout and dimensions and position has been succesfully measured

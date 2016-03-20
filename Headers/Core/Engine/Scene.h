@@ -11,6 +11,7 @@
 
 #include "Renderer.h"
 #include "Camera.h"
+#include "Layout.h"
 #include <vector>
 #include <glm/glm.hpp>
 #include <stack>
@@ -30,6 +31,9 @@ public:
     void addNode( INode* node );
     Camera* getCamera();
     void setCamera( Camera* camera );
+    
+    void setSceneHUD( UIComponent* );
+    void renderUI();
 private:
     Renderer* renderer;
     Node* rootNode;
@@ -38,6 +42,8 @@ private:
     glm::mat4 projectionMatrix;
     std::stack<glm::mat4> matrixStack;
     std::vector< Node* > renderBatch;
+    
+    Layout* windowLayout;
 };
 
 #endif /* Scene_h */

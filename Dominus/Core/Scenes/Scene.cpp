@@ -10,6 +10,7 @@
 
 Scene::Scene( Renderer* renderer ) : renderer( renderer ) {
     rootNode = new Node;
+    windowLayout = new Layout;
     projectionMatrix = glm::perspective( 0.78f, (float)640/480, 0.01f, 100.0f );
     lightPosition = glm::vec3( 0.0, 0.0, 0.0 );
     renderer->updateLightSource( lightPosition );
@@ -34,6 +35,18 @@ void Scene::setCamera( Camera* camera ) {
     this->camera = camera;
     renderer->updateCamera( camera->viewMatrix );
     rootNode->addNode( camera );
+}
+
+void Scene::setSceneHUD( UIComponent * root ) {
+    windowLayout->setWidth(640);
+    windowLayout->setHeight(480);
+    
+    windowLayout->addComponent( root );
+}
+
+void Scene::renderUI() {
+    windowLayout->render(renderer);
+    renderer->loadUI();
 }
 
 void Scene::load() {

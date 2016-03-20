@@ -117,12 +117,12 @@ std::vector<std::string> Mesh::split( const std::string s, const char delimiter 
     return elements;
 }
 
-std::string Mesh::getTexture() const {
-    return texture;
+std::string Mesh::getTexturePath() const {
+    return texturePath;
 }
 
 void Mesh::setTexture( const std::string texture ) {
-    this->texture = texture;
+    this->texturePath = texture;
 }
 
 float Mesh::getRotationAngle() const {
@@ -153,6 +153,10 @@ std::vector<glm::vec3> Mesh::getVertices() const {
     return vertices;
 }
 
+void Mesh::setUvs( std::vector<glm::vec2> uvs ) {
+    this->textureVertices = uvs;
+}
+
 void Mesh::setVertices( std::vector<glm::vec3> vertices ) {
     this->vertices = vertices;
 }
@@ -167,6 +171,14 @@ std::vector<glm::vec3> Mesh::getNormals() const {
 
 int Mesh::getNumTriangles() {
     return numTriangles;
+}
+
+void Mesh::setTexture( Texture* texture ){
+    this->texture = texture;
+}
+
+Texture* Mesh::getTexture() {
+    return texture;
 }
 
 GLsizeiptr Mesh::getSize() const {
