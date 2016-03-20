@@ -39,6 +39,7 @@ public:
     void loadUI( std::vector<UIComponent*> uiComponents );
     void drawUI( std::vector<UIComponent*> uiComponents );
     void present();
+    void clear();
 private:
     GLFWwindow* window;
     GLuint vao;

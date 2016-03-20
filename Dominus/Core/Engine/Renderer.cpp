@@ -67,9 +67,13 @@ void Renderer::init(){
     projectionUID = glGetUniformLocation(shader_programme, "projectionMatrix");
     normalUID = glGetUniformLocation(shader_programme, "normalMatrix");
     lightPositionUID = glGetUniformLocation(shader_programme, "lightPosition");
-    positionAttribute = glGetAttribLocation(shader_programme, "vp");
-    normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
-    textureAttribute = glGetAttribLocation(shader_programme, "textureCoord");
+    
+//    positionAttribute = glGetAttribLocation(shader_programme, "vp");
+//    normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
+//    textureAttribute = glGetAttribLocation(shader_programme, "textureCoord");
+    positionAttribute = 1;
+    normalAttribute = 2;
+    textureAttribute = 3;
     glClearColor( 0.5f, 0.5f, 1.0f, 1.0f );
 }
 
@@ -200,8 +204,6 @@ void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
 }
 
 void Renderer::draw( std::vector<Node*> renderBatch ) {
-    // wipe the drawing surface clear
-    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram (shader_programme);
     glUniformMatrix4fv(projectionUID, 1, GL_FALSE, &projectionMatrix[0][0]);
     glUniform3fv(lightPositionUID, 1, &lightPosition[0]);
@@ -248,8 +250,11 @@ void Renderer::initUI() {
     //retrieve shader uniforms and attributes ids
     uiTextureData = glGetUniformLocation(uiShaderProgram, "textureData");
     uiMVPMatrix = glGetUniformLocation(uiShaderProgram, "modelViewProjectionMatrix");
-    uiPositionAttribute = glGetAttribLocation(uiShaderProgram, "vertexCoord");
-    uiTextureAttribute = glGetAttribLocation(uiShaderProgram, "textureCoord");
+    
+//    uiPositionAttribute = glGetAttribLocation(uiShaderProgram, "vertexCoord");
+//    uiTextureAttribute = glGetAttribLocation(uiShaderProgram, "textureCoord");
+    uiPositionAttribute = 4;
+    uiTextureAttribute = 5;
 }
 
 void Renderer::loadUI( std::vector<UIComponent*> uiComponents ) {
@@ -277,7 +282,7 @@ void Renderer::loadUI( std::vector<UIComponent*> uiComponents ) {
         glBufferSubData(GL_ARRAY_BUFFER, // target
                         offset, // offset
                         uiComponent->getVertexSize(), // size
-                        uiComponent->getVertices()[0]); // data
+                        &uiComponent->getVertices()[0]); // data
         offset += uiComponent->getVertexSize();
     }
     
@@ -344,7 +349,7 @@ void Renderer::loadUI( std::vector<UIComponent*> uiComponents ) {
 }
 
 void Renderer::drawUI( std::vector<UIComponent*> uiComponents ) {
-    glm::mat4 orthoMatrix = glm::ortho( 0, 640, 480, 0 );
+    glm::mat4 orthoMatrix = glm::ortho( 0.0, 640.0, 480.0, 0.0 );
     glUseProgram ( uiShaderProgram );
     glBindVertexArray (vao);
     
@@ -369,6 +374,11 @@ void Renderer::drawUI( std::vector<UIComponent*> uiComponents ) {
         offset += (int)uiComponent->getVertices().size();
         glBindTexture( GL_TEXTURE_2D , 0 );
     }
+}
+
+void Renderer::clear() {
+    // wipe the drawing surface clear
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Renderer::present() {

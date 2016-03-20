@@ -54,7 +54,6 @@ void Scene::render() {
         
         renderer->draw( renderBatch );
         renderBatch.clear();
-        renderer->present();
     }
 }
 

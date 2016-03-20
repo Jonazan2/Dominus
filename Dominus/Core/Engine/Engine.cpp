@@ -29,7 +29,7 @@ void Engine::init() {
     renderer->initUI();
     
     UIComponent* uiComponent = new UIComponent;
-    Texture* texture = new Texture("diffuse.png");
+    Texture* texture = new Texture("token.png");
     uiComponent->setTexture( texture );
     uiComponents.push_back( uiComponent );
     renderer->loadUI( uiComponents );
@@ -58,8 +58,10 @@ void Engine::update( double delta ){
 }
 
 void Engine::render(){
+    renderer->clear();
     scene->render();
     renderer->drawUI( uiComponents );
+    renderer->present();
 }
 
 bool Engine::isRunning(){

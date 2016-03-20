@@ -19,9 +19,9 @@ public:
     UIComponent();
     ~UIComponent();
     
-    std::vector<glm::vec3*> getVertices() const;
+    std::vector<glm::vec3> getVertices() const;
     GLsizeiptr getVertexSize() const;
-    std::vector<glm::vec2*> getUvs() const;
+    std::vector<glm::vec2> getUvs() const;
     GLsizeiptr getUvsSize() const;
     void setTexture( Texture* texture );
     Texture* getTexture() const;
@@ -29,8 +29,8 @@ public:
     int x;
     int y;
 private:
-    std::vector<glm::vec3*> vertices;
-    std::vector<glm::vec2*> uvs;
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec2> uvs;
     Texture* texture;
 };
 

@@ -1,7 +1,7 @@
 #version 400
-in vec3 vp;
-in vec3 normalAttribute;
-in vec2 textureCoord;
+layout(location = 1) in vec3 vp;
+layout(location = 2) in vec3 normalAttribute;
+layout(location = 3) in vec2 textureCoord;
 out vec3 lightColor;
 out vec2 fragTextureCoord;
 uniform mat3 normalMatrix;

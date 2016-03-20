@@ -16,7 +16,7 @@ UIComponent::~UIComponent() {
 
 }
 
-std::vector<glm::vec3 *> UIComponent::getVertices() const {
+std::vector<glm::vec3> UIComponent::getVertices() const {
     return vertices;
 }
 
@@ -26,31 +26,36 @@ GLsizeiptr UIComponent::getVertexSize() const {
 
 void UIComponent::setTexture( Texture* texture ) {
     this->texture = texture;
-    glm::vec2* topLeft = new glm::vec2( 0, 0 );
-    glm::vec2* topRight = new glm::vec2( texture->getWidth(), 0 );
-    glm::vec2* bottomLeft = new glm::vec2( 0, texture->getHeight() );
-    glm::vec2* bottomRight = new glm::vec2( texture->getWidth(),
+    glm::vec2 topLeft = glm::vec2( 0, 0 );
+    glm::vec2 topRight = glm::vec2( texture->getWidth(), 0 );
+    glm::vec2 bottomLeft = glm::vec2( 0, texture->getHeight() );
+    glm::vec2 bottomRight = glm::vec2( texture->getWidth(),
                                            texture->getHeight() );
-    vertices.push_back( new glm::vec3( *topLeft, 0 ) );
-    vertices.push_back( new glm::vec3( *bottomLeft, 0 ) );
-    vertices.push_back( new glm::vec3( *topRight, 0 ) );
-    vertices.push_back( new glm::vec3( *bottomLeft, 0 ) );
-    vertices.push_back( new glm::vec3( *topRight, 0 ) );
-    vertices.push_back( new glm::vec3( *bottomRight, 0 ) );
+    vertices.push_back( glm::vec3( topLeft, 0 ) );
+    vertices.push_back( glm::vec3( bottomLeft, 0 ) );
+    vertices.push_back( glm::vec3( topRight, 0 ) );
+    vertices.push_back( glm::vec3( bottomLeft, 0 ) );
+    vertices.push_back( glm::vec3( topRight, 0 ) );
+    vertices.push_back( glm::vec3( bottomRight, 0 ) );
     
-    uvs.push_back( topLeft );
-    uvs.push_back( bottomLeft );
-    uvs.push_back( topRight );
-    uvs.push_back( bottomLeft );
-    uvs.push_back( topRight );
-    uvs.push_back( bottomRight );
+    glm::vec2 uvTopLeft = glm::vec2( 0, 0 );
+    glm::vec2 uvTopRight = glm::vec2( 1, 0 );
+    glm::vec2 uvBottomLeft = glm::vec2( 0, 1 );
+    glm::vec2 uvBottomRight = glm::vec2( 1, 1 );
+    
+    uvs.push_back(uvBottomRight );
+    uvs.push_back( uvTopRight );
+    uvs.push_back( uvBottomLeft );
+    uvs.push_back( uvTopRight );
+    uvs.push_back( uvBottomLeft );
+    uvs.push_back( uvTopLeft );
 }
 
 Texture* UIComponent::getTexture() const {
     return texture;
 }
 
-std::vector<glm::vec2 *> UIComponent::getUvs() const {
+std::vector<glm::vec2> UIComponent::getUvs() const {
     return uvs;
 }
 
