@@ -17,7 +17,6 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Node.hpp"
-#include "UIComponent.h"
 
 class Renderer{
 public:
@@ -36,8 +35,8 @@ public:
     void loadMesh( std::vector<Node*> renderBatch );
     void draw( std::vector<Node*> renderBatch );
     void initUI();
-    void loadUI( std::vector<UIComponent*> uiComponents );
-    void drawUI( std::vector<UIComponent*> uiComponents );
+    //void loadUI( std::vector<UIComponent*> uiComponents );
+    //void drawUI( std::vector<UIComponent*> uiComponents );
     void present();
     void clear();
 private:

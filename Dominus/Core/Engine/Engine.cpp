@@ -28,11 +28,11 @@ void Engine::init() {
     gameScene->onSceneCreated( scene );
     renderer->initUI();
     
-    UIComponent* uiComponent = new UIComponent;
-    Texture* texture = new Texture("token.png");
-    uiComponent->setTexture( texture );
-    uiComponents.push_back( uiComponent );
-    renderer->loadUI( uiComponents );
+//    UIComponent* uiComponent = new UIComponent;
+//    Texture* texture = new Texture("token.png");
+////    uiComponent->setTexture( texture );
+////    uiComponents.push_back( uiComponent );
+//    renderer->loadUI( uiComponents );
 }
 
 void Engine::processInput(){
@@ -60,7 +60,7 @@ void Engine::update( double delta ){
 void Engine::render(){
     renderer->clear();
     scene->render();
-    renderer->drawUI( uiComponents );
+    //renderer->drawUI( uiComponents );
     renderer->present();
 }
 

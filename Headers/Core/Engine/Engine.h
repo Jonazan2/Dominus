@@ -36,7 +36,6 @@ private:
     Node* node;
     std::vector<Node*> nodes;
     Window* window;
-    std::vector<UIComponent*> uiComponents;
 };
 
 #endif /* defined(__Dominus__Engine__) */
