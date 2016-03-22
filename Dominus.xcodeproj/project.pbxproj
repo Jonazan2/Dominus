@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3A7AA0B21C577E9F00C45A2A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */; };
+		3A8CBB471C73794E005A52BF /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A8CBB461C73794E005A52BF /* GameScene.cpp */; };
+		3AC1547B1C85994500FBE71C /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AC1547A1C85994500FBE71C /* libz.1.2.5.dylib */; };
 		92677A7D1C5665F900899024 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92677A7C1C5665F900899024 /* main.cpp */; };
 		92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E3453C1C6393D200308A63 /* Logger.hpp */; };
 		92E345411C64E04A00308A63 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345401C64E04A00308A63 /* Log.cpp */; };
@@ -84,6 +86,8 @@
 
 /* Begin PBXFileReference section */
 		3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		3A8CBB461C73794E005A52BF /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = Scenes/GameScene.cpp; sourceTree = "<group>"; };
+		3AC1547A1C85994500FBE71C /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		92677A791C5665F900899024 /* Dominus */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Dominus; sourceTree = BUILT_PRODUCTS_DIR; };
 		92677A7C1C5665F900899024 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		92E3453C1C6393D200308A63 /* Logger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Logger.hpp; path = Headers/Core/Log/Logger.hpp; sourceTree = "<group>"; };
@@ -156,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AC1547B1C85994500FBE71C /* libz.1.2.5.dylib in Frameworks */,
 				9C470C291C7F849F00558755 /* libz.1.2.5.tbd in Frameworks */,
 				3A7AA0B21C577E9F00C45A2A /* OpenGL.framework in Frameworks */,
 			);
@@ -178,6 +183,7 @@
 		92677A701C5665F900899024 = {
 			isa = PBXGroup;
 			children = (
+				3AC1547A1C85994500FBE71C /* libz.1.2.5.dylib */,
 				9C470C281C7F849F00558755 /* libz.1.2.5.tbd */,
 				9CCB2F9F1C82F8790066C313 /* gmock.framework */,
 				9CCB2F9D1C82F7FE0066C313 /* gtest.framework */,
