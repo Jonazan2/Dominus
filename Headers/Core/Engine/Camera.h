@@ -20,14 +20,14 @@ public:
     Camera();
     ~Camera();
     
-    void update();
-    
+    void onUpdate();
     void onRestore( Scene* scene );
     void onRender( Scene* scene );
     void onRenderChildrends( Scene* scene );
     void onPostRender( Scene* scene ) ;
     
     glm::mat4 viewMatrix;
+    glm::mat4 projectionMatrix;
     glm::vec3 up;
     glm::vec3 position;
     glm::vec3 front;

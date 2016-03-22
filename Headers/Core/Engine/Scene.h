@@ -12,6 +12,7 @@
 #include "Renderer.h"
 #include "Camera.h"
 #include "Layout.h"
+#include "LightNode.h"
 #include <vector>
 #include <glm/glm.hpp>
 #include <stack>
@@ -31,19 +32,21 @@ public:
     void addNode( INode* node );
     Camera* getCamera();
     void setCamera( Camera* camera );
+    LightNode* getLightNode();
+    void setLightNode( LightNode* lightNode );
     
-    void setSceneHUD( UIComponent* );
+    void setSceneHUD( UIComponent* component );
     void renderUI();
 private:
     Renderer* renderer;
-    Node* rootNode;
-    Camera* camera;
-    glm::vec3 lightPosition;
-    glm::mat4 projectionMatrix;
-    std::stack<glm::mat4> matrixStack;
-    std::vector< Node* > renderBatch;
-    
     Layout* windowLayout;
+    Node* rootNode;
+    
+    Camera* camera;
+    LightNode* lightNode;
+    
+    std::stack< glm::mat4 > matrixStack;
+    std::vector< Node* > renderBatch;
 };
 
 #endif /* Scene_h */

@@ -8,14 +8,15 @@
 
 #include "Scene.h"
 
-Scene::Scene( Renderer* renderer ) : renderer( renderer ) {
+Scene::Scene( Renderer* renderer ) :
+                                    renderer( renderer ),
+                                    lightNode( nullptr ),
+                                    camera( nullptr ) {
     rootNode = new Node;
     windowLayout = new Layout;
-    projectionMatrix = glm::perspective( 0.78f, (float)640/480, 0.01f, 100.0f );
-    lightPosition = glm::vec3( 0.0, 0.0, 0.0 );
-    renderer->updateLightSource( lightPosition );
-    renderer->updateProjection( projectionMatrix );
-    renderer->init();
+//    renderer->updateLightSource( lightPosition );
+//    renderer->updateProjection( projectionMatrix );
+//    renderer->init();
     pushMatrix( glm::mat4( 1 ) );
 }
 
@@ -24,24 +25,35 @@ Scene::~Scene() {
 }
 
 void Scene::update( double delta ) {
-    renderer->updateCamera( camera->viewMatrix );
+    rootNode->onUpdate();
+    if( camera != nullptr ) {
+        renderer->updateProjection( camera->projectionMatrix );
+        renderer->updateViewMatrix( camera->viewMatrix );
+    }
+    if( lightNode != nullptr ) {
+        renderer->updateLightSource( lightNode->position );
+    }
 }
 
 Camera* Scene::getCamera() {
     return camera;
 }
 
+void Scene::setLightNode( LightNode *lightNode ) {
+    this->lightNode = lightNode;
+    rootNode->addNode( lightNode );
+}
+
 void Scene::setCamera( Camera* camera ) {
     this->camera = camera;
-    renderer->updateCamera( camera->viewMatrix );
     rootNode->addNode( camera );
 }
 
-void Scene::setSceneHUD( UIComponent * root ) {
+void Scene::setSceneHUD( UIComponent * component ) {
     windowLayout->setWidth(640);
     windowLayout->setHeight(480);
     
-    windowLayout->addComponent( root );
+    windowLayout->addComponent( component );
 }
 
 void Scene::renderUI() {
@@ -51,7 +63,7 @@ void Scene::renderUI() {
 
 void Scene::load() {
     rootNode->onRestore( this );
-    renderer->loadMesh( renderBatch );
+    renderer->load( renderBatch );
     renderBatch.clear();
 }
 

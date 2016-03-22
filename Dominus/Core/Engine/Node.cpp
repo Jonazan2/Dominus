@@ -8,7 +8,6 @@
 
 #include "Node.hpp"
 #include "Scene.h"
-#include "Log.hpp"
 #include "glm/ext.hpp"
 
 Node::Node()
@@ -29,6 +28,12 @@ Node::~Node(){
 
 void Node::addNode( INode *node ) {
     childNodes.push_back( node );
+}
+
+void Node::onUpdate() {
+    for ( INode* node : childNodes ) {
+        node->onUpdate();
+    }
 }
 
 void Node::onRestore( Scene* scene ) {
@@ -78,9 +83,12 @@ void Node::setModelMatrix( glm::mat4 modelMatrix ) {
 }
 
 void Node::rotate( const glm::vec3 rotation ) {
-    glm::mat4 rotationX = glm::rotate( rotation.x , glm::vec3( 1.0, 0.0, 0.0 ) );
-    glm::mat4 rotationY = glm::rotate( rotation.y , glm::vec3( 0.0, 1.0, 0.0 ) );
-    glm::mat4 rotationZ = glm::rotate( rotation.z , glm::vec3( 0.0, 0.0, 1.0 ) );
+    glm::mat4 rotationX = glm::rotate( rotation.x ,
+                                       glm::vec3( 1.0, 0.0, 0.0 ) );
+    glm::mat4 rotationY = glm::rotate( rotation.y ,
+                                       glm::vec3( 0.0, 1.0, 0.0 ) );
+    glm::mat4 rotationZ = glm::rotate( rotation.z ,
+                                       glm::vec3( 0.0, 0.0, 1.0 ) );
     
     glm::mat4 total = rotationZ * rotationY * rotationX;
     modelMatrix = modelMatrix * total;

@@ -10,10 +10,10 @@
 #define INode_h
 
 class Scene;
-class Renderer;
 
 class INode {
 public:
+    virtual void onUpdate( ) = 0;
     virtual void onRestore( Scene* scene ) = 0;
     virtual void onRender( Scene* scene ) = 0;
     virtual void onRenderChildrends( Scene* scene ) = 0;

@@ -31,6 +31,8 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     this->scene = scene;
     Camera* camera = new Camera;
     scene->setCamera( camera );
+    LightNode* lightNode = new LightNode;
+    scene->setLightNode( lightNode );
     //buffer data
     Mesh * momoMesh = new Mesh;
     momoMesh->loadObj( "momo.obj" );
@@ -121,7 +123,6 @@ void RenderScene::onUpdate( double delta ) {
                                                       camera->front,
                                                       camera->up)) * cameraSpeed;
     }
-    camera->update();
 }
 
 void RenderScene::onKeyDown( Event* event ) {
@@ -180,7 +181,6 @@ void RenderScene::onMouseDragged( double xRel, double yRel ) {
     front.y = sin(glm::radians(pitch));
     front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
     scene->getCamera()->front = glm::normalize(front);
-    scene->getCamera()->update();
 }
 
 void RenderScene::onCosumeInput( std::vector<Event *>* events ) {

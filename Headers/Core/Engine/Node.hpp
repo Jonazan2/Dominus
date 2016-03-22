@@ -25,6 +25,7 @@ public:
     Node( Mesh* mesh );
     ~Node();
     
+    void onUpdate();
     void onRestore( Scene* scene );
     void onRender( Scene* scene );
     void onRenderChildrends( Scene* scene );

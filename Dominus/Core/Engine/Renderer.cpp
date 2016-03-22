@@ -19,25 +19,13 @@ Renderer::Renderer( GLFWwindow* window ) : window( window ) {
 Renderer::~Renderer(){
 }
 
-void Renderer::compileShader(GLuint shader){
-    glCompileShader(shader);
-    
-    GLint isCompiled = 0;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
-    if(isCompiled == GL_FALSE)
-    {
-        GLint maxLength = 0;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
-        
-        // The maxLength includes the NULL character
-        std::vector<GLchar> errorLog(maxLength);
-        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
-        Log::getInstance().e(&errorLog[0]);
-    }
+void Renderer::init(){
+    initOpenGLStates();
+    loadShaders();
+    loadUIShaders();
 }
 
-void Renderer::init(){
-    // get version info
+void Renderer::initOpenGLStates() {
     const GLubyte* renderer = glGetString (GL_RENDERER); // get renderer string
     const GLubyte* version = glGetString (GL_VERSION); // version as a string
     printf ("Renderer: %s\n", renderer);
@@ -49,10 +37,14 @@ void Renderer::init(){
     //enable alpha
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glClearColor( 0.5f, 0.5f, 1.0f, 1.0f );
     
     //create vao and set as current
     glGenVertexArrays (1, &vao);
     glBindVertexArray (vao);
+}
+
+void Renderer::loadShaders() {
     
     Shader* vertexShader = new Shader( "vertex_shader.glsl", GL_VERTEX_SHADER );
     vertexShader->compile();
@@ -72,20 +64,39 @@ void Renderer::init(){
     normalUID = glGetUniformLocation(shader_programme, "normalMatrix");
     lightPositionUID = glGetUniformLocation(shader_programme, "lightPosition");
     
-//    positionAttribute = glGetAttribLocation(shader_programme, "vp");
-//    normalAttribute = glGetAttribLocation(shader_programme, "normalAttribute");
-//    textureAttribute = glGetAttribLocation(shader_programme, "textureCoord");
     positionAttribute = 1;
     normalAttribute = 2;
     textureAttribute = 3;
-    glClearColor( 0.5f, 0.5f, 1.0f, 1.0f );
+}
+
+void Renderer::loadUIShaders() {
+    Shader* vertexShader = new Shader(
+                                      "shaders/ui_vertex_shader.glsl",
+                                      GL_VERTEX_SHADER );
+    vertexShader->compile();
+    
+    Shader* fragmentShader = new Shader(
+                                        "shaders/ui_fragment_shader.glsl",
+                                        GL_FRAGMENT_SHADER );
+    fragmentShader->compile();
+    
+    uiShaderProgram = glCreateProgram ();
+    glAttachShader ( uiShaderProgram, fragmentShader->getUID() );
+    glAttachShader ( uiShaderProgram, vertexShader->getUID() );
+    glLinkProgram ( uiShaderProgram );
+    
+    uiTextureData = glGetUniformLocation(uiShaderProgram, "textureData");
+    uiMVPMatrix = glGetUniformLocation(uiShaderProgram, "modelViewProjectionMatrix");
+    
+    uiPositionAttribute = 4;
+    uiTextureAttribute = 5;
 }
 
 void Renderer::updateProjection( glm::mat4 projectionMatrix ) {
     this->projectionMatrix = projectionMatrix;
 }
 
-void Renderer:: updateCamera( glm::mat4 viewMatrix ) {
+void Renderer:: updateViewMatrix( glm::mat4 viewMatrix ) {
     this->viewMatrix = viewMatrix;
 }
 
@@ -93,7 +104,7 @@ void Renderer::updateLightSource( glm::vec3 lightSource ) {
     this->lightPosition = lightSource;
 }
 
-void Renderer::loadMesh( std::vector<Node*> renderBatch ) {
+void Renderer::load( std::vector<Node*> renderBatch ) {
     //create buffer object and set as current
     GLuint buffers[3];
     glGenBuffers( 3, buffers );
@@ -233,32 +244,6 @@ void Renderer::draw( std::vector<Node*> renderBatch ) {
         offset += (int)node->getMesh()->getVertices().size();
         glBindTexture( GL_TEXTURE_2D , 0 );
     }
-}
-
-void Renderer::initUI() {
-    Shader* vertexShader = new Shader(
-                                      "shaders/ui_vertex_shader.glsl",
-                                      GL_VERTEX_SHADER );
-    vertexShader->compile();
-    
-    Shader* fragmentShader = new Shader(
-                                        "shaders/ui_fragment_shader.glsl",
-                                        GL_FRAGMENT_SHADER );
-    fragmentShader->compile();
-    
-    uiShaderProgram = glCreateProgram ();
-    glAttachShader ( uiShaderProgram, fragmentShader->getUID() );
-    glAttachShader ( uiShaderProgram, vertexShader->getUID() );
-    glLinkProgram ( uiShaderProgram );
-    
-    //retrieve shader uniforms and attributes ids
-    uiTextureData = glGetUniformLocation(uiShaderProgram, "textureData");
-    uiMVPMatrix = glGetUniformLocation(uiShaderProgram, "modelViewProjectionMatrix");
-    
-//    uiPositionAttribute = glGetAttribLocation(uiShaderProgram, "vertexCoord");
-//    uiTextureAttribute = glGetAttribLocation(uiShaderProgram, "textureCoord");
-    uiPositionAttribute = 4;
-    uiTextureAttribute = 5;
 }
 
 void Renderer::drawtexture( UIComponent* component ){

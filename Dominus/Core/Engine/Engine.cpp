@@ -23,7 +23,7 @@ void Engine::init() {
     inputHandler = new GLFWInputHandler( window->windowHandler() );
     inputHandler->init();
     renderer = new Renderer( window->windowHandler() );
-    renderer->initUI();
+    renderer->init();
     scene = new Scene( renderer );
     gameScene = new RenderScene;
     gameScene->onSceneCreated( scene );

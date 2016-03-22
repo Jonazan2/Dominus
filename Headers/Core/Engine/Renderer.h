@@ -25,18 +25,14 @@ public:
     Renderer( GLFWwindow* window );
     ~Renderer();
     void init();
-    void compileShader(GLuint shader);
-    void onMouseDragged(double xRel, double yRel);
-    void onMouseClicked(double x, double y);
-    void onMouseReleased(double x, double y);
-    void onMouseMoved(double x, double y);
     
     void updateProjection( glm::mat4 projectionMatrix );
     void updateLightSource( glm::vec3 lightSource );
-    void updateCamera( glm::mat4 viewMatrix );
-    void loadMesh( std::vector<Node*> renderBatch );
+    void updateViewMatrix( glm::mat4 viewMatrix );
+    
+    void load( std::vector<Node*> renderBatch );
     void draw( std::vector<Node*> renderBatch );
-    void initUI();
+    
     void loadUI( );
     void drawUI(  );
     
@@ -45,12 +41,19 @@ public:
     void present();
     void clear();
 private:
+    void initOpenGLStates();
+    void loadShaders();
+    void loadUIShaders();
+    
     GLFWwindow* window;
     GLuint vao;
     GLuint shader_programme;
+    
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
+    
     glm::vec3 lightPosition;
+    
     GLuint positionAttribute;
     GLuint normalAttribute;
     GLuint textureAttribute;
