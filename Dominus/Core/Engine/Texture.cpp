@@ -8,6 +8,10 @@
 
 #include "Texture.h"
 
+Texture::Texture() : width(0), height(0){
+
+}
+
 Texture::Texture( std::string filePath ) : filePath( filePath ) {
     bool result = loadPngImage( filePath.c_str() , width, height, hasAlpha, &image);
 }
@@ -20,12 +24,22 @@ GLubyte* Texture::getImageData() {
     return image;
 }
 
+
+
 int Texture::getWidth() {
     return width;
 }
 
 int Texture::getHeight() {
     return height;
+}
+
+void Texture::setWidth( int width ) {
+    this->width = width;
+}
+
+void Texture::setHeight( int height ) {
+    this->height = height;
 }
 
 bool Texture::loadPngImage( const char *name, int &outWidth, int &outHeight,

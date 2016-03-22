@@ -16,12 +16,15 @@
 #include <OpenGL/OpenGL.h>
 class Texture {
 public:
+    Texture();
     Texture( std::string filePath );
     ~Texture();
     
     GLubyte* getImageData();
     int getWidth();
     int getHeight();
+    void setWidth( int width );
+    void setHeight( int height );
     GLuint textureUID;
     
 private:

@@ -18,7 +18,7 @@
 #include <istream>
 #include <sstream>
 #include <list>
-#include <Material.hpp>
+#include "Material.hpp"
 #include "Texture.h"
 
 class Mesh{
