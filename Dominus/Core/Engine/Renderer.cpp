@@ -46,6 +46,9 @@ void Renderer::init(){
     // opengl states
     glEnable (GL_DEPTH_TEST); // enable depth-testing
     glDepthFunc (GL_LESS); // depth-testing interprets a smaller value as
+    //enable alpha
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     //create vao and set as current
     glGenVertexArrays (1, &vao);
@@ -283,12 +286,12 @@ void Renderer::drawtexture( UIComponent* component ){
         glm::vec2 uvBottomLeft = glm::vec2( 0, 1 );
         glm::vec2 uvBottomRight = glm::vec2( 1, 1 );
         
-        uvs.push_back(uvBottomRight );
-        uvs.push_back( uvTopRight );
-        uvs.push_back( uvBottomLeft );
-        uvs.push_back( uvTopRight );
-        uvs.push_back( uvBottomLeft );
+        uvs.push_back(uvBottomLeft );
         uvs.push_back( uvTopLeft );
+        uvs.push_back( uvBottomRight );
+        uvs.push_back( uvTopLeft );
+        uvs.push_back( uvBottomRight );
+        uvs.push_back( uvTopRight );
         component->mesh->setVertices( vertices );
         component->mesh->setUvs( uvs );
         

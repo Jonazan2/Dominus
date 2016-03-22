@@ -76,7 +76,7 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     scene->addNode( planeNode );
     scene->load();
     
-    VerticalLayout* root = new VerticalLayout;
+    HorizontalLayout* root = new HorizontalLayout;
     Params params = Params();
     params.disposition = WEIGHT_DISPOSITION;
     root->setParams(params);
@@ -84,8 +84,8 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     button->weight = 1;
     Button* button2 = new Button;
     button2->weight = 1;
-    Texture* buttonTexture = new Texture("token.png");
-    Texture* button2Texture = new Texture("token.png");
+    Texture* buttonTexture = new Texture("button.png");
+    Texture* button2Texture = new Texture("button.png");
     Params buttonParams = Params();
     buttonParams.width = WRAP;
     buttonParams.height = WRAP;
