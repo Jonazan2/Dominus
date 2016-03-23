@@ -36,7 +36,7 @@ void Engine::processInput(){
     events->clear();
 }
 
-void Engine::consumeEvents( std::vector<Event *> * events) {
+void Engine::consumeEvents( std::vector<Event *> * events ) {
     for ( int i = 0; i < events->size(); i++ ) {
         Event* event = events->at( i );
         if( event->type == ON_WINDOW_CLOSED ) {

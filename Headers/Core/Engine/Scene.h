@@ -36,7 +36,7 @@ public:
     void setLightNode( LightNode* lightNode );
     
     void setSceneHUD( UIComponent* component );
-    void renderUI();
+    void loadUI();
 private:
     Renderer* renderer;
     Layout* windowLayout;

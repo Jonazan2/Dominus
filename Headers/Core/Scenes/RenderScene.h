@@ -23,8 +23,8 @@ public:
     void onKeyDown( Event* event );
     void onMouseDragged( double xRel, double yRel );
     
-    void populateScene();
-    void populateUI();
+    void populateScene( Scene* scene );
+    void populateUI( Scene* scene );
 
     Scene* scene;
     

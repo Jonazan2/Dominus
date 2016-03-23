@@ -28,6 +28,11 @@ RenderScene::~RenderScene() {
 }
 
 void RenderScene::onSceneCreated( Scene* scene ) {
+    populateScene( scene );
+    populateUI( scene );
+}
+
+void RenderScene::populateScene( Scene* scene ) {
     this->scene = scene;
     Camera* camera = new Camera;
     scene->setCamera( camera );
@@ -77,7 +82,10 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     
     scene->addNode( planeNode );
     scene->load();
-    
+
+}
+
+void RenderScene::populateUI( Scene* scene ) {
     HorizontalLayout* root = new HorizontalLayout;
     Params params = Params();
     params.disposition = WEIGHT_DISPOSITION;
@@ -101,7 +109,7 @@ void RenderScene::onSceneCreated( Scene* scene ) {
     scene->setSceneHUD( root );
     root->addComponent(button);
     root->addComponent(button2);
-    scene->renderUI();
+    scene->loadUI();
 }
 
 void RenderScene::onUpdate( double delta ) {

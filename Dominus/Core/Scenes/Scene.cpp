@@ -14,9 +14,6 @@ Scene::Scene( Renderer* renderer ) :
                                     camera( nullptr ) {
     rootNode = new Node;
     windowLayout = new Layout;
-//    renderer->updateLightSource( lightPosition );
-//    renderer->updateProjection( projectionMatrix );
-//    renderer->init();
     pushMatrix( glm::mat4( 1 ) );
 }
 
@@ -56,13 +53,17 @@ void Scene::setSceneHUD( UIComponent * component ) {
     windowLayout->addComponent( component );
 }
 
-void Scene::renderUI() {
+void Scene::loadUI() {
+    //iterate graph and populate the batch
     windowLayout->render(renderer);
+    //load batch in gpu memory
     renderer->loadUI();
 }
 
 void Scene::load() {
+    //iterate the graph and populate the batch
     rootNode->onRestore( this );
+    //load batch in gpu memory
     renderer->load( renderBatch );
     renderBatch.clear();
 }
