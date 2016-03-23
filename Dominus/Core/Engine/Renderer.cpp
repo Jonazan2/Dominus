@@ -413,5 +413,4 @@ void Renderer::clear() {
 void Renderer::present() {
     // put the stuff we've been drawing onto the display
     glfwSwapBuffers (window);
-    //uiComponents.clear();
 }
