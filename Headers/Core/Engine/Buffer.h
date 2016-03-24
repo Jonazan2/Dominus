@@ -13,17 +13,16 @@
 #include <glm/glm.hpp>
 #include <OpenGL/gl3.h>
 
-class BufferVec3 {
+class Buffer {
 public:
-    BufferVec3();
-    ~BufferVec3();
+    Buffer();
+    ~Buffer();
     
-    void push( std::vector< glm::vec3 > vector );
+    void push( float* vector, GLsizeiptr vectorSize );
     void bind();
     void unBind();
     void clear();
-    void reserve( GLuint units );
-    void updateSize( GLuint units );
+    void reserve( GLsizeiptr size );
     
     GLsizeiptr getSize();
 private:

@@ -6,18 +6,18 @@
 //  Copyright © 2016 frikazos. All rights reserved.
 //
 
-#include "BufferVec3.h"
+#include "Buffer.h"
 
-BufferVec3::BufferVec3() : size( 0 ), maxSize( 0 ) {
-
-}
-
-BufferVec3::~BufferVec3() {
+Buffer::Buffer() : size( 0 ), maxSize( 0 ) {
 
 }
 
-void BufferVec3::reserve( GLuint units ) {
-    updateSize( units );
+Buffer::~Buffer() {
+
+}
+
+void Buffer::reserve( GLsizeiptr size ) {
+    this->size = size;
     //Wrap it in a opengl container and use it as a mock class
     glGenBuffers( 1, &bufferUID );
     bind();
@@ -25,21 +25,17 @@ void BufferVec3::reserve( GLuint units ) {
     unBind();
 }
 
-void BufferVec3::updateSize( GLuint units ) {
-    maxSize = ( sizeof ( GLfloat ) * 3 ) * units;
-}
-
-void BufferVec3::bind() {
+void Buffer::bind() {
     glBindBuffer(  GL_ARRAY_BUFFER, bufferUID );
     binded = true;
 }
 
-void BufferVec3::unBind() {
+void Buffer::unBind() {
     glBindBuffer(  GL_ARRAY_BUFFER, 0 );
     binded = false;
 }
 
-void BufferVec3::clear() {
+void Buffer::clear() {
     if ( binded ) {
         size = 0;
         glBufferData( GL_ARRAY_BUFFER, maxSize, NULL, GL_STATIC_DRAW );
@@ -48,13 +44,12 @@ void BufferVec3::clear() {
     }
 }
 
-void BufferVec3::push( std::vector< glm::vec3 > vector ) {
+void Buffer::push( float* vector, GLsizeiptr vectorSize ) {
     if ( binded ) {
-        GLsizeiptr vecSize = ( sizeof ( GLfloat ) * 3 ) * vector.size();
-        GLsizeiptr totalSize = size + vecSize;
+        GLsizeiptr totalSize = size + vectorSize;
         if( totalSize <= this->maxSize ) {
-            glBufferSubData( GL_ARRAY_BUFFER , size, vecSize, &vector[0] );
-            size += vecSize;
+            glBufferSubData( GL_ARRAY_BUFFER , size, vectorSize, vector );
+            size += vectorSize;
         } else {
             //TODO: reserve more memory
         }
@@ -63,6 +58,6 @@ void BufferVec3::push( std::vector< glm::vec3 > vector ) {
     }
 }
 
-GLsizeiptr BufferVec3::getSize() {
+GLsizeiptr Buffer::getSize() {
     return size;
 }

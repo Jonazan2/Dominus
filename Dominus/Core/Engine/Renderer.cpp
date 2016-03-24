@@ -24,9 +24,9 @@ void Renderer::init(){
     loadShaders();
     loadUIShaders();
     
-    verticesBuffer = new BufferVec3( );
-    uvsBuffer = new BufferVec2( );
-    normalBuffer = new BufferVec3( );
+    verticesBuffer = new Buffer( );
+    uvsBuffer = new Buffer( );
+    normalBuffer = new Buffer( );
     
     verticesBuffer->reserve( BUFFER_SIZE );
     normalBuffer->reserve( BUFFER_SIZE );
@@ -103,8 +103,9 @@ void Renderer::loadUIShaders() {
 void Renderer::load( std::vector<Node*> renderBatch ) {
     verticesBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Node* node = renderBatch.at(i);
-        verticesBuffer->push( node->getMesh()->getVertices() );
+        Mesh* mesh = renderBatch.at(i)->getMesh();
+        std::vector<glm::vec3> vector = mesh->getVertices();
+        verticesBuffer->push( (float*)&vector[0], mesh->getSize() );
     }
 //    float* bufferMapped = (float*)glMapBuffer(GL_ARRAY_BUFFER, GL_READ_BUFFER );
 //    for (int i = 0; i < verticesBuffer->getSize() ; i++) {
@@ -120,8 +121,9 @@ void Renderer::load( std::vector<Node*> renderBatch ) {
     
     normalBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Node* node = renderBatch.at(i);
-        normalBuffer->push( node->getMesh()->getNormals() );
+        Mesh* mesh = renderBatch.at(i)->getMesh();
+        std::vector<glm::vec3> vector = mesh->getNormals();
+        verticesBuffer->push( (float*)&vector[0], mesh->getNormalVerticesSize() );
     }
 
     glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
@@ -129,8 +131,9 @@ void Renderer::load( std::vector<Node*> renderBatch ) {
     
     uvsBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Node* node = renderBatch.at( i );
-        uvsBuffer->push( node->getMesh()->getUvs() );
+        Mesh* mesh = renderBatch.at(i)->getMesh();
+        std::vector<glm::vec2> vector = mesh->getUvs();
+        verticesBuffer->push( (float*)&vector[0], mesh->getTextureVerticesSize() );
     }
     
     glVertexAttribPointer( textureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );

@@ -18,8 +18,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Node.hpp"
 #include "Texture.h"
-#include "BufferVec2.h"
-#include "BufferVec3.h"
+#include "Buffer.h"
 
 class UIComponent;
 
@@ -48,7 +47,7 @@ private:
     void loadShaders();
     void loadUIShaders();
     
-    static const GLuint BUFFER_SIZE = 100000;
+    static const GLuint BUFFER_SIZE = 100000 * 12;
     GLFWwindow* window;
     GLuint vao;
     GLuint shader_programme;
@@ -73,9 +72,9 @@ private:
     GLuint uiTextureAttribute;
     GLuint uiTextureData;
     
-    BufferVec3* verticesBuffer;
-    BufferVec3* normalBuffer;
-    BufferVec2* uvsBuffer;
+    Buffer* verticesBuffer;
+    Buffer* normalBuffer;
+    Buffer* uvsBuffer;
     
     std::vector<UIComponent*> uiComponents;
 };
