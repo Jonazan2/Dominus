@@ -24,9 +24,9 @@ void Renderer::init(){
     loadShaders();
     loadUIShaders();
     
-    verticesBuffer = new Buffer( );
-    uvsBuffer = new Buffer( );
-    normalBuffer = new Buffer( );
+    verticesBuffer = new Buffer( new GLGpuBuffer );
+    uvsBuffer = new Buffer( new GLGpuBuffer );
+    normalBuffer = new Buffer( new GLGpuBuffer );
     
     verticesBuffer->reserve( BUFFER_SIZE );
     normalBuffer->reserve( BUFFER_SIZE );
@@ -104,26 +104,16 @@ void Renderer::load( std::vector<Node*> renderBatch ) {
     verticesBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Mesh* mesh = renderBatch.at(i)->getMesh();
-        std::vector<glm::vec3> vector = mesh->getVertices();
-        verticesBuffer->push( (float*)&vector[0], mesh->getSize() );
+        verticesBuffer->push( (float*)&mesh->getVertices()[0], mesh->getSize() );
     }
-//    float* bufferMapped = (float*)glMapBuffer(GL_ARRAY_BUFFER, GL_READ_BUFFER );
-//    for (int i = 0; i < verticesBuffer->getSize() ; i++) {
-//        if(i % 3 == 0){
-//            std::cout << bufferMapped[i] << ", ";
-//        }else {
-//            std::cout << std::endl;
-//        }
-//        i++;
-//    }
     glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(positionAttribute);
     
     normalBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Mesh* mesh = renderBatch.at(i)->getMesh();
-        std::vector<glm::vec3> vector = mesh->getNormals();
-        verticesBuffer->push( (float*)&vector[0], mesh->getNormalVerticesSize() );
+        normalBuffer->push( (float*)&mesh->getNormals()[0],
+                              mesh->getNormalVerticesSize() );
     }
 
     glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
@@ -132,8 +122,8 @@ void Renderer::load( std::vector<Node*> renderBatch ) {
     uvsBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Mesh* mesh = renderBatch.at(i)->getMesh();
-        std::vector<glm::vec2> vector = mesh->getUvs();
-        verticesBuffer->push( (float*)&vector[0], mesh->getTextureVerticesSize() );
+        uvsBuffer->push( (float*)&mesh->getUvs()[0],
+                             mesh->getTextureVerticesSize() );
     }
     
     glVertexAttribPointer( textureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );

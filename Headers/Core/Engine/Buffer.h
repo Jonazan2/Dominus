@@ -9,13 +9,13 @@
 #ifndef Buffer_h
 #define Buffer_h
 
-#include <vector>
+#include "GpuBuffer.h"
+#include "UnbindException.h"
 #include <glm/glm.hpp>
-#include <OpenGL/gl3.h>
 
 class Buffer {
 public:
-    Buffer();
+    Buffer( GpuBuffer* buffer );
     ~Buffer();
     
     void push( float* vector, GLsizeiptr vectorSize );
@@ -25,9 +25,12 @@ public:
     void reserve( GLsizeiptr size );
     
     GLsizeiptr getSize();
+    GLsizeiptr getPosition();
 private:
+    GpuBuffer* buffer;
+    
     GLuint bufferUID;
-    GLsizeiptr maxSize;
+    GLsizeiptr position;
     GLsizeiptr size;
     bool binded;
 };

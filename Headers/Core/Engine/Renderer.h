@@ -19,6 +19,7 @@
 #include "Node.hpp"
 #include "Texture.h"
 #include "Buffer.h"
+#include "GLGpuBuffer.h"
 
 class UIComponent;
 

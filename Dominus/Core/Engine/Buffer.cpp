@@ -8,56 +8,65 @@
 
 #include "Buffer.h"
 
-Buffer::Buffer() : size( 0 ), maxSize( 0 ) {
+Buffer::Buffer( GpuBuffer* buffer )
+: size( 0 ), position( 0 ), buffer( buffer ) {
 
 }
 
-Buffer::~Buffer() {
-
-}
+Buffer::~Buffer() { }
 
 void Buffer::reserve( GLsizeiptr size ) {
     this->size = size;
-    //Wrap it in a opengl container and use it as a mock class
-    glGenBuffers( 1, &bufferUID );
+    bufferUID = buffer->genBuffer();
     bind();
-    glBufferData( GL_ARRAY_BUFFER, maxSize, NULL, GL_STATIC_DRAW );
+    buffer->reserve( size );
     unBind();
 }
 
 void Buffer::bind() {
-    glBindBuffer(  GL_ARRAY_BUFFER, bufferUID );
+    buffer->bind( bufferUID );
     binded = true;
 }
 
 void Buffer::unBind() {
-    glBindBuffer(  GL_ARRAY_BUFFER, 0 );
+    buffer->unBind();
     binded = false;
 }
 
 void Buffer::clear() {
     if ( binded ) {
         size = 0;
-        glBufferData( GL_ARRAY_BUFFER, maxSize, NULL, GL_STATIC_DRAW );
+        buffer->clear( size );
     } else {
-        //TODO: throw exception
+        throw new UnbindException( bufferUID );
     }
 }
 
 void Buffer::push( float* vector, GLsizeiptr vectorSize ) {
     if ( binded ) {
-        GLsizeiptr totalSize = size + vectorSize;
-        if( totalSize <= this->maxSize ) {
-            glBufferSubData( GL_ARRAY_BUFFER , size, vectorSize, vector );
-            size += vectorSize;
+        GLsizeiptr totalSize = position + vectorSize;
+        if( totalSize <= this->size ) {
+            buffer->push( vector, position, vectorSize );
+            position += vectorSize;
         } else {
-            //TODO: reserve more memory
+            //save gpu buffer state
+            float* mapped = (float*)buffer->mapBuffer( bufferUID );
+            buffer->reserve( totalSize );
+            //restored gpu buffer state
+            buffer->push( mapped, 0, position );
+            buffer->push( vector, position, vectorSize );
+            position = totalSize;
+            size = totalSize;
         }
     } else {
-        //TODO: throw exception
+        throw UnbindException( bufferUID );
     }
 }
 
 GLsizeiptr Buffer::getSize() {
     return size;
+}
+
+GLsizeiptr Buffer::getPosition() {
+    return position;
 }
