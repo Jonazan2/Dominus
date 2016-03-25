@@ -28,9 +28,9 @@ void Renderer::init(){
     uvsBuffer = new Buffer( new GLGpuBuffer );
     normalBuffer = new Buffer( new GLGpuBuffer );
     
-    verticesBuffer->reserve( BUFFER_SIZE );
-    normalBuffer->reserve( BUFFER_SIZE );
-    uvsBuffer->reserve( BUFFER_SIZE );
+//    verticesBuffer->reserve( BUFFER_SIZE );
+//    normalBuffer->reserve( BUFFER_SIZE );
+//    uvsBuffer->reserve( BUFFER_SIZE );
 }
 
 void Renderer::initOpenGLStates() {

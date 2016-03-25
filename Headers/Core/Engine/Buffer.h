@@ -23,6 +23,7 @@ public:
     void unBind();
     void clear();
     void reserve( GLsizeiptr size );
+    bool isEmpty();
     
     GLsizeiptr getSize();
     GLsizeiptr getPosition();

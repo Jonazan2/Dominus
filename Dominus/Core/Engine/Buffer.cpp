@@ -10,14 +10,13 @@
 
 Buffer::Buffer( GpuBuffer* buffer )
 : size( 0 ), position( 0 ), buffer( buffer ) {
-
+    bufferUID = buffer->genBuffer();
 }
 
 Buffer::~Buffer() { }
 
 void Buffer::reserve( GLsizeiptr size ) {
     this->size = size;
-    bufferUID = buffer->genBuffer();
     bind();
     buffer->reserve( size );
     unBind();
@@ -49,12 +48,20 @@ void Buffer::push( float* vector, GLsizeiptr vectorSize ) {
             buffer->push( vector, position, vectorSize );
             position += vectorSize;
         } else {
-            //save gpu buffer state
-            float* mapped = (float*)buffer->mapBuffer( bufferUID );
-            buffer->reserve( totalSize );
-            //restored gpu buffer state
-            buffer->push( mapped, 0, position );
-            buffer->push( vector, position, vectorSize );
+            //Empty buffer
+            if( isEmpty() ){
+                buffer->reserve( vectorSize );
+                buffer->push( vector, 0, vectorSize );
+            } else if( position != 0 ) {
+                //save gpu buffer state
+                float* savedbuffer =
+                    (float*)buffer->getBufferSubData( 0, (int)position );
+                buffer->reserve( totalSize );
+                //restored gpu buffer state
+                buffer->push( savedbuffer, 0, position );
+                buffer->push( vector, position, vectorSize );
+                delete savedbuffer;
+            }
             position = totalSize;
             size = totalSize;
         }
@@ -69,4 +76,8 @@ GLsizeiptr Buffer::getSize() {
 
 GLsizeiptr Buffer::getPosition() {
     return position;
+}
+
+bool Buffer::isEmpty() {
+    return size == 0;
 }

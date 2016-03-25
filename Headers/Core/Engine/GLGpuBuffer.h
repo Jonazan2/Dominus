@@ -23,6 +23,9 @@ public:
     void reserve( GLsizeiptr size );
     GLuint genBuffer( );
     void* mapBuffer( GLuint bufferUID );
+    void unMapBuffer( GLuint bufferUID );
+    void getBufferSize( int* size );
+    void* getBufferSubData( int offset, int size );
 };
 
 #endif /* GLGpuBuffer_h */

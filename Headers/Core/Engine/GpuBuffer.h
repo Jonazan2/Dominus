@@ -22,6 +22,9 @@ public:
     virtual void reserve( GLsizeiptr size ) = 0;
     virtual GLuint genBuffer( ) = 0;
     virtual void* mapBuffer( GLuint bufferUID ) = 0;
+    virtual void* getBufferSubData( int offset, int size ) = 0;
+    virtual void getBufferSize( int* ) = 0;
+    virtual void unMapBuffer( GLuint bufferUID ) = 0;
 };
 
 #endif /* GPUBuffer_h */
