@@ -15,11 +15,14 @@ Buffer::Buffer( GpuBuffer* buffer )
 
 Buffer::~Buffer() { }
 
+//TODO: Check if the gpu memory allocation can fail and handle error.
 void Buffer::reserve( GLsizeiptr size ) {
-    this->size = size;
-    bind();
-    buffer->reserve( size );
-    unBind();
+    if( binded ){
+        this->size = size;
+        buffer->reserve( size );
+    } else {
+        throw UnbindException( bufferUID );
+    }
 }
 
 void Buffer::bind() {
@@ -42,32 +45,44 @@ void Buffer::clear() {
 }
 
 void Buffer::push( float* vector, GLsizeiptr vectorSize ) {
+    if( !add( vector, vectorSize ) ) {
+        requestBufferMemory( vector, vectorSize );
+        add( vector, vectorSize );
+    }
+}
+
+bool Buffer::add( float* vector, GLsizeiptr vectorSize ) {
     if ( binded ) {
         GLsizeiptr totalSize = position + vectorSize;
         if( totalSize <= this->size ) {
             buffer->push( vector, position, vectorSize );
             position += vectorSize;
+            return true;
         } else {
-            //Empty buffer
-            if( isEmpty() ){
-                buffer->reserve( vectorSize );
-                buffer->push( vector, 0, vectorSize );
-            } else if( position != 0 ) {
-                //save gpu buffer state
-                float* savedbuffer =
-                    (float*)buffer->getBufferSubData( 0, (int)position );
-                buffer->reserve( totalSize );
-                //restored gpu buffer state
-                buffer->push( savedbuffer, 0, position );
-                buffer->push( vector, position, vectorSize );
-                delete savedbuffer;
-            }
-            position = totalSize;
-            size = totalSize;
+            return false;
         }
     } else {
         throw UnbindException( bufferUID );
     }
+}
+
+void Buffer::requestBufferMemory( float *vector, GLsizeiptr vectorSize ) {
+    GLsizeiptr totalSize = position + vectorSize;
+    //buffer not defined
+    if( size == 0 ){
+        reserve( totalSize );
+    } else if( !isEmpty() ) {  //buffer defined and with saved content
+        //save gpu buffer state
+        float* savedBuffer =
+            (float*)buffer->getBufferSubData( 0, (int)position );
+        reserve( totalSize );
+        //restore gpu buffer state
+        buffer->push( savedBuffer, 0, position );
+        delete savedBuffer;
+    } else {
+        buffer->reserve( totalSize );
+    }
+
 }
 
 GLsizeiptr Buffer::getSize() {
@@ -78,6 +93,6 @@ GLsizeiptr Buffer::getPosition() {
     return position;
 }
 
-bool Buffer::isEmpty() {
-    return size == 0;
+bool Buffer::isEmpty() const {
+    return position == 0;
 }
