@@ -23,7 +23,9 @@ public:
     MOCK_METHOD1( reserve, void( GLsizeiptr size ) );
     MOCK_METHOD0( genBuffer, GLuint( ) );
     MOCK_METHOD1( mapBuffer, void*( GLuint bufferUID ) );
-    
+    MOCK_METHOD1( unMapBuffer, void( GLuint bufferUID ) );
+    MOCK_METHOD2( getBufferSubData, void*( int offset, int size ) );
+    MOCK_METHOD1( getBufferSize, void( int* ) );
 };
 
 #endif /* MockGPUBuffer_h */

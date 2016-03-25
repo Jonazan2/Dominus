@@ -21,8 +21,7 @@ public:
     }
     
     virtual void SetUp() {
-        EXPECT_CALL( mockGpuBuffer, genBuffer() ).WillOnce(testing::Return( 1 ) );
-        buffer->reserve( 128 );
+        //EXPECT_CALL( mockGpuBuffer, genBuffer() ).WillOnce(testing::Return( 1 ) );
         buffer->bind();
     }
     
@@ -35,77 +34,161 @@ public:
     Buffer* buffer;
 };
 
-TEST_F( BufferTest, EmptyBufferPushUnbindVector ) {
+TEST_F( BufferTest, UnbindedBufferAddVector ) {
     buffer->unBind();
     GLsizeiptr size = 32;
     float* vector = nullptr;
     try {
-        buffer->push( vector, size );
+        buffer->add( vector, size );
     } catch ( const UnbindException &e ) {
-        ASSERT_EQ( 128, buffer->getSize() );
+        ASSERT_EQ( 0, buffer->getSize() );
     }
 }
 
-TEST_F( BufferTest, EmptyBufferPushVector ) {
+TEST_F( BufferTest, EmptyBufferAddVector ) {
+    buffer->reserve( 128 );
     GLsizeiptr size = 32;
     float* vector = nullptr;
-    //EXPECT_CALL( mockGpuBuffer, mapBuffer( 0 ) );
+    
     buffer->push( vector, size );
     ASSERT_EQ( 32, buffer->getPosition() );
     ASSERT_EQ( 128, buffer->getSize() );
 }
 
-TEST_F( BufferTest, EmptyBufferPushVectorOverflow ) {
+TEST_F( BufferTest, EmptyBufferAddVectorOverflow ) {
+    buffer->reserve( 128 );
     GLsizeiptr size = 256;
     float* vector = nullptr;
-    buffer->push( vector, size );
-    ASSERT_EQ( 256, buffer->getPosition() );
-    ASSERT_EQ( 256, buffer->getSize() );
+    
+    bool added = buffer->add( vector, size );
+    ASSERT_EQ( false, added );
+    ASSERT_EQ( 128, buffer->getSize() );
 }
 
-TEST_F( BufferTest, EmptyBufferPushEqualVector ) {
+TEST_F( BufferTest, EmptyBufferAddEqualVector ) {
+    buffer->reserve( 128 );
+    
     GLsizeiptr size = 128;
     float* vector = nullptr;
-    buffer->push( vector, size );
+    
+    bool added = buffer->add( vector, size );
+    ASSERT_EQ( true , added );
     ASSERT_EQ( 128, buffer->getPosition() );
     ASSERT_EQ( 128, buffer->getSize() );
 }
 
-TEST_F( BufferTest, FilledBufferPushVector ) {
+TEST_F( BufferTest, FilledBufferAddVector ) {
+    buffer->reserve( 128 );
+    
     GLsizeiptr position = 64;
     float* vector = nullptr;
-    buffer->push( vector, position );
+    bool added = buffer->add( vector, position );
+    ASSERT_EQ( true , added );
     ASSERT_EQ( 64, buffer->getPosition() );
     ASSERT_EQ( 128, buffer->getSize() );
     
     GLsizeiptr size = 32;
-    buffer->push( vector, size );
+    added = buffer->add( vector, size );
+    ASSERT_EQ( true , added );
     ASSERT_EQ( 96, buffer->getPosition() );
     ASSERT_EQ( 128, buffer->getSize() );
 }
 
-TEST_F( BufferTest, FilledBufferPushVectorEqual ) {
+TEST_F( BufferTest, FilledBufferAddVectorEqual ) {
+    buffer->reserve( 128 );
+    
     GLsizeiptr position = 64;
     float* vector = nullptr;
-    buffer->push( vector, position );
+    buffer->add( vector, position );
     ASSERT_EQ( 64, buffer->getPosition() );
     ASSERT_EQ( 128, buffer->getSize() );
     
     GLsizeiptr size = 64;
-    buffer->push( vector, size );
+    bool added = buffer->add( vector, size );
+    ASSERT_EQ( true , added );
     ASSERT_EQ( 128, buffer->getPosition() );
     ASSERT_EQ( 128, buffer->getSize() );
 }
 
-TEST_F( BufferTest, FilledBufferPushVectorOverflow ) {
+TEST_F( BufferTest, FilledBufferAddVectorOverflow ) {
+    buffer->reserve( 128 );
+    
     GLsizeiptr position = 64;
     float* vector = nullptr;
-    buffer->push( vector, position );
+    buffer->add( vector, position );
     ASSERT_EQ( 64, buffer->getPosition() );
     ASSERT_EQ( 128, buffer->getSize() );
     
     GLsizeiptr size = 128;
-    buffer->push( vector, size );
-    ASSERT_EQ( 192, buffer->getPosition() );
+    bool added = buffer->add( vector, size );
+    ASSERT_EQ( false , added );
+    ASSERT_EQ( 64, buffer->getPosition() );
+    ASSERT_EQ( 128, buffer->getSize() );
+}
+
+TEST_F( BufferTest, UnReservedBufferRequest ) {
+    GLsizeiptr size = 64;
+    float* vector = nullptr;
+    
+    buffer->requestBufferMemory( vector, size );
+    ASSERT_EQ( 64, buffer->getSize() );
+    ASSERT_EQ( 0, buffer->getPosition() );
+}
+
+TEST_F( BufferTest, ReservedEmptyBufferRequest ) {
+    buffer->reserve( 128 );
+    GLsizeiptr size = 64;
+    float* vector = nullptr;
+    
+    buffer->requestBufferMemory( vector, size );
+    ASSERT_EQ( 64, buffer->getSize() );
+    ASSERT_EQ( 0, buffer->getPosition() );
+}
+
+TEST_F( BufferTest, ReservedNotEmptyBufferRequest ) {
+    buffer->reserve( 128 );
+    
+    GLsizeiptr position = 64;
+    float* vector = nullptr;
+    buffer->add( vector, position );
+    ASSERT_EQ( 64, buffer->getPosition() );
+    ASSERT_EQ( 128, buffer->getSize() );
+    
+    GLsizeiptr size = 32;
+    
+    buffer->requestBufferMemory( vector, size );
+    ASSERT_EQ( 64, buffer->getPosition() );
+    ASSERT_EQ( 96, buffer->getSize() );
+}
+
+TEST_F( BufferTest, ReservedNotEmptyBufferRequestFill ) {
+    buffer->reserve( 128 );
+    
+    GLsizeiptr position = 64;
+    float* vector = nullptr;
+    buffer->add( vector, position );
+    ASSERT_EQ( 64, buffer->getPosition() );
+    ASSERT_EQ( 128, buffer->getSize() );
+    
+    GLsizeiptr size = 64;
+    
+    buffer->requestBufferMemory( vector, size );
+    ASSERT_EQ( 64, buffer->getPosition() );
+    ASSERT_EQ( 128, buffer->getSize() );
+}
+
+TEST_F( BufferTest, ReservedNotEmptyBufferRequestOverflow ) {
+    buffer->reserve( 128 );
+    
+    GLsizeiptr position = 64;
+    float* vector = nullptr;
+    buffer->add( vector, position );
+    ASSERT_EQ( 64, buffer->getPosition() );
+    ASSERT_EQ( 128, buffer->getSize() );
+    
+    GLsizeiptr size = 128;
+    
+    buffer->requestBufferMemory( vector, size );
+    ASSERT_EQ( 64, buffer->getPosition() );
     ASSERT_EQ( 192, buffer->getSize() );
 }
