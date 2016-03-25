@@ -80,7 +80,7 @@ void Buffer::requestBufferMemory( float *vector, GLsizeiptr vectorSize ) {
         buffer->push( savedBuffer, 0, position );
         delete savedBuffer;
     } else {
-        buffer->reserve( totalSize );
+        reserve( totalSize );
     }
 
 }
