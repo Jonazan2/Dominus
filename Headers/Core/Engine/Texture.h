@@ -9,32 +9,32 @@
 #ifndef Texture_h
 #define Texture_h
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <png.h>
-#include <iostream>
 #include <OpenGL/OpenGL.h>
+#include <string>
+#include "TextureLoader.h"
+
 class Texture {
 public:
-    Texture();
-    Texture( std::string filePath );
-    ~Texture();
+    Texture( TextureLoader* loader );
+    ~Texture( );
     
     GLubyte* getImageData();
     int getWidth();
     int getHeight();
     void setWidth( int width );
     void setHeight( int height );
+    void loadTexture( std::string file );
     GLuint textureUID;
     
 private:
-    bool loadPngImage( const char *name, int &outWidth, int &outHeight,
-                      bool &outHasAlpha, GLubyte **outData );
-    unsigned char* image;
+    bool loadPngImage( const char *name,
+                      int &outWidth, int &outHeight,bool &outHasAlpha,
+                      GLubyte **outData );
+    GLubyte* image;
     int width;
     int height;
     bool hasAlpha;
-    std::string filePath;
+    TextureLoader* loader;
 };
 
 #endif /* Texture_h */

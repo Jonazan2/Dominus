@@ -11,6 +11,7 @@
 #include "HorizontalLayout.h"
 #include "VerticalLayout.h"
 #include "Button.h"
+#include "PngTextureLoader.h"
 
 RenderScene::RenderScene() {
     yaw = -90.0f;
@@ -94,8 +95,10 @@ void RenderScene::populateUI( Scene* scene ) {
     button->weight = 1;
     Button* button2 = new Button;
     button2->weight = 1;
-    Texture* buttonTexture = new Texture("button.png");
-    Texture* button2Texture = new Texture("button.png");
+    Texture* buttonTexture = new Texture( new PngTextureLoader );
+    Texture* button2Texture = new Texture( new PngTextureLoader );
+    buttonTexture->loadTexture( "button.png" );
+    button2Texture->loadTexture( "button.png" );
     Params buttonParams = Params();
     buttonParams.width = WRAP;
     buttonParams.height = WRAP;

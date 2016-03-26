@@ -10,7 +10,7 @@
 #define Buffer_h
 
 #include "GpuBuffer.h"
-#include "UnbindException.h"
+#include "Exception.h"
 #include <glm/glm.hpp>
 
 class Buffer {

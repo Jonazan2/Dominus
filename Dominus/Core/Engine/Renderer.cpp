@@ -11,6 +11,7 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "UIComponent.h"
+#include "PngTextureLoader.h"
 
 Renderer::Renderer( GLFWwindow* window ) : window( window ) {
 
@@ -143,7 +144,8 @@ void Renderer::load( std::vector<Node*> renderBatch ) {
     for ( int i = 0;  i < renderBatch.size(); i++ ) {
         Mesh* mesh = renderBatch.at( i )->getMesh();
         if( !mesh->getTexturePath().empty() ) {
-            Texture* textureData = new Texture( mesh->getTexturePath() );
+            Texture* textureData = new Texture( new PngTextureLoader );
+            textureData->loadTexture( mesh->getTexturePath() );
             mesh->textureUID = textures[actualTexture];
             glBindTexture( GL_TEXTURE_2D, textures[actualTexture] );
             // Set the texture wrapping/filtering options (on the currently bound texture object)
@@ -270,7 +272,6 @@ void Renderer::loadUI(  ) {
     //Texture loading
     for ( int i = 0;  i < uiComponents.size(); i++ ) {
         UIComponent* component = uiComponents.at( i );
-        Mesh* mesh = uiComponents.at( i )->mesh;
         if( component->texture != nullptr ) {
             component->texture->textureUID = textures[actualTexture];
             glBindTexture( GL_TEXTURE_2D, textures[actualTexture] );
