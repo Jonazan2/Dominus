@@ -28,9 +28,8 @@ void Renderer::init(){
     uvsBuffer = new Buffer( new GLGpuBuffer );
     normalBuffer = new Buffer( new GLGpuBuffer );
     
-//    verticesBuffer->reserve( BUFFER_SIZE );
-//    normalBuffer->reserve( BUFFER_SIZE );
-//    uvsBuffer->reserve( BUFFER_SIZE );
+    uiVerticesBufer = new Buffer( new GLGpuBuffer );
+    uiUvsBuffer = new Buffer( new GLGpuBuffer );
 }
 
 void Renderer::initOpenGLStates() {
@@ -236,42 +235,31 @@ void Renderer::drawtexture( UIComponent* component ){
 }
 
 void Renderer::loadUI(  ) {
-    //create buffer object and set as current
-    GLuint buffers[2];
-    glGenBuffers( 2, buffers );
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+    uiVerticesBufer->bind();
     
-    //allocate buffer memory to load all the vertex
-    GLsizeiptr vertexBufferSize = 0;
-    GLsizeiptr uvBufferSize = 0;
     for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* uiComponent = uiComponents.at(i)->mesh;
-        vertexBufferSize += uiComponent->getSize();
-        uvBufferSize += uiComponent->getTextureVerticesSize();
+        Mesh* mesh = uiComponents.at(i)->mesh;
+        uiVerticesBufer->push( (float*)&mesh->getVertices()[0], mesh->getSize() );
     }
-    glBufferData (GL_ARRAY_BUFFER,
-                  vertexBufferSize,
-                  NULL,
-                  GL_STATIC_DRAW);
-    //buffer vertex data
-    GLuint offset = 0;
-    for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* uiComponent = uiComponents.at(i)->mesh;
-        glBufferSubData(GL_ARRAY_BUFFER, // target
-                        offset, // offset
-                        uiComponent->getSize(), // size
-                        &uiComponent->getVertices()[0]); // data
-        offset += uiComponent->getSize();
-    }
-    
     //set vertex array layout for shader attibute and enable attibute
     glVertexAttribPointer (uiPositionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(uiPositionAttribute);
     
+    uiUvsBuffer->bind();
+    for ( int i = 0; i < uiComponents.size(); i++ ) {
+        Mesh* mesh = uiComponents.at(i)->mesh;
+        uiUvsBuffer->push( (float*)&mesh->getUvs()[0],
+                           mesh->getTextureVerticesSize() );
+    }
+    //set uvs array layout for shader attribute and enable attribute
+    glVertexAttribPointer( uiTextureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
+    glEnableVertexAttribArray( uiTextureAttribute );
+
+    
     int numTextures = 0;
     for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* uiComponent = uiComponents.at(i)->mesh;
-        if( uiComponent->getTexture() != nullptr ) {
+        Mesh* mesh = uiComponents.at(i)->mesh;
+        if( mesh->getTexture() != nullptr ) {
             numTextures++;
         }
     }
@@ -306,25 +294,6 @@ void Renderer::loadUI(  ) {
             actualTexture++;
         }
     }
-    
-    glBindBuffer( GL_ARRAY_BUFFER, buffers[1] );
-    glBufferData ( GL_ARRAY_BUFFER,
-                  uvBufferSize,
-                  NULL,
-                  GL_STATIC_DRAW );
-    GLuint textureOffset = 0;
-    for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* uiComponent = uiComponents.at(i)->mesh;
-        glBufferSubData(GL_ARRAY_BUFFER, // target
-                        textureOffset, // offset
-                        uiComponent->getTextureVerticesSize(), // size
-                        &uiComponent->getUvs()[0]); // data
-        textureOffset += uiComponent->getTextureVerticesSize();
-    }
-    
-    //set uvs array layout for shader attribute and enable attribute
-    glVertexAttribPointer( uiTextureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
-    glEnableVertexAttribArray( uiTextureAttribute );
 }
 
 void Renderer::drawUI(  ) {
@@ -336,10 +305,6 @@ void Renderer::drawUI(  ) {
     for ( int i = 0; i < uiComponents.size(); i++ ) {
         UIComponent* uiComponent = uiComponents.at(i);
         Mesh* mesh = uiComponents.at(i)->mesh;
-        glm::mat4 modelMatrix = glm::translate( glm::vec3(
-                                                          uiComponent->position.x,
-                                                          uiComponent->position.y,
-                                                          0 ) );
         // bind the texture and set the "tex" uniform in the fragment shader
         glActiveTexture(GL_TEXTURE0);
         glUniform1i(uiTextureData, 0); //set to 0 because the texture is bound to GL_TEXTURE0
@@ -369,11 +334,9 @@ void Renderer::updateLightSource( glm::vec3 lightSource ) {
 }
 
 void Renderer::clear() {
-    // wipe the drawing surface clear
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Renderer::present() {
-    // put the stuff we've been drawing onto the display
     glfwSwapBuffers (window);
 }

@@ -77,6 +77,9 @@ private:
     Buffer* normalBuffer;
     Buffer* uvsBuffer;
     
+    Buffer* uiVerticesBufer;
+    Buffer* uiUvsBuffer;
+    
     std::vector<UIComponent*> uiComponents;
 };
 
