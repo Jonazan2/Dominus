@@ -23,6 +23,13 @@ void Renderer::init(){
     initOpenGLStates();
     loadShaders();
     loadUIShaders();
+    
+    verticesBuffer = new Buffer( new GLGpuBuffer );
+    uvsBuffer = new Buffer( new GLGpuBuffer );
+    normalBuffer = new Buffer( new GLGpuBuffer );
+    
+    uiVerticesBufer = new Buffer( new GLGpuBuffer );
+    uiUvsBuffer = new Buffer( new GLGpuBuffer );
 }
 
 void Renderer::initOpenGLStates() {
@@ -92,72 +99,34 @@ void Renderer::loadUIShaders() {
     uiTextureAttribute = 5;
 }
 
-void Renderer::updateProjection( glm::mat4 projectionMatrix ) {
-    this->projectionMatrix = projectionMatrix;
-}
-
-void Renderer:: updateViewMatrix( glm::mat4 viewMatrix ) {
-    this->viewMatrix = viewMatrix;
-}
-
-void Renderer::updateLightSource( glm::vec3 lightSource ) {
-    this->lightPosition = lightSource;
-}
-
 void Renderer::load( std::vector<Node*> renderBatch ) {
-    //create buffer object and set as current
-    GLuint buffers[3];
-    glGenBuffers( 3, buffers );
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
-    
-    //allocate buffer memory to load all the vertex
-    GLsizeiptr vertexBufferSize = 0;
-    GLsizeiptr normalBufferSize = 0;
-    GLsizeiptr uvBufferSize = 0;
+    verticesBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Node* node = renderBatch.at(i);
-        Mesh* mesh = node->getMesh();
-        vertexBufferSize += mesh->getSize();
-        normalBufferSize += mesh->getNormalVerticesSize();
-        uvBufferSize += mesh->getTextureVerticesSize();
+        Mesh* mesh = renderBatch.at(i)->getMesh();
+        verticesBuffer->push( (float*)&mesh->getVertices()[0], mesh->getSize() );
     }
-    glBufferData (GL_ARRAY_BUFFER,
-                  vertexBufferSize,
-                  NULL,
-                  GL_STATIC_DRAW);
-    //buffer vertex data
-    GLuint offset = 0;
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Node* node = renderBatch.at(i);
-        glBufferSubData(GL_ARRAY_BUFFER, // target
-                        offset, // offset
-                        node->getMesh()->getSize(), // size
-                        &node->getMesh()->getVertices()[0]); // data
-        offset += node->getMesh()->getSize();
-    }
-    
-    //set vertex array layout for shader attibute and enable attibute
     glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(positionAttribute);
     
-    //buffer vertex data
-    glBindBuffer( GL_ARRAY_BUFFER, buffers[1] );
-    glBufferData (GL_ARRAY_BUFFER,
-                  normalBufferSize,
-                  NULL,
-                  GL_STATIC_DRAW);
-    GLuint normalOffset = 0;
+    normalBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Node* node = renderBatch.at(i);
-        glBufferSubData(GL_ARRAY_BUFFER, // target
-                        normalOffset, // offset
-                        node->getMesh()->getNormalVerticesSize(), // size
-                        &node->getMesh()->getNormals()[0]); // data
-        normalOffset += node->getMesh()->getNormalVerticesSize();
+        Mesh* mesh = renderBatch.at(i)->getMesh();
+        normalBuffer->push( (float*)&mesh->getNormals()[0],
+                              mesh->getNormalVerticesSize() );
     }
-    //set normal array layout for shader attribute and enable attribute
+
     glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(normalAttribute);
+    
+    uvsBuffer->bind();
+    for ( int i = 0; i < renderBatch.size(); i++ ) {
+        Mesh* mesh = renderBatch.at(i)->getMesh();
+        uvsBuffer->push( (float*)&mesh->getUvs()[0],
+                             mesh->getTextureVerticesSize() );
+    }
+    
+    glVertexAttribPointer( textureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
+    glEnableVertexAttribArray( textureAttribute );
     
     int numTextures = 0;
     for ( int i = 0; i < renderBatch.size(); i++ ) {
@@ -197,25 +166,6 @@ void Renderer::load( std::vector<Node*> renderBatch ) {
             actualTexture++;
         }
     }
-    
-    glBindBuffer( GL_ARRAY_BUFFER, buffers[2] );
-    glBufferData ( GL_ARRAY_BUFFER,
-                  uvBufferSize,
-                  NULL,
-                  GL_STATIC_DRAW );
-    GLuint textureOffset = 0;
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Node* node = renderBatch.at( i );
-        glBufferSubData(GL_ARRAY_BUFFER, // target
-                        textureOffset, // offset
-                        node->getMesh()->getTextureVerticesSize(), // size
-                        &node->getMesh()->getUvs()[0]); // data
-        textureOffset += node->getMesh()->getTextureVerticesSize();
-    }
-    
-    //set uvs array layout for shader attribute and enable attribute
-    glVertexAttribPointer( textureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
-    glEnableVertexAttribArray( textureAttribute );
 }
 
 void Renderer::draw( std::vector<Node*> renderBatch ) {
@@ -285,42 +235,31 @@ void Renderer::drawtexture( UIComponent* component ){
 }
 
 void Renderer::loadUI(  ) {
-    //create buffer object and set as current
-    GLuint buffers[2];
-    glGenBuffers( 2, buffers );
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+    uiVerticesBufer->bind();
     
-    //allocate buffer memory to load all the vertex
-    GLsizeiptr vertexBufferSize = 0;
-    GLsizeiptr uvBufferSize = 0;
     for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* uiComponent = uiComponents.at(i)->mesh;
-        vertexBufferSize += uiComponent->getSize();
-        uvBufferSize += uiComponent->getTextureVerticesSize();
+        Mesh* mesh = uiComponents.at(i)->mesh;
+        uiVerticesBufer->push( (float*)&mesh->getVertices()[0], mesh->getSize() );
     }
-    glBufferData (GL_ARRAY_BUFFER,
-                  vertexBufferSize,
-                  NULL,
-                  GL_STATIC_DRAW);
-    //buffer vertex data
-    GLuint offset = 0;
-    for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* uiComponent = uiComponents.at(i)->mesh;
-        glBufferSubData(GL_ARRAY_BUFFER, // target
-                        offset, // offset
-                        uiComponent->getSize(), // size
-                        &uiComponent->getVertices()[0]); // data
-        offset += uiComponent->getSize();
-    }
-    
     //set vertex array layout for shader attibute and enable attibute
     glVertexAttribPointer (uiPositionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(uiPositionAttribute);
     
+    uiUvsBuffer->bind();
+    for ( int i = 0; i < uiComponents.size(); i++ ) {
+        Mesh* mesh = uiComponents.at(i)->mesh;
+        uiUvsBuffer->push( (float*)&mesh->getUvs()[0],
+                           mesh->getTextureVerticesSize() );
+    }
+    //set uvs array layout for shader attribute and enable attribute
+    glVertexAttribPointer( uiTextureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
+    glEnableVertexAttribArray( uiTextureAttribute );
+
+    
     int numTextures = 0;
     for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* uiComponent = uiComponents.at(i)->mesh;
-        if( uiComponent->getTexture() != nullptr ) {
+        Mesh* mesh = uiComponents.at(i)->mesh;
+        if( mesh->getTexture() != nullptr ) {
             numTextures++;
         }
     }
@@ -355,25 +294,6 @@ void Renderer::loadUI(  ) {
             actualTexture++;
         }
     }
-    
-    glBindBuffer( GL_ARRAY_BUFFER, buffers[1] );
-    glBufferData ( GL_ARRAY_BUFFER,
-                  uvBufferSize,
-                  NULL,
-                  GL_STATIC_DRAW );
-    GLuint textureOffset = 0;
-    for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* uiComponent = uiComponents.at(i)->mesh;
-        glBufferSubData(GL_ARRAY_BUFFER, // target
-                        textureOffset, // offset
-                        uiComponent->getTextureVerticesSize(), // size
-                        &uiComponent->getUvs()[0]); // data
-        textureOffset += uiComponent->getTextureVerticesSize();
-    }
-    
-    //set uvs array layout for shader attribute and enable attribute
-    glVertexAttribPointer( uiTextureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
-    glEnableVertexAttribArray( uiTextureAttribute );
 }
 
 void Renderer::drawUI(  ) {
@@ -385,10 +305,6 @@ void Renderer::drawUI(  ) {
     for ( int i = 0; i < uiComponents.size(); i++ ) {
         UIComponent* uiComponent = uiComponents.at(i);
         Mesh* mesh = uiComponents.at(i)->mesh;
-        glm::mat4 modelMatrix = glm::translate( glm::vec3(
-                                                          uiComponent->position.x,
-                                                          uiComponent->position.y,
-                                                          0 ) );
         // bind the texture and set the "tex" uniform in the fragment shader
         glActiveTexture(GL_TEXTURE0);
         glUniform1i(uiTextureData, 0); //set to 0 because the texture is bound to GL_TEXTURE0
@@ -405,12 +321,22 @@ void Renderer::drawUI(  ) {
     }
 }
 
+void Renderer::updateProjection( glm::mat4 projectionMatrix ) {
+    this->projectionMatrix = projectionMatrix;
+}
+
+void Renderer:: updateViewMatrix( glm::mat4 viewMatrix ) {
+    this->viewMatrix = viewMatrix;
+}
+
+void Renderer::updateLightSource( glm::vec3 lightSource ) {
+    this->lightPosition = lightSource;
+}
+
 void Renderer::clear() {
-    // wipe the drawing surface clear
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Renderer::present() {
-    // put the stuff we've been drawing onto the display
     glfwSwapBuffers (window);
 }

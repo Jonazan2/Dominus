@@ -12,26 +12,28 @@
 		92677A7D1C5665F900899024 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92677A7C1C5665F900899024 /* main.cpp */; };
 		92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E3453C1C6393D200308A63 /* Logger.hpp */; };
 		92E345411C64E04A00308A63 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345401C64E04A00308A63 /* Log.cpp */; };
+		9C222D591CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C222D5A1CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */; settings = {ASSET_TAGS = (); }; };
 		9C470C291C7F849F00558755 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C470C281C7F849F00558755 /* libz.1.2.5.tbd */; };
 		9C777FC11C84E2BF005C48A5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */; };
-		9C7D08271C9EC0C500804DF1 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08221C9EC0C500804DF1 /* Button.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D08281C9EC0C500804DF1 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08221C9EC0C500804DF1 /* Button.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D082B1C9EC0C500804DF1 /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08241C9EC0C500804DF1 /* Text.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D082C1C9EC0C500804DF1 /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08241C9EC0C500804DF1 /* Text.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D082D1C9EC0C500804DF1 /* TextList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08251C9EC0C500804DF1 /* TextList.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D082E1C9EC0C500804DF1 /* TextList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08251C9EC0C500804DF1 /* TextList.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D082F1C9EC0C500804DF1 /* UIComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08261C9EC0C500804DF1 /* UIComponent.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D08301C9EC0C500804DF1 /* UIComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08261C9EC0C500804DF1 /* UIComponent.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D08331C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08311C9EC57600804DF1 /* HorizontalLayout.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D08341C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08311C9EC57600804DF1 /* HorizontalLayout.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D08351C9EC57600804DF1 /* VerticalLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08321C9EC57600804DF1 /* VerticalLayout.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D08361C9EC57600804DF1 /* VerticalLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08321C9EC57600804DF1 /* VerticalLayout.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D083B1C9EC63A00804DF1 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D083A1C9EC63A00804DF1 /* Layout.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C7D083C1C9EC63A00804DF1 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D083A1C9EC63A00804DF1 /* Layout.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C80752D1CA1D1C80052086F /* HorizontalLayoutTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C8075291CA1D1C80052086F /* HorizontalLayoutTest.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C80752E1CA1D1C80052086F /* LayoutTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80752A1CA1D1C80052086F /* LayoutTest.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C80752F1CA1D1C80052086F /* UIComponentTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80752B1CA1D1C80052086F /* UIComponentTest.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C8075301CA1D1C80052086F /* VerticalLayoutTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80752C1CA1D1C80052086F /* VerticalLayoutTest.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C7D08271C9EC0C500804DF1 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08221C9EC0C500804DF1 /* Button.cpp */; };
+		9C7D08281C9EC0C500804DF1 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08221C9EC0C500804DF1 /* Button.cpp */; };
+		9C7D082B1C9EC0C500804DF1 /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08241C9EC0C500804DF1 /* Text.cpp */; };
+		9C7D082C1C9EC0C500804DF1 /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08241C9EC0C500804DF1 /* Text.cpp */; };
+		9C7D082D1C9EC0C500804DF1 /* TextList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08251C9EC0C500804DF1 /* TextList.cpp */; };
+		9C7D082E1C9EC0C500804DF1 /* TextList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08251C9EC0C500804DF1 /* TextList.cpp */; };
+		9C7D082F1C9EC0C500804DF1 /* UIComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08261C9EC0C500804DF1 /* UIComponent.cpp */; };
+		9C7D08301C9EC0C500804DF1 /* UIComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08261C9EC0C500804DF1 /* UIComponent.cpp */; };
+		9C7D08331C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08311C9EC57600804DF1 /* HorizontalLayout.cpp */; };
+		9C7D08341C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08311C9EC57600804DF1 /* HorizontalLayout.cpp */; };
+		9C7D08351C9EC57600804DF1 /* VerticalLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08321C9EC57600804DF1 /* VerticalLayout.cpp */; };
+		9C7D08361C9EC57600804DF1 /* VerticalLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08321C9EC57600804DF1 /* VerticalLayout.cpp */; };
+		9C7D083B1C9EC63A00804DF1 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D083A1C9EC63A00804DF1 /* Layout.cpp */; };
+		9C7D083C1C9EC63A00804DF1 /* Layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D083A1C9EC63A00804DF1 /* Layout.cpp */; };
+		9C80752D1CA1D1C80052086F /* HorizontalLayoutTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C8075291CA1D1C80052086F /* HorizontalLayoutTest.cpp */; };
+		9C80752E1CA1D1C80052086F /* LayoutTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80752A1CA1D1C80052086F /* LayoutTest.cpp */; };
+		9C80752F1CA1D1C80052086F /* UIComponentTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80752B1CA1D1C80052086F /* UIComponentTest.cpp */; };
+		9C8075301CA1D1C80052086F /* VerticalLayoutTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80752C1CA1D1C80052086F /* VerticalLayoutTest.cpp */; };
 		9C80753D1CA1D1DF0052086F /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6398D81C8CE49500CA0B3B /* Texture.cpp */; };
 		9C80753F1CA1D5520052086F /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C470C281C7F849F00558755 /* libz.1.2.5.tbd */; };
 		9C8075401CA1D6510052086F /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6398D31C8CE49500CA0B3B /* Material.cpp */; };
@@ -43,8 +45,11 @@
 		9C8075461CA1D6A70052086F /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6398D71C8CE49500CA0B3B /* Shader.cpp */; };
 		9C8075471CA1D6A70052086F /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB6398D91C8CE49500CA0B3B /* Window.cpp */; };
 		9C8075481CA1D6A70052086F /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345401C64E04A00308A63 /* Log.cpp */; };
-		9C80754B1CA1FC5D0052086F /* LightNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754A1CA1FC5D0052086F /* LightNode.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C80754C1CA1FC5D0052086F /* LightNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754A1CA1FC5D0052086F /* LightNode.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C80754B1CA1FC5D0052086F /* LightNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754A1CA1FC5D0052086F /* LightNode.cpp */; };
+		9C80754C1CA1FC5D0052086F /* LightNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754A1CA1FC5D0052086F /* LightNode.cpp */; };
+		9C80754E1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
+		9C80754F1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
+		9C8075571CA31ED60052086F /* BufferTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C8075561CA31ED60052086F /* BufferTest.cpp */; };
 		9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FA81C82F92D0066C313 /* main.cpp */; };
 		9CCB2FAF1C82F95E0066C313 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9D1C82F7FE0066C313 /* gtest.framework */; };
 		9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9F1C82F8790066C313 /* gmock.framework */; };
@@ -93,6 +98,11 @@
 		92E3453C1C6393D200308A63 /* Logger.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Logger.hpp; path = Headers/Core/Log/Logger.hpp; sourceTree = "<group>"; };
 		92E3453F1C64CCE700308A63 /* LoggerTerminal.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = LoggerTerminal.hpp; path = Headers/Core/Log/LoggerTerminal.hpp; sourceTree = "<group>"; };
 		92E345401C64E04A00308A63 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = Core/Log/Log.cpp; sourceTree = "<group>"; };
+		9C222D541CA47500003C1DC5 /* GpuBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GpuBuffer.h; path = Headers/Core/Engine/GpuBuffer.h; sourceTree = "<group>"; };
+		9C222D551CA48A85003C1DC5 /* UnbindException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UnbindException.h; path = Headers/Core/Engine/UnbindException.h; sourceTree = "<group>"; };
+		9C222D561CA49071003C1DC5 /* MockGPUBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockGPUBuffer.h; sourceTree = "<group>"; };
+		9C222D571CA49198003C1DC5 /* GLGpuBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GLGpuBuffer.h; path = Headers/Core/Engine/GLGpuBuffer.h; sourceTree = "<group>"; };
+		9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GLGpuBuffer.cpp; path = Core/Engine/GLGpuBuffer.cpp; sourceTree = "<group>"; };
 		9C470C281C7F849F00558755 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		9C7D081A1C9EC06600804DF1 /* Button.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Button.h; path = Headers/Core/Engine/Button.h; sourceTree = "<group>"; };
 		9C7D081B1C9EC06600804DF1 /* Frame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Frame.h; path = Headers/Core/Engine/Frame.h; sourceTree = "<group>"; };
@@ -117,6 +127,9 @@
 		9C80752C1CA1D1C80052086F /* VerticalLayoutTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VerticalLayoutTest.cpp; sourceTree = "<group>"; };
 		9C8075491CA1FC370052086F /* LightNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightNode.h; path = Headers/Core/Engine/LightNode.h; sourceTree = "<group>"; };
 		9C80754A1CA1FC5D0052086F /* LightNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LightNode.cpp; path = Core/Engine/LightNode.cpp; sourceTree = "<group>"; };
+		9C80754D1CA313130052086F /* Buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Buffer.cpp; path = Core/Engine/Buffer.cpp; sourceTree = "<group>"; };
+		9C8075501CA313250052086F /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Buffer.h; path = Headers/Core/Engine/Buffer.h; sourceTree = "<group>"; };
+		9C8075561CA31ED60052086F /* BufferTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BufferTest.cpp; sourceTree = "<group>"; };
 		9C922E851C975F9D00D66C8F /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		9CCB2F9D1C82F7FE0066C313 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = ../../../../Library/Frameworks/gtest.framework; sourceTree = "<group>"; };
 		9CCB2F9F1C82F8790066C313 /* gmock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gmock.framework; path = ../../../../Library/Frameworks/gmock.framework; sourceTree = "<group>"; };
@@ -332,6 +345,8 @@
 				9C80752A1CA1D1C80052086F /* LayoutTest.cpp */,
 				9C80752B1CA1D1C80052086F /* UIComponentTest.cpp */,
 				9C80752C1CA1D1C80052086F /* VerticalLayoutTest.cpp */,
+				9C8075561CA31ED60052086F /* BufferTest.cpp */,
+				9C222D561CA49071003C1DC5 /* MockGPUBuffer.h */,
 			);
 			path = UnitTest;
 			sourceTree = "<group>";
@@ -354,6 +369,10 @@
 				AB6398C71C8CE43400CA0B3B /* Texture.h */,
 				AB6398C81C8CE43400CA0B3B /* Window.h */,
 				9C8075491CA1FC370052086F /* LightNode.h */,
+				9C8075501CA313250052086F /* Buffer.h */,
+				9C222D541CA47500003C1DC5 /* GpuBuffer.h */,
+				9C222D551CA48A85003C1DC5 /* UnbindException.h */,
+				9C222D571CA49198003C1DC5 /* GLGpuBuffer.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -373,6 +392,8 @@
 				AB6398D81C8CE49500CA0B3B /* Texture.cpp */,
 				AB6398D91C8CE49500CA0B3B /* Window.cpp */,
 				9C80754A1CA1FC5D0052086F /* LightNode.cpp */,
+				9C80754D1CA313130052086F /* Buffer.cpp */,
+				9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -466,6 +487,7 @@
 				AB6398DE1C8CE49500CA0B3B /* Material.cpp in Sources */,
 				9C7D083B1C9EC63A00804DF1 /* Layout.cpp in Sources */,
 				AB6398DA1C8CE49500CA0B3B /* Camera.cpp in Sources */,
+				9C222D591CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */,
 				AB6398DF1C8CE49500CA0B3B /* Mesh.cpp in Sources */,
 				AB6398DD1C8CE49500CA0B3B /* GLFWInputHandler.cpp in Sources */,
 				92E345411C64E04A00308A63 /* Log.cpp in Sources */,
@@ -477,6 +499,7 @@
 				9C7D08271C9EC0C500804DF1 /* Button.cpp in Sources */,
 				9C7D082D1C9EC0C500804DF1 /* TextList.cpp in Sources */,
 				9C7D082B1C9EC0C500804DF1 /* Text.cpp in Sources */,
+				9C80754E1CA313130052086F /* Buffer.cpp in Sources */,
 				AB6398CC1C8CE48400CA0B3B /* GameScene.cpp in Sources */,
 				AB6398CD1C8CE48400CA0B3B /* RenderScene.cpp in Sources */,
 			);
@@ -491,14 +514,17 @@
 				9C8075461CA1D6A70052086F /* Shader.cpp in Sources */,
 				9C8075471CA1D6A70052086F /* Window.cpp in Sources */,
 				9C8075481CA1D6A70052086F /* Log.cpp in Sources */,
+				9C222D5A1CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */,
 				9C80754C1CA1FC5D0052086F /* LightNode.cpp in Sources */,
 				9C8075431CA1D68B0052086F /* Renderer.cpp in Sources */,
 				9C8075421CA1D6730052086F /* Event.cpp in Sources */,
 				9C8075401CA1D6510052086F /* Material.cpp in Sources */,
 				9C8075411CA1D6510052086F /* Mesh.cpp in Sources */,
+				9C8075571CA31ED60052086F /* BufferTest.cpp in Sources */,
 				9C80753D1CA1D1DF0052086F /* Texture.cpp in Sources */,
 				9C7D083C1C9EC63A00804DF1 /* Layout.cpp in Sources */,
 				9C80752F1CA1D1C80052086F /* UIComponentTest.cpp in Sources */,
+				9C80754F1CA313130052086F /* Buffer.cpp in Sources */,
 				9C8075301CA1D1C80052086F /* VerticalLayoutTest.cpp in Sources */,
 				9C7D082E1C9EC0C500804DF1 /* TextList.cpp in Sources */,
 				9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */,
