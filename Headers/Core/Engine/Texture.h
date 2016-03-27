@@ -12,10 +12,13 @@
 #include <OpenGL/OpenGL.h>
 #include <string>
 #include "TextureLoader.h"
+#include "GpuTexture.h"
 
 class Texture {
 public:
-    Texture( TextureLoader* loader );
+    Texture( );
+    Texture( GpuTexture* gpuTexture, TextureLoader* loader );
+    Texture( GpuTexture* gpuTexture );
     ~Texture( );
     
     GLubyte* getImageData();
@@ -23,9 +26,11 @@ public:
     int getHeight();
     void setWidth( int width );
     void setHeight( int height );
-    void loadTexture( std::string file );
-    GLuint textureUID;
-    
+    void load( std::string file );
+    void push( );
+    void bind( );
+    void unbind();
+    GLuint getUID();
 private:
     bool loadPngImage( const char *name,
                       int &outWidth, int &outHeight,bool &outHasAlpha,
@@ -35,6 +40,10 @@ private:
     int height;
     bool hasAlpha;
     TextureLoader* loader;
+    GpuTexture* gpuTexture;
+    bool binded;
+    bool loaded;
+    GLuint textureUID;
 };
 
 #endif /* Texture_h */

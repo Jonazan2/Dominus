@@ -30,28 +30,30 @@ public:
     
     glm::vec3 getPosition() const;
     void setPosition(glm::vec3 position);
+    
     glm::vec3 getRotation() const;
     void setRotation(glm::vec3 rotation);
+    
     std::vector<glm::vec3> getVertices() const;
     void setVertices(std::vector<glm::vec3> vertices);
     void setUvs(std::vector<glm::vec2> uvs);
     std::vector<glm::vec2> getUvs() const;
     std::vector<glm::vec3> getNormals() const;
+    
     float getRotationAngle() const;
     void setRotationAngle(float);
-    void setTexture( const std::string );
-    std::string getTexturePath() const;
+    
     int getNumTriangles();
+    
     void setMaterial( const Material material );
     Material getMaterial() const;
+    
     void setTexture( Texture* texture );
     Texture* getTexture();
     
     GLsizeiptr getSize() const;
     GLsizeiptr getNormalVerticesSize() const;
     GLsizeiptr getTextureVerticesSize() const;
-    
-    GLuint textureUID;
     
     ~Mesh();
 private:
@@ -72,7 +74,6 @@ private:
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> textureVertices;
     std::vector<glm::vec3> normalVertices;
-    std::string texturePath;
     Texture* texture;
 };
 

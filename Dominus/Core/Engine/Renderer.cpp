@@ -129,44 +129,11 @@ void Renderer::load( std::vector<Node*> renderBatch ) {
     glVertexAttribPointer( textureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
     glEnableVertexAttribArray( textureAttribute );
     
-    int numTextures = 0;
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at( i )->getMesh();
-        if( !mesh->getTexturePath().empty() ) {
-            numTextures++;
-        }
-    }
-    GLuint textures [numTextures];
-    glGenTextures(numTextures, textures);
-    
-    GLuint actualTexture = 0;
     //Texture loading
     for ( int i = 0;  i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at( i )->getMesh();
-        if( !mesh->getTexturePath().empty() ) {
-            Texture* textureData = new Texture( new PngTextureLoader );
-            textureData->loadTexture( mesh->getTexturePath() );
-            mesh->textureUID = textures[actualTexture];
-            glBindTexture( GL_TEXTURE_2D, textures[actualTexture] );
-            // Set the texture wrapping/filtering options (on the currently bound texture object)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            
-            // Load and generate the texture
-            glTexImage2D( GL_TEXTURE_2D,
-                         0,
-                         GL_RGBA,
-                         textureData->getWidth(),
-                         textureData->getHeight(),
-                         0,
-                         GL_RGBA,
-                         GL_UNSIGNED_BYTE,
-                         textureData->getImageData() );
-            glBindTexture( GL_TEXTURE, 0 );
-            actualTexture++;
-        }
+        Texture* texture = renderBatch.at( i )->getMesh()->getTexture();
+        texture->bind();
+        texture->push();
     }
 }
 
@@ -182,7 +149,7 @@ void Renderer::draw( std::vector<Node*> renderBatch ) {
         // bind the texture and set the "tex" uniform in the fragment shader
         glActiveTexture(GL_TEXTURE0);
         glUniform1i(textureUID, 0); //set to 0 because the texture is bound to GL_TEXTURE0
-        glBindTexture(GL_TEXTURE_2D, node->getMesh()->textureUID);
+        glBindTexture( GL_TEXTURE_2D, node->getMesh()->getTexture()->getUID() );
         //
         glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
         glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );

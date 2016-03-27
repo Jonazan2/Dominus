@@ -117,14 +117,6 @@ std::vector<std::string> Mesh::split( const std::string s, const char delimiter 
     return elements;
 }
 
-std::string Mesh::getTexturePath() const {
-    return texturePath;
-}
-
-void Mesh::setTexture( const std::string texture ) {
-    this->texturePath = texture;
-}
-
 float Mesh::getRotationAngle() const {
     return rotationAngle;
 }

@@ -12,6 +12,7 @@
 #include "VerticalLayout.h"
 #include "Button.h"
 #include "PngTextureLoader.h"
+#include "GLGpuTexture.h"
 
 RenderScene::RenderScene() {
     yaw = -90.0f;
@@ -42,11 +43,13 @@ void RenderScene::populateScene( Scene* scene ) {
     //buffer data
     Mesh * momoMesh = new Mesh;
     momoMesh->loadObj( "momo.obj" );
-    momoMesh->setTexture( "diffuse.png" );
+    Texture* momoTexture = new Texture( new GLGpuTexture, new PngTextureLoader );
+    momoTexture->load( "diffuse.png" );
     
     Mesh* jokerMesh = new Mesh;
     jokerMesh->loadObj( "capsule.obj" );
-    jokerMesh->setTexture( "capsule.png" );
+    Texture* jokerTexture = new Texture( new GLGpuTexture, new PngTextureLoader );
+    jokerTexture->load( "capsule.png" );
     
     Mesh* momoHolder = new Mesh;
     momoHolder->loadObj( "cube.obj" );
@@ -95,10 +98,10 @@ void RenderScene::populateUI( Scene* scene ) {
     button->weight = 1;
     Button* button2 = new Button;
     button2->weight = 1;
-    Texture* buttonTexture = new Texture( new PngTextureLoader );
-    Texture* button2Texture = new Texture( new PngTextureLoader );
-    buttonTexture->loadTexture( "button.png" );
-    button2Texture->loadTexture( "button.png" );
+    Texture* buttonTexture = new Texture( new GLGpuTexture, new PngTextureLoader );
+    Texture* button2Texture = new Texture( new GLGpuTexture, new PngTextureLoader );
+    buttonTexture->load( "button.png" );
+    button2Texture->load( "button.png" );
     Params buttonParams = Params();
     buttonParams.width = WRAP;
     buttonParams.height = WRAP;
