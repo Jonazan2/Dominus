@@ -10,6 +10,7 @@
 #include "Texture.hpp"
 
 Renderer::Renderer(){
+    delta = 0;
 }
 
 Renderer::~Renderer(){
@@ -175,8 +176,8 @@ void Renderer::init(){
     
     
     //create vao and set as current
-//    glGenVertexArrays (1, &uiVao);
-//    glBindVertexArray (uiVao);
+    glGenVertexArrays (1, &uiVao);
+    glBindVertexArray (uiVao);
     glUseProgram(uiShaderProgram);
     
     GLuint buffers[2];
@@ -222,10 +223,8 @@ void Renderer::init(){
     
     glBindTexture( GL_TEXTURE_2D, textureUID );
     // Set the texture wrapping/filtering options (on the currently bound texture object)
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
     Texture* textureData = new Texture( "g_bubble_red.png" );
     // Load and generate the texture
     glTexImage2D( GL_TEXTURE_2D,
@@ -270,11 +269,11 @@ void Renderer::render(){
     
     
     glUseProgram(uiShaderProgram);
-    //glBindVertexArray (uiVao);
-    
-    glActiveTexture(GL_TEXTURE0);
+    glBindVertexArray (uiVao);
+
     glUniform1i(textureDataUniform, 0); //set to 0 because the texture is bound to GL_TEXTURE0
     glBindTexture(GL_TEXTURE_2D, textureUID);
+    glActiveTexture(GL_TEXTURE0);
     
     glm::mat4 orthoMatrix = glm::ortho(0.0, 640.0, 480.0, 0.0 );
     glUniformMatrix4fv(uiMvp, 1, GL_FALSE, &orthoMatrix[0][0]);
