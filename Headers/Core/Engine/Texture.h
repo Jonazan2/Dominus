@@ -16,7 +16,6 @@
 
 class Texture {
 public:
-    Texture( );
     Texture( GpuTexture* gpuTexture, TextureLoader* loader );
     Texture( GpuTexture* gpuTexture );
     ~Texture( );
@@ -32,6 +31,7 @@ public:
     void unbind();
     GLuint getUID();
 private:
+    Texture( );
     bool loadPngImage( const char *name,
                       int &outWidth, int &outHeight,bool &outHasAlpha,
                       GLubyte **outData );

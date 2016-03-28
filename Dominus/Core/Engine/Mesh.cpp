@@ -1,7 +1,9 @@
 #include "Mesh.hpp"
 #include <OpenGL/OpenGL.h>
 
-Mesh::Mesh() : rotationAngle( 0 ) {}
+Mesh::Mesh() : rotationAngle( 0 ) {
+    texture = nullptr;
+}
 
 Mesh::Mesh( std::string filePath ) : rotationAngle( 0 ), fileName( filePath ) {
     vertexIndices = 0;
@@ -9,6 +11,7 @@ Mesh::Mesh( std::string filePath ) : rotationAngle( 0 ), fileName( filePath ) {
     normalIndices = 0;
     numTriangles = 0;
     loadObj(filePath);
+    texture = nullptr;
 }
 
 void Mesh::loadObj( std::string filePath ) {

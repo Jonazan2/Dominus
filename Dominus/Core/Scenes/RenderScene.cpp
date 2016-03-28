@@ -45,11 +45,14 @@ void RenderScene::populateScene( Scene* scene ) {
     momoMesh->loadObj( "momo.obj" );
     Texture* momoTexture = new Texture( new GLGpuTexture, new PngTextureLoader );
     momoTexture->load( "diffuse.png" );
+    momoMesh->setTexture( momoTexture );
     
     Mesh* jokerMesh = new Mesh;
     jokerMesh->loadObj( "capsule.obj" );
     Texture* jokerTexture = new Texture( new GLGpuTexture, new PngTextureLoader );
     jokerTexture->load( "capsule.png" );
+    //TODO: png format issues loading capsule.png
+    //jokerMesh->setTexture( jokerTexture );
     
     Mesh* momoHolder = new Mesh;
     momoHolder->loadObj( "cube.obj" );

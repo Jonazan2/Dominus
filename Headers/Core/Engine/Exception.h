@@ -17,19 +17,35 @@
 class UnbindException : public std::runtime_error {
 public:
     UnbindException( int bufferUID )
-    : runtime_error( "Buffer unbind" ), bufferUID( bufferUID )
+    : runtime_error( "Buffer unbinded" ), bufferUID( bufferUID )
     {}
     
     virtual const char* what() const throw() {
         std::ostringstream message;
-        message << std::runtime_error::what() << ": " << bufferUID;
-        
+        message << std::runtime_error::what() << " " << bufferUID;
         return message.str().c_str();
-        }
-        
-    private:
-        int bufferUID;
-        };
+    }
+private:
+    int bufferUID;
+};
+
+class InvalidTextureException : public std::runtime_error {
+public:
+    InvalidTextureException( int uid, int width, int height )
+    : runtime_error( "Invalid Texture" ),  uid( uid ), width( width ), height( height )
+    {}
+    
+    virtual const char* what() const throw() {
+        std::ostringstream message;
+        message << std::runtime_error::what() << " ";
+        message << uid << " width: " << width << " height: " << height;
+        return message.str().c_str();
+    }
+private:
+    int uid;
+    int width;
+    int height;
+};
 
 class FileAccesException : public std::runtime_error {
 public:
@@ -45,7 +61,6 @@ public:
     
 private:
     const char* fileName;
-    
 };
 
 class LibPngException : public std::runtime_error {

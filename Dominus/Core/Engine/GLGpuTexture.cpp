@@ -25,10 +25,8 @@ GLuint GLGpuTexture::genTexture() {
 
 void GLGpuTexture::push( int width, int height, bool alpha, GLubyte *data ) {
     // Set the texture wrapping/filtering options
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
     
     GLint format;
     if ( alpha ) {
@@ -43,13 +41,14 @@ void GLGpuTexture::push( int width, int height, bool alpha, GLubyte *data ) {
                  width,
                  height,
                  0,
-                 format,
+                 GL_RGBA,
                  GL_UNSIGNED_BYTE,
                  data );
 }
 
 void GLGpuTexture::bind( GLuint textureUID ) {
     glBindTexture( GL_TEXTURE_2D , textureUID );
+    glActiveTexture( GL_TEXTURE0 );
 }
 
 void GLGpuTexture::unbind() {

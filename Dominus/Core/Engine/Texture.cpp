@@ -35,9 +35,12 @@ void Texture::load( std::string file ) {
 }
 
 void Texture::push() {
-    //TODO: check if the image data is already loaded
     if( binded ) {
-        gpuTexture->push( width, height, hasAlpha, image );
+        if( width > 0 && height > 0 && image != nullptr  ) {
+            gpuTexture->push( width, height, hasAlpha, image );
+        } else {
+            throw InvalidTextureException( textureUID, width, height );
+        }
     } else {
         throw UnbindException( textureUID );
     }
@@ -45,10 +48,12 @@ void Texture::push() {
 
 void Texture::bind() {
     gpuTexture->bind( textureUID );
+    binded = true;
 }
 
 void Texture::unbind() {
     gpuTexture->unbind();
+    binded = false;
 }
 
 GLuint Texture::getUID() {

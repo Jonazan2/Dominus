@@ -114,6 +114,30 @@ void PngTextureLoader::loadTexture( const char *fileName,
     int bit_depth;
     png_get_IHDR( png_ptr, info_ptr, &width, &height, &bit_depth, &color_type,
                  &interlace_type, NULL, NULL );
+    
+    outHasAlpha = false;
+    if( color_type == PNG_COLOR_TYPE_GRAY ) {
+        std::cout <<  fileName << " PNG_COLOR_TYPE_GRAY" << std::endl;
+        png_set_gray_to_rgb(png_ptr);
+    } else if( color_type == PNG_COLOR_TYPE_GRAY_ALPHA ) {
+        std::cout << fileName << " PNG_COLOR_TYPE_GRAY_ALPHA" << std::endl;
+        png_set_gray_to_rgb(png_ptr);
+        outHasAlpha = true;
+    } else if( color_type == PNG_COLOR_TYPE_PALETTE ) {
+        std::cout << fileName << " PNG_COLOR_TYPE_PALETTE" << std::endl;
+    } else if( color_type == PNG_COLOR_TYPE_RGB ) {
+        std::cout << fileName << " PNG_COLOR_TYPE_RGB" << std::endl;
+    } else if( color_type == PNG_COLOR_TYPE_RGB_ALPHA ) {
+        std::cout << fileName << " PNG_COLOR_TYPE_RGB_ALPHA" << std::endl;
+        outHasAlpha = true;
+    } else if( color_type == PNG_COLOR_MASK_PALETTE ) {
+        std::cout << fileName << " PNG_COLOR_MASK_PALETTE" << std::endl;
+    } else if( color_type == PNG_COLOR_MASK_COLOR ) {
+        std::cout << fileName << " PNG_COLOR_MASK_COLOR" << std::endl;
+    } else if( color_type == PNG_COLOR_MASK_ALPHA ) {
+        std::cout << fileName << " PNG_COLOR_MASK_ALPHA" << std::endl;
+    }
+    
     outWidth = width;
     outHeight = height;
     
