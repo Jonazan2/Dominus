@@ -35,8 +35,8 @@ public:
     bool downPressed;
     bool leftPressed;
     bool rightPressed;
-    
     bool rightClickPressed;
+
     float xSaved;
     float ySaved;
 };

@@ -20,7 +20,7 @@ RenderScene::RenderScene() {
     leftPressed = false;
     rightPressed = false;
     
-    rightPressed = false;
+    rightClickPressed = false;
 }
 
 RenderScene::~RenderScene() {
