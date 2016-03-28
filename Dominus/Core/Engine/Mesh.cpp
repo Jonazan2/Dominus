@@ -5,6 +5,14 @@ Mesh::Mesh()
 :texture( nullptr )
 {}
 
+Mesh::Mesh( MeshLoader* loader ) : Mesh( ) {
+    this->loader = loader;
+}
+
+void Mesh::load( const std::string file ) {
+    loader->load( file, &vertices, &uvs, &normals );
+}
+
 glm::vec3 Mesh::getPosition() const {
     return position;
 }
@@ -18,7 +26,7 @@ std::vector<glm::vec3> Mesh::getVertices() const {
 }
 
 void Mesh::setUvs( std::vector<glm::vec2> uvs ) {
-    this->textureVertices = uvs;
+    this->uvs = uvs;
 }
 
 void Mesh::setVertices( std::vector<glm::vec3> vertices ) {
@@ -26,11 +34,11 @@ void Mesh::setVertices( std::vector<glm::vec3> vertices ) {
 }
 
 std::vector<glm::vec2> Mesh::getUvs() const {
-    return textureVertices;
+    return uvs;
 }
 
 std::vector<glm::vec3> Mesh::getNormals() const {
-    return normalVertices;
+    return normals;
 }
 
 void Mesh::setTexture( Texture* texture ){

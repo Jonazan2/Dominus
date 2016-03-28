@@ -13,6 +13,7 @@
 #include "Button.h"
 #include "PngTextureLoader.h"
 #include "GLGpuTexture.h"
+#include "ObjLoader.h"
 
 RenderScene::RenderScene() {
     yaw = -90.0f;
@@ -41,27 +42,27 @@ void RenderScene::populateScene( Scene* scene ) {
     LightNode* lightNode = new LightNode;
     scene->setLightNode( lightNode );
     //buffer data
-    Mesh * momoMesh = new Mesh;
-    //momoMesh->loadObj( "momo.obj" );
+    Mesh * momoMesh = new Mesh( new ObjLoader );
+    momoMesh->load( "momo.obj" );
     Texture* momoTexture = new Texture( new GLGpuTexture, new PngTextureLoader );
     momoTexture->load( "diffuse.png" );
     momoMesh->setTexture( momoTexture );
     
-    Mesh* jokerMesh = new Mesh;
-    //jokerMesh->loadObj( "capsule.obj" );
+    Mesh* jokerMesh = new Mesh( new ObjLoader );
+    jokerMesh->load( "capsule.obj" );
     Texture* jokerTexture = new Texture( new GLGpuTexture, new PngTextureLoader );
     jokerTexture->load( "capsule.png" );
     //TODO: png format issues loading capsule.png
     //jokerMesh->setTexture( jokerTexture );
     
-    Mesh* momoHolder = new Mesh;
-    //momoHolder->loadObj( "cube.obj" );
+    Mesh* momoHolder = new Mesh( new ObjLoader );
+    momoHolder->load( "cube.obj" );
     
-    Mesh* jokerHolder = new Mesh;
-    //jokerHolder->loadObj( "cube.obj" );
+    Mesh* jokerHolder = new Mesh( new ObjLoader );
+    jokerHolder->load( "cube.obj" );
     
-    Mesh* plane = new Mesh;
-    //plane->loadObj( "cube.obj" );
+    Mesh* plane = new Mesh( new ObjLoader );
+    plane->load( "cube.obj" );
     
     //populate scene
     Node* momoNode = new Node( momoMesh );

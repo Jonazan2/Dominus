@@ -20,11 +20,15 @@
 #include <list>
 #include "Material.hpp"
 #include "Texture.h"
+#include "MeshLoader.h"
 
 class Mesh{
 public:
-    Mesh();
-    ~Mesh();
+    Mesh( );
+    Mesh( MeshLoader* loader );
+    ~Mesh( );
+    
+    void load( const std::string file );
     
     glm::vec3 getPosition() const;
     void setPosition(glm::vec3 position);
@@ -45,10 +49,11 @@ public:
 private:
     glm::vec3 position;
     std::vector<glm::vec3> vertices;
-    std::vector<glm::vec2> textureVertices;
-    std::vector<glm::vec3> normalVertices;
+    std::vector<glm::vec2> uvs;
+    std::vector<glm::vec3> normals;
     Texture* texture;
     Material material;
+    MeshLoader* loader;
 };
 
 #endif /* Mesh_hpp */
