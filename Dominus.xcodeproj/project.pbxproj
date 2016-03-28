@@ -50,6 +50,10 @@
 		9C80754E1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
 		9C80754F1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
 		9C8075571CA31ED60052086F /* BufferTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C8075561CA31ED60052086F /* BufferTest.cpp */; };
+		9CB3200C1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CB320121CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CB320131CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FA81C82F92D0066C313 /* main.cpp */; };
 		9CCB2FAF1C82F95E0066C313 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9D1C82F7FE0066C313 /* gtest.framework */; };
 		9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9F1C82F8790066C313 /* gmock.framework */; };
@@ -99,7 +103,6 @@
 		92E3453F1C64CCE700308A63 /* LoggerTerminal.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = LoggerTerminal.hpp; path = Headers/Core/Log/LoggerTerminal.hpp; sourceTree = "<group>"; };
 		92E345401C64E04A00308A63 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = Core/Log/Log.cpp; sourceTree = "<group>"; };
 		9C222D541CA47500003C1DC5 /* GpuBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GpuBuffer.h; path = Headers/Core/Engine/GpuBuffer.h; sourceTree = "<group>"; };
-		9C222D551CA48A85003C1DC5 /* UnbindException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UnbindException.h; path = Headers/Core/Engine/UnbindException.h; sourceTree = "<group>"; };
 		9C222D561CA49071003C1DC5 /* MockGPUBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockGPUBuffer.h; sourceTree = "<group>"; };
 		9C222D571CA49198003C1DC5 /* GLGpuBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GLGpuBuffer.h; path = Headers/Core/Engine/GLGpuBuffer.h; sourceTree = "<group>"; };
 		9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GLGpuBuffer.cpp; path = Core/Engine/GLGpuBuffer.cpp; sourceTree = "<group>"; };
@@ -131,6 +134,13 @@
 		9C8075501CA313250052086F /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Buffer.h; path = Headers/Core/Engine/Buffer.h; sourceTree = "<group>"; };
 		9C8075561CA31ED60052086F /* BufferTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BufferTest.cpp; sourceTree = "<group>"; };
 		9C922E851C975F9D00D66C8F /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		9CB320091CA724370058482C /* TextureLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextureLoader.h; path = Headers/Core/Engine/TextureLoader.h; sourceTree = "<group>"; };
+		9CB3200A1CA725C10058482C /* PngTextureLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PngTextureLoader.h; path = Headers/Core/Engine/PngTextureLoader.h; sourceTree = "<group>"; };
+		9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PngTextureLoader.cpp; path = Core/Engine/PngTextureLoader.cpp; sourceTree = "<group>"; };
+		9CB3200E1CA727A40058482C /* Exception.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = Headers/Core/Engine/Exception.h; sourceTree = "<group>"; };
+		9CB3200F1CA735700058482C /* GpuTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GpuTexture.h; path = Headers/Core/Engine/GpuTexture.h; sourceTree = "<group>"; };
+		9CB320101CA735C50058482C /* GLGpuTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GLGpuTexture.h; path = Headers/Core/Engine/GLGpuTexture.h; sourceTree = "<group>"; };
+		9CB320111CA735E00058482C /* GLGpuTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GLGpuTexture.cpp; path = Core/Engine/GLGpuTexture.cpp; sourceTree = "<group>"; };
 		9CCB2F9D1C82F7FE0066C313 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = ../../../../Library/Frameworks/gtest.framework; sourceTree = "<group>"; };
 		9CCB2F9F1C82F8790066C313 /* gmock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gmock.framework; path = ../../../../Library/Frameworks/gmock.framework; sourceTree = "<group>"; };
 		9CCB2FA61C82F92D0066C313 /* UnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -371,8 +381,12 @@
 				9C8075491CA1FC370052086F /* LightNode.h */,
 				9C8075501CA313250052086F /* Buffer.h */,
 				9C222D541CA47500003C1DC5 /* GpuBuffer.h */,
-				9C222D551CA48A85003C1DC5 /* UnbindException.h */,
 				9C222D571CA49198003C1DC5 /* GLGpuBuffer.h */,
+				9CB320091CA724370058482C /* TextureLoader.h */,
+				9CB3200A1CA725C10058482C /* PngTextureLoader.h */,
+				9CB3200E1CA727A40058482C /* Exception.h */,
+				9CB3200F1CA735700058482C /* GpuTexture.h */,
+				9CB320101CA735C50058482C /* GLGpuTexture.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -394,6 +408,8 @@
 				9C80754A1CA1FC5D0052086F /* LightNode.cpp */,
 				9C80754D1CA313130052086F /* Buffer.cpp */,
 				9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */,
+				9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */,
+				9CB320111CA735E00058482C /* GLGpuTexture.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -482,6 +498,7 @@
 				9C80754B1CA1FC5D0052086F /* LightNode.cpp in Sources */,
 				AB6398E21C8CE49500CA0B3B /* Shader.cpp in Sources */,
 				9C7D08331C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */,
+				9CB320121CA735E00058482C /* GLGpuTexture.cpp in Sources */,
 				AB6398E11C8CE49500CA0B3B /* Renderer.cpp in Sources */,
 				9C7D08351C9EC57600804DF1 /* VerticalLayout.cpp in Sources */,
 				AB6398DE1C8CE49500CA0B3B /* Material.cpp in Sources */,
@@ -497,6 +514,7 @@
 				9C7D082F1C9EC0C500804DF1 /* UIComponent.cpp in Sources */,
 				AB6398E41C8CE49500CA0B3B /* Window.cpp in Sources */,
 				9C7D08271C9EC0C500804DF1 /* Button.cpp in Sources */,
+				9CB3200C1CA725D90058482C /* PngTextureLoader.cpp in Sources */,
 				9C7D082D1C9EC0C500804DF1 /* TextList.cpp in Sources */,
 				9C7D082B1C9EC0C500804DF1 /* Text.cpp in Sources */,
 				9C80754E1CA313130052086F /* Buffer.cpp in Sources */,
@@ -518,6 +536,7 @@
 				9C80754C1CA1FC5D0052086F /* LightNode.cpp in Sources */,
 				9C8075431CA1D68B0052086F /* Renderer.cpp in Sources */,
 				9C8075421CA1D6730052086F /* Event.cpp in Sources */,
+				9CB320131CA735E00058482C /* GLGpuTexture.cpp in Sources */,
 				9C8075401CA1D6510052086F /* Material.cpp in Sources */,
 				9C8075411CA1D6510052086F /* Mesh.cpp in Sources */,
 				9C8075571CA31ED60052086F /* BufferTest.cpp in Sources */,
@@ -526,6 +545,7 @@
 				9C80752F1CA1D1C80052086F /* UIComponentTest.cpp in Sources */,
 				9C80754F1CA313130052086F /* Buffer.cpp in Sources */,
 				9C8075301CA1D1C80052086F /* VerticalLayoutTest.cpp in Sources */,
+				9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */,
 				9C7D082E1C9EC0C500804DF1 /* TextList.cpp in Sources */,
 				9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */,
 				9C7D08361C9EC57600804DF1 /* VerticalLayout.cpp in Sources */,
