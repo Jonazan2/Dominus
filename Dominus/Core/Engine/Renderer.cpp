@@ -251,7 +251,7 @@ void Renderer::loadUI(  ) {
     for ( int i = 0; i < uiComponents.size(); i++ ) {
         Mesh* mesh = uiComponents.at(i)->mesh;
         uiUvsBuffer->push( (float*)&mesh->getUvs()[0],
-                           ( sizeof ( GLfloat ) * 3 ) * mesh->getUvs().size() );
+                           ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size() );
     }
     //set uvs array layout for shader attribute and enable attribute
     glVertexAttribPointer( uiTextureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
@@ -272,7 +272,6 @@ void Renderer::loadUI(  ) {
     //Texture loading
     for ( int i = 0;  i < uiComponents.size(); i++ ) {
         UIComponent* component = uiComponents.at( i );
-        Mesh* mesh = uiComponents.at( i )->mesh;
         if( component->texture != nullptr ) {
             component->texture->textureUID = textures[actualTexture];
             glBindTexture( GL_TEXTURE_2D, textures[actualTexture] );
