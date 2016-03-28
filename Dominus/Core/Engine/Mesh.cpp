@@ -1,11 +1,9 @@
 #include "Mesh.hpp"
 #include <OpenGL/OpenGL.h>
 
-Mesh::Mesh() {}
-
-Mesh::Mesh( std::string filePath ) : fileName( filePath ) {
-
-}
+Mesh::Mesh()
+:texture( nullptr )
+{}
 
 glm::vec3 Mesh::getPosition() const {
     return position;

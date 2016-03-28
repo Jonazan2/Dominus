@@ -11,6 +11,7 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "UIComponent.h"
+#include "PngTextureLoader.h"
 
 Renderer::Renderer( GLFWwindow* window ) : window( window ) {
 
@@ -99,6 +100,44 @@ void Renderer::loadUIShaders() {
     uiTextureAttribute = 5;
 }
 
+void Renderer::drawtexture( UIComponent* component ){
+    if( component->texture != nullptr ) {
+        glm::vec2 position = component->getPosition();
+        std::vector<glm::vec3> vertices;
+        std::vector<glm::vec2> uvs;
+        glm::vec3 topLeft = glm::vec3( position.x, position.y, 0 );
+        glm::vec3 topRight = glm::vec3( position.x + component->width,
+                                       position.y, 0 );
+        glm::vec3 bottomLeft = glm::vec3( position.x,
+                                         position.y + component->height, 0 );
+        glm::vec3 bottomRight = glm::vec3( position.x + component->width,
+                                          position.y + component->height, 0 );
+        
+        vertices.push_back( topLeft );
+        vertices.push_back( bottomLeft );
+        vertices.push_back( topRight );
+        vertices.push_back( bottomLeft );
+        vertices.push_back( topRight);
+        vertices.push_back( bottomRight );
+        
+        glm::vec2 uvTopLeft = glm::vec2( 0, 0 );
+        glm::vec2 uvTopRight = glm::vec2( 1, 0 );
+        glm::vec2 uvBottomLeft = glm::vec2( 0, 1 );
+        glm::vec2 uvBottomRight = glm::vec2( 1, 1 );
+        
+        uvs.push_back( uvBottomLeft );
+        uvs.push_back( uvTopLeft );
+        uvs.push_back( uvBottomRight );
+        uvs.push_back( uvTopLeft );
+        uvs.push_back( uvBottomRight );
+        uvs.push_back( uvTopRight );
+        component->mesh->setVertices( vertices );
+        component->mesh->setUvs( uvs );
+        
+        uiComponents.push_back( component );
+    }
+}
+
 void Renderer::load( std::vector<Node*> renderBatch ) {
     verticesBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
@@ -129,109 +168,14 @@ void Renderer::load( std::vector<Node*> renderBatch ) {
     glVertexAttribPointer( textureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
     glEnableVertexAttribArray( textureAttribute );
     
-    int numTextures = 0;
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at( i )->getMesh();
-        if( !mesh->getTexturePath().empty() ) {
-            numTextures++;
-        }
-    }
-    GLuint textures [numTextures];
-    glGenTextures(numTextures, textures);
-    
-    GLuint actualTexture = 0;
     //Texture loading
     for ( int i = 0;  i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at( i )->getMesh();
-        if( !mesh->getTexturePath().empty() ) {
-            Texture* textureData = new Texture( mesh->getTexturePath() );
-            mesh->textureUID = textures[actualTexture];
-            glBindTexture( GL_TEXTURE_2D, textures[actualTexture] );
-            // Set the texture wrapping/filtering options (on the currently bound texture object)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            
-            // Load and generate the texture
-            glTexImage2D( GL_TEXTURE_2D,
-                         0,
-                         GL_RGBA,
-                         textureData->getWidth(),
-                         textureData->getHeight(),
-                         0,
-                         GL_RGBA,
-                         GL_UNSIGNED_BYTE,
-                         textureData->getImageData() );
-            glBindTexture( GL_TEXTURE, 0 );
-            actualTexture++;
+        Texture* texture = renderBatch.at( i )->getMesh()->getTexture();
+        if( texture != nullptr ){
+            texture->bind();
+            texture->push();
+            texture->unbind();
         }
-    }
-}
-
-void Renderer::draw( std::vector<Node*> renderBatch ) {
-    glUseProgram (shader_programme);
-    glUniformMatrix4fv(projectionUID, 1, GL_FALSE, &projectionMatrix[0][0]);
-    glUniform3fv(lightPositionUID, 1, &lightPosition[0]);
-    glBindVertexArray (vao);
-    
-    GLuint offset = 0;
-    for ( int i = 0; i < renderBatch.size() ; i++ ) {
-        Node* node = renderBatch.at( i );
-        // bind the texture and set the "tex" uniform in the fragment shader
-        glActiveTexture(GL_TEXTURE0);
-        glUniform1i(textureUID, 0); //set to 0 because the texture is bound to GL_TEXTURE0
-        glBindTexture(GL_TEXTURE_2D, node->getMesh()->textureUID);
-        //
-        glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
-        glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
-        glm::mat3 normalMat3 = glm::mat3( normalMat );
-        glUniformMatrix4fv(modelViewUID, 1, GL_FALSE, &modelViewMatrix[0][0]);
-        glUniformMatrix3fv(normalUID, 1, GL_FALSE, &normalMat3[0][0]);
-        // draw points from the currently bound VAO with current in-use shader
-        glDrawArrays (GL_TRIANGLES,
-                        offset,
-                        (int)node->getMesh()->getVertices().size());
-        offset += (int)node->getMesh()->getVertices().size();
-        glBindTexture( GL_TEXTURE_2D , 0 );
-    }
-}
-
-void Renderer::drawtexture( UIComponent* component ){
-    if( component->texture != nullptr ) {
-        glm::vec2 position = component->getPosition();
-        std::vector<glm::vec3> vertices;
-        std::vector<glm::vec2> uvs;
-        glm::vec3 topLeft = glm::vec3( position.x, position.y, 0 );
-        glm::vec3 topRight = glm::vec3( position.x + component->width,
-                                       position.y, 0 );
-        glm::vec3 bottomLeft = glm::vec3( position.x,
-                                         position.y + component->height, 0 );
-        glm::vec3 bottomRight = glm::vec3( position.x + component->width,
-                                          position.y + component->height, 0 );
-        
-        vertices.push_back( topLeft );
-        vertices.push_back( bottomLeft );
-        vertices.push_back( topRight );
-        vertices.push_back( bottomLeft );
-        vertices.push_back( topRight);
-        vertices.push_back( bottomRight );
-        
-        glm::vec2 uvTopLeft = glm::vec2( 0, 0 );
-        glm::vec2 uvTopRight = glm::vec2( 1, 0 );
-        glm::vec2 uvBottomLeft = glm::vec2( 0, 1 );
-        glm::vec2 uvBottomRight = glm::vec2( 1, 1 );
-        
-        uvs.push_back(uvBottomLeft );
-        uvs.push_back( uvTopLeft );
-        uvs.push_back( uvBottomRight );
-        uvs.push_back( uvTopLeft );
-        uvs.push_back( uvBottomRight );
-        uvs.push_back( uvTopRight );
-        component->mesh->setVertices( vertices );
-        component->mesh->setUvs( uvs );
-        
-        uiComponents.push_back( component );
     }
 }
 
@@ -257,42 +201,42 @@ void Renderer::loadUI(  ) {
     glVertexAttribPointer( uiTextureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
     glEnableVertexAttribArray( uiTextureAttribute );
 
-    
-    int numTextures = 0;
-    for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* mesh = uiComponents.at(i)->mesh;
-        if( mesh->getTexture() != nullptr ) {
-            numTextures++;
-        }
-    }
-    GLuint textures [numTextures];
-    glGenTextures(numTextures, textures);
-    
-    GLuint actualTexture = 0;
-    //Texture loading
     for ( int i = 0;  i < uiComponents.size(); i++ ) {
         UIComponent* component = uiComponents.at( i );
         if( component->texture != nullptr ) {
-            component->texture->textureUID = textures[actualTexture];
-            glBindTexture( GL_TEXTURE_2D, textures[actualTexture] );
-            // Set the texture wrapping/filtering options (on the currently bound texture object)
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            
-            // Load and generate the texture
-            glTexImage2D( GL_TEXTURE_2D,
-                         0,
-                         GL_RGBA,
-                         component->texture->getWidth(),
-                         component->texture->getHeight(),
-                         0,
-                         GL_RGBA,
-                         GL_UNSIGNED_BYTE,
-                         component->texture->getImageData() );
-            glBindTexture( GL_TEXTURE, 0 );
-            actualTexture++;
+            component->texture->bind();
+            component->texture->push();
+            component->texture->unbind();
+        }
+    }
+}
+
+void Renderer::draw( std::vector<Node*> renderBatch ) {
+    glUseProgram (shader_programme);
+    glUniformMatrix4fv(projectionUID, 1, GL_FALSE, &projectionMatrix[0][0]);
+    glUniform3fv(lightPositionUID, 1, &lightPosition[0]);
+    glBindVertexArray (vao);
+    
+    GLuint offset = 0;
+    for ( int i = 0; i < renderBatch.size() ; i++ ) {
+        Node* node = renderBatch.at( i );
+        if( node->getMesh()->getTexture() != nullptr ) {
+            node->getMesh()->getTexture()->bind();
+            glUniform1i(textureUID, 0);
+        }
+        
+        glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
+        glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
+        glm::mat3 normalMat3 = glm::mat3( normalMat );
+        glUniformMatrix4fv(modelViewUID, 1, GL_FALSE, &modelViewMatrix[0][0]);
+        glUniformMatrix3fv(normalUID, 1, GL_FALSE, &normalMat3[0][0]);
+        // draw points from the currently bound VAO with current in-use shader
+        glDrawArrays (GL_TRIANGLES,
+                      offset,
+                      (int)node->getMesh()->getVertices().size());
+        offset += (int)node->getMesh()->getVertices().size();
+        if( node->getMesh()->getTexture() != nullptr ) {
+            node->getMesh()->getTexture()->unbind();
         }
     }
 }
@@ -304,21 +248,22 @@ void Renderer::drawUI(  ) {
     
     GLuint offset = 0;
     for ( int i = 0; i < uiComponents.size(); i++ ) {
-        UIComponent* uiComponent = uiComponents.at(i);
         Mesh* mesh = uiComponents.at(i)->mesh;
-        // bind the texture and set the "tex" uniform in the fragment shader
-        glActiveTexture(GL_TEXTURE0);
-        glUniform1i(uiTextureData, 0); //set to 0 because the texture is bound to GL_TEXTURE0
-        glBindTexture(GL_TEXTURE_2D, uiComponent->texture->textureUID);
-        //
+        if( uiComponents.at(i)->texture != nullptr ){
+            uiComponents.at(i)->texture->bind();
+            glUniform1i(uiTextureData, 0);
+        }
+
         glm::mat4 MVPMatrix = orthoMatrix;
         glUniformMatrix4fv(uiMVPMatrix, 1, GL_FALSE, &MVPMatrix[0][0]);
-        // draw points from the currently bound VAO with current in-use shader
+
         glDrawArrays ( GL_TRIANGLES,
                       offset,
                       (int)mesh->getVertices().size() );
         offset += (int)mesh->getVertices().size();
-        glBindTexture( GL_TEXTURE_2D , 0 );
+        if( mesh->getTexture() != nullptr ){
+            mesh->getTexture()->unbind();
+        }
     }
 }
 
