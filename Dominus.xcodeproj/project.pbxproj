@@ -14,6 +14,8 @@
 		92E345411C64E04A00308A63 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345401C64E04A00308A63 /* Log.cpp */; };
 		9C222D591CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */; settings = {ASSET_TAGS = (); }; };
 		9C222D5A1CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E6C1CA972E1004A45CA /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E6D1CA972E1004A45CA /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */; settings = {ASSET_TAGS = (); }; };
 		9C470C291C7F849F00558755 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C470C281C7F849F00558755 /* libz.1.2.5.tbd */; };
 		9C777FC11C84E2BF005C48A5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */; };
 		9C7D08271C9EC0C500804DF1 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08221C9EC0C500804DF1 /* Button.cpp */; };
@@ -106,6 +108,9 @@
 		9C222D561CA49071003C1DC5 /* MockGPUBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MockGPUBuffer.h; sourceTree = "<group>"; };
 		9C222D571CA49198003C1DC5 /* GLGpuBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GLGpuBuffer.h; path = Headers/Core/Engine/GLGpuBuffer.h; sourceTree = "<group>"; };
 		9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GLGpuBuffer.cpp; path = Core/Engine/GLGpuBuffer.cpp; sourceTree = "<group>"; };
+		9C2A0E691CA972B6004A45CA /* MeshLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MeshLoader.h; path = Headers/Core/Engine/MeshLoader.h; sourceTree = "<group>"; };
+		9C2A0E6A1CA972CE004A45CA /* ObjLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ObjLoader.h; path = Headers/Core/Engine/ObjLoader.h; sourceTree = "<group>"; };
+		9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjLoader.cpp; path = Core/Engine/ObjLoader.cpp; sourceTree = "<group>"; };
 		9C470C281C7F849F00558755 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		9C7D081A1C9EC06600804DF1 /* Button.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Button.h; path = Headers/Core/Engine/Button.h; sourceTree = "<group>"; };
 		9C7D081B1C9EC06600804DF1 /* Frame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Frame.h; path = Headers/Core/Engine/Frame.h; sourceTree = "<group>"; };
@@ -382,6 +387,8 @@
 				9C8075501CA313250052086F /* Buffer.h */,
 				9C222D541CA47500003C1DC5 /* GpuBuffer.h */,
 				9C222D571CA49198003C1DC5 /* GLGpuBuffer.h */,
+				9C2A0E691CA972B6004A45CA /* MeshLoader.h */,
+				9C2A0E6A1CA972CE004A45CA /* ObjLoader.h */,
 				9CB320091CA724370058482C /* TextureLoader.h */,
 				9CB3200A1CA725C10058482C /* PngTextureLoader.h */,
 				9CB3200E1CA727A40058482C /* Exception.h */,
@@ -408,6 +415,7 @@
 				9C80754A1CA1FC5D0052086F /* LightNode.cpp */,
 				9C80754D1CA313130052086F /* Buffer.cpp */,
 				9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */,
+				9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */,
 				9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */,
 				9CB320111CA735E00058482C /* GLGpuTexture.cpp */,
 			);
@@ -495,6 +503,7 @@
 				AB6398DB1C8CE49500CA0B3B /* Engine.cpp in Sources */,
 				AB6398CE1C8CE48400CA0B3B /* Scene.cpp in Sources */,
 				AB6398DC1C8CE49500CA0B3B /* Event.cpp in Sources */,
+				9C2A0E6C1CA972E1004A45CA /* ObjLoader.cpp in Sources */,
 				9C80754B1CA1FC5D0052086F /* LightNode.cpp in Sources */,
 				AB6398E21C8CE49500CA0B3B /* Shader.cpp in Sources */,
 				9C7D08331C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */,
@@ -535,6 +544,7 @@
 				9C222D5A1CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */,
 				9C80754C1CA1FC5D0052086F /* LightNode.cpp in Sources */,
 				9C8075431CA1D68B0052086F /* Renderer.cpp in Sources */,
+				9C2A0E6D1CA972E1004A45CA /* ObjLoader.cpp in Sources */,
 				9C8075421CA1D6730052086F /* Event.cpp in Sources */,
 				9CB320131CA735E00058482C /* GLGpuTexture.cpp in Sources */,
 				9C8075401CA1D6510052086F /* Material.cpp in Sources */,

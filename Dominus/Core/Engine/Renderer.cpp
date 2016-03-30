@@ -142,7 +142,8 @@ void Renderer::load( std::vector<Node*> renderBatch ) {
     verticesBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Mesh* mesh = renderBatch.at(i)->getMesh();
-        verticesBuffer->push( (float*)&mesh->getVertices()[0], mesh->getSize() );
+        verticesBuffer->push( (float*)&mesh->getVertices()[0],
+                              ( sizeof ( GLfloat ) * 3 ) * mesh->getVertices().size() );
     }
     glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(positionAttribute);
@@ -151,7 +152,7 @@ void Renderer::load( std::vector<Node*> renderBatch ) {
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Mesh* mesh = renderBatch.at(i)->getMesh();
         normalBuffer->push( (float*)&mesh->getNormals()[0],
-                              mesh->getNormalVerticesSize() );
+                            ( sizeof ( GLfloat ) * 3 ) * mesh->getNormals().size() );
     }
 
     glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
@@ -161,7 +162,7 @@ void Renderer::load( std::vector<Node*> renderBatch ) {
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Mesh* mesh = renderBatch.at(i)->getMesh();
         uvsBuffer->push( (float*)&mesh->getUvs()[0],
-                             mesh->getTextureVerticesSize() );
+                         ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size() );
     }
     
     glVertexAttribPointer( textureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
@@ -183,7 +184,8 @@ void Renderer::loadUI(  ) {
     
     for ( int i = 0; i < uiComponents.size(); i++ ) {
         Mesh* mesh = uiComponents.at(i)->mesh;
-        uiVerticesBufer->push( (float*)&mesh->getVertices()[0], mesh->getSize() );
+        uiVerticesBufer->push( (float*)&mesh->getVertices()[0],
+                               ( sizeof ( GLfloat ) * 3 ) * mesh->getVertices().size() );
     }
     //set vertex array layout for shader attibute and enable attibute
     glVertexAttribPointer (uiPositionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
@@ -193,7 +195,7 @@ void Renderer::loadUI(  ) {
     for ( int i = 0; i < uiComponents.size(); i++ ) {
         Mesh* mesh = uiComponents.at(i)->mesh;
         uiUvsBuffer->push( (float*)&mesh->getUvs()[0],
-                           mesh->getTextureVerticesSize() );
+                           ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size() );
     }
     //set uvs array layout for shader attribute and enable attribute
     glVertexAttribPointer( uiTextureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );

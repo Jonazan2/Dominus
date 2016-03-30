@@ -20,61 +20,40 @@
 #include <list>
 #include "Material.hpp"
 #include "Texture.h"
+#include "MeshLoader.h"
 
 class Mesh{
 public:
-    Mesh();
-    Mesh( std::string filePath );
+    Mesh( );
+    Mesh( MeshLoader* loader );
+    ~Mesh( );
     
-    void loadObj(std::string fileName);
+    void load( const std::string file );
     
     glm::vec3 getPosition() const;
     void setPosition(glm::vec3 position);
     
-    glm::vec3 getRotation() const;
-    void setRotation(glm::vec3 rotation);
-    
     std::vector<glm::vec3> getVertices() const;
     void setVertices(std::vector<glm::vec3> vertices);
+    
     void setUvs(std::vector<glm::vec2> uvs);
     std::vector<glm::vec2> getUvs() const;
+    
     std::vector<glm::vec3> getNormals() const;
-    
-    float getRotationAngle() const;
-    void setRotationAngle(float);
-    
-    int getNumTriangles();
     
     void setMaterial( const Material material );
     Material getMaterial() const;
     
     void setTexture( Texture* texture );
     Texture* getTexture();
-    
-    GLsizeiptr getSize() const;
-    GLsizeiptr getNormalVerticesSize() const;
-    GLsizeiptr getTextureVerticesSize() const;
-    
-    ~Mesh();
 private:
-    std::string fileName;
     glm::vec3 position;
-    glm::vec3 rotation;
-    
-    // TODO (jonathan): move this method to a Utils inline file ?
-    std::vector<std::string> split( const std::string, const char ) const;
-    
-    float rotationAngle;
-    int vertexIndices;
-    int uvIndices;
-    int normalIndices;
-    int numTriangles;
-    
-    Material material;
     std::vector<glm::vec3> vertices;
-    std::vector<glm::vec2> textureVertices;
-    std::vector<glm::vec3> normalVertices;
+    std::vector<glm::vec2> uvs;
+    std::vector<glm::vec3> normals;
     Texture* texture;
+    Material material;
+    MeshLoader* loader;
 };
 
 #endif /* Mesh_hpp */
