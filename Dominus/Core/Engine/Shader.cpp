@@ -14,10 +14,8 @@
 #include <sstream>
 
 Shader::Shader( std::string file, GLenum type )
-                                                :   filePath( file ),
-                                                    type( type ) {
-
-}
+: filePath( file ),type( type )
+{ }
 
 Shader::~Shader( ) {
 

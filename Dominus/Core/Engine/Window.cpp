@@ -10,8 +10,7 @@
 #include "Log.hpp"
 
 Window::Window( int width, int height )
-                                        :   width(width),
-                                            height(height) {
+: width(width), height(height) {
     
 }
 
