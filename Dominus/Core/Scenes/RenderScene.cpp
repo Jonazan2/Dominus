@@ -14,6 +14,7 @@
 #include "PngTextureLoader.h"
 #include "GLGpuTexture.h"
 #include "ObjLoader.h"
+#include "MapBuilder.h"
 
 RenderScene::RenderScene() {
     yaw = -90.0f;
@@ -91,6 +92,9 @@ void RenderScene::populateScene( Scene* scene ) {
     scene->addNode( planeNode );
     scene->load();
 
+    MapBuilder* mapBuilder = new MapBuilder;
+    Map* map = mapBuilder->build( new MapLoader( "map.lua" ) ,
+                                  new TilesLoader( ) );
 }
 
 void RenderScene::populateUI( Scene* scene ) {
