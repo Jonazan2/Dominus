@@ -26,7 +26,6 @@ void Map::addTile( Tile* tile ) {
 void Map::setup() {
     for ( int i = 0; i < tiles.size(); i++ ) {
         Mesh* mesh = tiles.at( i )->getMesh();
-        
       //y
     //z ////////// +
         //
@@ -34,11 +33,22 @@ void Map::setup() {
         //
         // +
         float x = 0;
-        float yOffset = 0; //width - columns
-        float zOffset = 0; //height - rows
-        
         //assuming normalized tiles (-1, +1)
-        //mesh->setPosition( glm::vec3( x, ) );
+        float yOffset = 1; //width - columns
+        float zOffset = 1; //height - rows
+        
+        float tileWidth = 2;
+        float tileHeight = 2;
+        
+        int actualColumn = 0;
+        
+        if( i % this->rows == 0 ) {
+            
+        }
+        mesh->setPosition( glm::vec3( x,
+                                     yOffset + tileWidth,
+                                     zOffset + actualColumn) );
+        
     }
 }
 
