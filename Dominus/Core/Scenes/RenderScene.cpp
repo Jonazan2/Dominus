@@ -17,8 +17,6 @@
 #include "MapBuilder.h"
 
 RenderScene::RenderScene() {
-    yaw = -90.0f;
-    pitch = 0;
     upPressed = false;
     downPressed = false;
     leftPressed = false;
@@ -38,15 +36,12 @@ void RenderScene::onSceneCreated( Scene* scene ) {
 
 void RenderScene::populateScene( Scene* scene ) {
     this->scene = scene;
+    //Camera setup
     Camera* camera = new Camera;
-    scene->setCamera( camera );
-    glm::vec3 front = scene->getCamera()->front;
-    front.x = cos(glm::radians(-45.0)) * cos(glm::radians(-25.0));
-    front.y = sin(glm::radians(-25.0));
-    front.z = sin(glm::radians(-45.0)) * cos(glm::radians(-25.0));
-    scene->getCamera()->front = glm::normalize(front);
-    
+    camera->yaw = -45.0;
+    camera->pitch = -25.0;
     camera->position = glm::vec3( -6.33f, 7.28f, 5.93f );
+    scene->setCamera( camera );
     
     LightNode* lightNode = new LightNode;
     scene->setLightNode( lightNode );
@@ -198,21 +193,8 @@ void RenderScene::onMouseDragged( double xRel, double yRel ) {
     double xoffset = xRel * sensitivity;
     double yoffset = yRel * sensitivity;
     
-    yaw += xoffset;
-    pitch += yoffset;
-    
-    if(pitch > 89.0f)
-        pitch = 89.0f;
-    if(pitch < -89.0f)
-        pitch = -89.0f;
-    std::cout << yaw << std::endl;
-    std::cout << pitch << std::endl;
-    
-    glm::vec3 front = scene->getCamera()->front;
-    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    front.y = sin(glm::radians(pitch));
-    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    scene->getCamera()->front = glm::normalize(front);
+    scene->getCamera()->yaw += xoffset;
+    scene->getCamera()->pitch += yoffset;
 }
 
 void RenderScene::onCosumeInput( std::vector<Event *>* events ) {

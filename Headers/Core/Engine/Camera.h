@@ -26,6 +26,11 @@ public:
     void onRenderChildrends( Scene* scene );
     void onPostRender( Scene* scene ) ;
     
+    void rotationUpdate(); 
+    
+    double yaw;
+    double pitch;
+    
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
     glm::vec3 up;
