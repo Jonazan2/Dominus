@@ -22,6 +22,16 @@
 		9C2A0E741CAC45E2004A45CA /* Lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2A0E721CAC45CE004A45CA /* Lua.framework */; };
 		9C2A0E771CAC4650004A45CA /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E761CAC4650004A45CA /* MapLoader.cpp */; };
 		9C2A0E781CAC4650004A45CA /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E761CAC4650004A45CA /* MapLoader.cpp */; };
+		9C2A0E771CAC4650004A45CA /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E761CAC4650004A45CA /* MapLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E781CAC4650004A45CA /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E761CAC4650004A45CA /* MapLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E7D1CADA87D004A45CA /* TilesLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E7C1CADA87D004A45CA /* TilesLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E7E1CADA87D004A45CA /* TilesLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E7C1CADA87D004A45CA /* TilesLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E811CADACA7004A45CA /* MapBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E801CADACA7004A45CA /* MapBuilder.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E821CADACA7004A45CA /* MapBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E801CADACA7004A45CA /* MapBuilder.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E851CADAD4E004A45CA /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E841CADAD4E004A45CA /* Map.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E861CADAD4E004A45CA /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E841CADAD4E004A45CA /* Map.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E891CADADB1004A45CA /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E881CADADB1004A45CA /* Tile.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E8A1CADADB1004A45CA /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E881CADADB1004A45CA /* Tile.cpp */; settings = {ASSET_TAGS = (); }; };
 		9C470C291C7F849F00558755 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C470C281C7F849F00558755 /* libz.1.2.5.tbd */; };
 		9C777FC11C84E2BF005C48A5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */; };
 		9C7D08271C9EC0C500804DF1 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08221C9EC0C500804DF1 /* Button.cpp */; };
@@ -123,6 +133,15 @@
 		9C2A0E721CAC45CE004A45CA /* Lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lua.framework; path = ../../../../Library/Frameworks/Lua.framework; sourceTree = "<group>"; };
 		9C2A0E751CAC463D004A45CA /* MapLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapLoader.h; path = Headers/Core/Engine/MapLoader.h; sourceTree = "<group>"; };
 		9C2A0E761CAC4650004A45CA /* MapLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapLoader.cpp; path = Core/Engine/MapLoader.cpp; sourceTree = "<group>"; };
+		9C2A0E791CADA48D004A45CA /* MapInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapInfo.h; path = Headers/Core/Engine/MapInfo.h; sourceTree = "<group>"; };
+		9C2A0E7B1CADA86C004A45CA /* TilesLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TilesLoader.h; path = Headers/Core/Engine/TilesLoader.h; sourceTree = "<group>"; };
+		9C2A0E7C1CADA87D004A45CA /* TilesLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TilesLoader.cpp; path = Core/Engine/TilesLoader.cpp; sourceTree = "<group>"; };
+		9C2A0E7F1CADAC90004A45CA /* MapBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapBuilder.h; path = Headers/Core/Engine/MapBuilder.h; sourceTree = "<group>"; };
+		9C2A0E801CADACA7004A45CA /* MapBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapBuilder.cpp; path = Core/Engine/MapBuilder.cpp; sourceTree = "<group>"; };
+		9C2A0E831CADAD3A004A45CA /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Map.h; path = Headers/Core/Engine/Map.h; sourceTree = "<group>"; };
+		9C2A0E841CADAD4E004A45CA /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Map.cpp; path = Core/Engine/Map.cpp; sourceTree = "<group>"; };
+		9C2A0E871CADADA0004A45CA /* Tile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Tile.h; path = Headers/Core/Engine/Tile.h; sourceTree = "<group>"; };
+		9C2A0E881CADADB1004A45CA /* Tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Tile.cpp; path = Core/Engine/Tile.cpp; sourceTree = "<group>"; };
 		9C470C281C7F849F00558755 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		9C7D081A1C9EC06600804DF1 /* Button.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Button.h; path = Headers/Core/Engine/Button.h; sourceTree = "<group>"; };
 		9C7D081B1C9EC06600804DF1 /* Frame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Frame.h; path = Headers/Core/Engine/Frame.h; sourceTree = "<group>"; };
@@ -412,6 +431,11 @@
 				9CB3200F1CA735700058482C /* GpuTexture.h */,
 				9CB320101CA735C50058482C /* GLGpuTexture.h */,
 				9C2A0E751CAC463D004A45CA /* MapLoader.h */,
+				9C2A0E791CADA48D004A45CA /* MapInfo.h */,
+				9C2A0E7B1CADA86C004A45CA /* TilesLoader.h */,
+				9C2A0E7F1CADAC90004A45CA /* MapBuilder.h */,
+				9C2A0E831CADAD3A004A45CA /* Map.h */,
+				9C2A0E871CADADA0004A45CA /* Tile.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -438,6 +462,10 @@
 				9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */,
 				9CB320111CA735E00058482C /* GLGpuTexture.cpp */,
 				9C2A0E761CAC4650004A45CA /* MapLoader.cpp */,
+				9C2A0E7C1CADA87D004A45CA /* TilesLoader.cpp */,
+				9C2A0E801CADACA7004A45CA /* MapBuilder.cpp */,
+				9C2A0E841CADAD4E004A45CA /* Map.cpp */,
+				9C2A0E881CADADB1004A45CA /* Tile.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -521,6 +549,7 @@
 			files = (
 				9C2A0E6F1CAC450B004A45CA /* LuaScript.cpp in Sources */,
 				92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */,
+				9C2A0E7D1CADA87D004A45CA /* TilesLoader.cpp in Sources */,
 				AB6398DB1C8CE49500CA0B3B /* Engine.cpp in Sources */,
 				AB6398CE1C8CE48400CA0B3B /* Scene.cpp in Sources */,
 				AB6398DC1C8CE49500CA0B3B /* Event.cpp in Sources */,
@@ -540,9 +569,12 @@
 				92E345411C64E04A00308A63 /* Log.cpp in Sources */,
 				9C2A0E771CAC4650004A45CA /* MapLoader.cpp in Sources */,
 				AB6398E01C8CE49500CA0B3B /* Node.cpp in Sources */,
+				9C2A0E811CADACA7004A45CA /* MapBuilder.cpp in Sources */,
 				92677A7D1C5665F900899024 /* main.cpp in Sources */,
 				AB6398E31C8CE49500CA0B3B /* Texture.cpp in Sources */,
 				9C7D082F1C9EC0C500804DF1 /* UIComponent.cpp in Sources */,
+				9C2A0E851CADAD4E004A45CA /* Map.cpp in Sources */,
+				9C2A0E891CADADB1004A45CA /* Tile.cpp in Sources */,
 				AB6398E41C8CE49500CA0B3B /* Window.cpp in Sources */,
 				9C7D08271C9EC0C500804DF1 /* Button.cpp in Sources */,
 				9CB3200C1CA725D90058482C /* PngTextureLoader.cpp in Sources */,
@@ -558,6 +590,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C2A0E861CADAD4E004A45CA /* Map.cpp in Sources */,
 				9C8075441CA1D6A70052086F /* Scene.cpp in Sources */,
 				9C8075451CA1D6A70052086F /* Node.cpp in Sources */,
 				9C8075461CA1D6A70052086F /* Shader.cpp in Sources */,
@@ -582,6 +615,8 @@
 				9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */,
 				9C7D082E1C9EC0C500804DF1 /* TextList.cpp in Sources */,
 				9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */,
+				9C2A0E7E1CADA87D004A45CA /* TilesLoader.cpp in Sources */,
+				9C2A0E821CADACA7004A45CA /* MapBuilder.cpp in Sources */,
 				9C7D08361C9EC57600804DF1 /* VerticalLayout.cpp in Sources */,
 				9C7D08341C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */,
 				9C7D08301C9EC0C500804DF1 /* UIComponent.cpp in Sources */,
@@ -589,6 +624,7 @@
 				9C80752D1CA1D1C80052086F /* HorizontalLayoutTest.cpp in Sources */,
 				9C7D08281C9EC0C500804DF1 /* Button.cpp in Sources */,
 				9C7D082C1C9EC0C500804DF1 /* Text.cpp in Sources */,
+				9C2A0E8A1CADADB1004A45CA /* Tile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

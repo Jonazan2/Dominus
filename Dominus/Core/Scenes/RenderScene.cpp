@@ -14,6 +14,7 @@
 #include "PngTextureLoader.h"
 #include "GLGpuTexture.h"
 #include "ObjLoader.h"
+#include "MapBuilder.h"
 
 RenderScene::RenderScene() {
     yaw = -90.0f;
@@ -91,6 +92,10 @@ void RenderScene::populateScene( Scene* scene ) {
     scene->addNode( planeNode );
     scene->load();
 
+    MapBuilder* mapBuilder = new MapBuilder;
+    Map* map = mapBuilder->build( new MapLoader( "map.lua" ) ,
+                                  new TilesLoader( ) );
+    
 }
 
 void RenderScene::populateUI( Scene* scene ) {
@@ -191,8 +196,8 @@ void RenderScene::onMouseDragged( double xRel, double yRel ) {
         pitch = 89.0f;
     if(pitch < -89.0f)
         pitch = -89.0f;
-    std::cout << yaw << std::endl;
-    std::cout << pitch << std::endl;
+    //std::cout << yaw << std::endl;
+    //std::cout << pitch << std::endl;
     
     glm::vec3 front = scene->getCamera()->front;
     front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));

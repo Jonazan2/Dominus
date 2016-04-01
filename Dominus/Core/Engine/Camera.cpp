@@ -7,6 +7,7 @@
 //
 
 #include "Camera.h"
+#include <iostream>
 Camera::Camera()
                 :   viewMatrix( glm::mat4( 1 ) ),
                     position( glm::vec3 ( 0.0f, 0.0f, 10.0f ) ),
@@ -23,6 +24,7 @@ Camera::~Camera() {
 }
 
 void Camera::onUpdate() {
+    std::cout << "Camera position: " << position.x << ", " << position.y << ", "<<position.z << std::endl;
     viewMatrix = glm::lookAt( position, position + front, up );
 }
 

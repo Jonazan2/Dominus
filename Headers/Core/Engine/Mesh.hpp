@@ -46,6 +46,10 @@ public:
     
     void setTexture( Texture* texture );
     Texture* getTexture();
+    
+    void normalize();
+    void unNormalize();
+    
 private:
     glm::vec3 position;
     std::vector<glm::vec3> vertices;
@@ -54,6 +58,7 @@ private:
     Texture* texture;
     Material material;
     MeshLoader* loader;
+    bool normalized;
 };
 
 #endif /* Mesh_hpp */
