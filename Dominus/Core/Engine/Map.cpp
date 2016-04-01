@@ -24,31 +24,33 @@ void Map::addTile( Tile* tile ) {
 }
 
 void Map::setup() {
+    int currentColumn = 0;
     for ( int i = 0; i < tiles.size(); i++ ) {
-        Mesh* mesh = tiles.at( i )->getMesh();
-      //y
+        Node* node = tiles.at( i );
+      //x ->
     //z ////////// +
-        //
+    //| //
         //
         //
         // +
-        float x = 0;
+        float y = 0;
         //assuming normalized tiles (-1, +1)
-        float yOffset = 1; //width - columns
-        float zOffset = 1; //height - rows
+        float xOffset = 1; //width -> columns
+        float zOffset = -1; //height -> rows
         
         float tileWidth = 2;
         float tileHeight = 2;
         
-        int actualColumn = 0;
-        
-        if( i % this->rows == 0 ) {
-            
+        int currentRow = i % this->rows;
+        if( currentRow == 0 && i != 0) {
+            currentColumn++;
         }
-        mesh->setPosition( glm::vec3( x,
-                                     yOffset + tileWidth,
-                                     zOffset + actualColumn) );
         
+        glm::vec3 translation = glm::vec3( xOffset + ( currentColumn * tileWidth ),
+                                           y,
+                                           zOffset - ( currentRow * tileHeight ) );
+
+        node->setModelMatrix( glm::translate( translation ) );
     }
 }
 

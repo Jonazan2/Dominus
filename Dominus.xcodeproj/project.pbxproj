@@ -18,10 +18,6 @@
 		9C2A0E6D1CA972E1004A45CA /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */; };
 		9C2A0E6F1CAC450B004A45CA /* LuaScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E6E1CAC450B004A45CA /* LuaScript.cpp */; };
 		9C2A0E701CAC450B004A45CA /* LuaScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E6E1CAC450B004A45CA /* LuaScript.cpp */; };
-		9C2A0E731CAC45CE004A45CA /* Lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2A0E721CAC45CE004A45CA /* Lua.framework */; };
-		9C2A0E741CAC45E2004A45CA /* Lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2A0E721CAC45CE004A45CA /* Lua.framework */; };
-		9C2A0E771CAC4650004A45CA /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E761CAC4650004A45CA /* MapLoader.cpp */; };
-		9C2A0E781CAC4650004A45CA /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E761CAC4650004A45CA /* MapLoader.cpp */; };
 		9C2A0E771CAC4650004A45CA /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E761CAC4650004A45CA /* MapLoader.cpp */; settings = {ASSET_TAGS = (); }; };
 		9C2A0E781CAC4650004A45CA /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E761CAC4650004A45CA /* MapLoader.cpp */; settings = {ASSET_TAGS = (); }; };
 		9C2A0E7D1CADA87D004A45CA /* TilesLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E7C1CADA87D004A45CA /* TilesLoader.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -114,7 +110,6 @@
 
 /* Begin PBXFileReference section */
 		3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		3AB679391CAD13B900C6F95C /* Lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lua.framework; path = ../Frameworks/Lua.framework; sourceTree = "<group>"; };
 		3AC1547A1C85994500FBE71C /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		92677A791C5665F900899024 /* Dominus */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Dominus; sourceTree = BUILT_PRODUCTS_DIR; };
 		92677A7C1C5665F900899024 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -130,7 +125,6 @@
 		9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjLoader.cpp; path = Core/Engine/ObjLoader.cpp; sourceTree = "<group>"; };
 		9C2A0E6E1CAC450B004A45CA /* LuaScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaScript.cpp; path = Core/Engine/LuaScript.cpp; sourceTree = "<group>"; };
 		9C2A0E711CAC4556004A45CA /* LuaScript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LuaScript.h; path = Headers/Core/Engine/LuaScript.h; sourceTree = "<group>"; };
-		9C2A0E721CAC45CE004A45CA /* Lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lua.framework; path = ../../../../Library/Frameworks/Lua.framework; sourceTree = "<group>"; };
 		9C2A0E751CAC463D004A45CA /* MapLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapLoader.h; path = Headers/Core/Engine/MapLoader.h; sourceTree = "<group>"; };
 		9C2A0E761CAC4650004A45CA /* MapLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapLoader.cpp; path = Core/Engine/MapLoader.cpp; sourceTree = "<group>"; };
 		9C2A0E791CADA48D004A45CA /* MapInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapInfo.h; path = Headers/Core/Engine/MapInfo.h; sourceTree = "<group>"; };
@@ -221,7 +215,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C2A0E731CAC45CE004A45CA /* Lua.framework in Frameworks */,
 				3AC1547B1C85994500FBE71C /* libz.1.2.5.dylib in Frameworks */,
 				9C470C291C7F849F00558755 /* libz.1.2.5.tbd in Frameworks */,
 				3A7AA0B21C577E9F00C45A2A /* OpenGL.framework in Frameworks */,
@@ -232,7 +225,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C2A0E741CAC45E2004A45CA /* Lua.framework in Frameworks */,
 				9C80753F1CA1D5520052086F /* libz.1.2.5.tbd in Frameworks */,
 				9C777FC11C84E2BF005C48A5 /* OpenGL.framework in Frameworks */,
 				9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */,
@@ -246,8 +238,6 @@
 		92677A701C5665F900899024 = {
 			isa = PBXGroup;
 			children = (
-				3AB679391CAD13B900C6F95C /* Lua.framework */,
-				9C2A0E721CAC45CE004A45CA /* Lua.framework */,
 				3AC1547A1C85994500FBE71C /* libz.1.2.5.dylib */,
 				9C470C281C7F849F00558755 /* libz.1.2.5.tbd */,
 				9CCB2F9F1C82F8790066C313 /* gmock.framework */,
@@ -772,6 +762,7 @@
 				OTHER_LDFLAGS = (
 					"-lpng",
 					"-lglfw3",
+					"-llua",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -791,6 +782,7 @@
 				OTHER_LDFLAGS = (
 					"-lpng",
 					"-lglfw3",
+					"-llua",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
