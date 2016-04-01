@@ -40,6 +40,14 @@ void RenderScene::populateScene( Scene* scene ) {
     this->scene = scene;
     Camera* camera = new Camera;
     scene->setCamera( camera );
+    glm::vec3 front = scene->getCamera()->front;
+    front.x = cos(glm::radians(-45.0)) * cos(glm::radians(-25.0));
+    front.y = sin(glm::radians(-25.0));
+    front.z = sin(glm::radians(-45.0)) * cos(glm::radians(-25.0));
+    scene->getCamera()->front = glm::normalize(front);
+    
+    camera->position = glm::vec3( -6.33f, 7.28f, 5.93f );
+    
     LightNode* lightNode = new LightNode;
     scene->setLightNode( lightNode );
     //buffer data
@@ -197,8 +205,8 @@ void RenderScene::onMouseDragged( double xRel, double yRel ) {
         pitch = 89.0f;
     if(pitch < -89.0f)
         pitch = -89.0f;
-    //std::cout << yaw << std::endl;
-    //std::cout << pitch << std::endl;
+    std::cout << yaw << std::endl;
+    std::cout << pitch << std::endl;
     
     glm::vec3 front = scene->getCamera()->front;
     front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
