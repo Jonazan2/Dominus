@@ -35,6 +35,8 @@ public:
     LightNode* getLightNode();
     void setLightNode( LightNode* lightNode );
     
+    void setMapNode( Node* node );
+    
     void setSceneHUD( UIComponent* component );
     void loadUI();
 private:
@@ -44,6 +46,7 @@ private:
     
     Camera* camera;
     LightNode* lightNode;
+    Node* mapNode;
     
     std::stack< glm::mat4 > matrixStack;
     std::vector< Node* > renderBatch;

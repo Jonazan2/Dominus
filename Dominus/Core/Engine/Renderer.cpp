@@ -12,6 +12,8 @@
 #include "Shader.h"
 #include "UIComponent.h"
 #include "PngTextureLoader.h"
+#include "MomoRenderState.h"
+#include "MapRenderState.h"
 
 Renderer::Renderer( GLFWwindow* window ) : window( window ) {
 
@@ -22,15 +24,16 @@ Renderer::~Renderer(){
 
 void Renderer::init(){
     initOpenGLStates();
-    loadShaders();
     loadUIShaders();
     
-    verticesBuffer = new Buffer( new GLGpuBuffer );
-    uvsBuffer = new Buffer( new GLGpuBuffer );
-    normalBuffer = new Buffer( new GLGpuBuffer );
+    states[MOMO_RENDER_STATE] = new MomoRenderState;
+    states[MAP_RENDER_STATE] = new MapRenderState;
+    
+    currentState = states[MAP_RENDER_STATE];
     
     uiVerticesBufer = new Buffer( new GLGpuBuffer );
     uiUvsBuffer = new Buffer( new GLGpuBuffer );
+    currentState->init();
 }
 
 void Renderer::initOpenGLStates() {
@@ -39,42 +42,40 @@ void Renderer::initOpenGLStates() {
     printf ("Renderer: %s\n", renderer);
     printf ("OpenGL version supported %s\n", version);
     
-    // opengl states
-    glEnable (GL_DEPTH_TEST); // enable depth-testing
-    glDepthFunc (GL_LESS); // depth-testing interprets a smaller value as
+    glEnable (GL_DEPTH_TEST);
+    glDepthFunc (GL_LESS);
     //enable alpha
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
     glClearColor( 0.5f, 0.5f, 1.0f, 1.0f );
     
-    //create vao and set as current
     glGenVertexArrays (1, &vao);
     glBindVertexArray (vao);
 }
 
-void Renderer::loadShaders() {
-    
-    Shader* vertexShader = new Shader( "vertex_shader.glsl", GL_VERTEX_SHADER );
-    vertexShader->compile();
-    
-    Shader* fragmentShader = new Shader( "fragment_shader.glsl", GL_FRAGMENT_SHADER );
-    fragmentShader->compile();
-    
-    shader_programme = glCreateProgram ();
-    glAttachShader ( shader_programme, fragmentShader->getUID() );
-    glAttachShader ( shader_programme, vertexShader->getUID() );
-    glLinkProgram ( shader_programme );
-    
-    //retrieve shader uniforms and attributes ids
-    textureUID = glGetUniformLocation(shader_programme, "textureData");
-    modelViewUID = glGetUniformLocation(shader_programme, "modelViewMatrix");
-    projectionUID = glGetUniformLocation(shader_programme, "projectionMatrix");
-    normalUID = glGetUniformLocation(shader_programme, "normalMatrix");
-    lightPositionUID = glGetUniformLocation(shader_programme, "lightPosition");
-    
-    positionAttribute = 1;
-    normalAttribute = 2;
-    textureAttribute = 3;
+void Renderer::updateState( const int stateCode ) {
+    currentState = states[ stateCode ];
+}
+
+void Renderer:: updateProjection( glm::mat4 projectionMatrix ) {
+    currentState->updateProjection( projectionMatrix );
+}
+
+void Renderer::updateViewMatrix( glm::mat4 viewMatrix ) {
+    currentState->updateCamera( viewMatrix );
+}
+
+void Renderer::updateLightSource( glm::vec3 lightSource ) {
+    currentState->updateLightSource( lightSource );
+}
+
+void Renderer::load( std::vector<Node *> renderBatch ) {
+    currentState->load( renderBatch );
+}
+
+void Renderer::draw( std::vector<Node *> renderBatch ) {
+    currentState->draw( renderBatch );
 }
 
 void Renderer::loadUIShaders() {
@@ -93,8 +94,9 @@ void Renderer::loadUIShaders() {
     glAttachShader ( uiShaderProgram, vertexShader->getUID() );
     glLinkProgram ( uiShaderProgram );
     
-    uiTextureData = glGetUniformLocation(uiShaderProgram, "textureData");
-    uiMVPMatrix = glGetUniformLocation(uiShaderProgram, "modelViewProjectionMatrix");
+    uiTextureData = glGetUniformLocation( uiShaderProgram, "textureData" );
+    uiMVPMatrix = glGetUniformLocation( uiShaderProgram,
+                                        "modelViewProjectionMatrix" );
     
     uiPositionAttribute = 4;
     uiTextureAttribute = 5;
@@ -138,47 +140,6 @@ void Renderer::drawtexture( UIComponent* component ){
     }
 }
 
-void Renderer::load( std::vector<Node*> renderBatch ) {
-    verticesBuffer->bind();
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
-        verticesBuffer->push( (float*)&mesh->getVertices()[0],
-                              ( sizeof ( GLfloat ) * 3 ) * mesh->getVertices().size() );
-    }
-    glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(positionAttribute);
-    
-    normalBuffer->bind();
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
-        normalBuffer->push( (float*)&mesh->getNormals()[0],
-                            ( sizeof ( GLfloat ) * 3 ) * mesh->getNormals().size() );
-    }
-
-    glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(normalAttribute);
-    
-    uvsBuffer->bind();
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
-        uvsBuffer->push( (float*)&mesh->getUvs()[0],
-                         ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size() );
-    }
-    
-    glVertexAttribPointer( textureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
-    glEnableVertexAttribArray( textureAttribute );
-    
-    //Texture loading
-    for ( int i = 0;  i < renderBatch.size(); i++ ) {
-        Texture* texture = renderBatch.at( i )->getMesh()->getTexture();
-        if( texture != nullptr ){
-            texture->bind();
-            texture->push();
-            texture->unbind();
-        }
-    }
-}
-
 void Renderer::loadUI(  ) {
     uiVerticesBufer->bind();
     
@@ -211,36 +172,6 @@ void Renderer::loadUI(  ) {
     }
 }
 
-void Renderer::draw( std::vector<Node*> renderBatch ) {
-    glUseProgram (shader_programme);
-    glUniformMatrix4fv(projectionUID, 1, GL_FALSE, &projectionMatrix[0][0]);
-    glUniform3fv(lightPositionUID, 1, &lightPosition[0]);
-    glBindVertexArray (vao);
-    
-    GLuint offset = 0;
-    for ( int i = 0; i < renderBatch.size() ; i++ ) {
-        Node* node = renderBatch.at( i );
-        if( node->getMesh()->getTexture() != nullptr ) {
-            node->getMesh()->getTexture()->bind();
-            glUniform1i(textureUID, 0);
-        }
-        
-        glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
-        glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
-        glm::mat3 normalMat3 = glm::mat3( normalMat );
-        glUniformMatrix4fv(modelViewUID, 1, GL_FALSE, &modelViewMatrix[0][0]);
-        glUniformMatrix3fv(normalUID, 1, GL_FALSE, &normalMat3[0][0]);
-        // draw points from the currently bound VAO with current in-use shader
-        glDrawArrays (GL_TRIANGLES,
-                      offset,
-                      (int)node->getMesh()->getVertices().size());
-        offset += (int)node->getMesh()->getVertices().size();
-        if( node->getMesh()->getTexture() != nullptr ) {
-            node->getMesh()->getTexture()->unbind();
-        }
-    }
-}
-
 void Renderer::drawUI(  ) {
     glm::mat4 orthoMatrix = glm::ortho( 0.0, 640.0, 480.0, 0.0 );
     glUseProgram ( uiShaderProgram );
@@ -265,18 +196,6 @@ void Renderer::drawUI(  ) {
             component->texture->unbind();
         }
     }
-}
-
-void Renderer::updateProjection( glm::mat4 projectionMatrix ) {
-    this->projectionMatrix = projectionMatrix;
-}
-
-void Renderer:: updateViewMatrix( glm::mat4 viewMatrix ) {
-    this->viewMatrix = viewMatrix;
-}
-
-void Renderer::updateLightSource( glm::vec3 lightSource ) {
-    this->lightPosition = lightSource;
 }
 
 void Renderer::clear() {

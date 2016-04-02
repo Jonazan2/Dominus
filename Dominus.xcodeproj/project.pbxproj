@@ -68,6 +68,10 @@
 		9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; };
 		9CB320121CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; };
 		9CB320131CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; };
+		9CBA323E1CB0346A00FCF048 /* MapRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA323D1CB0346A00FCF048 /* MapRenderState.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CBA323F1CB0346A00FCF048 /* MapRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA323D1CB0346A00FCF048 /* MapRenderState.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CBA32421CB04D0D00FCF048 /* MomoRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32411CB04D0D00FCF048 /* MomoRenderState.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CBA32431CB04D0D00FCF048 /* MomoRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32411CB04D0D00FCF048 /* MomoRenderState.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FA81C82F92D0066C313 /* main.cpp */; };
 		9CCB2FAF1C82F95E0066C313 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9D1C82F7FE0066C313 /* gtest.framework */; };
 		9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9F1C82F8790066C313 /* gmock.framework */; };
@@ -171,6 +175,11 @@
 		9CB3200F1CA735700058482C /* GpuTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GpuTexture.h; path = Headers/Core/Engine/GpuTexture.h; sourceTree = "<group>"; };
 		9CB320101CA735C50058482C /* GLGpuTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GLGpuTexture.h; path = Headers/Core/Engine/GLGpuTexture.h; sourceTree = "<group>"; };
 		9CB320111CA735E00058482C /* GLGpuTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GLGpuTexture.cpp; path = Core/Engine/GLGpuTexture.cpp; sourceTree = "<group>"; };
+		9CBA323B1CB033C400FCF048 /* RenderState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RenderState.h; path = Dominus/Core/Engine/RenderState.h; sourceTree = "<group>"; };
+		9CBA323C1CB0343600FCF048 /* MapRenderState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapRenderState.h; path = Headers/Core/Engine/MapRenderState.h; sourceTree = "<group>"; };
+		9CBA323D1CB0346A00FCF048 /* MapRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapRenderState.cpp; path = Core/Engine/MapRenderState.cpp; sourceTree = "<group>"; };
+		9CBA32401CB04CF400FCF048 /* MomoRenderState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MomoRenderState.h; path = Headers/Core/Engine/MomoRenderState.h; sourceTree = "<group>"; };
+		9CBA32411CB04D0D00FCF048 /* MomoRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MomoRenderState.cpp; path = Core/Engine/MomoRenderState.cpp; sourceTree = "<group>"; };
 		9CCB2F9D1C82F7FE0066C313 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = ../../../../Library/Frameworks/gtest.framework; sourceTree = "<group>"; };
 		9CCB2F9F1C82F8790066C313 /* gmock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gmock.framework; path = ../../../../Library/Frameworks/gmock.framework; sourceTree = "<group>"; };
 		9CCB2FA61C82F92D0066C313 /* UnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -426,6 +435,9 @@
 				9C2A0E7F1CADAC90004A45CA /* MapBuilder.h */,
 				9C2A0E831CADAD3A004A45CA /* Map.h */,
 				9C2A0E871CADADA0004A45CA /* Tile.h */,
+				9CBA323B1CB033C400FCF048 /* RenderState.h */,
+				9CBA323C1CB0343600FCF048 /* MapRenderState.h */,
+				9CBA32401CB04CF400FCF048 /* MomoRenderState.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -456,6 +468,8 @@
 				9C2A0E801CADACA7004A45CA /* MapBuilder.cpp */,
 				9C2A0E841CADAD4E004A45CA /* Map.cpp */,
 				9C2A0E881CADADB1004A45CA /* Tile.cpp */,
+				9CBA323D1CB0346A00FCF048 /* MapRenderState.cpp */,
+				9CBA32411CB04D0D00FCF048 /* MomoRenderState.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -564,6 +578,7 @@
 				AB6398E31C8CE49500CA0B3B /* Texture.cpp in Sources */,
 				9C7D082F1C9EC0C500804DF1 /* UIComponent.cpp in Sources */,
 				9C2A0E851CADAD4E004A45CA /* Map.cpp in Sources */,
+				9CBA32421CB04D0D00FCF048 /* MomoRenderState.cpp in Sources */,
 				9C2A0E891CADADB1004A45CA /* Tile.cpp in Sources */,
 				AB6398E41C8CE49500CA0B3B /* Window.cpp in Sources */,
 				9C7D08271C9EC0C500804DF1 /* Button.cpp in Sources */,
@@ -571,6 +586,7 @@
 				9C7D082D1C9EC0C500804DF1 /* TextList.cpp in Sources */,
 				9C7D082B1C9EC0C500804DF1 /* Text.cpp in Sources */,
 				9C80754E1CA313130052086F /* Buffer.cpp in Sources */,
+				9CBA323E1CB0346A00FCF048 /* MapRenderState.cpp in Sources */,
 				AB6398CC1C8CE48400CA0B3B /* GameScene.cpp in Sources */,
 				AB6398CD1C8CE48400CA0B3B /* RenderScene.cpp in Sources */,
 			);
@@ -598,10 +614,12 @@
 				9C80753D1CA1D1DF0052086F /* Texture.cpp in Sources */,
 				9C2A0E701CAC450B004A45CA /* LuaScript.cpp in Sources */,
 				9C7D083C1C9EC63A00804DF1 /* Layout.cpp in Sources */,
+				9CBA323F1CB0346A00FCF048 /* MapRenderState.cpp in Sources */,
 				9C80752F1CA1D1C80052086F /* UIComponentTest.cpp in Sources */,
 				9C80754F1CA313130052086F /* Buffer.cpp in Sources */,
 				9C2A0E781CAC4650004A45CA /* MapLoader.cpp in Sources */,
 				9C8075301CA1D1C80052086F /* VerticalLayoutTest.cpp in Sources */,
+				9CBA32431CB04D0D00FCF048 /* MomoRenderState.cpp in Sources */,
 				9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */,
 				9C7D082E1C9EC0C500804DF1 /* TextList.cpp in Sources */,
 				9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */,
