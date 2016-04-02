@@ -12,10 +12,22 @@
 		92677A7D1C5665F900899024 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92677A7C1C5665F900899024 /* main.cpp */; };
 		92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E3453C1C6393D200308A63 /* Logger.hpp */; };
 		92E345411C64E04A00308A63 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92E345401C64E04A00308A63 /* Log.cpp */; };
-		9C222D591CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C222D5A1CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C2A0E6C1CA972E1004A45CA /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */; settings = {ASSET_TAGS = (); }; };
-		9C2A0E6D1CA972E1004A45CA /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C222D591CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */; };
+		9C222D5A1CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C222D581CA491C7003C1DC5 /* GLGpuBuffer.cpp */; };
+		9C2A0E6C1CA972E1004A45CA /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */; };
+		9C2A0E6D1CA972E1004A45CA /* ObjLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */; };
+		9C2A0E6F1CAC450B004A45CA /* LuaScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E6E1CAC450B004A45CA /* LuaScript.cpp */; };
+		9C2A0E701CAC450B004A45CA /* LuaScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E6E1CAC450B004A45CA /* LuaScript.cpp */; };
+		9C2A0E771CAC4650004A45CA /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E761CAC4650004A45CA /* MapLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E781CAC4650004A45CA /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E761CAC4650004A45CA /* MapLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E7D1CADA87D004A45CA /* TilesLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E7C1CADA87D004A45CA /* TilesLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E7E1CADA87D004A45CA /* TilesLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E7C1CADA87D004A45CA /* TilesLoader.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E811CADACA7004A45CA /* MapBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E801CADACA7004A45CA /* MapBuilder.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E821CADACA7004A45CA /* MapBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E801CADACA7004A45CA /* MapBuilder.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E851CADAD4E004A45CA /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E841CADAD4E004A45CA /* Map.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E861CADAD4E004A45CA /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E841CADAD4E004A45CA /* Map.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E891CADADB1004A45CA /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E881CADADB1004A45CA /* Tile.cpp */; settings = {ASSET_TAGS = (); }; };
+		9C2A0E8A1CADADB1004A45CA /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E881CADADB1004A45CA /* Tile.cpp */; settings = {ASSET_TAGS = (); }; };
 		9C470C291C7F849F00558755 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C470C281C7F849F00558755 /* libz.1.2.5.tbd */; };
 		9C777FC11C84E2BF005C48A5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */; };
 		9C7D08271C9EC0C500804DF1 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08221C9EC0C500804DF1 /* Button.cpp */; };
@@ -52,10 +64,10 @@
 		9C80754E1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
 		9C80754F1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
 		9C8075571CA31ED60052086F /* BufferTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C8075561CA31ED60052086F /* BufferTest.cpp */; };
-		9CB3200C1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; settings = {ASSET_TAGS = (); }; };
-		9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; settings = {ASSET_TAGS = (); }; };
-		9CB320121CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; settings = {ASSET_TAGS = (); }; };
-		9CB320131CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CB3200C1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; };
+		9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; };
+		9CB320121CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; };
+		9CB320131CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; };
 		9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FA81C82F92D0066C313 /* main.cpp */; };
 		9CCB2FAF1C82F95E0066C313 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9D1C82F7FE0066C313 /* gtest.framework */; };
 		9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9F1C82F8790066C313 /* gmock.framework */; };
@@ -111,6 +123,19 @@
 		9C2A0E691CA972B6004A45CA /* MeshLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MeshLoader.h; path = Headers/Core/Engine/MeshLoader.h; sourceTree = "<group>"; };
 		9C2A0E6A1CA972CE004A45CA /* ObjLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ObjLoader.h; path = Headers/Core/Engine/ObjLoader.h; sourceTree = "<group>"; };
 		9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjLoader.cpp; path = Core/Engine/ObjLoader.cpp; sourceTree = "<group>"; };
+		9C2A0E6E1CAC450B004A45CA /* LuaScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LuaScript.cpp; path = Core/Engine/LuaScript.cpp; sourceTree = "<group>"; };
+		9C2A0E711CAC4556004A45CA /* LuaScript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LuaScript.h; path = Headers/Core/Engine/LuaScript.h; sourceTree = "<group>"; };
+		9C2A0E751CAC463D004A45CA /* MapLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapLoader.h; path = Headers/Core/Engine/MapLoader.h; sourceTree = "<group>"; };
+		9C2A0E761CAC4650004A45CA /* MapLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapLoader.cpp; path = Core/Engine/MapLoader.cpp; sourceTree = "<group>"; };
+		9C2A0E791CADA48D004A45CA /* MapInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapInfo.h; path = Headers/Core/Engine/MapInfo.h; sourceTree = "<group>"; };
+		9C2A0E7B1CADA86C004A45CA /* TilesLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TilesLoader.h; path = Headers/Core/Engine/TilesLoader.h; sourceTree = "<group>"; };
+		9C2A0E7C1CADA87D004A45CA /* TilesLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TilesLoader.cpp; path = Core/Engine/TilesLoader.cpp; sourceTree = "<group>"; };
+		9C2A0E7F1CADAC90004A45CA /* MapBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MapBuilder.h; path = Headers/Core/Engine/MapBuilder.h; sourceTree = "<group>"; };
+		9C2A0E801CADACA7004A45CA /* MapBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MapBuilder.cpp; path = Core/Engine/MapBuilder.cpp; sourceTree = "<group>"; };
+		9C2A0E831CADAD3A004A45CA /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Map.h; path = Headers/Core/Engine/Map.h; sourceTree = "<group>"; };
+		9C2A0E841CADAD4E004A45CA /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Map.cpp; path = Core/Engine/Map.cpp; sourceTree = "<group>"; };
+		9C2A0E871CADADA0004A45CA /* Tile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Tile.h; path = Headers/Core/Engine/Tile.h; sourceTree = "<group>"; };
+		9C2A0E881CADADB1004A45CA /* Tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Tile.cpp; path = Core/Engine/Tile.cpp; sourceTree = "<group>"; };
 		9C470C281C7F849F00558755 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		9C7D081A1C9EC06600804DF1 /* Button.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Button.h; path = Headers/Core/Engine/Button.h; sourceTree = "<group>"; };
 		9C7D081B1C9EC06600804DF1 /* Frame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Frame.h; path = Headers/Core/Engine/Frame.h; sourceTree = "<group>"; };
@@ -376,6 +401,7 @@
 				AB6398BF1C8CE43400CA0B3B /* INode.h */,
 				AB6398C01C8CE43400CA0B3B /* InputHandler.h */,
 				AB6398C11C8CE43400CA0B3B /* Material.hpp */,
+				9C2A0E711CAC4556004A45CA /* LuaScript.h */,
 				AB6398C21C8CE43400CA0B3B /* Mesh.hpp */,
 				AB6398C31C8CE43400CA0B3B /* Node.hpp */,
 				AB6398C41C8CE43400CA0B3B /* Renderer.h */,
@@ -394,6 +420,12 @@
 				9CB3200E1CA727A40058482C /* Exception.h */,
 				9CB3200F1CA735700058482C /* GpuTexture.h */,
 				9CB320101CA735C50058482C /* GLGpuTexture.h */,
+				9C2A0E751CAC463D004A45CA /* MapLoader.h */,
+				9C2A0E791CADA48D004A45CA /* MapInfo.h */,
+				9C2A0E7B1CADA86C004A45CA /* TilesLoader.h */,
+				9C2A0E7F1CADAC90004A45CA /* MapBuilder.h */,
+				9C2A0E831CADAD3A004A45CA /* Map.h */,
+				9C2A0E871CADADA0004A45CA /* Tile.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -402,6 +434,7 @@
 			isa = PBXGroup;
 			children = (
 				AB6398CF1C8CE49500CA0B3B /* Camera.cpp */,
+				9C2A0E6E1CAC450B004A45CA /* LuaScript.cpp */,
 				AB6398D01C8CE49500CA0B3B /* Engine.cpp */,
 				AB6398D11C8CE49500CA0B3B /* Event.cpp */,
 				AB6398D21C8CE49500CA0B3B /* GLFWInputHandler.cpp */,
@@ -418,6 +451,11 @@
 				9C2A0E6B1CA972E1004A45CA /* ObjLoader.cpp */,
 				9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */,
 				9CB320111CA735E00058482C /* GLGpuTexture.cpp */,
+				9C2A0E761CAC4650004A45CA /* MapLoader.cpp */,
+				9C2A0E7C1CADA87D004A45CA /* TilesLoader.cpp */,
+				9C2A0E801CADACA7004A45CA /* MapBuilder.cpp */,
+				9C2A0E841CADAD4E004A45CA /* Map.cpp */,
+				9C2A0E881CADADB1004A45CA /* Tile.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -499,7 +537,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C2A0E6F1CAC450B004A45CA /* LuaScript.cpp in Sources */,
 				92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */,
+				9C2A0E7D1CADA87D004A45CA /* TilesLoader.cpp in Sources */,
 				AB6398DB1C8CE49500CA0B3B /* Engine.cpp in Sources */,
 				AB6398CE1C8CE48400CA0B3B /* Scene.cpp in Sources */,
 				AB6398DC1C8CE49500CA0B3B /* Event.cpp in Sources */,
@@ -517,10 +557,14 @@
 				AB6398DF1C8CE49500CA0B3B /* Mesh.cpp in Sources */,
 				AB6398DD1C8CE49500CA0B3B /* GLFWInputHandler.cpp in Sources */,
 				92E345411C64E04A00308A63 /* Log.cpp in Sources */,
+				9C2A0E771CAC4650004A45CA /* MapLoader.cpp in Sources */,
 				AB6398E01C8CE49500CA0B3B /* Node.cpp in Sources */,
+				9C2A0E811CADACA7004A45CA /* MapBuilder.cpp in Sources */,
 				92677A7D1C5665F900899024 /* main.cpp in Sources */,
 				AB6398E31C8CE49500CA0B3B /* Texture.cpp in Sources */,
 				9C7D082F1C9EC0C500804DF1 /* UIComponent.cpp in Sources */,
+				9C2A0E851CADAD4E004A45CA /* Map.cpp in Sources */,
+				9C2A0E891CADADB1004A45CA /* Tile.cpp in Sources */,
 				AB6398E41C8CE49500CA0B3B /* Window.cpp in Sources */,
 				9C7D08271C9EC0C500804DF1 /* Button.cpp in Sources */,
 				9CB3200C1CA725D90058482C /* PngTextureLoader.cpp in Sources */,
@@ -536,6 +580,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C2A0E861CADAD4E004A45CA /* Map.cpp in Sources */,
 				9C8075441CA1D6A70052086F /* Scene.cpp in Sources */,
 				9C8075451CA1D6A70052086F /* Node.cpp in Sources */,
 				9C8075461CA1D6A70052086F /* Shader.cpp in Sources */,
@@ -551,13 +596,17 @@
 				9C8075411CA1D6510052086F /* Mesh.cpp in Sources */,
 				9C8075571CA31ED60052086F /* BufferTest.cpp in Sources */,
 				9C80753D1CA1D1DF0052086F /* Texture.cpp in Sources */,
+				9C2A0E701CAC450B004A45CA /* LuaScript.cpp in Sources */,
 				9C7D083C1C9EC63A00804DF1 /* Layout.cpp in Sources */,
 				9C80752F1CA1D1C80052086F /* UIComponentTest.cpp in Sources */,
 				9C80754F1CA313130052086F /* Buffer.cpp in Sources */,
+				9C2A0E781CAC4650004A45CA /* MapLoader.cpp in Sources */,
 				9C8075301CA1D1C80052086F /* VerticalLayoutTest.cpp in Sources */,
 				9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */,
 				9C7D082E1C9EC0C500804DF1 /* TextList.cpp in Sources */,
 				9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */,
+				9C2A0E7E1CADA87D004A45CA /* TilesLoader.cpp in Sources */,
+				9C2A0E821CADACA7004A45CA /* MapBuilder.cpp in Sources */,
 				9C7D08361C9EC57600804DF1 /* VerticalLayout.cpp in Sources */,
 				9C7D08341C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */,
 				9C7D08301C9EC0C500804DF1 /* UIComponent.cpp in Sources */,
@@ -565,6 +614,7 @@
 				9C80752D1CA1D1C80052086F /* HorizontalLayoutTest.cpp in Sources */,
 				9C7D08281C9EC0C500804DF1 /* Button.cpp in Sources */,
 				9C7D082C1C9EC0C500804DF1 /* Text.cpp in Sources */,
+				9C2A0E8A1CADADB1004A45CA /* Tile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,6 +707,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					/Users/alvaro.chambicampos/Development/Frameworks,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -667,6 +718,7 @@
 				OTHER_LDFLAGS = (
 					"-lglfw3",
 					"-lpng",
+					"-llua",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -679,6 +731,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					/Users/alvaro.chambicampos/Development/Frameworks,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -689,6 +742,7 @@
 				OTHER_LDFLAGS = (
 					"-lglfw3",
 					"-lpng",
+					"-llua",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -700,6 +754,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					/Users/alvaro.chambicampos/Development/Frameworks,
 				);
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
@@ -707,6 +762,7 @@
 				OTHER_LDFLAGS = (
 					"-lpng",
 					"-lglfw3",
+					"-llua",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -718,6 +774,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					/Users/alvaro.chambicampos/Development/Frameworks,
 				);
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
@@ -725,6 +782,7 @@
 				OTHER_LDFLAGS = (
 					"-lpng",
 					"-lglfw3",
+					"-llua",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

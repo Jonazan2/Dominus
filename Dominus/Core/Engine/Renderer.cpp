@@ -248,9 +248,9 @@ void Renderer::drawUI(  ) {
     
     GLuint offset = 0;
     for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* mesh = uiComponents.at(i)->mesh;
-        if( uiComponents.at(i)->texture != nullptr ){
-            uiComponents.at(i)->texture->bind();
+        UIComponent* component = uiComponents.at( i );
+        if( component->texture != nullptr ){
+            component->texture->bind();
             glUniform1i(uiTextureData, 0);
         }
 
@@ -259,10 +259,10 @@ void Renderer::drawUI(  ) {
 
         glDrawArrays ( GL_TRIANGLES,
                       offset,
-                      (int)mesh->getVertices().size() );
-        offset += (int)mesh->getVertices().size();
-        if( mesh->getTexture() != nullptr ){
-            mesh->getTexture()->unbind();
+                      (int)component->mesh->getVertices().size() );
+        offset += (int)component->mesh->getVertices().size();
+        if( component->texture != nullptr ){
+            component->texture->unbind();
         }
     }
 }

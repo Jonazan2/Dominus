@@ -28,9 +28,6 @@ public:
 
     Scene* scene;
     
-    double yaw;
-    double pitch;
-    
     bool upPressed;
     bool downPressed;
     bool leftPressed;
