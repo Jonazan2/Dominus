@@ -24,20 +24,21 @@ public:
     void load( std::vector<Node*> renderBatch );
     void draw( std::vector<Node*> renderBatch );
 private:
-    Buffer* colorBuffer;
+    Buffer* normalBuffer;
     Buffer* verticesBuffer;
     
     glm::mat4 projectionMatrix;
     glm::mat4 viewMatrix;
     
     GLuint positionAttribute;
-    GLuint colorAttribute;
+    GLuint normalAttribute;
+    GLuint colorUniform;
     
     GLuint vao;
     GLuint shaderProgram;
     
-    GLuint projectionMatrixUID;
-    GLuint modelViewMatrixUID;
+    GLuint projectionUID;
+    GLuint modelViewUID;
 };
 
 #endif /* MapRenderState_h */

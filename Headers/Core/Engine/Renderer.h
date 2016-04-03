@@ -28,7 +28,7 @@ class UIComponent;
 class Renderer{
 public:
     enum { MOMO_RENDER_STATE = 1 };
-    enum { MAP_RENDER_STATE = 1 };
+    enum { MAP_RENDER_STATE = 2 };
     
     Renderer( GLFWwindow* window );
     ~Renderer();

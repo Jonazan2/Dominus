@@ -25,7 +25,7 @@ public:
     void draw( std::vector<Node*> renderBatch );
 private:
     GLuint vao;
-    GLuint shader_programme;
+    GLuint shaderProgram;
     
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;

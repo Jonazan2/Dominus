@@ -12,6 +12,7 @@
 #include <fstream>
 #include <istream>
 #include <sstream>
+#include "Exception.h"
 
 Shader::Shader( std::string file, GLenum type )
 : filePath( file ),type( type )
@@ -25,15 +26,19 @@ const GLuint Shader::getUID() {
     return uid;
 }
 
-bool Shader::compile() {
+void Shader::compile() {
     uid = glCreateShader ( type );
     std::ifstream file( filePath );
-    std::stringstream buffer;
-    buffer << file.rdbuf();
-    const std::string& tmp = buffer.str();
-    data = tmp.c_str();
-    glShaderSource ( uid, 1, &data, NULL );
-    return compileShader( uid );
+    if( file ){
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+        const std::string& tmp = buffer.str();
+        data = tmp.c_str();
+        glShaderSource ( uid, 1, &data, NULL );
+        compileShader( uid );
+    }else {
+        throw FileNotFoundException( filePath.c_str() );
+    }
 }
 
 bool Shader::compileShader(GLuint shader){

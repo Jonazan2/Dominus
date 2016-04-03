@@ -77,5 +77,20 @@ public:
 private:
     const char* error;
 };
+        
+class FileNotFoundException : public std::runtime_error {
+public:
+    FileNotFoundException( const char* file )
+    : runtime_error( "File not found " ), file( file )
+    {}
+    
+    virtual const char* what() const throw() {
+        std::ostringstream message;
+        message << std::runtime_error::what() << ": " << file;
+        return message.str().c_str();
+    }
+private:
+    const char* file;
+};
 
 #endif /* Exception_h */

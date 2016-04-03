@@ -32,6 +32,7 @@ Texture::~Texture() {
 
 void Texture::load( std::string file ) {
     loader->loadTexture( file.c_str(), width, height, hasAlpha, &image );
+    loaded = true;
 }
 
 void Texture::push() {

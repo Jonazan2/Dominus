@@ -41,27 +41,28 @@ void MomoRenderState::init() {
                                         GL_FRAGMENT_SHADER );
     fragmentShader->compile();
     
-    shader_programme = glCreateProgram ();
-    glAttachShader ( shader_programme, fragmentShader->getUID() );
-    glAttachShader ( shader_programme, vertexShader->getUID() );
-    glLinkProgram ( shader_programme );
+    shaderProgram = glCreateProgram ();
+    glAttachShader ( shaderProgram, fragmentShader->getUID() );
+    glAttachShader ( shaderProgram, vertexShader->getUID() );
+    glLinkProgram ( shaderProgram );
     
     //retrieve shader uniforms and attributes ids
-    textureUID = glGetUniformLocation(shader_programme, "textureData");
-    modelViewUID = glGetUniformLocation(shader_programme, "modelViewMatrix");
-    projectionUID = glGetUniformLocation(shader_programme, "projectionMatrix");
-    normalUID = glGetUniformLocation(shader_programme, "normalMatrix");
-    lightPositionUID = glGetUniformLocation(shader_programme, "lightPosition");
+    textureUID = glGetUniformLocation(shaderProgram, "textureData");
+    modelViewUID = glGetUniformLocation(shaderProgram, "modelViewMatrix");
+    projectionUID = glGetUniformLocation(shaderProgram, "projectionMatrix");
+    normalUID = glGetUniformLocation(shaderProgram, "normalMatrix");
+    lightPositionUID = glGetUniformLocation(shaderProgram, "lightPosition");
     
     positionAttribute = 1;
     normalAttribute = 2;
     textureAttribute = 3;
     
     glGenVertexArrays ( 1, &vao );
-    glBindVertexArray ( vao );
 }
 
 void MomoRenderState::load( std::vector<Node *> renderBatch ) {
+    glBindVertexArray ( vao );
+    
     verticesBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Mesh* mesh = renderBatch.at(i)->getMesh();
@@ -100,10 +101,12 @@ void MomoRenderState::load( std::vector<Node *> renderBatch ) {
             texture->unbind();
         }
     }
+    
+    glBindVertexArray( 0 );
 }
 
 void MomoRenderState::draw( std::vector<Node *> renderBatch ) {
-    glUseProgram (shader_programme);
+    glUseProgram (shaderProgram);
     glUniformMatrix4fv(projectionUID, 1, GL_FALSE, &projectionMatrix[0][0]);
     glUniform3fv(lightPositionUID, 1, &lightPosition[0]);
     glBindVertexArray (vao);
@@ -130,5 +133,7 @@ void MomoRenderState::draw( std::vector<Node *> renderBatch ) {
             node->getMesh()->getTexture()->unbind();
         }
     }
+    
+    glBindVertexArray( 0 );
 }
 

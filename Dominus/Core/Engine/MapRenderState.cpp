@@ -11,7 +11,7 @@
 #include "GLGpuBuffer.h"
 
 MapRenderState::MapRenderState() {
-    colorBuffer = new Buffer( new GLGpuBuffer );
+    normalBuffer = new Buffer( new GLGpuBuffer );
     verticesBuffer = new Buffer( new GLGpuBuffer );
 }
 
@@ -32,11 +32,11 @@ void MapRenderState::updateLightSource( glm::vec3 light ) {
 }
 
 void MapRenderState::init() {
-    Shader* vertexShader = new Shader( "map_vertex_shader.glsl",
+    Shader* vertexShader = new Shader( "shaders/map_vertex_shader.glsl",
                                        GL_VERTEX_SHADER );
     vertexShader->compile();
     
-    Shader* fragmentShader = new Shader( "map_fragment_shader.glsl",
+    Shader* fragmentShader = new Shader( "shaders/map_fragment_shader.glsl",
                                          GL_FRAGMENT_SHADER );
     fragmentShader->compile();
     
@@ -45,24 +45,44 @@ void MapRenderState::init() {
     glAttachShader ( shaderProgram, vertexShader->getUID() );
     glLinkProgram ( shaderProgram );
     
+    GLint isLinked = 0;
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &isLinked);
+    
+    if(isLinked == GL_FALSE) {
+        GLint maxLength = 0;
+        glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &maxLength);
+        
+        //The maxLength includes the NULL character
+        std::vector<GLchar> infoLog(maxLength);
+        glGetProgramInfoLog(shaderProgram, maxLength, &maxLength, &infoLog[0]);
+        std::cout <<  &infoLog[0] << std::endl;
+        //The program is useless now. So delete it.
+        glDeleteProgram(shaderProgram);
+        
+        //Provide the infolog in whatever manner you deem best.
+        //Exit with failure.
+    }
+    
     //retrieve shader uniforms and attributes ids
-    projectionMatrixUID = glGetUniformLocation( shaderProgram , "modelViewMatrix" );
-    modelViewMatrixUID = glGetUniformLocation( shaderProgram , "projectionMatrix" );
+    projectionUID = glGetUniformLocation( shaderProgram, "projectionMatrix" );
+    modelViewUID = glGetUniformLocation( shaderProgram, "modelViewMatrix" );
     
-    positionAttribute = glGetAttribLocation( shaderProgram , "vertex" );
-    colorAttribute = glGetAttribLocation( shaderProgram , "color" );
+    colorUniform = glGetUniformLocation( shaderProgram, "color" );
     
-    glGenVertexArrays (1, &vao);
-    glBindVertexArray (vao);
+    positionAttribute = 6;
+    normalAttribute = 7;
+    
+    glGenVertexArrays ( 1, &vao );
 }
 
 void MapRenderState::load( std::vector<Node*> renderBatch ) {
+    glBindVertexArray ( vao );
+    
     verticesBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Mesh* mesh = renderBatch.at(i)->getMesh();
-        verticesBuffer->push( (float*) &mesh->getVertices()[0],
-                              ( sizeof( GLfloat ) * 3 ) *
-                                mesh->getVertices().size() );
+        GLsizeiptr size = ( sizeof( GLfloat ) * 3 ) * mesh->getVertices().size();
+        verticesBuffer->push( (float*) &mesh->getVertices()[0], size );
     }
     
     //TODO: Dont allow this operation if the vao is not binded
@@ -70,29 +90,34 @@ void MapRenderState::load( std::vector<Node*> renderBatch ) {
     glEnableVertexAttribArray( positionAttribute );
     verticesBuffer->unBind();
     
-    colorBuffer->bind();
+    normalBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Mesh* mesh = renderBatch.at(i)->getMesh();
-        colorBuffer->push( (float*) &mesh->getNormals()[0],
-                             ( sizeof( GLfloat ) * 3 ) *
-                                mesh->getNormals().size() );
+        GLsizeiptr size = ( sizeof( GLfloat ) * 3 ) * mesh->getNormals().size();
+        normalBuffer->push( (float*) &mesh->getNormals()[0], size );
     }
     
-    glVertexAttribPointer( colorAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL );
-    glEnableVertexAttribArray( colorAttribute );
-    colorBuffer->unBind();
+    glVertexAttribPointer( normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL );
+    glEnableVertexAttribArray( normalAttribute );
+    normalBuffer->unBind();
+    
+    glBindVertexArray( 0 );
 }
 
 void MapRenderState::draw( std::vector<Node*> renderBatch ) {
     glUseProgram ( shaderProgram );
-    glUniformMatrix4fv( projectionMatrixUID , 1, GL_FALSE, &projectionMatrix[0][0]);
+    glUniformMatrix4fv( projectionUID , 1, GL_FALSE, &projectionMatrix[0][0]);
     glBindVertexArray ( vao );
 
     int offset = 0;
     for ( int i = 0; i < renderBatch.size(); i++ ) {
         Node* node = renderBatch.at( i );
+        //TODO: Fixed color: retrieve from material
+        glm::vec3 color = glm::vec3( (i % 2) * 0.5f , 1.0f, 1.0f );
+        glUniform3fv(colorUniform, 1, &color[0] );
+        
         glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
-        glUniformMatrix4fv( modelViewMatrixUID , 1, GL_FALSE,
+        glUniformMatrix4fv( modelViewUID , 1, GL_FALSE,
                             &modelViewMatrix[0][0]);
         glDrawArrays ( GL_TRIANGLES,
                        offset,
