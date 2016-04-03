@@ -25,6 +25,7 @@ void ShaderProgram::attachShader( Shader* shader ) {
 
 void ShaderProgram::linkProgram() {
     GLint isLinked = 0;
+    glLinkProgram( uid );
     glGetProgramiv( uid , GL_LINK_STATUS, &isLinked );
     
     if(isLinked == GL_FALSE) {
@@ -36,9 +37,7 @@ void ShaderProgram::linkProgram() {
         glGetProgramInfoLog( uid, maxLength, &maxLength, &infoLog[0] );
         //The program is useless now. So delete it.
         glDeleteProgram( uid );
-        std::ostringstream message;
-        message << uid << " " << &infoLog[0];
-        throw LinkProgramException( message.str().c_str() );
+        throw LinkProgramException( &infoLog[0] );
     }
     linked = true;
 }

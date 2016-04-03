@@ -11,6 +11,7 @@
 
 #include "RenderState.h"
 #include "Buffer.h"
+#include "ShaderProgram.h"
 
 class MapRenderState : public RenderState {
 public:
@@ -30,15 +31,15 @@ private:
     glm::mat4 projectionMatrix;
     glm::mat4 viewMatrix;
     
-    GLuint positionAttribute;
-    GLuint normalAttribute;
-    GLuint colorUniform;
+    ShaderProgram* shaderProgram;
+    
+    std::string positionAttributeKey;
+    std::string normalAttributeKey;
+    std::string colorUniformKey;
+    std::string projectionUniformKey;
+    std::string modelViewUniformKey;
     
     GLuint vao;
-    GLuint shaderProgram;
-    
-    GLuint projectionUID;
-    GLuint modelViewUID;
 };
 
 #endif /* MapRenderState_h */

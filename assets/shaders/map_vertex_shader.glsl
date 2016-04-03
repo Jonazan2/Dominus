@@ -1,6 +1,6 @@
 #version 400
-layout(location = 6) in vec3 vertex;
-layout(location = 7) in vec3 color;
+in vec3 vertex;
+in vec3 normal;
 
 uniform mat4 projectionMatrix;
 uniform mat4 modelViewMatrix;

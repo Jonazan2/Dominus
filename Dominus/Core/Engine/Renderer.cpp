@@ -17,7 +17,7 @@
 
 Renderer::Renderer( GLFWwindow* window )
 : window( window ), currentState( nullptr ) {
-
+    shaderProgram = new ShaderProgram;
 }
 
 Renderer::~Renderer(){
@@ -25,16 +25,22 @@ Renderer::~Renderer(){
 
 void Renderer::init(){
     initOpenGLStates();
-    loadUIShaders();
+    
+    positionAttributeKey = "vertexCoord";
+    textureAttributeKey = "textureCoord";
+    mvpUniformKey = "modelViewProjectionMatrix";
+    textureDataUniformKey = "textureData";
     
     states[MOMO_RENDER_STATE] = new MomoRenderState;
     states[MAP_RENDER_STATE] = new MapRenderState;
     
-    currentState = states[MAP_RENDER_STATE];
+    currentState = states[MOMO_RENDER_STATE];
     
     uiVerticesBufer = new Buffer( new GLGpuBuffer );
     uiUvsBuffer = new Buffer( new GLGpuBuffer );
     currentState->init();
+    
+    loadUIShaders();
 }
 
 void Renderer::initOpenGLStates() {
@@ -89,17 +95,15 @@ void Renderer::loadUIShaders() {
                                         GL_FRAGMENT_SHADER );
     fragmentShader->compile();
     
-    uiShaderProgram = glCreateProgram ();
-    glAttachShader ( uiShaderProgram, fragmentShader->getUID() );
-    glAttachShader ( uiShaderProgram, vertexShader->getUID() );
-    glLinkProgram ( uiShaderProgram );
+    shaderProgram->attachShader( vertexShader );
+    shaderProgram->attachShader( fragmentShader );
     
-    uiTextureData = glGetUniformLocation( uiShaderProgram, "textureData" );
-    uiMVPMatrix = glGetUniformLocation( uiShaderProgram,
-                                        "modelViewProjectionMatrix" );
+    shaderProgram->linkProgram();
     
-    uiPositionAttribute = 4;
-    uiTextureAttribute = 5;
+    shaderProgram->registerUnitform( mvpUniformKey );
+    shaderProgram->registerUnitform( textureDataUniformKey );
+    shaderProgram->registerAttribute( positionAttributeKey );
+    shaderProgram->registerAttribute( textureAttributeKey );
 }
 
 void Renderer::drawtexture( UIComponent* component ){
@@ -151,8 +155,9 @@ void Renderer::loadUI(  ) {
         uiVerticesBufer->push( (float*)&mesh->getVertices()[0], size );
     }
     //set vertex array layout for shader attibute and enable attibute
-    glVertexAttribPointer (uiPositionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(uiPositionAttribute);
+    glVertexAttribPointer ( shaderProgram->getAttribute( positionAttributeKey ),
+                            3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray( shaderProgram->getAttribute(positionAttributeKey) );
     
     uiUvsBuffer->bind();
     for ( int i = 0; i < uiComponents.size(); i++ ) {
@@ -161,8 +166,9 @@ void Renderer::loadUI(  ) {
         uiUvsBuffer->push( (float*)&mesh->getUvs()[0], size );
     }
     //set uvs array layout for shader attribute and enable attribute
-    glVertexAttribPointer( uiTextureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
-    glEnableVertexAttribArray( uiTextureAttribute );
+    glVertexAttribPointer( shaderProgram->getAttribute( textureAttributeKey ),
+                           2, GL_FLOAT, GL_FALSE, 0, NULL );
+    glEnableVertexAttribArray( shaderProgram->getAttribute( textureAttributeKey ) );
 
     for ( int i = 0;  i < uiComponents.size(); i++ ) {
         UIComponent* component = uiComponents.at( i );
@@ -177,7 +183,7 @@ void Renderer::loadUI(  ) {
 
 void Renderer::drawUI(  ) {
     glm::mat4 orthoMatrix = glm::ortho( 0.0, 640.0, 480.0, 0.0 );
-    glUseProgram ( uiShaderProgram );
+    shaderProgram->useProgram();
     glBindVertexArray ( vao );
     
     GLuint offset = 0;
@@ -185,11 +191,12 @@ void Renderer::drawUI(  ) {
         UIComponent* component = uiComponents.at( i );
         if( component->texture != nullptr ) {
             component->texture->bind();
-            glUniform1i( uiTextureData, 0 );
+            glUniform1i( shaderProgram->getUniform( textureDataUniformKey ) , 0 );
         }
 
         glm::mat4 MVPMatrix = orthoMatrix;
-        glUniformMatrix4fv( uiMVPMatrix, 1, GL_FALSE, &MVPMatrix[0][0] );
+        glUniformMatrix4fv( shaderProgram->getUniform( mvpUniformKey ),
+                            1, GL_FALSE, &MVPMatrix[0][0] );
 
         glDrawArrays ( GL_TRIANGLES,
                       offset,
@@ -201,6 +208,7 @@ void Renderer::drawUI(  ) {
     }
     
     glBindVertexArray( 0 );
+    shaderProgram->closeProgram();
 }
 
 void Renderer::clear() {

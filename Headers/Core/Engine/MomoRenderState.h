@@ -11,6 +11,7 @@
 
 #include "RenderState.h"
 #include "Buffer.h"
+#include "ShaderProgram.h"
 
 class MomoRenderState : public RenderState {
 public:
@@ -25,21 +26,21 @@ public:
     void draw( std::vector<Node*> renderBatch );
 private:
     GLuint vao;
-    GLuint shaderProgram;
+    ShaderProgram* shaderProgram;
     
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
     
     glm::vec3 lightPosition;
     
-    GLuint positionAttribute;
-    GLuint normalAttribute;
-    GLuint textureAttribute;
-    GLuint modelViewUID;
-    GLuint projectionUID;
-    GLuint normalUID;
-    GLuint lightPositionUID;
-    GLuint textureUID;
+    std::string positionAttributeKey;
+    std::string normalAttributeKey;
+    std::string textureAttributeKey;
+    std::string modelViewUniformKey;
+    std::string projectionUniformKey;
+    std::string normalUniformKey;
+    std::string lightUniformKey;
+    std::string textureUniformKey;
     
     Buffer* verticesBuffer;
     Buffer* normalBuffer;

@@ -22,6 +22,7 @@
 #include "GLGpuBuffer.h"
 #include <unordered_map>
 #include "RenderState.h"
+#include "ShaderProgram.h"
 
 class UIComponent;
 
@@ -58,11 +59,11 @@ private:
     GLFWwindow* window;
     GLuint vao;
     
-    GLuint uiShaderProgram;
-    GLuint uiPositionAttribute;
-    GLuint uiMVPMatrix;
-    GLuint uiTextureAttribute;
-    GLuint uiTextureData;
+    ShaderProgram* shaderProgram;
+    std::string positionAttributeKey;
+    std::string textureAttributeKey;
+    std::string mvpUniformKey;
+    std::string textureDataUniformKey;
     
     Buffer* uiVerticesBufer;
     Buffer* uiUvsBuffer;
