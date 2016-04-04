@@ -20,14 +20,22 @@
 #include "Texture.h"
 #include "Buffer.h"
 #include "GLGpuBuffer.h"
+#include <unordered_map>
+#include "RenderState.h"
+#include "ShaderProgram.h"
 
 class UIComponent;
 
 class Renderer{
 public:
+    enum { MOMO_RENDER_STATE = 1 };
+    enum { MAP_RENDER_STATE = 2 };
+    
     Renderer( GLFWwindow* window );
     ~Renderer();
     void init();
+    
+    void updateState( const int stateCode );
     
     void updateProjection( glm::mat4 projectionMatrix );
     void updateLightSource( glm::vec3 lightSource );
@@ -45,42 +53,24 @@ public:
     void clear();
 private:
     void initOpenGLStates();
-    void loadShaders();
     void loadUIShaders();
     
     static const GLuint BUFFER_SIZE = 100000 * 12;
     GLFWwindow* window;
     GLuint vao;
-    GLuint shader_programme;
     
-    glm::mat4 viewMatrix;
-    glm::mat4 projectionMatrix;
-    
-    glm::vec3 lightPosition;
-    
-    GLuint positionAttribute;
-    GLuint normalAttribute;
-    GLuint textureAttribute;
-    GLuint modelViewUID;
-    GLuint projectionUID;
-    GLuint normalUID;
-    GLuint lightPositionUID;
-    GLuint textureUID;
-    
-    GLuint uiShaderProgram;
-    GLuint uiPositionAttribute;
-    GLuint uiMVPMatrix;
-    GLuint uiTextureAttribute;
-    GLuint uiTextureData;
-    
-    Buffer* verticesBuffer;
-    Buffer* normalBuffer;
-    Buffer* uvsBuffer;
+    ShaderProgram* shaderProgram;
+    std::string positionAttributeKey;
+    std::string textureAttributeKey;
+    std::string mvpUniformKey;
+    std::string textureDataUniformKey;
     
     Buffer* uiVerticesBufer;
     Buffer* uiUvsBuffer;
     
     std::vector<UIComponent*> uiComponents;
+    std::unordered_map<int, RenderState*> states;
+    RenderState* currentState;
 };
 
 #endif /* defined(__Dominus__Renderer__) */

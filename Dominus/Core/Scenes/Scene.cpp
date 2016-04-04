@@ -32,6 +32,10 @@ void Scene::update( double delta ) {
     }
 }
 
+void Scene::setMapNode( Node *node ) {
+    this->mapNode = node;
+}
+
 Camera* Scene::getCamera() {
     return camera;
 }

@@ -12,9 +12,12 @@
 #include "Shader.h"
 #include "UIComponent.h"
 #include "PngTextureLoader.h"
+#include "MomoRenderState.h"
+#include "MapRenderState.h"
 
-Renderer::Renderer( GLFWwindow* window ) : window( window ) {
-
+Renderer::Renderer( GLFWwindow* window )
+: window( window ), currentState( nullptr ) {
+    shaderProgram = new ShaderProgram;
 }
 
 Renderer::~Renderer(){
@@ -22,15 +25,22 @@ Renderer::~Renderer(){
 
 void Renderer::init(){
     initOpenGLStates();
-    loadShaders();
-    loadUIShaders();
     
-    verticesBuffer = new Buffer( new GLGpuBuffer );
-    uvsBuffer = new Buffer( new GLGpuBuffer );
-    normalBuffer = new Buffer( new GLGpuBuffer );
+    positionAttributeKey = "vertexCoord";
+    textureAttributeKey = "textureCoord";
+    mvpUniformKey = "modelViewProjectionMatrix";
+    textureDataUniformKey = "textureData";
+    
+    states[MOMO_RENDER_STATE] = new MomoRenderState;
+    states[MAP_RENDER_STATE] = new MapRenderState;
+    
+    currentState = states[MOMO_RENDER_STATE];
     
     uiVerticesBufer = new Buffer( new GLGpuBuffer );
     uiUvsBuffer = new Buffer( new GLGpuBuffer );
+    currentState->init();
+    
+    loadUIShaders();
 }
 
 void Renderer::initOpenGLStates() {
@@ -39,42 +49,39 @@ void Renderer::initOpenGLStates() {
     printf ("Renderer: %s\n", renderer);
     printf ("OpenGL version supported %s\n", version);
     
-    // opengl states
-    glEnable (GL_DEPTH_TEST); // enable depth-testing
-    glDepthFunc (GL_LESS); // depth-testing interprets a smaller value as
+    glEnable (GL_DEPTH_TEST);
+    glDepthFunc (GL_LESS);
     //enable alpha
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
     glClearColor( 0.5f, 0.5f, 1.0f, 1.0f );
     
-    //create vao and set as current
-    glGenVertexArrays (1, &vao);
-    glBindVertexArray (vao);
+    glGenVertexArrays ( 1, &vao );
 }
 
-void Renderer::loadShaders() {
-    
-    Shader* vertexShader = new Shader( "vertex_shader.glsl", GL_VERTEX_SHADER );
-    vertexShader->compile();
-    
-    Shader* fragmentShader = new Shader( "fragment_shader.glsl", GL_FRAGMENT_SHADER );
-    fragmentShader->compile();
-    
-    shader_programme = glCreateProgram ();
-    glAttachShader ( shader_programme, fragmentShader->getUID() );
-    glAttachShader ( shader_programme, vertexShader->getUID() );
-    glLinkProgram ( shader_programme );
-    
-    //retrieve shader uniforms and attributes ids
-    textureUID = glGetUniformLocation(shader_programme, "textureData");
-    modelViewUID = glGetUniformLocation(shader_programme, "modelViewMatrix");
-    projectionUID = glGetUniformLocation(shader_programme, "projectionMatrix");
-    normalUID = glGetUniformLocation(shader_programme, "normalMatrix");
-    lightPositionUID = glGetUniformLocation(shader_programme, "lightPosition");
-    
-    positionAttribute = 1;
-    normalAttribute = 2;
-    textureAttribute = 3;
+void Renderer::updateState( const int stateCode ) {
+    currentState = states[ stateCode ];
+}
+
+void Renderer:: updateProjection( glm::mat4 projectionMatrix ) {
+    currentState->updateProjection( projectionMatrix );
+}
+
+void Renderer::updateViewMatrix( glm::mat4 viewMatrix ) {
+    currentState->updateCamera( viewMatrix );
+}
+
+void Renderer::updateLightSource( glm::vec3 lightSource ) {
+    currentState->updateLightSource( lightSource );
+}
+
+void Renderer::load( std::vector<Node *> renderBatch ) {
+    currentState->load( renderBatch );
+}
+
+void Renderer::draw( std::vector<Node *> renderBatch ) {
+    currentState->draw( renderBatch );
 }
 
 void Renderer::loadUIShaders() {
@@ -88,16 +95,15 @@ void Renderer::loadUIShaders() {
                                         GL_FRAGMENT_SHADER );
     fragmentShader->compile();
     
-    uiShaderProgram = glCreateProgram ();
-    glAttachShader ( uiShaderProgram, fragmentShader->getUID() );
-    glAttachShader ( uiShaderProgram, vertexShader->getUID() );
-    glLinkProgram ( uiShaderProgram );
+    shaderProgram->attachShader( vertexShader );
+    shaderProgram->attachShader( fragmentShader );
     
-    uiTextureData = glGetUniformLocation(uiShaderProgram, "textureData");
-    uiMVPMatrix = glGetUniformLocation(uiShaderProgram, "modelViewProjectionMatrix");
+    shaderProgram->linkProgram();
     
-    uiPositionAttribute = 4;
-    uiTextureAttribute = 5;
+    shaderProgram->registerUnitform( mvpUniformKey );
+    shaderProgram->registerUnitform( textureDataUniformKey );
+    shaderProgram->registerAttribute( positionAttributeKey );
+    shaderProgram->registerAttribute( textureAttributeKey );
 }
 
 void Renderer::drawtexture( UIComponent* component ){
@@ -138,68 +144,31 @@ void Renderer::drawtexture( UIComponent* component ){
     }
 }
 
-void Renderer::load( std::vector<Node*> renderBatch ) {
-    verticesBuffer->bind();
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
-        verticesBuffer->push( (float*)&mesh->getVertices()[0],
-                              ( sizeof ( GLfloat ) * 3 ) * mesh->getVertices().size() );
-    }
-    glVertexAttribPointer (positionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(positionAttribute);
-    
-    normalBuffer->bind();
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
-        normalBuffer->push( (float*)&mesh->getNormals()[0],
-                            ( sizeof ( GLfloat ) * 3 ) * mesh->getNormals().size() );
-    }
-
-    glVertexAttribPointer(normalAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(normalAttribute);
-    
-    uvsBuffer->bind();
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
-        uvsBuffer->push( (float*)&mesh->getUvs()[0],
-                         ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size() );
-    }
-    
-    glVertexAttribPointer( textureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
-    glEnableVertexAttribArray( textureAttribute );
-    
-    //Texture loading
-    for ( int i = 0;  i < renderBatch.size(); i++ ) {
-        Texture* texture = renderBatch.at( i )->getMesh()->getTexture();
-        if( texture != nullptr ){
-            texture->bind();
-            texture->push();
-            texture->unbind();
-        }
-    }
-}
-
 void Renderer::loadUI(  ) {
+    glBindVertexArray ( vao );
+
     uiVerticesBufer->bind();
     
     for ( int i = 0; i < uiComponents.size(); i++ ) {
         Mesh* mesh = uiComponents.at(i)->mesh;
-        uiVerticesBufer->push( (float*)&mesh->getVertices()[0],
-                               ( sizeof ( GLfloat ) * 3 ) * mesh->getVertices().size() );
+        GLsizeiptr size = ( sizeof ( GLfloat ) * 3 ) * mesh->getVertices().size();
+        uiVerticesBufer->push( (float*)&mesh->getVertices()[0], size );
     }
     //set vertex array layout for shader attibute and enable attibute
-    glVertexAttribPointer (uiPositionAttribute, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(uiPositionAttribute);
+    glVertexAttribPointer ( shaderProgram->getAttribute( positionAttributeKey ),
+                            3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray( shaderProgram->getAttribute(positionAttributeKey) );
     
     uiUvsBuffer->bind();
     for ( int i = 0; i < uiComponents.size(); i++ ) {
         Mesh* mesh = uiComponents.at(i)->mesh;
-        uiUvsBuffer->push( (float*)&mesh->getUvs()[0],
-                           ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size() );
+        GLsizeiptr size = ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size();
+        uiUvsBuffer->push( (float*)&mesh->getUvs()[0], size );
     }
     //set uvs array layout for shader attribute and enable attribute
-    glVertexAttribPointer( uiTextureAttribute, 2, GL_FLOAT, GL_FALSE, 0, NULL );
-    glEnableVertexAttribArray( uiTextureAttribute );
+    glVertexAttribPointer( shaderProgram->getAttribute( textureAttributeKey ),
+                           2, GL_FLOAT, GL_FALSE, 0, NULL );
+    glEnableVertexAttribArray( shaderProgram->getAttribute( textureAttributeKey ) );
 
     for ( int i = 0;  i < uiComponents.size(); i++ ) {
         UIComponent* component = uiComponents.at( i );
@@ -209,74 +178,37 @@ void Renderer::loadUI(  ) {
             component->texture->unbind();
         }
     }
-}
-
-void Renderer::draw( std::vector<Node*> renderBatch ) {
-    glUseProgram (shader_programme);
-    glUniformMatrix4fv(projectionUID, 1, GL_FALSE, &projectionMatrix[0][0]);
-    glUniform3fv(lightPositionUID, 1, &lightPosition[0]);
-    glBindVertexArray (vao);
-    
-    GLuint offset = 0;
-    for ( int i = 0; i < renderBatch.size() ; i++ ) {
-        Node* node = renderBatch.at( i );
-        if( node->getMesh()->getTexture() != nullptr ) {
-            node->getMesh()->getTexture()->bind();
-            glUniform1i(textureUID, 0);
-        }
-        
-        glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
-        glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
-        glm::mat3 normalMat3 = glm::mat3( normalMat );
-        glUniformMatrix4fv(modelViewUID, 1, GL_FALSE, &modelViewMatrix[0][0]);
-        glUniformMatrix3fv(normalUID, 1, GL_FALSE, &normalMat3[0][0]);
-        // draw points from the currently bound VAO with current in-use shader
-        glDrawArrays (GL_TRIANGLES,
-                      offset,
-                      (int)node->getMesh()->getVertices().size());
-        offset += (int)node->getMesh()->getVertices().size();
-        if( node->getMesh()->getTexture() != nullptr ) {
-            node->getMesh()->getTexture()->unbind();
-        }
-    }
+    glBindVertexArray ( 0 );
 }
 
 void Renderer::drawUI(  ) {
     glm::mat4 orthoMatrix = glm::ortho( 0.0, 640.0, 480.0, 0.0 );
-    glUseProgram ( uiShaderProgram );
-    glBindVertexArray (vao);
+    shaderProgram->useProgram();
+    glBindVertexArray ( vao );
     
     GLuint offset = 0;
     for ( int i = 0; i < uiComponents.size(); i++ ) {
         UIComponent* component = uiComponents.at( i );
-        if( component->texture != nullptr ){
+        if( component->texture != nullptr ) {
             component->texture->bind();
-            glUniform1i(uiTextureData, 0);
+            glUniform1i( shaderProgram->getUniform( textureDataUniformKey ) , 0 );
         }
 
         glm::mat4 MVPMatrix = orthoMatrix;
-        glUniformMatrix4fv(uiMVPMatrix, 1, GL_FALSE, &MVPMatrix[0][0]);
+        glUniformMatrix4fv( shaderProgram->getUniform( mvpUniformKey ),
+                            1, GL_FALSE, &MVPMatrix[0][0] );
 
         glDrawArrays ( GL_TRIANGLES,
                       offset,
                       (int)component->mesh->getVertices().size() );
         offset += (int)component->mesh->getVertices().size();
-        if( component->texture != nullptr ){
+        if( component->texture != nullptr ) {
             component->texture->unbind();
         }
     }
-}
-
-void Renderer::updateProjection( glm::mat4 projectionMatrix ) {
-    this->projectionMatrix = projectionMatrix;
-}
-
-void Renderer:: updateViewMatrix( glm::mat4 viewMatrix ) {
-    this->viewMatrix = viewMatrix;
-}
-
-void Renderer::updateLightSource( glm::vec3 lightSource ) {
-    this->lightPosition = lightSource;
+    
+    glBindVertexArray( 0 );
+    shaderProgram->closeProgram();
 }
 
 void Renderer::clear() {

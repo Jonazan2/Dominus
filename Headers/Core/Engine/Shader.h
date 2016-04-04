@@ -18,7 +18,7 @@ public:
     Shader( std::string file, GLenum type );
     ~Shader( );
     
-    bool compile();
+    void compile();
     const GLuint getUID();
 private:
     bool compileShader( GLuint shader );

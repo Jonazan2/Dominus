@@ -98,7 +98,7 @@ void RenderScene::populateScene( Scene* scene ) {
     map->setup();
     
     map->setModelMatrix( glm::scale( glm::vec3( 1.0f, 1.0f, 1.0f ) ) );
-    scene->addNode( map );
+    scene->addNode( momoHolderNode );
     scene->load();
 }
 

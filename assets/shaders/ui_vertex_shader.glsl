@@ -1,6 +1,6 @@
 #version 400
-layout(location = 4) in vec3 vertexCoord;
-layout(location = 5) in vec2 textureCoord;
+in vec3 vertexCoord;
+in vec2 textureCoord;
 out vec2 fragTextureCoord;
 uniform mat4 modelViewProjectionMatrix;
 void main () {
