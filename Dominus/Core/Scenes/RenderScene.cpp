@@ -24,44 +24,45 @@ void RenderScene::onSceneCreated( Scene* scene ) {
 void RenderScene::populateScene( Scene* scene ) {
     this->scene = scene;
     //Camera setup
-    Camera* camera = new Camera;
+    std::shared_ptr< Camera > camera ( new Camera );
     camera->yaw = -45.0;
     camera->pitch = -25.0;
     camera->position = glm::vec3( -6.33f, 7.28f, 5.93f );
     scene->setCamera( camera );
     
-    LightNode* lightNode = new LightNode;
+    std::shared_ptr< LightNode > lightNode ( new LightNode );
     scene->setLightNode( lightNode );
+
     //buffer data
-    Mesh * momoMesh = new Mesh( new ObjLoader );
+    std::shared_ptr< Mesh > momoMesh ( new Mesh( new ObjLoader ) );
     momoMesh->load( "momo.obj" );
     Texture* momoTexture = new Texture( new GLGpuTexture, new PngTextureLoader );
     momoTexture->load( "diffuse.png" );
     momoMesh->setTexture( momoTexture );
     
-    Mesh* jokerMesh = new Mesh( new ObjLoader );
+    std::shared_ptr< Mesh > jokerMesh ( new Mesh( new ObjLoader ) );
     jokerMesh->load( "capsule.obj" );
     Texture* jokerTexture = new Texture( new GLGpuTexture, new PngTextureLoader );
     jokerTexture->load( "capsule.png" );
     //TODO: png format issues loading capsule.png
     //jokerMesh->setTexture( jokerTexture );
     
-    Mesh* momoHolder = new Mesh( new ObjLoader );
+    std::shared_ptr< Mesh > momoHolder ( new Mesh( new ObjLoader ) );
     momoHolder->load( "cube.obj" );
     
-    Mesh* jokerHolder = new Mesh( new ObjLoader );
+    std::shared_ptr< Mesh > jokerHolder ( new Mesh( new ObjLoader ) );
     jokerHolder->load( "cube.obj" );
     
-    Mesh* plane = new Mesh( new ObjLoader );
+    std::shared_ptr< Mesh > plane ( new Mesh( new ObjLoader ) );
     plane->load( "cube.obj" );
     
     //populate scene
-    Node* momoNode = new Node( momoMesh );
-    Node* jokerNode = new Node( jokerMesh );
+    std::shared_ptr< Node > momoNode ( new Node( momoMesh ) );
+    std::shared_ptr< Node > jokerNode ( new Node( jokerMesh ) );
     
-    Node* momoHolderNode = new Node( momoHolder );
-    Node* jokerHolderNode = new Node( jokerHolder );
-    Node* planeNode = new Node( plane );
+    std::shared_ptr< Node > momoHolderNode ( new Node( momoHolder ) );
+    std::shared_ptr< Node > jokerHolderNode ( new Node( jokerHolder ) );
+    std::shared_ptr< Node > planeNode ( new Node( plane ) );
     
     momoHolderNode->setModelMatrix( glm::translate( glm::vec3( 5.0f, 1.0f, 0.0f ) ) );
     jokerHolderNode->setModelMatrix( glm::translate( glm::vec3( -5.0f, 1.0f, 1.0f ) ) );
@@ -90,7 +91,7 @@ void RenderScene::populateScene( Scene* scene ) {
 }
 
 void RenderScene::populateUI( Scene* scene ) {
-    HorizontalLayout* root = new HorizontalLayout;
+    std::shared_ptr< HorizontalLayout > root ( new HorizontalLayout );
     Params params = Params();
     params.disposition = WEIGHT_DISPOSITION;
     root->setParams(params);
@@ -132,7 +133,7 @@ void RenderScene::populateUI( Scene* scene ) {
 
 void RenderScene::onUpdate( double delta ) {
     GLfloat cameraSpeed = 0.01f * delta;
-    Camera* camera = scene->getCamera();
+    std::shared_ptr< Camera > camera = scene->getCamera();
     if( upPressed ) {
         camera->position += cameraSpeed * camera->front;
     }
@@ -194,9 +195,9 @@ void RenderScene::onMouseDragged( double xRel, double yRel ) {
     scene->getCamera()->pitch += yoffset;
 }
 
-void RenderScene::onCosumeInput( std::vector< std::shared_ptr< Event > > ) {
-    for ( int i = 0; i < events->size(); i++ ) {
-        std::shared_ptr< Event > event = events->at( i );
+void RenderScene::onCosumeInput( std::vector< std::shared_ptr< Event > > events ) {
+    for ( int i = 0; i < events.size(); i++ ) {
+        std::shared_ptr< Event > event = events.at( i );
         if ( event->type == ON_RIGHT_CLICK_PRESS ) {
             event->consumed = true;
             xSaved = event->x;
@@ -209,10 +210,10 @@ void RenderScene::onCosumeInput( std::vector< std::shared_ptr< Event > > ) {
             rightClickPressed = false;
         } else if ( event->type == ON_KEY_PRESS ) {
             event->consumed = true;
-            onKeyDown( event );
+            onKeyDown( event.get() );
         } else if ( event->type == ON_KEY_RELEASE ) {
             event->consumed = true;
-            onKeyDown( event );
+            onKeyDown( event.get() );
         } else if ( event->type == ON_MOUSE_MOVED ) {
             event->consumed = true;
             if ( rightClickPressed ) {

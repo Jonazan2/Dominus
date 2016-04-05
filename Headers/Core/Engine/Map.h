@@ -10,6 +10,8 @@
 #define Map_h
 
 #include <vector>
+#include <memory>
+
 #include "Tile.h"
 
 class Map : public Node {
@@ -17,12 +19,12 @@ public:
     Map();
     ~Map();
     
-    void addTile( Tile* tile );
+    void addTile( std::shared_ptr< Tile > tile );
     void setup();
     
     int rows;
     int columns;
-    std::vector<Tile*> tiles;
+    std::vector< std::shared_ptr< Tile > > tiles;
 };
 
 #endif /* Map_h */

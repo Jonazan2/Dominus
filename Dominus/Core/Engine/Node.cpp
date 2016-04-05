@@ -34,7 +34,7 @@ void Node::onRestore( Scene* scene ) {
     for ( std::shared_ptr< INode > node : childNodes ) {
         node->onRestore( scene );
     }
-    scene->addToBatch( std::make_shared<Node>(this) );
+    scene->addToBatch( std::shared_ptr< Node >(this) );
 }
 
 void Node::onRender( Scene* scene ) {
@@ -53,7 +53,7 @@ void Node::onRenderChildrends( Scene* scene ) {
 
 void Node::onPostRender( Scene* scene ) {
     scene->getStack()->pop();
-    scene->addToBatch( std::make_shared<Node>(this) );
+    scene->addToBatch( std::shared_ptr< Node >(this) );
 }
 
 glm::mat4 * Node::getToWorldMatrix() {

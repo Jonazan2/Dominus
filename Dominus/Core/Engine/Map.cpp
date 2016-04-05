@@ -17,7 +17,7 @@ Map::~Map() {
 
 }
 
-void Map::addTile( Tile* tile ) {
+void Map::addTile( std::shared_ptr< Tile > tile ) {
     Node::addNode( tile );
     
     tiles.push_back( tile );
@@ -26,7 +26,7 @@ void Map::addTile( Tile* tile ) {
 void Map::setup() {
     int currentColumn = 0;
     for ( int i = 0; i < tiles.size(); i++ ) {
-        Node* node = tiles.at( i );
+        std::shared_ptr< Node > node = tiles.at( i );
       //x ->
     //z ////////// +
     //| //

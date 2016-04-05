@@ -6,6 +6,7 @@ Scene::Scene( Renderer* renderer ) :
                                     camera( nullptr ) {
     rootNode = new Node;
     windowLayout = new Layout;
+    matrixStack = std::shared_ptr<std::stack< glm::mat4 >> (new std::stack< glm::mat4 >());
     pushMatrix( glm::mat4( 1 ) );
 }
 

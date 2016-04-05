@@ -63,12 +63,12 @@ void MapRenderState::init() {
     glGenVertexArrays ( 1, &vao );
 }
 
-void MapRenderState::load( std::vector<Node*> renderBatch ) {
+void MapRenderState::load( std::vector< std::shared_ptr< Node > > renderBatch ) {
     glBindVertexArray ( vao );
     
     verticesBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
+        std::shared_ptr< Mesh > mesh = renderBatch.at(i)->getMesh();
         GLsizeiptr size = ( sizeof( GLfloat ) * 3 ) * mesh->getVertices().size();
         verticesBuffer->push( (float*) &mesh->getVertices()[0], size );
     }
@@ -81,7 +81,7 @@ void MapRenderState::load( std::vector<Node*> renderBatch ) {
     
     normalBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
+        std::shared_ptr< Mesh > mesh = renderBatch.at(i)->getMesh();
         GLsizeiptr size = ( sizeof( GLfloat ) * 3 ) * mesh->getNormals().size();
         normalBuffer->push( (float*) &mesh->getNormals()[0], size );
     }
@@ -94,7 +94,7 @@ void MapRenderState::load( std::vector<Node*> renderBatch ) {
     glBindVertexArray( 0 );
 }
 
-void MapRenderState::draw( std::vector<Node*> renderBatch ) {
+void MapRenderState::draw( std::vector< std::shared_ptr< Node > > renderBatch ) {
     shaderProgram->useProgram();
     glUniformMatrix4fv( shaderProgram->getUniform( projectionUniformKey ) ,
                         1, GL_FALSE, &projectionMatrix[0][0]);
@@ -102,7 +102,7 @@ void MapRenderState::draw( std::vector<Node*> renderBatch ) {
 
     int offset = 0;
     for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Node* node = renderBatch.at( i );
+        std::shared_ptr< Node > node = renderBatch.at( i );
         //TODO: Fixed color: retrieve from material
         glm::vec3 color = glm::vec3( (i % 2) * 0.5f , 1.0f, 1.0f );
         glUniform3fv( shaderProgram->getUniform( colorUniformKey ),

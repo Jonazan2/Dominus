@@ -25,10 +25,11 @@ Map* MapBuilder::build( MapLoader *mapLoader, TilesLoader *tilesLoader ) {
     
     for ( int i = 0 ; i < mapInfo->tilesKeys.size(); i++ ) {
         int tileKey = mapInfo->tilesKeys.at( i );
-        Mesh* mesh = new Mesh( new ObjLoader );
+        std::shared_ptr< Mesh > mesh( new Mesh( new ObjLoader ) );
+        
         mesh->load( tilesInfo.at( tileKey ) );
         
-        Tile* tile = new Tile;
+        std::shared_ptr< Tile > tile( new Tile );
         tile->key = tileKey;
         tile->setMesh( mesh );
         

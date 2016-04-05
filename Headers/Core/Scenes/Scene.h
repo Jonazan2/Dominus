@@ -49,4 +49,4 @@ private:
     std::vector< std::shared_ptr< Node > > renderBatch;
 };
 
-#endif /* Scene_h */
+#endif /* _SCENE_H_ */

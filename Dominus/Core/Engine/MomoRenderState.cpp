@@ -71,12 +71,12 @@ void MomoRenderState::init() {
     glGenVertexArrays ( 1, &vao );
 }
 
-void MomoRenderState::load( std::vector<Node *> renderBatch ) {
+void MomoRenderState::load( std::vector< std::shared_ptr< Node > > renderBatch ) {
     glBindVertexArray ( vao );
     
     verticesBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
+        std::shared_ptr< Mesh > mesh = renderBatch.at(i)->getMesh();
         verticesBuffer->push( (float*) &mesh->getVertices()[0],
                              ( sizeof( GLfloat ) * 3 ) * mesh->getVertices().size() );
     }
@@ -86,7 +86,7 @@ void MomoRenderState::load( std::vector<Node *> renderBatch ) {
     
     normalBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
+        std::shared_ptr< Mesh > mesh = renderBatch.at(i)->getMesh();
         normalBuffer->push( (float*)&mesh->getNormals()[0],
                            ( sizeof ( GLfloat ) * 3 ) * mesh->getNormals().size() );
     }
@@ -97,7 +97,7 @@ void MomoRenderState::load( std::vector<Node *> renderBatch ) {
     
     uvsBuffer->bind();
     for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
+        std::shared_ptr< Mesh > mesh = renderBatch.at(i)->getMesh();
         uvsBuffer->push( (float*)&mesh->getUvs()[0],
                         ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size() );
     }
@@ -119,7 +119,7 @@ void MomoRenderState::load( std::vector<Node *> renderBatch ) {
     glBindVertexArray( 0 );
 }
 
-void MomoRenderState::draw( std::vector<Node *> renderBatch ) {
+void MomoRenderState::draw( std::vector< std::shared_ptr< Node > > renderBatch ) {
     shaderProgram->useProgram();
     glUniformMatrix4fv( shaderProgram->getUniform( projectionUniformKey ),
                         1, GL_FALSE, &projectionMatrix[0][0] );
@@ -129,7 +129,7 @@ void MomoRenderState::draw( std::vector<Node *> renderBatch ) {
     
     GLuint offset = 0;
     for ( int i = 0; i < renderBatch.size() ; i++ ) {
-        Node* node = renderBatch.at( i );
+        std::shared_ptr< Node > node = renderBatch.at( i );
         if( node->getMesh()->getTexture() != nullptr ) {
             node->getMesh()->getTexture()->bind();
             glUniform1i( shaderProgram->getUniform( textureUniformKey ) , 0);

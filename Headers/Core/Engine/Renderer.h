@@ -22,8 +22,10 @@ class UIComponent;
 
 class Renderer{
 public:
-    enum { MOMO_RENDER_STATE = 1 };
-    enum { MAP_RENDER_STATE = 2 };
+    enum {
+        MOMO_RENDER_STATE = 1,
+        MAP_RENDER_STATE = 2
+    };
     
     Renderer( GLFWwindow* window );
     ~Renderer();
@@ -35,11 +37,11 @@ public:
     void updateLightSource( glm::vec3 lightSource );
     void updateViewMatrix( glm::mat4 viewMatrix );
     
-    void load( std::vector<Node*> renderBatch );
-    void draw( std::vector<Node*> renderBatch );
+    void load( std::vector< std::shared_ptr< Node > > renderBatch );
+    void draw( std::vector< std::shared_ptr< Node > > renderBatch );
     
-    void loadUI( );
-    void drawUI(  );
+    void loadUI();
+    void drawUI();
     
     void drawtexture( UIComponent* component );
     
