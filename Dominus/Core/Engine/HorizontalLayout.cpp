@@ -22,7 +22,7 @@ void HorizontalLayout::measureDisposition() {
 
 std::vector<glm::vec2> HorizontalLayout::wrapDisposition() {
     std::vector< glm::vec2 > dispositionPoints;
-    for ( auto component :  components ) {
+    for ( std::shared_ptr< UIComponent > component :  components ) {
         glm::vec2 start = position;
         glm::vec2 end;
         //If there are a previous end point start from there
@@ -51,7 +51,7 @@ std::vector<glm::vec2> HorizontalLayout::wrapDisposition() {
 std::vector<glm::vec2> HorizontalLayout::weightDisposition() {
     float weightSum = 0;
     float actualWeight = 0;
-    for ( auto component :  components ) {
+    for ( std::shared_ptr< UIComponent > component :  components ) {
         if ( component->getWeight() < 0 ) {
             component->setWeight(0);
         }
@@ -59,7 +59,7 @@ std::vector<glm::vec2> HorizontalLayout::weightDisposition() {
     }
     
     std::vector< glm::vec2 > dispositionPoints;
-    for ( auto component : components ) {
+    for ( std::shared_ptr< UIComponent > component : components ) {
         glm::vec2 start = position;
         glm::vec2 end;
         

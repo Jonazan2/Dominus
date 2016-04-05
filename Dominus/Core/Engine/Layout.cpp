@@ -7,7 +7,7 @@ Layout::Layout() :
 
 //TODO: Implement render call
 void Layout::render( Renderer *renderer ) {
-    for ( auto component : components ) {
+    for ( std::shared_ptr< UIComponent > component : components ) {
         component->render( renderer );
     }
 }
@@ -26,7 +26,7 @@ void Layout::onContentMeasureCompleted() {}
 
 bool Layout::handleEvent( const Event event ) {
     bool result = false;
-    for ( auto component : components ) {
+    for ( std::shared_ptr< UIComponent > component : components ) {
         if ( component->handleEvent( event ) ) {
             result = true;
             if ( listener != nullptr ) {
@@ -39,7 +39,7 @@ bool Layout::handleEvent( const Event event ) {
 
 void Layout::resize( float widthRatio, float heightRatio ) {
     UIComponent::resize( widthRatio, heightRatio );
-    for ( auto component : components ) {
+    for ( std::shared_ptr< UIComponent >  component : components ) {
         component->resize( widthRatio, heightRatio );
         component->onMeasureChanged();
     }
@@ -48,7 +48,7 @@ void Layout::resize( float widthRatio, float heightRatio ) {
 
 void Layout::resetSize() {
     UIComponent::resetSize();
-    for ( auto component : components ) {
+    for ( std::shared_ptr< UIComponent > component : components ) {
         component->resetSize();
         component->onMeasureChanged();
     }
@@ -63,7 +63,7 @@ void Layout::measureDisposition() {
 }
 
 void Layout::populateLayout(std::vector<glm::vec2> dispositionPoints) {
-    for ( auto component : components ) {
+    for ( std::shared_ptr< UIComponent > component : components ) {
         Frame frame = component->getFrame();
         component->measurePosition( frame.position, frame.width, frame.height );
         //Notify finished measurement

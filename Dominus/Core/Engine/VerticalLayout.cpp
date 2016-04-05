@@ -23,7 +23,7 @@ void VerticalLayout::measureDisposition() {
 
 std::vector< glm::vec2 > VerticalLayout::wrapDisposition() {
     std::vector< glm::vec2 > dispositionPoints;
-    for ( auto component :  components ) {
+    for ( std::shared_ptr< UIComponent > component :  components ) {
         glm::vec2 start = position;
         glm::vec2 end;
         //If there are a previous end point start from there
@@ -60,7 +60,7 @@ std::vector< glm::vec2 > VerticalLayout::weightDisposition() {
     }
     
     std::vector<glm::vec2 > dispositionPoints;
-    for ( auto component : components ) {
+    for ( std::shared_ptr< UIComponent > component : components ) {
         glm::vec2 start = position;
         glm::vec2 end;
         
