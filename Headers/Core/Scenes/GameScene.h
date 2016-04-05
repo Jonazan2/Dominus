@@ -1,5 +1,5 @@
-#ifndef Dominus_GameScene_h
-#define Dominus_GameScene_h
+#ifndef __Dominus_GameScene_h__
+#define __Dominus_GameScene_h__
 
 #include <vector>
 #include <memory>

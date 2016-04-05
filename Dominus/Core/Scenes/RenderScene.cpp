@@ -17,12 +17,12 @@ RenderScene::RenderScene() {
 }
 
 void RenderScene::onSceneCreated( Scene* scene ) {
+    this->scene = scene;
     populateScene( scene );
     populateUI( scene );
 }
 
 void RenderScene::populateScene( Scene* scene ) {
-    this->scene = scene;
     //Camera setup
     std::shared_ptr< Camera > camera ( new Camera );
     camera->yaw = -45.0;
@@ -42,10 +42,6 @@ void RenderScene::populateScene( Scene* scene ) {
     
     std::shared_ptr< Mesh > jokerMesh ( new Mesh( new ObjLoader ) );
     jokerMesh->load( "capsule.obj" );
-    Texture* jokerTexture = new Texture( new GLGpuTexture, new PngTextureLoader );
-    jokerTexture->load( "capsule.png" );
-    //TODO: png format issues loading capsule.png
-    //jokerMesh->setTexture( jokerTexture );
     
     std::shared_ptr< Mesh > momoHolder ( new Mesh( new ObjLoader ) );
     momoHolder->load( "cube.obj" );
@@ -57,12 +53,12 @@ void RenderScene::populateScene( Scene* scene ) {
     plane->load( "cube.obj" );
     
     //populate scene
-    std::shared_ptr< Node > momoNode ( new Node( momoMesh ) );
-    std::shared_ptr< Node > jokerNode ( new Node( jokerMesh ) );
+    Node* momoNode = new Node( momoMesh );
+    Node* jokerNode = new Node( jokerMesh );
     
-    std::shared_ptr< Node > momoHolderNode ( new Node( momoHolder ) );
-    std::shared_ptr< Node > jokerHolderNode ( new Node( jokerHolder ) );
-    std::shared_ptr< Node > planeNode ( new Node( plane ) );
+    Node* momoHolderNode  = new Node( momoHolder );
+    Node* jokerHolderNode ( new Node( jokerHolder ) );
+    Node* planeNode = new Node( plane );
     
     momoHolderNode->setModelMatrix( glm::translate( glm::vec3( 5.0f, 1.0f, 0.0f ) ) );
     jokerHolderNode->setModelMatrix( glm::translate( glm::vec3( -5.0f, 1.0f, 1.0f ) ) );
@@ -74,19 +70,19 @@ void RenderScene::populateScene( Scene* scene ) {
     jokerNode->setModelMatrix( glm::translate( glm::vec3( 0.0f, 2.0f, 0.0f ) ) *
                               glm::rotate( -360.0f , glm::vec3( 1.0f, 0.0f, 0.0f ) ));
     
-    planeNode->addNode( momoHolderNode );
-    planeNode->addNode( jokerHolderNode );
+    planeNode->addNode( std::shared_ptr< Node >( momoHolderNode ) );
+    planeNode->addNode( std::shared_ptr< Node >( jokerHolderNode ) );
     
-    momoHolderNode->addNode( momoNode );
-    jokerHolderNode->addNode( jokerNode );
+    momoHolderNode->addNode( std::shared_ptr< Node >( momoNode ) );
+    jokerHolderNode->addNode( std::shared_ptr< Node >( jokerNode ) );
 
     MapBuilder* mapBuilder = new MapBuilder;
     Map* map = mapBuilder->build( new MapLoader( "map.lua" ) ,
-                                  new TilesLoader( ) );
+                                  new TilesLoader() );
     map->setup();
     
     map->setModelMatrix( glm::scale( glm::vec3( 1.0f, 1.0f, 1.0f ) ) );
-    scene->addNode( momoHolderNode );
+    scene->addNode( std::shared_ptr< Node >( momoHolderNode ) );
     scene->load();
 }
 
@@ -150,7 +146,7 @@ void RenderScene::onUpdate( double delta ) {
     }
 }
 
-void RenderScene::onKeyDown( Event* event ) {
+void RenderScene::onKeyDown( std::shared_ptr< Event > event ) {
     switch ( event->keyCode ) {
         case GLFW_KEY_UP:
             if ( event->type == ON_KEY_PRESS ) {
@@ -210,10 +206,10 @@ void RenderScene::onCosumeInput( std::vector< std::shared_ptr< Event > > events 
             rightClickPressed = false;
         } else if ( event->type == ON_KEY_PRESS ) {
             event->consumed = true;
-            onKeyDown( event.get() );
+            onKeyDown( event );
         } else if ( event->type == ON_KEY_RELEASE ) {
             event->consumed = true;
-            onKeyDown( event.get() );
+            onKeyDown( event );
         } else if ( event->type == ON_MOUSE_MOVED ) {
             event->consumed = true;
             if ( rightClickPressed ) {

@@ -39,7 +39,7 @@ public:
 private:
     Renderer* renderer;
     Layout* windowLayout;
-    Node* rootNode;
+    std::shared_ptr< Node > rootNode;
     
     std::shared_ptr< Camera > camera;
     std::shared_ptr< LightNode > lightNode;

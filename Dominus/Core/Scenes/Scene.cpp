@@ -4,9 +4,10 @@ Scene::Scene( Renderer* renderer ) :
                                     renderer( renderer ),
                                     lightNode( nullptr ),
                                     camera( nullptr ) {
-    rootNode = new Node;
+    rootNode = std::shared_ptr< Node > ( new Node );
     windowLayout = new Layout;
-    matrixStack = std::shared_ptr<std::stack< glm::mat4 >> (new std::stack< glm::mat4 >());
+    matrixStack = std::shared_ptr<std::stack< glm::mat4 >>
+                        (new std::stack< glm::mat4 >());
     pushMatrix( glm::mat4( 1 ) );
 }
 
@@ -58,7 +59,6 @@ void Scene::load() {
     rootNode->onRestore( this );
     //load batch in gpu memory
     renderer->load( renderBatch );
-    renderBatch.clear();
 }
 
 void Scene::addNode( std::shared_ptr< INode > node ) {
@@ -70,9 +70,7 @@ void Scene::render() {
         rootNode->onRender( this );
         rootNode->onRenderChildrends( this );
         rootNode->onPostRender( this );
-        
         renderer->draw( renderBatch );
-        renderBatch.clear();
     }
 }
 
@@ -95,6 +93,6 @@ void Scene::addToBatch( std::shared_ptr< Node > node ) {
 }
 
 Scene::~Scene() {
+    renderBatch.clear();
     delete windowLayout;
-    delete rootNode;
 }
