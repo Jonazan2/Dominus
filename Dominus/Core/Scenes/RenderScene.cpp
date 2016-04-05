@@ -1,11 +1,3 @@
-//
-//  RenderScene.cpp
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 15/2/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
-
 #include "RenderScene.h"
 #include "Log.hpp"
 #include "HorizontalLayout.h"
@@ -21,12 +13,7 @@ RenderScene::RenderScene() {
     downPressed = false;
     leftPressed = false;
     rightPressed = false;
-    
     rightClickPressed = false;
-}
-
-RenderScene::~RenderScene() {
-
 }
 
 void RenderScene::onSceneCreated( Scene* scene ) {
@@ -107,27 +94,37 @@ void RenderScene::populateUI( Scene* scene ) {
     Params params = Params();
     params.disposition = WEIGHT_DISPOSITION;
     root->setParams(params);
-    Button* button = new Button;
-    button->weight = 1;
-    Button* button2 = new Button;
-    button2->weight = 1;
-    Texture* buttonTexture = new Texture( new GLGpuTexture, new PngTextureLoader );
-    Texture* button2Texture = new Texture( new GLGpuTexture, new PngTextureLoader );
-    buttonTexture->load( "button.png" );
-    button2Texture->load( "button.png" );
+    
+    // Create buttons
+    std::shared_ptr< Button > ptrButton( new Button );
+    ptrButton->setWeight( 1 );
+    std::shared_ptr< Button > ptrButton2( new Button );
+    ptrButton2->setWeight( 1 );
+    
+    Texture* buttonTexture = new Texture( new GLGpuTexture,
+                                          new PngTextureLoader );
+    std::shared_ptr< Texture > ptrTexture( buttonTexture );
+
+    Texture* button2Texture = new Texture( new GLGpuTexture,
+                                           new PngTextureLoader );
+    std::shared_ptr< Texture > ptrTexture2( button2Texture );
+
+    ptrTexture->load( "button.png" );
+    ptrTexture2->load( "button.png" );
     Params buttonParams = Params();
     buttonParams.width = WRAP;
     buttonParams.height = WRAP;
     buttonParams.gravity = DOWN;
+
+    ptrButton2->setParams(buttonParams);
+    ptrButton->setParams(buttonParams);
+    ptrButton2->setTexture( ptrTexture2 );
+    ptrButton->setTexture( ptrTexture );
     
-    button2->setParams(buttonParams);
-    button->setParams(buttonParams);
-    button2->setTexture(button2Texture);
-    button->setTexture( buttonTexture );
-    
+    // Add components to scene
     scene->setSceneHUD( root );
-    root->addComponent(button);
-    root->addComponent(button2);
+    root->addComponent( ptrButton );
+    root->addComponent( ptrButton2 );
     scene->loadUI();
 }
 
@@ -141,14 +138,12 @@ void RenderScene::onUpdate( double delta ) {
         camera->position -= cameraSpeed * camera->front;
     }
     if( leftPressed ) {
-        camera->position -= glm::normalize(glm::cross(
-                                                      camera->front,
-                                                      camera->up)) * cameraSpeed;
+        camera->position -= glm::normalize(glm::cross(camera->front,
+                                camera->up)) * cameraSpeed;
     }
     if( rightPressed ) {
-        camera->position += glm::normalize(glm::cross(
-                                                      camera->front,
-                                                      camera->up)) * cameraSpeed;
+        camera->position += glm::normalize(glm::cross(camera->front,
+                                camera->up)) * cameraSpeed;
     }
 }
 
@@ -224,3 +219,5 @@ void RenderScene::onCosumeInput( std::vector<Event *>* events ) {
         }
     }
 }
+
+RenderScene::~RenderScene() {}

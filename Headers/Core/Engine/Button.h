@@ -1,29 +1,20 @@
-//
-//  Button.h
-//  ProjectWar
-//
-//  Created by Alvaro Chambi Campos on 24/3/15.
-//  Copyright (c) 2015 Alvaro Chambi Campos. All rights reserved.
-//
-
-#ifndef __ProjectWar__Button__
-#define __ProjectWar__Button__
+#ifndef __Dominus__Button_h__
+#define __Dominus__Button_h__
 
 #include <stdio.h>
 
 #include "UIComponent.h"
 
-class Button : public UIComponent
-{
+class Button : public UIComponent {
 public:
     Button();
     virtual ~Button();
     void render(Renderer* renderer);
-    void setTexture(Texture* texture);
+    void setTexture(std::shared_ptr< Texture > texture);
     void setImageResource(std::string resource);
 private:
     std::string resource;
     bool resourceChanged;
 };
 
-#endif /* defined(__ProjectWar__Button__) */
+#endif /* _BUTTON_H_ */

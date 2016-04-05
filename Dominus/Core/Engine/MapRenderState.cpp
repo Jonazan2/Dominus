@@ -9,6 +9,7 @@
 #include "MapRenderState.h"
 #include "Shader.h"
 #include "GLGpuBuffer.h"
+#include "Log.hpp"
 
 MapRenderState::MapRenderState() {
     normalBuffer = new Buffer( new GLGpuBuffer );
@@ -21,10 +22,6 @@ MapRenderState::MapRenderState() {
     modelViewUniformKey = "modelViewMatrix";
     positionAttributeKey = "vertex";
     normalAttributeKey = "normal";
-}
-
-MapRenderState::~MapRenderState() {
-
 }
 
 void MapRenderState::updateCamera( glm::mat4 camera ) {
@@ -119,3 +116,5 @@ void MapRenderState::draw( std::vector<Node*> renderBatch ) {
     glBindVertexArray( 0 );
     shaderProgram->closeProgram();
 }
+
+MapRenderState::~MapRenderState() {}

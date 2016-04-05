@@ -1,22 +1,11 @@
-//
-//  OnItemClickedListener.h
-//  ProjectWar
-//
-//  Created by Alvaro Chambi Campos on 9/9/15.
-//  Copyright (c) 2015 Alvaro Chambi Campos. All rights reserved.
-//
-
-#ifndef ProjectWar_OnItemClickedListener_h
-#define ProjectWar_OnItemClickedListener_h
+#ifndef __Dominus_OnItemClickedListener_h__
+#define __Dominus_OnItemClickedListener_h__
 
 class UIComponent;
 
-class OnItemClickedListener
-{
+class OnItemClickedListener {
 public:
-    OnItemClickedListener(){}
-    ~OnItemClickedListener(){}
-    
     virtual void onItemClicked(UIComponent* component) = 0;
 };
-#endif
+
+#endif /* _ON_ITEM_CLICK_LISTENER_H_ */

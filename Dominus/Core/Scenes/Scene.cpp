@@ -54,12 +54,12 @@ void Scene::setSceneHUD( UIComponent * component ) {
     windowLayout->setWidth(640);
     windowLayout->setHeight(480);
     
-    windowLayout->addComponent( component );
+    windowLayout->addComponent( std::shared_ptr<UIComponent>( component ) );
 }
 
 void Scene::loadUI() {
     //iterate graph and populate the batch
-    windowLayout->render(renderer);
+    windowLayout->render( renderer );
     //load batch in gpu memory
     renderer->loadUI();
 }
