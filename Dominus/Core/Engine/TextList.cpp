@@ -31,6 +31,6 @@ void TextList::setList(std::list<std::string> list)
         text->setTextResource(item);
         text->setParams(Params(50,10,CENTER));
         
-        this->addComponent(text);
+        this->addComponent( std::shared_ptr< Text >( text ) );
     }
 }

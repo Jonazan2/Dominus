@@ -9,6 +9,8 @@
 #ifndef ProjectWar_UIComponent_h
 #define ProjectWar_UIComponent_h
 
+#include <memory>
+
 #include "Renderer.h"
 #include "Params.h"
 #include "Texture.h"
@@ -22,7 +24,7 @@ public:
     UIComponent();
     virtual ~UIComponent();
     virtual void render( Renderer* renderer );
-    virtual UIComponent* matchEvent( glm::vec2 position );
+    virtual std::shared_ptr<UIComponent> matchEvent( glm::vec2 position );
     
     virtual bool handleEvent( const Event event );
     
@@ -49,32 +51,45 @@ public:
     void left( glm::vec2 parentPosition, int parentWidth, int parentHeight );
     void centerDown( glm::vec2 parentPosition, int parentWidth, int parentHeight );
     
-    void setHUD( bool hud );
-    bool isHUD();
+    void setHUD( const bool hud );
+    bool isHUD() const;
     
-    void setParams( Params params );
-    Params getParams();
+    void setParams( const Params params );
+    Params getParams() const;
     
-    void setPosition( int x, int y );
-    void setPosition( glm::vec2 position );
-    glm::vec2 getPosition();
+    void setPosition( const int x, const int y );
+    void setPosition( const glm::vec2 position );
+    glm::vec2 getPosition() const;
     
-    void setWidth( int width );
-    int getWidth();
+    void setWidth( const int width );
+    int getWidth() const;
     
-    void setHeight( int height );
-    int getHeight();
+    void setHeight( const int height );
+    int getHeight() const;
+    
+    void setWeight( const int weight );
+    int getWeight() const;
     
     void setVisible( bool visible );
     bool isVisible();
     
     void setParent( UIComponent* component );
-    UIComponent* getParent();
+    UIComponent* getParent() const;
+
+    void setMesh( Mesh* mesh );
+    Mesh* getMesh() const;
     
+    void setTexture( std::shared_ptr< Texture > texture );
+    std::shared_ptr< Texture > getTexture() const;
+    
+    void setFrame( const Frame frame );
+    Frame getFrame();
+    
+protected:
     UIComponent* parent;
     Params params;
     glm::vec2 position;
-    Texture* texture;
+    std::shared_ptr<Texture> texture;
     int width;
     int height;
     bool hud;

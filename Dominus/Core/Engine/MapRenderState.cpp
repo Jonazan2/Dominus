@@ -9,6 +9,7 @@
 #include "MapRenderState.h"
 #include "Shader.h"
 #include "GLGpuBuffer.h"
+#include "Log.hpp"
 
 MapRenderState::MapRenderState() {
     normalBuffer = new Buffer( new GLGpuBuffer );
@@ -24,7 +25,7 @@ MapRenderState::MapRenderState() {
 }
 
 MapRenderState::~MapRenderState() {
-
+    Log::getInstance().e("MapRenderState destroyed");
 }
 
 void MapRenderState::updateCamera( glm::mat4 camera ) {

@@ -31,8 +31,8 @@ std::vector<glm::vec2> HorizontalLayout::wrapDisposition() {
         }
         dispositionPoints.push_back( start );
         
-        end.x = start.x + component->width;
-        end.y = position.y + component->height;
+        end.x = start.x + component->getWidth();
+        end.y = position.y + component->getHeight();
         
         if ( end.y != ( position.y + height ) ) {
             end.y = position.y + height;
@@ -52,10 +52,10 @@ std::vector<glm::vec2> HorizontalLayout::weightDisposition() {
     float weightSum = 0;
     float actualWeight = 0;
     for ( auto component :  components ) {
-        if ( component->weight < 0 ) {
-            component->weight = 0;
+        if ( component->getWeight() < 0 ) {
+            component->setWeight(0);
         }
-        weightSum = weightSum + component->weight;
+        weightSum = weightSum + component->getWeight();
     }
     
     std::vector< glm::vec2 > dispositionPoints;
@@ -70,11 +70,11 @@ std::vector<glm::vec2> HorizontalLayout::weightDisposition() {
         
         dispositionPoints.push_back(start);
         if ( weightSum > 0 ) {
-            actualWeight = component->weight / weightSum;
+            actualWeight = component->getWeight() / weightSum;
         }
         
         end.x = start.x + width * actualWeight;
-        end.y = position.y + component->height;
+        end.y = position.y + component->getHeight();
         if ( end.y != ( position.y + height ) ) {
             end.y = position.y + height;
         }

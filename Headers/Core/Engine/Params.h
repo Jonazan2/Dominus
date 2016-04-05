@@ -1,19 +1,10 @@
-//
-//  Params.h
-//  ProjectWar
-//
-//  Created by Alvaro Chambi Campos on 24/3/15.
-//  Copyright (c) 2015 Alvaro Chambi Campos. All rights reserved.
-//
-
-#ifndef ProjectWar_Params_h
-#define ProjectWar_Params_h
+#ifndef _Dominus_Params_h
+#define _Dominus_Params_h
 
 static const int FILL = -1;
 static const int WRAP = -2;
 
-enum Gravity
-{
+enum Gravity {
     CENTER,
     UP,
     DOWN,
@@ -21,24 +12,24 @@ enum Gravity
     CENTER_DOWN,
 };
 
-enum LayoutDisposition
-{
+enum LayoutDisposition {
     WEIGHT_DISPOSITION,
     WRAP_DISPOSITION,
 };
 
-class Params
-{
+// TODO: this class can be turn into a struct since it doesn't have behaviour
+class Params {
 public:
     Params() : width(FILL), height(FILL), gravity(CENTER), margin(0), marginLeft(0), marginRight(0)
                 ,marginTop(0), marginDown(0), disposition(WRAP_DISPOSITION)
     {}
-    Params(int width, int height, Gravity gravity) : Params()
-    {
+    
+    Params(int width, int height, Gravity gravity) : Params() {
         this->width = width;
         this->height = height;
         this->gravity = gravity;
     }
+    
     virtual ~Params(){}
     int width;
     int height;
@@ -52,4 +43,4 @@ public:
     int margin;
 };
 
-#endif
+#endif /* _PARAMS_H_ */

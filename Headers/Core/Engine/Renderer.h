@@ -1,26 +1,20 @@
-//
-//  Renderer.h
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 03/02/16.
-//  Copyright (c) 2016 frikazos. All rights reserved.
-//
-
 #ifndef __Dominus__Renderer__
 #define __Dominus__Renderer__
 
 #include <stdio.h>
-#include "Mesh.hpp"
+#include <unordered_map>
+
 #include <GLFW/glfw3.h>
 #include <OpenGL/gl3.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include "Mesh.hpp"
 #include "Node.hpp"
 #include "Texture.h"
 #include "Buffer.h"
 #include "GLGpuBuffer.h"
-#include <unordered_map>
 #include "RenderState.h"
 #include "ShaderProgram.h"
 
@@ -68,7 +62,7 @@ private:
     Buffer* uiVerticesBufer;
     Buffer* uiUvsBuffer;
     
-    std::vector<UIComponent*> uiComponents;
+    std::vector< std::shared_ptr< UIComponent > > uiComponents;
     std::unordered_map<int, RenderState*> states;
     RenderState* currentState;
 };

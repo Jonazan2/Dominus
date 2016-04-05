@@ -17,4 +17,4 @@ public:
     std::vector< glm::vec2 > weightDisposition();
 };
 
-#endif /* HORIZONTAL_LAYOUT_H_ */
+#endif /* _HORIZONTAL_LAYOUT_H_ */

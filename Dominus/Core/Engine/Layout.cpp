@@ -1,12 +1,12 @@
 #include "Layout.h"
 
 Layout::Layout() :
-    UIComponent(),
-    background( nullptr ) {
+    UIComponent() {
+    backgroundTexture = nullptr;
 }
 
 //TODO: Implement render call
-void Layout::render( Renderer* renderer ) {
+void Layout::render( Renderer *renderer ) {
     for ( auto component : components ) {
         component->render( renderer );
     }
@@ -30,7 +30,7 @@ bool Layout::handleEvent( const Event event ) {
         if ( component->handleEvent( event ) ) {
             result = true;
             if ( listener != nullptr ) {
-                listener->onItemClicked( component );
+                listener->onItemClicked( component.get() );
             }
         }
     }
@@ -64,7 +64,7 @@ void Layout::measureDisposition() {
 
 void Layout::populateLayout(std::vector<glm::vec2> dispositionPoints) {
     for ( auto component : components ) {
-        Frame frame = component->frame;
+        Frame frame = component->getFrame();
         component->measurePosition( frame.position, frame.width, frame.height );
         //Notify finished measurement
         component->onMeasureCompleted();
@@ -74,18 +74,21 @@ void Layout::populateLayout(std::vector<glm::vec2> dispositionPoints) {
 }
 
 void Layout::assignFrames(std::vector<glm::vec2> dispositionPoints) {
-    std::vector<UIComponent*> vector(components.begin(), components.end());
+    std::vector<std::shared_ptr< UIComponent >>
+        vector(components.begin(), components.end());
     assignFrames(dispositionPoints, vector);
 }
 
-void Layout::assignFrames( std::vector<glm::vec2> dispositionPoints, std::vector<UIComponent*> components ) {
+void Layout::assignFrames( std::vector<glm::vec2> dispositionPoints, std::vector<std::shared_ptr< UIComponent >> components ) {
     int i = 0;
-    for ( auto component : components ) {
+    for ( std::shared_ptr< UIComponent > component : components ) {
         glm::vec2 start = dispositionPoints.at( i++ );
         glm::vec2 end = dispositionPoints.at( i++ );
-        component->frame.position = start;
-        component->frame.width = end.x - start.x;
-        component->frame.height = end.y - start.y;
+        Frame frame = component->getFrame();
+        frame.position = start;
+        frame.width = end.x - start.x;
+        frame.height = end.y - start.y;
+        component->setFrame(frame);
     }
 }
 
@@ -100,7 +103,7 @@ std::vector<glm::vec2> Layout::layoutDisposition() {
     return dispositionPoints;
 }
 
-void Layout::addComponent( UIComponent *component ) {
+void Layout::addComponent( std::shared_ptr< UIComponent > component ) {
     components.push_back( component );
     //update children hud value
     component->setHUD( this->isHUD() );
@@ -114,13 +117,14 @@ void Layout::addComponent( UIComponent *component ) {
 void Layout::cleanComponents() {
     this->components.clear();
 }
+void Layout::setBackground( std::shared_ptr< Texture > background ) {
+    this->backgroundTexture = background;
+}
 
-void Layout::setBackground( Texture *background ){}
-
-UIComponent* Layout::matchEvent( glm::vec2 position ) {
-    UIComponent* result = nullptr;
+std::shared_ptr<UIComponent> Layout::matchEvent( glm::vec2 position ) {
+        std::shared_ptr<UIComponent>result = nullptr;
     if( isVisible() ) {
-        for ( auto component : components ) {
+        for ( std::shared_ptr< UIComponent > component : components ) {
             result = component->matchEvent( position );
             if ( result != nullptr ) {
                 return result;

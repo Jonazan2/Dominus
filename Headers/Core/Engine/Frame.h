@@ -1,26 +1,17 @@
-//
-//  Frame.h
-//  ProjectWar
-//
-//  Created by Alvaro Chambi Campos on 4/9/15.
-//  Copyright (c) 2015 Alvaro Chambi Campos. All rights reserved.
-//
-
-#ifndef ProjectWar_Frame_h
-#define ProjectWar_Frame_h
+#ifndef __Dominus__Frame_h__
+#define __Dominus__Frame_h__
 
 #include <glm/glm.hpp>
 
-class Frame
-{
+// TODO: this class can be turn into a struct since it doesn't have behaviour
+class Frame {
 public:
-    Frame() : width(0), height(0)
-    {}
-    ~Frame(){}
+    Frame() : width(0), height(0) {}
+    ~Frame() {}
     
     glm::vec2 position;
     int width;
     int height;
 };
 
-#endif
+#endif /* _FRAME_H_ */

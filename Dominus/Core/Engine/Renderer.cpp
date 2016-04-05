@@ -107,17 +107,17 @@ void Renderer::loadUIShaders() {
 }
 
 void Renderer::drawtexture( UIComponent* component ){
-    if( component->texture != nullptr ) {
+    if( component->getTexture() != nullptr ) {
         glm::vec2 position = component->getPosition();
         std::vector<glm::vec3> vertices;
         std::vector<glm::vec2> uvs;
         glm::vec3 topLeft = glm::vec3( position.x, position.y, 0 );
-        glm::vec3 topRight = glm::vec3( position.x + component->width,
+        glm::vec3 topRight = glm::vec3( position.x + component->getWidth(),
                                        position.y, 0 );
         glm::vec3 bottomLeft = glm::vec3( position.x,
-                                         position.y + component->height, 0 );
-        glm::vec3 bottomRight = glm::vec3( position.x + component->width,
-                                          position.y + component->height, 0 );
+                                         position.y + component->getHeight(), 0 );
+        glm::vec3 bottomRight = glm::vec3( position.x + component->getWidth(),
+                                          position.y + component->getHeight(), 0 );
         
         vertices.push_back( topLeft );
         vertices.push_back( bottomLeft );
@@ -137,10 +137,10 @@ void Renderer::drawtexture( UIComponent* component ){
         uvs.push_back( uvTopLeft );
         uvs.push_back( uvBottomRight );
         uvs.push_back( uvTopRight );
-        component->mesh->setVertices( vertices );
-        component->mesh->setUvs( uvs );
+        component->getMesh()->setVertices( vertices );
+        component->getMesh()->setUvs( uvs );
         
-        uiComponents.push_back( component );
+        uiComponents.push_back( std::shared_ptr< UIComponent >( component ) );
     }
 }
 
@@ -150,7 +150,7 @@ void Renderer::loadUI(  ) {
     uiVerticesBufer->bind();
     
     for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* mesh = uiComponents.at(i)->mesh;
+        Mesh* mesh = uiComponents.at(i)->getMesh();
         GLsizeiptr size = ( sizeof ( GLfloat ) * 3 ) * mesh->getVertices().size();
         uiVerticesBufer->push( (float*)&mesh->getVertices()[0], size );
     }
@@ -161,7 +161,7 @@ void Renderer::loadUI(  ) {
     
     uiUvsBuffer->bind();
     for ( int i = 0; i < uiComponents.size(); i++ ) {
-        Mesh* mesh = uiComponents.at(i)->mesh;
+        Mesh* mesh = uiComponents.at(i)->getMesh();
         GLsizeiptr size = ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size();
         uiUvsBuffer->push( (float*)&mesh->getUvs()[0], size );
     }
@@ -171,11 +171,11 @@ void Renderer::loadUI(  ) {
     glEnableVertexAttribArray( shaderProgram->getAttribute( textureAttributeKey ) );
 
     for ( int i = 0;  i < uiComponents.size(); i++ ) {
-        UIComponent* component = uiComponents.at( i );
-        if( component->texture != nullptr ) {
-            component->texture->bind();
-            component->texture->push();
-            component->texture->unbind();
+        std::shared_ptr<UIComponent> component = uiComponents.at( i );
+        if( component->getTexture() != nullptr ) {
+            component->getTexture()->bind();
+            component->getTexture()->push();
+            component->getTexture()->unbind();
         }
     }
     glBindVertexArray ( 0 );
@@ -188,9 +188,9 @@ void Renderer::drawUI(  ) {
     
     GLuint offset = 0;
     for ( int i = 0; i < uiComponents.size(); i++ ) {
-        UIComponent* component = uiComponents.at( i );
-        if( component->texture != nullptr ) {
-            component->texture->bind();
+        std::shared_ptr<UIComponent> component = uiComponents.at( i );
+        if( component->getTexture() != nullptr ) {
+            component->getTexture()->bind();
             glUniform1i( shaderProgram->getUniform( textureDataUniformKey ) , 0 );
         }
 
@@ -200,10 +200,10 @@ void Renderer::drawUI(  ) {
 
         glDrawArrays ( GL_TRIANGLES,
                       offset,
-                      (int)component->mesh->getVertices().size() );
-        offset += (int)component->mesh->getVertices().size();
-        if( component->texture != nullptr ) {
-            component->texture->unbind();
+                      (int)component->getMesh()->getVertices().size() );
+        offset += (int)component->getMesh()->getVertices().size();
+        if( component->getTexture() != nullptr ) {
+            component->getTexture()->unbind();
         }
     }
     
