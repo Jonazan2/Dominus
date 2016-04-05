@@ -2,12 +2,13 @@
 #define Material_hpp
 
 #include <string>
-#include <OpenGL/gl3.h>
-#include <glm/glm.hpp>
 #include <iostream>
 #include <fstream>
 #include <istream>
 #include <sstream>
+
+#include <OpenGL/gl3.h>
+#include <glm/glm.hpp>
 
 class Material {
     

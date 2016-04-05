@@ -6,41 +6,35 @@
 //  Copyright © 2016 frikazos. All rights reserved.
 //
 
-#include "Node.hpp"
+#include "Node.h"
 #include "Scene.h"
 #include "glm/ext.hpp"
 
-Node::Node()
-            :   toWorldMatrix( glm::mat4( 1 ) ),
-                modelMatrix( glm::mat4( 1 ) ),
-                mesh( new Mesh ){
-
+Node::Node() :  toWorldMatrix( glm::mat4( 1 ) ),
+                modelMatrix( glm::mat4( 1 ) ) {
+    this->mesh = std::shared_ptr< Mesh >( new Mesh );
 }
 
-Node::Node( Mesh* mesh )
+Node::Node( std::shared_ptr< Mesh > mesh )
             :   modelMatrix( glm::mat4( 1 ) ),
                 mesh( mesh ) {
 }
 
-Node::~Node(){
-
-}
-
-void Node::addNode( INode *node ) {
+void Node::addNode( std::shared_ptr< INode > node ) {
     childNodes.push_back( node );
 }
 
 void Node::onUpdate() {
-    for ( INode* node : childNodes ) {
+    for ( std::shared_ptr< INode > node : childNodes ) {
         node->onUpdate();
     }
 }
 
 void Node::onRestore( Scene* scene ) {
-    for ( INode* node : childNodes ) {
+    for ( std::shared_ptr< INode > node : childNodes ) {
         node->onRestore( scene );
     }
-    scene->addToBatch( this );
+    scene->addToBatch( std::shared_ptr< Node >(this) );
 }
 
 void Node::onRender( Scene* scene ) {
@@ -50,7 +44,7 @@ void Node::onRender( Scene* scene ) {
 }
 
 void Node::onRenderChildrends( Scene* scene ) {
-    for ( INode * node :  childNodes ) {
+    for ( std::shared_ptr< INode > node :  childNodes ) {
         node->onRender( scene );
         node->onRenderChildrends( scene );
         node->onPostRender( scene );
@@ -59,7 +53,7 @@ void Node::onRenderChildrends( Scene* scene ) {
 
 void Node::onPostRender( Scene* scene ) {
     scene->getStack()->pop();
-    scene->addToBatch( this );
+    scene->addToBatch( std::shared_ptr< Node >(this) );
 }
 
 glm::mat4 * Node::getToWorldMatrix() {
@@ -70,11 +64,11 @@ glm::mat4 * Node::getModelMatrix() {
     return &modelMatrix;
 }
 
-void Node::setMesh( Mesh *mesh ) {
+void Node::setMesh( std::shared_ptr< Mesh > mesh ) {
     this->mesh = mesh;
 }
 
-Mesh* Node::getMesh() {
+std::shared_ptr< Mesh > Node::getMesh() const {
     return mesh;
 }
 
@@ -98,3 +92,5 @@ void Node::translate( const glm::vec3 translation ) {
     glm::mat4 translationMatrix = glm::translate( translation );
     modelMatrix = modelMatrix * translationMatrix;
 }
+
+Node::~Node(){}

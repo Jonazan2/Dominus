@@ -58,7 +58,7 @@ void window_close_callback( GLFWwindow* window ) {
 
 void GLFWInputHandler::onKeyEvent(  int key, int scancode,
                                     int action, int mode ) {
-    Event* event = new Event;
+    std::shared_ptr< Event > event ( new Event );
     if ( action == GLFW_PRESS ) {
         event->type = ON_KEY_PRESS;
         event->keyCode = key;
@@ -70,7 +70,7 @@ void GLFWInputHandler::onKeyEvent(  int key, int scancode,
 }
 
 void GLFWInputHandler::onMouseMoved( double x, double y ) {
-    Event* event = new Event;
+    std::shared_ptr< Event > event ( new Event );
     event->type = ON_MOUSE_MOVED;
     event->x = x;
     event->y = y;
@@ -78,13 +78,13 @@ void GLFWInputHandler::onMouseMoved( double x, double y ) {
 }
 
 void GLFWInputHandler::onWindowClosed() {
-    Event* event = new Event;
+    std::shared_ptr< Event > event ( new Event );
     event->type = ON_WINDOW_CLOSED;
     events.push_back( event );
 }
 
 void GLFWInputHandler::onRightClickEvent( int action, double x, double y ) {
-    Event* event = new Event;
+    std::shared_ptr< Event > event ( new Event );
     event->x = x;
     event->y = y;
     if( action == GLFW_PRESS ) {
@@ -96,7 +96,7 @@ void GLFWInputHandler::onRightClickEvent( int action, double x, double y ) {
 }
 
 void GLFWInputHandler::onLeftClickEvent( int action, double x, double y ) {
-    Event* event = new Event;
+    std::shared_ptr< Event > event ( new Event );
     event->x = x;
     event->y = y;
     if( action == GLFW_PRESS ) {
@@ -114,7 +114,7 @@ void GLFWInputHandler::init() {
     glfwSetWindowCloseCallback( window, window_close_callback );
 }
 
-std::vector<Event*> * GLFWInputHandler::poolEvents() {
+std::vector< std::shared_ptr< Event > > GLFWInputHandler::poolEvents() {
     glfwPollEvents ();
-    return &events;
+    return events;
 }

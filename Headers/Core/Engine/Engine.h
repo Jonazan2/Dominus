@@ -23,7 +23,7 @@ public:
     void update( double delta );
     void render();
     
-    void consumeEvents( std::vector<Event*> * );
+    void consumeEvents( std::vector< std::shared_ptr< Event > > );
     
     bool isRunning();
 private:

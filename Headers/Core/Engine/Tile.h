@@ -9,7 +9,7 @@
 #ifndef Tile_h
 #define Tile_h
 
-#include "Node.hpp"
+#include "Node.h"
 
 class Tile : public Node {
 public:

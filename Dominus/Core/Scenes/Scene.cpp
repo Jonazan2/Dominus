@@ -1,24 +1,14 @@
-//
-//  Scene.cpp
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 10/2/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
-
 #include "Scene.h"
 
 Scene::Scene( Renderer* renderer ) :
                                     renderer( renderer ),
                                     lightNode( nullptr ),
                                     camera( nullptr ) {
-    rootNode = new Node;
+    rootNode = std::shared_ptr< Node > ( new Node );
     windowLayout = new Layout;
+    matrixStack = std::shared_ptr<std::stack< glm::mat4 >>
+                        (new std::stack< glm::mat4 >());
     pushMatrix( glm::mat4( 1 ) );
-}
-
-Scene::~Scene() {
-
 }
 
 void Scene::update( double delta ) {
@@ -32,29 +22,29 @@ void Scene::update( double delta ) {
     }
 }
 
-void Scene::setMapNode( Node *node ) {
+void Scene::setMapNode( std::shared_ptr< Node > node ) {
     this->mapNode = node;
 }
 
-Camera* Scene::getCamera() {
+std::shared_ptr< Camera > Scene::getCamera() const {
     return camera;
 }
 
-void Scene::setLightNode( LightNode *lightNode ) {
+void Scene::setLightNode( std::shared_ptr< LightNode > lightNode ) {
     this->lightNode = lightNode;
     rootNode->addNode( lightNode );
 }
 
-void Scene::setCamera( Camera* camera ) {
+void Scene::setCamera( std::shared_ptr< Camera > camera ) {
     this->camera = camera;
     rootNode->addNode( camera );
 }
 
-void Scene::setSceneHUD( UIComponent * component ) {
+void Scene::setSceneHUD( std::shared_ptr< UIComponent > component ) {
     windowLayout->setWidth(640);
     windowLayout->setHeight(480);
     
-    windowLayout->addComponent( std::shared_ptr<UIComponent>( component ) );
+    windowLayout->addComponent( component );
 }
 
 void Scene::loadUI() {
@@ -69,10 +59,9 @@ void Scene::load() {
     rootNode->onRestore( this );
     //load batch in gpu memory
     renderer->load( renderBatch );
-    renderBatch.clear();
 }
 
-void Scene::addNode( INode *node ) {
+void Scene::addNode( std::shared_ptr< INode > node ) {
     rootNode->addNode( node );
 }
 
@@ -81,26 +70,29 @@ void Scene::render() {
         rootNode->onRender( this );
         rootNode->onRenderChildrends( this );
         rootNode->onPostRender( this );
-        
         renderer->draw( renderBatch );
-        renderBatch.clear();
     }
 }
 
-std::stack<glm::mat4> * Scene::getStack() {
-    return &matrixStack;
+std::shared_ptr< std::stack< glm::mat4 > > Scene::getStack() {
+    return matrixStack;
 }
 
 void Scene::pushMatrix( glm::mat4 matrix ) {
-    matrixStack.push( matrix );
+    matrixStack->push( matrix );
 }
 
 glm::mat4 Scene::popMatrix() {
-    glm::mat4 result = matrixStack.top();
-    matrixStack.pop();
+    glm::mat4 result = matrixStack->top();
+    matrixStack->pop();
     return result;
 }
 
-void Scene::addToBatch( Node *node ) {
+void Scene::addToBatch( std::shared_ptr< Node > node ) {
     renderBatch.push_back( node );
+}
+
+Scene::~Scene() {
+    renderBatch.clear();
+    delete windowLayout;
 }

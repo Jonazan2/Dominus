@@ -1,21 +1,15 @@
-//
-//  InputHandler.h
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 10/2/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
+#ifndef __Dominus_InputHandler_h__
+#define __Dominus_InputHandler_h__
 
-#ifndef InputHandler_h
-#define InputHandler_h
+#include <vector>
+#include <memory>
 
 #include "Event.h"
-#include <vector>
 
 class InputHandler {
 public:
-    virtual std::vector<Event*> * poolEvents() = 0;
+    virtual std::vector< std::shared_ptr< Event > > poolEvents() = 0;
     virtual void init() = 0;
 };
 
-#endif /* InputHandler_h */
+#endif /* _INPUT_HANDLER_H_ */

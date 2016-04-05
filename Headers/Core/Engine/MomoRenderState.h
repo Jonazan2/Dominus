@@ -22,8 +22,8 @@ public:
     void updateCamera( glm::mat4 camera );
     void updateProjection( glm::mat4 projection );
     void updateLightSource( glm::vec3 light );
-    void load( std::vector<Node*> renderBatch );
-    void draw( std::vector<Node*> renderBatch );
+    void load( std::vector< std::shared_ptr< Node > > renderBatch );
+    void draw( std::vector< std::shared_ptr< Node > > renderBatch );
 private:
     GLuint vao;
     ShaderProgram* shaderProgram;

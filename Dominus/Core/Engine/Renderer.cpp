@@ -76,11 +76,11 @@ void Renderer::updateLightSource( glm::vec3 lightSource ) {
     currentState->updateLightSource( lightSource );
 }
 
-void Renderer::load( std::vector<Node *> renderBatch ) {
+void Renderer::load( std::vector< std::shared_ptr< Node > > renderBatch ) {
     currentState->load( renderBatch );
 }
 
-void Renderer::draw( std::vector<Node *> renderBatch ) {
+void Renderer::draw( std::vector< std::shared_ptr< Node > > renderBatch ) {
     currentState->draw( renderBatch );
 }
 

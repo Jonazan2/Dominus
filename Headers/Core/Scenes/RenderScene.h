@@ -1,13 +1,5 @@
-//
-//  RenderScene.h
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 15/2/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
-
-#ifndef RenderScene_h
-#define RenderScene_h
+#ifndef __Dominus_RenderScene_h__
+#define __Dominus_RenderScene_h__
 
 #include "GameScene.h"
 
@@ -18,14 +10,15 @@ public:
     
     void onUpdate( double delta );
     void onSceneCreated( Scene* scene );
-    void onCosumeInput( std::vector<Event*>* );
+    void onCosumeInput( std::vector< std::shared_ptr< Event > > );
     
-    void onKeyDown( Event* event );
-    void onMouseDragged( double xRel, double yRel );
+    void onKeyDown( std::shared_ptr< Event > event );
+    void onMouseDragged( const double xRel, const double yRel );
     
     void populateScene( Scene* scene );
     void populateUI( Scene* scene );
-
+    
+private:
     Scene* scene;
     
     bool upPressed;
@@ -38,4 +31,4 @@ public:
     float ySaved;
 };
 
-#endif /* RenderScene_h */
+#endif /* _RENDER_SCENE_H_ */
