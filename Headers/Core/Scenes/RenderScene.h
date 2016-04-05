@@ -18,7 +18,7 @@ public:
     
     void onUpdate( double delta );
     void onSceneCreated( Scene* scene );
-    void onCosumeInput( std::vector<Event*>* );
+    void onCosumeInput( std::vector< std::shared_ptr< Event > > );
     
     void onKeyDown( Event* event );
     void onMouseDragged( double xRel, double yRel );

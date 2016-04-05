@@ -30,15 +30,14 @@ void Engine::init() {
 }
 
 void Engine::processInput(){
-    std::vector<Event*> * events = inputHandler->poolEvents();
+    std::vector< std::shared_ptr< Event > > events = inputHandler->poolEvents();
     consumeEvents( events );
     gameScene->onCosumeInput( events );
-    events->clear();
 }
 
-void Engine::consumeEvents( std::vector<Event *> * events ) {
-    for ( int i = 0; i < events->size(); i++ ) {
-        Event* event = events->at( i );
+void Engine::consumeEvents( std::vector< std::shared_ptr< Event > > events ) {
+    for ( int i = 0; i < events.size(); i++ ) {
+        std::shared_ptr< Event > event = events.at( i );
         if( event->type == ON_WINDOW_CLOSED ) {
             running = false;
             event->consumed = true;

@@ -11,7 +11,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Mesh.hpp"
-#include "Node.hpp"
+#include "Node.h"
 #include "Texture.h"
 #include "Buffer.h"
 #include "GLGpuBuffer.h"

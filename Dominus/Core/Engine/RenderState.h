@@ -9,7 +9,7 @@
 #ifndef RenderState_h
 #define RenderState_h
 
-#include "Node.hpp"
+#include "Node.h"
 
 class RenderState {
 public:

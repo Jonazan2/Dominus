@@ -194,9 +194,9 @@ void RenderScene::onMouseDragged( double xRel, double yRel ) {
     scene->getCamera()->pitch += yoffset;
 }
 
-void RenderScene::onCosumeInput( std::vector<Event *>* events ) {
+void RenderScene::onCosumeInput( std::vector< std::shared_ptr< Event > > ) {
     for ( int i = 0; i < events->size(); i++ ) {
-        Event* event = events->at( i );
+        std::shared_ptr< Event > event = events->at( i );
         if ( event->type == ON_RIGHT_CLICK_PRESS ) {
             event->consumed = true;
             xSaved = event->x;
