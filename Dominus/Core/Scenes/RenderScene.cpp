@@ -96,11 +96,9 @@ void RenderScene::populateUI( Scene* scene ) {
     root->setParams(params);
     
     // Create buttons
-    Button* button = new Button;
-    std::shared_ptr< Button > ptrButton( button );
+    std::shared_ptr< Button > ptrButton( new Button );
     ptrButton->setWeight( 1 );
-    Button* button2 = new Button;
-    std::shared_ptr< Button > ptrButton2( button2 );
+    std::shared_ptr< Button > ptrButton2( new Button );
     ptrButton2->setWeight( 1 );
     
     Texture* buttonTexture = new Texture( new GLGpuTexture,

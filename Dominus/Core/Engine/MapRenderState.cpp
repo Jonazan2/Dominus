@@ -24,10 +24,6 @@ MapRenderState::MapRenderState() {
     normalAttributeKey = "normal";
 }
 
-MapRenderState::~MapRenderState() {
-    Log::getInstance().e("MapRenderState destroyed");
-}
-
 void MapRenderState::updateCamera( glm::mat4 camera ) {
     this->viewMatrix = camera;
 }
@@ -120,3 +116,5 @@ void MapRenderState::draw( std::vector<Node*> renderBatch ) {
     glBindVertexArray( 0 );
     shaderProgram->closeProgram();
 }
+
+MapRenderState::~MapRenderState() {}
