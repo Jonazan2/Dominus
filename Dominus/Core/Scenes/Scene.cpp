@@ -8,10 +8,12 @@
 
 #include "Scene.h"
 
-Scene::Scene( Renderer* renderer ) :
-                                    renderer( renderer ),
-                                    lightNode( nullptr ),
-                                    camera( nullptr ) {
+int Scene::currentID = 0;
+
+Scene::Scene( Renderer* renderer )
+: renderer( renderer ),
+lightNode( nullptr ),
+camera( nullptr ) {
     rootNode = new Node;
     windowLayout = new Layout;
     pushMatrix( glm::mat4( 1 ) );
@@ -21,8 +23,13 @@ Scene::~Scene() {
 
 }
 
+int Scene::generateID() {
+    return currentID++;
+}
+
 void Scene::update( double delta ) {
     rootNode->onUpdate();
+    //TODO: move to render/draw
     if( camera != nullptr ) {
         renderer->updateProjection( camera->projectionMatrix );
         renderer->updateViewMatrix( camera->viewMatrix );
@@ -68,12 +75,24 @@ void Scene::load() {
     //iterate the graph and populate the batch
     rootNode->onRestore( this );
     //load batch in gpu memory
-    renderer->load( renderBatch );
-    renderBatch.clear();
+    //renderer->load( renderBatch );
+    //renderBatch.clear();
+}
+
+void Scene::load( Node *node, int renderState ) {
+    renderer->updateState( renderState );
+    renderer->load( node );
+}
+
+void Scene::render( Node *node, int renderState ) {
+    renderer->updateState( renderState );
+    renderer->draw( node );
 }
 
 void Scene::addNode( INode *node ) {
+    //TODO: User story to implement proper node add
     rootNode->addNode( node );
+    node->onRestore( this );
 }
 
 void Scene::render() {
@@ -82,7 +101,7 @@ void Scene::render() {
         rootNode->onRenderChildrends( this );
         rootNode->onPostRender( this );
         
-        renderer->draw( renderBatch );
+        //renderer->draw( renderBatch );
         renderBatch.clear();
     }
 }

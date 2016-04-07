@@ -22,8 +22,9 @@ public:
     void updateCamera( glm::mat4 camera );
     void updateProjection( glm::mat4 projection );
     void updateLightSource( glm::vec3 light );
-    void load( std::vector<Node*> renderBatch );
-    void draw( std::vector<Node*> renderBatch );
+    
+    void load( Node* node );
+    void draw( Node* node );
 private:
     GLuint vao;
     ShaderProgram* shaderProgram;
@@ -45,6 +46,9 @@ private:
     Buffer* verticesBuffer;
     Buffer* normalBuffer;
     Buffer* uvsBuffer;
+    
+    std::unordered_map<int, long> offsetMap;
+    int units;
 };
 
 #endif /* MomoRenderState_h */

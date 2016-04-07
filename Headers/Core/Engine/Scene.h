@@ -19,12 +19,18 @@
 
 class Scene {
 public:
+    static int generateID();
+    
     Scene( Renderer* renderer );
     ~Scene();
     
     void update( double delta );
     void render();
     void load();
+    
+    void render( Node* node, int renderState );
+    void load( Node* node, int renderState );
+    
     void pushMatrix( glm::mat4 matrix );
     std::stack<glm::mat4> * getStack();
     glm::mat4 popMatrix();
@@ -50,6 +56,8 @@ private:
     
     std::stack< glm::mat4 > matrixStack;
     std::vector< Node* > renderBatch;
+    
+    static int currentID;
 };
 
 #endif /* Scene_h */

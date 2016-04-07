@@ -7,6 +7,7 @@
 #include "GLGpuTexture.h"
 #include "ObjLoader.h"
 #include "MapBuilder.h"
+#include "MomoNode.h"
 
 RenderScene::RenderScene() {
     upPressed = false;
@@ -56,7 +57,7 @@ void RenderScene::populateScene( Scene* scene ) {
     plane->load( "cube.obj" );
     
     //populate scene
-    Node* momoNode = new Node( momoMesh );
+    Node* momoNode = new MomoNode( momoMesh );
     Node* jokerNode = new Node( jokerMesh );
     
     Node* momoHolderNode = new Node( momoHolder );
@@ -66,7 +67,7 @@ void RenderScene::populateScene( Scene* scene ) {
     momoHolderNode->setModelMatrix( glm::translate( glm::vec3( 5.0f, 1.0f, 0.0f ) ) );
     jokerHolderNode->setModelMatrix( glm::translate( glm::vec3( -5.0f, 1.0f, 1.0f ) ) );
     
-    momoNode->setModelMatrix( glm::translate( glm::vec3( 0.0f, 2.0f, 0.0f ) ) *
+    momoNode->setModelMatrix( glm::translate( glm::vec3( 1.0f, 0.0f, -1.0f ) ) *
                              glm::rotate( -360.0f , glm::vec3( 1.0f, 0.0f, 0.0f ) ) *
                              glm::scale( glm::vec3( 1.0f, 1.0f, 1.0f ) ) );
     
@@ -85,8 +86,8 @@ void RenderScene::populateScene( Scene* scene ) {
     map->setup();
     
     map->setModelMatrix( glm::scale( glm::vec3( 1.0f, 1.0f, 1.0f ) ) );
-    scene->addNode( momoHolderNode );
-    scene->load();
+    scene->addNode( map );
+    scene->addNode( momoNode );
 }
 
 void RenderScene::populateUI( Scene* scene ) {

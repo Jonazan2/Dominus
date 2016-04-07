@@ -12,6 +12,7 @@
 #include "RenderState.h"
 #include "Buffer.h"
 #include "ShaderProgram.h"
+#include <unordered_map>
 
 class MapRenderState : public RenderState {
 public:
@@ -22,8 +23,9 @@ public:
     void updateCamera( glm::mat4 camera );
     void updateProjection( glm::mat4 projection );
     void updateLightSource( glm::vec3 light );
-    void load( std::vector<Node*> renderBatch );
-    void draw( std::vector<Node*> renderBatch );
+    
+    void load( Node* node );
+    void draw( Node* node );
 private:
     Buffer* normalBuffer;
     Buffer* verticesBuffer;
@@ -40,6 +42,9 @@ private:
     std::string modelViewUniformKey;
     
     GLuint vao;
+    
+    std::unordered_map<int, long> offsetMap;
+    int units;
 };
 
 #endif /* MapRenderState_h */
