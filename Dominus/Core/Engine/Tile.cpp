@@ -17,7 +17,7 @@ Tile::~Tile() {
 }
 
 void Tile::onUpdate() {
-
+    Node::onUpdate();
 }
 
 void Tile::onRestore( Scene *scene ) {
@@ -27,6 +27,7 @@ void Tile::onRestore( Scene *scene ) {
 
 void Tile::onRender( Scene *scene ) {
     Node::onRender( scene );
+    scene->render( this, Renderer::MAP_RENDER_STATE );
 }
 
 void Tile::onRenderChildrends( Scene *scene ) {
@@ -34,6 +35,5 @@ void Tile::onRenderChildrends( Scene *scene ) {
 }
 
 void Tile::onPostRender( Scene* scene ) {
-    scene->render( this, Renderer::MAP_RENDER_STATE );
     Node::onPostRender( scene );
 }

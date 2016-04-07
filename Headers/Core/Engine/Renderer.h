@@ -35,9 +35,6 @@ public:
     void updateLightSource( glm::vec3 lightSource );
     void updateViewMatrix( glm::mat4 viewMatrix );
     
-    void load( std::vector<Node*> renderBatch );
-    void draw( std::vector<Node*> renderBatch );
-    
     void load( Node* node );
     void draw( Node* node );
     

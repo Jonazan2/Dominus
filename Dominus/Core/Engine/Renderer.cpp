@@ -86,14 +86,6 @@ void Renderer::draw( Node *node ) {
     currentState->draw( node );
 }
 
-void Renderer::load( std::vector<Node *> renderBatch ) {
-    //currentState->load( renderBatch );
-}
-
-void Renderer::draw( std::vector<Node *> renderBatch ) {
-    //currentState->draw( renderBatch );
-}
-
 void Renderer::loadUIShaders() {
     Shader* vertexShader = new Shader(
                                       "shaders/ui_vertex_shader.glsl",

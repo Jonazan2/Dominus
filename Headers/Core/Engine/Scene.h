@@ -26,7 +26,6 @@ public:
     
     void update( double delta );
     void render();
-    void load();
     
     void render( Node* node, int renderState );
     void load( Node* node, int renderState );
@@ -34,7 +33,6 @@ public:
     void pushMatrix( glm::mat4 matrix );
     std::stack<glm::mat4> * getStack();
     glm::mat4 popMatrix();
-    void addToBatch( Node* node );
     void addNode( INode* node );
     Camera* getCamera();
     void setCamera( Camera* camera );
@@ -55,7 +53,6 @@ private:
     Node* mapNode;
     
     std::stack< glm::mat4 > matrixStack;
-    std::vector< Node* > renderBatch;
     
     static int currentID;
 };

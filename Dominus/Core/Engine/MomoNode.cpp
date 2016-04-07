@@ -22,7 +22,7 @@ MomoNode::~MomoNode() {
 }
 
 void MomoNode::onUpdate() {
-    
+    Node::onUpdate();
 }
 
 void MomoNode::onRestore( Scene *scene ) {
@@ -32,6 +32,7 @@ void MomoNode::onRestore( Scene *scene ) {
 
 void MomoNode::onRender( Scene *scene ) {
     Node::onRender( scene );
+    scene->render( this, Renderer::MOMO_RENDER_STATE );
 }
 
 void MomoNode::onRenderChildrends( Scene *scene ) {
@@ -39,6 +40,5 @@ void MomoNode::onRenderChildrends( Scene *scene ) {
 }
 
 void MomoNode::onPostRender( Scene* scene ) {
-    scene->render( this, Renderer::MOMO_RENDER_STATE );
     Node::onPostRender( scene );
 }

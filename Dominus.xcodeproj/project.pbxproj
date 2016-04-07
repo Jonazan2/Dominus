@@ -76,6 +76,8 @@
 		9CBA324B1CB12F4100FCF048 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */; };
 		9CBA324E1CB6810F00FCF048 /* MomoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CBA324F1CB6810F00FCF048 /* MomoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CBA32521CB6D40000FCF048 /* UIRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CBA32531CB6D40000FCF048 /* UIRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FA81C82F92D0066C313 /* main.cpp */; };
 		9CCB2FAF1C82F95E0066C313 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9D1C82F7FE0066C313 /* gtest.framework */; };
 		9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9F1C82F8790066C313 /* gmock.framework */; };
@@ -188,6 +190,8 @@
 		9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderProgram.cpp; path = Core/Engine/ShaderProgram.cpp; sourceTree = "<group>"; };
 		9CBA324C1CB680F900FCF048 /* MomoNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MomoNode.h; path = Headers/Core/Engine/MomoNode.h; sourceTree = "<group>"; };
 		9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MomoNode.cpp; path = Core/Engine/MomoNode.cpp; sourceTree = "<group>"; };
+		9CBA32501CB6D3ED00FCF048 /* UIRenderState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UIRenderState.h; path = Headers/Core/Engine/UIRenderState.h; sourceTree = "<group>"; };
+		9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIRenderState.cpp; path = Core/Engine/UIRenderState.cpp; sourceTree = "<group>"; };
 		9CCB2F9D1C82F7FE0066C313 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = ../../../../Library/Frameworks/gtest.framework; sourceTree = "<group>"; };
 		9CCB2F9F1C82F8790066C313 /* gmock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gmock.framework; path = ../../../../Library/Frameworks/gmock.framework; sourceTree = "<group>"; };
 		9CCB2FA61C82F92D0066C313 /* UnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -448,6 +452,7 @@
 				9CBA32401CB04CF400FCF048 /* MomoRenderState.h */,
 				9CBA32481CB12F3100FCF048 /* ShaderProgram.h */,
 				9CBA324C1CB680F900FCF048 /* MomoNode.h */,
+				9CBA32501CB6D3ED00FCF048 /* UIRenderState.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -482,6 +487,7 @@
 				9CBA32411CB04D0D00FCF048 /* MomoRenderState.cpp */,
 				9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */,
 				9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */,
+				9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -601,6 +607,7 @@
 				9C7D082B1C9EC0C500804DF1 /* Text.cpp in Sources */,
 				9C80754E1CA313130052086F /* Buffer.cpp in Sources */,
 				9CBA323E1CB0346A00FCF048 /* MapRenderState.cpp in Sources */,
+				9CBA32521CB6D40000FCF048 /* UIRenderState.cpp in Sources */,
 				AB6398CC1C8CE48400CA0B3B /* GameScene.cpp in Sources */,
 				AB6398CD1C8CE48400CA0B3B /* RenderScene.cpp in Sources */,
 			);
@@ -643,6 +650,7 @@
 				9C2A0E821CADACA7004A45CA /* MapBuilder.cpp in Sources */,
 				9C7D08361C9EC57600804DF1 /* VerticalLayout.cpp in Sources */,
 				9C7D08341C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */,
+				9CBA32531CB6D40000FCF048 /* UIRenderState.cpp in Sources */,
 				9C7D08301C9EC0C500804DF1 /* UIComponent.cpp in Sources */,
 				9C80752E1CA1D1C80052086F /* LayoutTest.cpp in Sources */,
 				9C80752D1CA1D1C80052086F /* HorizontalLayoutTest.cpp in Sources */,

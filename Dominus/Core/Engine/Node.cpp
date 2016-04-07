@@ -44,7 +44,6 @@ void Node::onRestore( Scene* scene ) {
     for ( INode* node : childNodes ) {
         node->onRestore( scene );
     }
-    //TODO: implement a void render state and set it as a default
 }
 
 void Node::onRender( Scene* scene ) {
@@ -63,7 +62,6 @@ void Node::onRenderChildrends( Scene* scene ) {
 
 void Node::onPostRender( Scene* scene ) {
     scene->getStack()->pop();
-    //TODO: implement a void render state and set it as a default
 }
 
 glm::mat4 * Node::getToWorldMatrix() {

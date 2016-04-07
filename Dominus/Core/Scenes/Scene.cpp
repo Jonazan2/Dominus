@@ -57,18 +57,8 @@ void Scene::setSceneHUD( UIComponent * component ) {
 }
 
 void Scene::loadUI() {
-    //iterate graph and populate the batch
     windowLayout->render( renderer );
-    //load batch in gpu memory
     renderer->loadUI();
-}
-
-void Scene::load() {
-    //iterate the graph and populate the batch
-    rootNode->onRestore( this );
-    //load batch in gpu memory
-    //renderer->load( renderBatch );
-    //renderBatch.clear();
 }
 
 void Scene::load( Node *node, int renderState ) {
@@ -89,7 +79,6 @@ void Scene::render( Node *node, int renderState ) {
 }
 
 void Scene::addNode( INode *node ) {
-    //TODO: User story to implement proper node add
     rootNode->addNode( node );
     node->onRestore( this );
 }
@@ -99,9 +88,6 @@ void Scene::render() {
         rootNode->onRender( this );
         rootNode->onRenderChildrends( this );
         rootNode->onPostRender( this );
-        
-        //renderer->draw( renderBatch );
-        renderBatch.clear();
     }
 }
 
@@ -117,8 +103,4 @@ glm::mat4 Scene::popMatrix() {
     glm::mat4 result = matrixStack.top();
     matrixStack.pop();
     return result;
-}
-
-void Scene::addToBatch( Node *node ) {
-    renderBatch.push_back( node );
 }

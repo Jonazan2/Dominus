@@ -84,11 +84,11 @@ void RenderScene::populateScene( Scene* scene ) {
     MapBuilder* mapBuilder = new MapBuilder;
     Map* map = mapBuilder->build( new MapLoader( "map.lua" ) ,
                                   new TilesLoader( ) );
+    map->addNode( momoNode );
     map->setup();
     
     map->setModelMatrix( glm::scale( glm::vec3( 1.0f, 1.0f, 1.0f ) ) );
     scene->addNode( map );
-    scene->addNode( momoNode );
 }
 
 void RenderScene::populateUI( Scene* scene ) {
