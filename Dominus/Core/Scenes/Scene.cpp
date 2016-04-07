@@ -29,14 +29,6 @@ int Scene::generateID() {
 
 void Scene::update( double delta ) {
     rootNode->onUpdate();
-    //TODO: move to render/draw
-    if( camera != nullptr ) {
-        renderer->updateProjection( camera->projectionMatrix );
-        renderer->updateViewMatrix( camera->viewMatrix );
-    }
-    if( lightNode != nullptr ) {
-        renderer->updateLightSource( lightNode->position );
-    }
 }
 
 void Scene::setMapNode( Node *node ) {
@@ -85,6 +77,13 @@ void Scene::load( Node *node, int renderState ) {
 }
 
 void Scene::render( Node *node, int renderState ) {
+    if( camera != nullptr ) {
+        renderer->updateProjection( camera->projectionMatrix );
+        renderer->updateViewMatrix( camera->viewMatrix );
+    }
+    if( lightNode != nullptr ) {
+        renderer->updateLightSource( lightNode->position );
+    }
     renderer->updateState( renderState );
     renderer->draw( node );
 }
