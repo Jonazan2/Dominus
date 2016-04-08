@@ -11,7 +11,8 @@
 #include "GLGpuBuffer.h"
 #include "Log.hpp"
 
-MapRenderState::MapRenderState() {
+MapRenderState::MapRenderState()
+: units(0) {
     normalBuffer = new Buffer( new GLGpuBuffer );
     verticesBuffer = new Buffer( new GLGpuBuffer );
     
@@ -57,62 +58,63 @@ void MapRenderState::init() {
     shaderProgram->registerUnitform( colorUniformKey );
     
     glGenVertexArrays ( 1, &vao );
-}
-
-void MapRenderState::load( std::vector<Node*> renderBatch ) {
     glBindVertexArray ( vao );
     
+    //Setup vao with the given vbo
     verticesBuffer->bind();
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
-        GLsizeiptr size = ( sizeof( GLfloat ) * 3 ) * mesh->getVertices().size();
-        verticesBuffer->push( (float*) &mesh->getVertices()[0], size );
-    }
-    
     //TODO: Dont allow this operation if the vao is not binded
     glVertexAttribPointer ( shaderProgram->getAttribute( positionAttributeKey ),
-                            3, GL_FLOAT, GL_FALSE, 0, NULL) ;
+                           3, GL_FLOAT, GL_FALSE, 0, NULL) ;
     glEnableVertexAttribArray( shaderProgram->getAttribute(positionAttributeKey) );
     verticesBuffer->unBind();
     
     normalBuffer->bind();
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
-        GLsizeiptr size = ( sizeof( GLfloat ) * 3 ) * mesh->getNormals().size();
-        normalBuffer->push( (float*) &mesh->getNormals()[0], size );
-    }
-    
     glVertexAttribPointer( shaderProgram->getAttribute( normalAttributeKey ),
-                           3, GL_FLOAT, GL_FALSE, 0, NULL );
+                          3, GL_FLOAT, GL_FALSE, 0, NULL );
     glEnableVertexAttribArray( shaderProgram->getAttribute( normalAttributeKey ) );
+    normalBuffer->unBind();
+    
+    glBindVertexArray ( 0 );
+}
+
+void MapRenderState::load( Node* node ) {
+    Mesh* mesh = node->getMesh();
+
+    glBindVertexArray ( vao );
+    
+    verticesBuffer->bind();
+    GLsizeiptr size = ( sizeof( GLfloat ) * 3 ) * mesh->getVertices().size();
+    verticesBuffer->push( (float*) &mesh->getVertices()[0], size );
+    //TODO: this should be automatic...
+    offsetMap[node->getID()] = units;
+    units += mesh->getVertices().size();
+    verticesBuffer->unBind();
+    
+    normalBuffer->bind();
+    size = ( sizeof( GLfloat ) * 3 ) * mesh->getNormals().size();
+    normalBuffer->push( (float*) &mesh->getNormals()[0], size );
     normalBuffer->unBind();
     
     glBindVertexArray( 0 );
 }
 
-void MapRenderState::draw( std::vector<Node*> renderBatch ) {
+void MapRenderState::draw( Node* node ) {
     shaderProgram->useProgram();
     glUniformMatrix4fv( shaderProgram->getUniform( projectionUniformKey ) ,
-                        1, GL_FALSE, &projectionMatrix[0][0]);
+                       1, GL_FALSE, &projectionMatrix[0][0]);
     glBindVertexArray ( vao );
-
-    int offset = 0;
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Node* node = renderBatch.at( i );
-        //TODO: Fixed color: retrieve from material
-        glm::vec3 color = glm::vec3( (i % 2) * 0.5f , 1.0f, 1.0f );
-        glUniform3fv( shaderProgram->getUniform( colorUniformKey ),
-                      1, &color[0] );
-        
-        glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
-        glUniformMatrix4fv( shaderProgram->getUniform( modelViewUniformKey ),
-                            1, GL_FALSE,
-                            &modelViewMatrix[0][0]);
-        glDrawArrays ( GL_TRIANGLES,
-                       offset,
-                       (int)node->getMesh()->getVertices().size());
-        offset += (int)node->getMesh()->getVertices().size();
-    }
+    
+    glm::vec3 color = glm::vec3( (node->getID() % 2) * 0.5f , 1.0f, 1.0f );
+    glUniform3fv( shaderProgram->getUniform( colorUniformKey ),
+                 1, &color[0] );
+    
+    glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
+    glUniformMatrix4fv( shaderProgram->getUniform( modelViewUniformKey ),
+                       1, GL_FALSE,
+                       &modelViewMatrix[0][0]);
+    glDrawArrays ( GL_TRIANGLES,
+                  (int)offsetMap[node->getID()],
+                  (int)node->getMesh()->getVertices().size());
     glBindVertexArray( 0 );
     shaderProgram->closeProgram();
 }

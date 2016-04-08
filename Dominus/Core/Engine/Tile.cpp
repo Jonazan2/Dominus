@@ -7,10 +7,33 @@
 //
 
 #include "Tile.h"
+#include "Scene.h"
 
 Tile::Tile() : key( -1 )
 { }
 
 Tile::~Tile() {
 
+}
+
+void Tile::onUpdate() {
+    Node::onUpdate();
+}
+
+void Tile::onRestore( Scene *scene ) {
+    Node::onRestore( scene );
+    scene->load( this, Renderer::MAP_RENDER_STATE );
+}
+
+void Tile::onRender( Scene *scene ) {
+    Node::onRender( scene );
+    scene->render( this, Renderer::MAP_RENDER_STATE );
+}
+
+void Tile::onRenderChildrends( Scene *scene ) {
+    Node::onRenderChildrends( scene );
+}
+
+void Tile::onPostRender( Scene* scene ) {
+    Node::onPostRender( scene );
 }

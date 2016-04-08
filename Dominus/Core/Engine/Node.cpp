@@ -11,19 +11,23 @@
 #include "glm/ext.hpp"
 
 Node::Node()
-            :   toWorldMatrix( glm::mat4( 1 ) ),
-                modelMatrix( glm::mat4( 1 ) ),
-                mesh( new Mesh ){
-
+: toWorldMatrix( glm::mat4( 1 ) ),
+modelMatrix( glm::mat4( 1 ) ),
+mesh( new Mesh ) {
+     id = Scene::generateID();
 }
 
 Node::Node( Mesh* mesh )
-            :   modelMatrix( glm::mat4( 1 ) ),
-                mesh( mesh ) {
+: Node() {
+    this->mesh = mesh;
 }
 
 Node::~Node(){
 
+}
+
+int Node::getID() {
+    return id;
 }
 
 void Node::addNode( INode *node ) {
@@ -40,7 +44,6 @@ void Node::onRestore( Scene* scene ) {
     for ( INode* node : childNodes ) {
         node->onRestore( scene );
     }
-    scene->addToBatch( this );
 }
 
 void Node::onRender( Scene* scene ) {
@@ -59,7 +62,6 @@ void Node::onRenderChildrends( Scene* scene ) {
 
 void Node::onPostRender( Scene* scene ) {
     scene->getStack()->pop();
-    scene->addToBatch( this );
 }
 
 glm::mat4 * Node::getToWorldMatrix() {

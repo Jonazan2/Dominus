@@ -8,10 +8,12 @@
 
 #include "Scene.h"
 
-Scene::Scene( Renderer* renderer ) :
-                                    renderer( renderer ),
-                                    lightNode( nullptr ),
-                                    camera( nullptr ) {
+int Scene::currentID = 0;
+
+Scene::Scene( Renderer* renderer )
+: renderer( renderer ),
+lightNode( nullptr ),
+camera( nullptr ) {
     rootNode = new Node;
     windowLayout = new Layout;
     pushMatrix( glm::mat4( 1 ) );
@@ -21,15 +23,12 @@ Scene::~Scene() {
 
 }
 
+int Scene::generateID() {
+    return currentID++;
+}
+
 void Scene::update( double delta ) {
     rootNode->onUpdate();
-    if( camera != nullptr ) {
-        renderer->updateProjection( camera->projectionMatrix );
-        renderer->updateViewMatrix( camera->viewMatrix );
-    }
-    if( lightNode != nullptr ) {
-        renderer->updateLightSource( lightNode->position );
-    }
 }
 
 void Scene::setMapNode( Node *node ) {
@@ -58,22 +57,30 @@ void Scene::setSceneHUD( UIComponent * component ) {
 }
 
 void Scene::loadUI() {
-    //iterate graph and populate the batch
     windowLayout->render( renderer );
-    //load batch in gpu memory
     renderer->loadUI();
 }
 
-void Scene::load() {
-    //iterate the graph and populate the batch
-    rootNode->onRestore( this );
-    //load batch in gpu memory
-    renderer->load( renderBatch );
-    renderBatch.clear();
+void Scene::load( Node *node, int renderState ) {
+    renderer->updateState( renderState );
+    renderer->load( node );
+}
+
+void Scene::render( Node *node, int renderState ) {
+    if( camera != nullptr ) {
+        renderer->updateProjection( camera->projectionMatrix );
+        renderer->updateViewMatrix( camera->viewMatrix );
+    }
+    if( lightNode != nullptr ) {
+        renderer->updateLightSource( lightNode->position );
+    }
+    renderer->updateState( renderState );
+    renderer->draw( node );
 }
 
 void Scene::addNode( INode *node ) {
     rootNode->addNode( node );
+    node->onRestore( this );
 }
 
 void Scene::render() {
@@ -81,9 +88,6 @@ void Scene::render() {
         rootNode->onRender( this );
         rootNode->onRenderChildrends( this );
         rootNode->onPostRender( this );
-        
-        renderer->draw( renderBatch );
-        renderBatch.clear();
     }
 }
 
@@ -99,8 +103,4 @@ glm::mat4 Scene::popMatrix() {
     glm::mat4 result = matrixStack.top();
     matrixStack.pop();
     return result;
-}
-
-void Scene::addToBatch( Node *node ) {
-    renderBatch.push_back( node );
 }

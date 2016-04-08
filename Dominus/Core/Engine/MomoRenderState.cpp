@@ -10,7 +10,8 @@
 #include "GLGpuBuffer.h"
 #include "Shader.h"
 
-MomoRenderState::MomoRenderState() {
+MomoRenderState::MomoRenderState()
+: units( 0 ) {
     verticesBuffer = new Buffer( new GLGpuBuffer );
     uvsBuffer = new Buffer( new GLGpuBuffer );
     normalBuffer = new Buffer( new GLGpuBuffer );
@@ -69,57 +70,63 @@ void MomoRenderState::init() {
     shaderProgram->registerUnitform( textureUniformKey );
     
     glGenVertexArrays ( 1, &vao );
-}
-
-void MomoRenderState::load( std::vector<Node *> renderBatch ) {
     glBindVertexArray ( vao );
     
     verticesBuffer->bind();
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
-        verticesBuffer->push( (float*) &mesh->getVertices()[0],
-                             ( sizeof( GLfloat ) * 3 ) * mesh->getVertices().size() );
-    }
     glVertexAttribPointer( shaderProgram->getAttribute( positionAttributeKey ),
-                           3, GL_FLOAT, GL_FALSE, 0, NULL);
+                          3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray( shaderProgram->getAttribute(positionAttributeKey) );
+    verticesBuffer->unBind();
     
     normalBuffer->bind();
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
-        normalBuffer->push( (float*)&mesh->getNormals()[0],
-                           ( sizeof ( GLfloat ) * 3 ) * mesh->getNormals().size() );
-    }
-    
     glVertexAttribPointer( shaderProgram->getAttribute( normalAttributeKey ),
-                           3, GL_FLOAT, GL_FALSE, 0, NULL);
+                          3, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray( shaderProgram->getAttribute( normalAttributeKey ) );
+    normalBuffer->unBind();
     
     uvsBuffer->bind();
-    for ( int i = 0; i < renderBatch.size(); i++ ) {
-        Mesh* mesh = renderBatch.at(i)->getMesh();
-        uvsBuffer->push( (float*)&mesh->getUvs()[0],
-                        ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size() );
-    }
-    
     glVertexAttribPointer( shaderProgram->getAttribute( textureAttributeKey ),
-                           2, GL_FLOAT, GL_FALSE, 0, NULL );
+                          2, GL_FLOAT, GL_FALSE, 0, NULL );
     glEnableVertexAttribArray( shaderProgram->getAttribute( textureAttributeKey ) );
+    uvsBuffer->unBind();
+    
+    glBindVertexArray ( 0 );
+}
+
+void MomoRenderState::load( Node* node ) {
+    glBindVertexArray ( vao );
+    Mesh* mesh = node->getMesh();
+    
+    verticesBuffer->bind();
+    verticesBuffer->push( (float*) &mesh->getVertices()[0],
+                         ( sizeof( GLfloat ) * 3 ) * mesh->getVertices().size() );
+    offsetMap[node->getID()] = units;
+    units += mesh->getVertices().size();
+    verticesBuffer->unBind();
+    
+    normalBuffer->bind();
+    normalBuffer->push( (float*)&mesh->getNormals()[0],
+                       ( sizeof ( GLfloat ) * 3 ) * mesh->getNormals().size() );
+    normalBuffer->unBind();
+    
+    uvsBuffer->bind();
+    uvsBuffer->push( (float*)&mesh->getUvs()[0],
+                    ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size() );
+    uvsBuffer->unBind();
     
     //Texture loading
-    for ( int i = 0;  i < renderBatch.size(); i++ ) {
-        Texture* texture = renderBatch.at( i )->getMesh()->getTexture();
-        if( texture != nullptr ){
-            texture->bind();
-            texture->push();
-            texture->unbind();
-        }
+    Texture* texture = mesh->getTexture();
+    if( texture != nullptr ){
+        texture->bind();
+        texture->push();
+        texture->unbind();
     }
     
     glBindVertexArray( 0 );
 }
 
-void MomoRenderState::draw( std::vector<Node *> renderBatch ) {
+void MomoRenderState::draw( Node* node ) {
+    
     shaderProgram->useProgram();
     glUniformMatrix4fv( shaderProgram->getUniform( projectionUniformKey ),
                         1, GL_FALSE, &projectionMatrix[0][0] );
@@ -127,32 +134,28 @@ void MomoRenderState::draw( std::vector<Node *> renderBatch ) {
                   1, &lightPosition[0]);
     glBindVertexArray ( vao );
     
-    GLuint offset = 0;
-    for ( int i = 0; i < renderBatch.size() ; i++ ) {
-        Node* node = renderBatch.at( i );
-        if( node->getMesh()->getTexture() != nullptr ) {
-            node->getMesh()->getTexture()->bind();
-            glUniform1i( shaderProgram->getUniform( textureUniformKey ) , 0);
-        }
-        
-        glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
-        glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
-        glm::mat3 normalMat3 = glm::mat3( normalMat );
-        glUniformMatrix4fv( shaderProgram->getUniform( modelViewUniformKey ),
-                            1, GL_FALSE, &modelViewMatrix[0][0] );
-        glUniformMatrix3fv( shaderProgram->getUniform( normalUniformKey ),
-                            1, GL_FALSE, &normalMat3[0][0] );
-        // draw points from the currently bound VAO with current in-use shader
-        glDrawArrays (GL_TRIANGLES,
-                      offset,
-                      (int)node->getMesh()->getVertices().size() );
-        offset += (int)node->getMesh()->getVertices().size();
-        if( node->getMesh()->getTexture() != nullptr ) {
-            node->getMesh()->getTexture()->unbind();
-        }
+    if( node->getMesh()->getTexture() != nullptr ) {
+        node->getMesh()->getTexture()->bind();
+        glUniform1i( shaderProgram->getUniform( textureUniformKey ) , 0);
     }
+    
+    glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
+    glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
+    glm::mat3 normalMat3 = glm::mat3( normalMat );
+    glUniformMatrix4fv( shaderProgram->getUniform( modelViewUniformKey ),
+                       1, GL_FALSE, &modelViewMatrix[0][0] );
+    glUniformMatrix3fv( shaderProgram->getUniform( normalUniformKey ),
+                       1, GL_FALSE, &normalMat3[0][0] );
+    // draw points from the currently bound VAO with current in-use shader
+    glDrawArrays (GL_TRIANGLES,
+                  (int)offsetMap[node->getID()],
+                  (int)node->getMesh()->getVertices().size() );
+
+    if( node->getMesh()->getTexture() != nullptr ) {
+        node->getMesh()->getTexture()->unbind();
+    }
+
     
     glBindVertexArray( 0 );
     shaderProgram->closeProgram();
 }
-

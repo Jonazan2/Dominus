@@ -34,11 +34,13 @@ void Renderer::init(){
     states[MOMO_RENDER_STATE] = new MomoRenderState;
     states[MAP_RENDER_STATE] = new MapRenderState;
     
-    currentState = states[MOMO_RENDER_STATE];
+    currentState = states[MAP_RENDER_STATE];
     
     uiVerticesBufer = new Buffer( new GLGpuBuffer );
     uiUvsBuffer = new Buffer( new GLGpuBuffer );
-    currentState->init();
+    
+    states[MOMO_RENDER_STATE]->init();
+    states[MAP_RENDER_STATE]->init();
     
     loadUIShaders();
 }
@@ -76,12 +78,12 @@ void Renderer::updateLightSource( glm::vec3 lightSource ) {
     currentState->updateLightSource( lightSource );
 }
 
-void Renderer::load( std::vector<Node *> renderBatch ) {
-    currentState->load( renderBatch );
+void Renderer::load( Node *node ) {
+    currentState->load( node );
 }
 
-void Renderer::draw( std::vector<Node *> renderBatch ) {
-    currentState->draw( renderBatch );
+void Renderer::draw( Node *node ) {
+    currentState->draw( node );
 }
 
 void Renderer::loadUIShaders() {

@@ -40,12 +40,14 @@ public:
     Mesh* getMesh();
     void rotate(  const glm::vec3 rotation );
     void translate( const glm::vec3 translation );
+    
+    int getID();
 private:
     std::vector< INode * > childNodes;
     glm::mat4 modelMatrix;
     glm::mat4 toWorldMatrix;
     Mesh* mesh;
-
+    int id;
 };
 
 #endif /* Node_hpp */
