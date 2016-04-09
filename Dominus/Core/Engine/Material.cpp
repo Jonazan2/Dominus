@@ -200,7 +200,5 @@ std::string Material::getStencilTextureMap() const {
 
 
 Material::~Material() {
-    delete ambientColor;
-    delete diffuseColor;
-    delete specularColor;
+
 }

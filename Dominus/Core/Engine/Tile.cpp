@@ -22,12 +22,14 @@ void Tile::onUpdate() {
 
 void Tile::onRestore( Scene *scene ) {
     Node::onRestore( scene );
-    scene->load( this, Renderer::MAP_RENDER_STATE );
+    scene->load( std::static_pointer_cast<Node>( shared_from_this() ),
+                 Renderer::MAP_RENDER_STATE );
 }
 
 void Tile::onRender( Scene *scene ) {
     Node::onRender( scene );
-    scene->render( this, Renderer::MAP_RENDER_STATE );
+    scene->render( std::static_pointer_cast<Node>( shared_from_this() ),
+                   Renderer::MAP_RENDER_STATE );
 }
 
 void Tile::onRenderChildrends( Scene *scene ) {

@@ -17,18 +17,20 @@ MapBuilder::~MapBuilder() {
 
 }
 
-Map* MapBuilder::build( MapLoader *mapLoader, TilesLoader *tilesLoader ) {
-    Map* map = new Map;
+std::shared_ptr<Map> MapBuilder::build( MapLoader *mapLoader,
+                                        TilesLoader *tilesLoader ) {
+    std::shared_ptr<Map> map( new Map );
     
     MapInfo* mapInfo = mapLoader->load();
     std::vector<std::string> tilesInfo = tilesLoader->load( mapInfo->tilesResource );
     
     for ( int i = 0 ; i < mapInfo->tilesKeys.size(); i++ ) {
         int tileKey = mapInfo->tilesKeys.at( i );
-        Mesh* mesh = new Mesh( new ObjLoader );
+        std::shared_ptr<Mesh> mesh =
+            std::shared_ptr<Mesh>( new Mesh( new ObjLoader ) );
         mesh->load( tilesInfo.at( tileKey ) );
         
-        Tile* tile = new Tile;
+        std::shared_ptr<Tile> tile( new Tile );
         tile->key = tileKey;
         tile->setMesh( mesh );
         

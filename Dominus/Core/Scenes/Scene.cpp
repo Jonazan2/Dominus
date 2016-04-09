@@ -14,8 +14,8 @@ Scene::Scene( Renderer* renderer )
 : renderer( renderer ),
 lightNode( nullptr ),
 camera( nullptr ) {
-    rootNode = new Node;
-    windowLayout = new Layout;
+    rootNode = std::shared_ptr< Node > ( new Node );
+    windowLayout = std::shared_ptr<Layout> ( new Layout );
     pushMatrix( glm::mat4( 1 ) );
 }
 
@@ -31,29 +31,30 @@ void Scene::update( double delta ) {
     rootNode->onUpdate();
 }
 
-void Scene::setMapNode( Node *node ) {
+void Scene::setMapNode( std::shared_ptr< Node > node ) {
     this->mapNode = node;
+    addNode( mapNode );
 }
 
-Camera* Scene::getCamera() {
+std::shared_ptr<Camera> Scene::getCamera() {
     return camera;
 }
 
-void Scene::setLightNode( LightNode *lightNode ) {
+void Scene::setLightNode( std::shared_ptr<LightNode> lightNode ) {
     this->lightNode = lightNode;
     rootNode->addNode( lightNode );
 }
 
-void Scene::setCamera( Camera* camera ) {
+void Scene::setCamera( std::shared_ptr<Camera> camera ) {
     this->camera = camera;
     rootNode->addNode( camera );
 }
 
-void Scene::setSceneHUD( UIComponent * component ) {
+void Scene::setSceneHUD( std::shared_ptr<UIComponent> component ) {
     windowLayout->setWidth(640);
     windowLayout->setHeight(480);
     
-    windowLayout->addComponent( std::shared_ptr<UIComponent>( component ) );
+    windowLayout->addComponent( component );
 }
 
 void Scene::loadUI() {
@@ -61,12 +62,12 @@ void Scene::loadUI() {
     renderer->loadUI();
 }
 
-void Scene::load( Node *node, int renderState ) {
+void Scene::load( std::shared_ptr<Node> node, int renderState ) {
     renderer->updateState( renderState );
     renderer->load( node );
 }
 
-void Scene::render( Node *node, int renderState ) {
+void Scene::render( std::shared_ptr<Node> node, int renderState ) {
     if( camera != nullptr ) {
         renderer->updateProjection( camera->projectionMatrix );
         renderer->updateViewMatrix( camera->viewMatrix );
@@ -78,7 +79,7 @@ void Scene::render( Node *node, int renderState ) {
     renderer->draw( node );
 }
 
-void Scene::addNode( INode *node ) {
+void Scene::addNode( std::shared_ptr<INode> node ) {
     rootNode->addNode( node );
     node->onRestore( this );
 }

@@ -19,7 +19,7 @@
 #include "OnItemClickedListener.h"
 #include "Mesh.hpp"
 
-class UIComponent {
+class UIComponent : public std::enable_shared_from_this<UIComponent>{
 public:
     UIComponent();
     virtual ~UIComponent();

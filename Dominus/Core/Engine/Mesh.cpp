@@ -41,11 +41,11 @@ std::vector<glm::vec3> Mesh::getNormals() const {
     return normals;
 }
 
-void Mesh::setTexture( Texture* texture ){
+void Mesh::setTexture( std::shared_ptr<Texture> texture ){
     this->texture = texture;
 }
 
-Texture* Mesh::getTexture() {
+std::shared_ptr<Texture> Mesh::getTexture() {
     return texture;
 }
 
@@ -57,4 +57,5 @@ Material Mesh::getMaterial() const {
     return material;
 }
 
-Mesh::~Mesh() {}
+Mesh::~Mesh() {
+}

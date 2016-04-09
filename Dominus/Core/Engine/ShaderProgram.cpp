@@ -18,7 +18,7 @@ ShaderProgram::~ShaderProgram() {
 
 }
 
-void ShaderProgram::attachShader( Shader* shader ) {
+void ShaderProgram::attachShader( std::shared_ptr<Shader> shader ) {
     shaders.push_back( shader );
     glAttachShader( uid , shader->getUID() );
 }

@@ -24,16 +24,16 @@ public:
     void updateProjection( glm::mat4 projection );
     void updateLightSource( glm::vec3 light );
     
-    void load( Node* node );
-    void draw( Node* node );
+    void load( std::shared_ptr<Node> node );
+    void draw( std::shared_ptr<Node> node );
 private:
-    Buffer* normalBuffer;
-    Buffer* verticesBuffer;
+    std::shared_ptr<Buffer> normalBuffer;
+    std::shared_ptr<Buffer> verticesBuffer;
     
     glm::mat4 projectionMatrix;
     glm::mat4 viewMatrix;
     
-    ShaderProgram* shaderProgram;
+    std::shared_ptr<ShaderProgram> shaderProgram;
     
     std::string positionAttributeKey;
     std::string normalAttributeKey;

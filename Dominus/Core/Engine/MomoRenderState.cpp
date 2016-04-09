@@ -12,11 +12,12 @@
 
 MomoRenderState::MomoRenderState()
 : units( 0 ) {
-    verticesBuffer = new Buffer( new GLGpuBuffer );
-    uvsBuffer = new Buffer( new GLGpuBuffer );
-    normalBuffer = new Buffer( new GLGpuBuffer );
+    //TODO: GLGPuBuffer: leaked memory
+    verticesBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
+    uvsBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
+    normalBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
     
-    shaderProgram = new ShaderProgram;
+    shaderProgram = std::shared_ptr<ShaderProgram>( new ShaderProgram );
     
     textureUniformKey = "textureData";
     modelViewUniformKey = "modelViewMatrix";
@@ -46,12 +47,14 @@ void MomoRenderState::updateLightSource( glm::vec3 light ) {
 }
 
 void MomoRenderState::init() {
-    Shader* vertexShader = new Shader( "vertex_shader.glsl",
-                                      GL_VERTEX_SHADER );
+    std::shared_ptr<Shader> vertexShader =
+        std::shared_ptr<Shader>( new Shader( "vertex_shader.glsl",
+                                        GL_VERTEX_SHADER ) );
     vertexShader->compile();
     
-    Shader* fragmentShader = new Shader( "fragment_shader.glsl",
-                                        GL_FRAGMENT_SHADER );
+    std::shared_ptr<Shader> fragmentShader =
+        std::shared_ptr<Shader>( new Shader( "fragment_shader.glsl",
+                                        GL_FRAGMENT_SHADER ) );
     fragmentShader->compile();
     
     shaderProgram->attachShader( vertexShader );
@@ -93,9 +96,9 @@ void MomoRenderState::init() {
     glBindVertexArray ( 0 );
 }
 
-void MomoRenderState::load( Node* node ) {
+void MomoRenderState::load( std::shared_ptr<Node> node ) {
     glBindVertexArray ( vao );
-    Mesh* mesh = node->getMesh();
+    std::shared_ptr<Mesh> mesh = node->getMesh();
     
     verticesBuffer->bind();
     verticesBuffer->push( (float*) &mesh->getVertices()[0],
@@ -115,7 +118,7 @@ void MomoRenderState::load( Node* node ) {
     uvsBuffer->unBind();
     
     //Texture loading
-    Texture* texture = mesh->getTexture();
+    std::shared_ptr<Texture> texture = mesh->getTexture();
     if( texture != nullptr ){
         texture->bind();
         texture->push();
@@ -125,7 +128,7 @@ void MomoRenderState::load( Node* node ) {
     glBindVertexArray( 0 );
 }
 
-void MomoRenderState::draw( Node* node ) {
+void MomoRenderState::draw( std::shared_ptr<Node> node ) {
     
     shaderProgram->useProgram();
     glUniformMatrix4fv( shaderProgram->getUniform( projectionUniformKey ),
@@ -146,7 +149,7 @@ void MomoRenderState::draw( Node* node ) {
                        1, GL_FALSE, &modelViewMatrix[0][0] );
     glUniformMatrix3fv( shaderProgram->getUniform( normalUniformKey ),
                        1, GL_FALSE, &normalMat3[0][0] );
-    // draw points from the currently bound VAO with current in-use shader
+    
     glDrawArrays (GL_TRIANGLES,
                   (int)offsetMap[node->getID()],
                   (int)node->getMesh()->getVertices().size() );

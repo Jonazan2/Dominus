@@ -44,8 +44,8 @@ public:
     void setMaterial( const Material material );
     Material getMaterial() const;
     
-    void setTexture( Texture* texture );
-    Texture* getTexture();
+    void setTexture( std::shared_ptr<Texture> texture );
+    std::shared_ptr<Texture> getTexture();
     
     void normalize();
     void unNormalize();
@@ -55,7 +55,7 @@ private:
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
-    Texture* texture;
+    std::shared_ptr<Texture> texture;
     Material material;
     MeshLoader* loader;
     bool normalized;

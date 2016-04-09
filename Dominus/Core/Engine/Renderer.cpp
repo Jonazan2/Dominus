@@ -17,7 +17,7 @@
 
 Renderer::Renderer( GLFWwindow* window )
 : window( window ), currentState( nullptr ) {
-    shaderProgram = new ShaderProgram;
+    shaderProgram = std::shared_ptr<ShaderProgram>( new ShaderProgram );
 }
 
 Renderer::~Renderer(){
@@ -36,8 +36,9 @@ void Renderer::init(){
     
     currentState = states[MAP_RENDER_STATE];
     
-    uiVerticesBufer = new Buffer( new GLGpuBuffer );
-    uiUvsBuffer = new Buffer( new GLGpuBuffer );
+    //TODO: GLGpuBuffer: leaked memory
+    uiVerticesBufer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
+    uiUvsBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
     
     states[MOMO_RENDER_STATE]->init();
     states[MAP_RENDER_STATE]->init();
@@ -78,23 +79,23 @@ void Renderer::updateLightSource( glm::vec3 lightSource ) {
     currentState->updateLightSource( lightSource );
 }
 
-void Renderer::load( Node *node ) {
+void Renderer::load( std::shared_ptr<Node> node ) {
     currentState->load( node );
 }
 
-void Renderer::draw( Node *node ) {
+void Renderer::draw( std::shared_ptr<Node> node ) {
     currentState->draw( node );
 }
 
 void Renderer::loadUIShaders() {
-    Shader* vertexShader = new Shader(
-                                      "shaders/ui_vertex_shader.glsl",
-                                      GL_VERTEX_SHADER );
+    std::shared_ptr<Shader> vertexShader =
+        std::shared_ptr<Shader>( new Shader( "shaders/ui_vertex_shader.glsl",
+                                        GL_VERTEX_SHADER ) );
     vertexShader->compile();
     
-    Shader* fragmentShader = new Shader(
-                                        "shaders/ui_fragment_shader.glsl",
-                                        GL_FRAGMENT_SHADER );
+    std::shared_ptr<Shader> fragmentShader =
+        std::shared_ptr<Shader>( new Shader( "shaders/ui_fragment_shader.glsl",
+                                        GL_FRAGMENT_SHADER ) );
     fragmentShader->compile();
     
     shaderProgram->attachShader( vertexShader );
@@ -108,7 +109,7 @@ void Renderer::loadUIShaders() {
     shaderProgram->registerAttribute( textureAttributeKey );
 }
 
-void Renderer::drawtexture( UIComponent* component ){
+void Renderer::drawtexture( std::shared_ptr<UIComponent> component ){
     if( component->getTexture() != nullptr ) {
         glm::vec2 position = component->getPosition();
         std::vector<glm::vec3> vertices;

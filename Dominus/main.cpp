@@ -13,13 +13,14 @@
 #include "Engine.h"
 #include "Renderer.h"
 #include <Log.hpp>
+#include <memory>
 
 const int FPS = 60; //Overall max frame rate
 const double DELAY_TIME = 1000.0f / FPS;
 const int MS_PER_UPDATE = 40; //25 FPS
 
-int main(int argc, const char * argv[]) {    
-    Engine * engine = new Engine();
+int main(int argc, const char * argv[]) {
+    std::auto_ptr<Engine> engine( new Engine() );
     engine->init();
     std::chrono::time_point<std::chrono::system_clock> current, previous;
     previous = std::chrono::system_clock::now();

@@ -12,36 +12,35 @@
 
 Node::Node()
 : toWorldMatrix( glm::mat4( 1 ) ),
-modelMatrix( glm::mat4( 1 ) ),
-mesh( new Mesh ) {
-     id = Scene::generateID();
+modelMatrix( glm::mat4( 1 ) ) {
+    mesh = std::shared_ptr<Mesh>( new Mesh );
+    id = Scene::generateID();
 }
 
-Node::Node( Mesh* mesh )
+Node::Node( std::shared_ptr<Mesh> mesh )
 : Node() {
     this->mesh = mesh;
 }
 
 Node::~Node(){
-
 }
 
 int Node::getID() {
     return id;
 }
 
-void Node::addNode( INode *node ) {
+void Node::addNode( std::shared_ptr<INode> node ) {
     childNodes.push_back( node );
 }
 
 void Node::onUpdate() {
-    for ( INode* node : childNodes ) {
+    for ( std::shared_ptr<INode> node : childNodes ) {
         node->onUpdate();
     }
 }
 
 void Node::onRestore( Scene* scene ) {
-    for ( INode* node : childNodes ) {
+    for ( std::shared_ptr<INode> node : childNodes ) {
         node->onRestore( scene );
     }
 }
@@ -53,7 +52,7 @@ void Node::onRender( Scene* scene ) {
 }
 
 void Node::onRenderChildrends( Scene* scene ) {
-    for ( INode * node :  childNodes ) {
+    for ( std::shared_ptr<INode> node :  childNodes ) {
         node->onRender( scene );
         node->onRenderChildrends( scene );
         node->onPostRender( scene );
@@ -72,11 +71,11 @@ glm::mat4 * Node::getModelMatrix() {
     return &modelMatrix;
 }
 
-void Node::setMesh( Mesh *mesh ) {
+void Node::setMesh( std::shared_ptr<Mesh> mesh ) {
     this->mesh = mesh;
 }
 
-Mesh* Node::getMesh() {
+std::shared_ptr<Mesh> Node::getMesh() {
     return mesh;
 }
 

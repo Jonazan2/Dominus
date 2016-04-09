@@ -13,7 +13,8 @@ Buffer::Buffer( GpuBuffer* buffer )
     bufferUID = buffer->genBuffer();
 }
 
-Buffer::~Buffer() { }
+Buffer::~Buffer() {
+}
 
 //TODO: Check if the gpu memory allocation can fail and handle error.
 void Buffer::reserve( GLsizeiptr size ) {

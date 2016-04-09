@@ -18,14 +18,14 @@ UIRenderState::~UIRenderState() {
 }
 
 void UIRenderState::init() {
-    Shader* vertexShader = new Shader(
-                                      "shaders/ui_vertex_shader.glsl",
-                                      GL_VERTEX_SHADER );
+    std::shared_ptr<Shader> vertexShader =
+        std::shared_ptr<Shader>( new Shader( "shaders/ui_vertex_shader.glsl",
+                                        GL_VERTEX_SHADER ) );
     vertexShader->compile();
     
-    Shader* fragmentShader = new Shader(
-                                        "shaders/ui_fragment_shader.glsl",
-                                        GL_FRAGMENT_SHADER );
+    std::shared_ptr<Shader> fragmentShader =
+        std::shared_ptr<Shader>( new Shader( "shaders/ui_fragment_shader.glsl",
+                                        GL_FRAGMENT_SHADER ) );
     fragmentShader->compile();
     
     shaderProgram->attachShader( vertexShader );
@@ -68,9 +68,9 @@ void UIRenderState::updateLightSource( glm::vec3 light ) {
 
 }
 
-void UIRenderState::load( Node *node ) {
+void UIRenderState::load( std::shared_ptr<Node> node ) {
     glBindVertexArray ( vao );
-    Mesh* mesh = node->getMesh();
+    std::shared_ptr<Mesh> mesh = node->getMesh();
     
     uiVerticesBufer->bind();
     GLsizeiptr size = ( sizeof ( GLfloat ) * 3 ) * mesh->getVertices().size();
@@ -94,7 +94,7 @@ void UIRenderState::load( Node *node ) {
     glBindVertexArray ( 0 );
 }
 
-void UIRenderState::draw( Node *node ) {
+void UIRenderState::draw( std::shared_ptr<Node> node ) {
     glm::mat4 orthoMatrix = glm::ortho( 0.0, 640.0, 480.0, 0.0 );
     shaderProgram->useProgram();
     glBindVertexArray ( vao );

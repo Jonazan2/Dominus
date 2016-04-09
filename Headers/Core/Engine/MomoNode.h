@@ -14,7 +14,7 @@
 class MomoNode : public Node {
 public:
     MomoNode();
-    MomoNode( Mesh* mesh );
+    MomoNode( std::shared_ptr<Mesh> mesh );
     ~MomoNode();
     
     void onUpdate( );

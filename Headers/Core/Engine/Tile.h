@@ -14,7 +14,7 @@
 class Tile : public Node {
 public:
     Tile();
-    ~Tile();
+    virtual ~Tile();
     
     void onUpdate( );
     void onRestore( Scene* scene );

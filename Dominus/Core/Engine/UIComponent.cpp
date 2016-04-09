@@ -23,7 +23,7 @@ bool UIComponent::handleEvent( const Event event ) {
 
 //TODO: Update render call
 void UIComponent::render( Renderer* renderer ) {
-    renderer->drawtexture( this );
+    renderer->drawtexture( shared_from_this() );
 }
 
 std::shared_ptr<UIComponent> UIComponent::matchEvent( glm::vec2 position ) {
@@ -274,4 +274,6 @@ Frame UIComponent::getFrame() {
     return this->frame;
 }
 
-UIComponent::~UIComponent() {}
+UIComponent::~UIComponent() {
+    std::cout << "UIComponent destroyed \n";
+}

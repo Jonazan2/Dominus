@@ -13,10 +13,10 @@
 
 MapRenderState::MapRenderState()
 : units(0) {
-    normalBuffer = new Buffer( new GLGpuBuffer );
-    verticesBuffer = new Buffer( new GLGpuBuffer );
+    normalBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
+    verticesBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
     
-    shaderProgram = new ShaderProgram;
+    shaderProgram = std::shared_ptr<ShaderProgram>( new ShaderProgram );
     
     colorUniformKey = "color";
     projectionUniformKey = "projectionMatrix";
@@ -38,12 +38,14 @@ void MapRenderState::updateLightSource( glm::vec3 light ) {
 }
 
 void MapRenderState::init() {
-    Shader* vertexShader = new Shader( "shaders/map_vertex_shader.glsl",
-                                       GL_VERTEX_SHADER );
+    std::shared_ptr<Shader> vertexShader =
+            std::shared_ptr<Shader>( new Shader( "shaders/map_vertex_shader.glsl",
+                                         GL_VERTEX_SHADER ) );
     vertexShader->compile();
     
-    Shader* fragmentShader = new Shader( "shaders/map_fragment_shader.glsl",
-                                         GL_FRAGMENT_SHADER );
+    std::shared_ptr<Shader> fragmentShader =
+        std::shared_ptr<Shader>( new Shader( "shaders/map_fragment_shader.glsl",
+                                        GL_FRAGMENT_SHADER ) );
     fragmentShader->compile();
     
     shaderProgram->attachShader( vertexShader );
@@ -77,8 +79,8 @@ void MapRenderState::init() {
     glBindVertexArray ( 0 );
 }
 
-void MapRenderState::load( Node* node ) {
-    Mesh* mesh = node->getMesh();
+void MapRenderState::load( std::shared_ptr<Node> node ) {
+    std::shared_ptr<Mesh> mesh = node->getMesh();
 
     glBindVertexArray ( vao );
     
@@ -98,7 +100,7 @@ void MapRenderState::load( Node* node ) {
     glBindVertexArray( 0 );
 }
 
-void MapRenderState::draw( Node* node ) {
+void MapRenderState::draw( std::shared_ptr<Node> node ) {
     shaderProgram->useProgram();
     glUniformMatrix4fv( shaderProgram->getUniform( projectionUniformKey ) ,
                        1, GL_FALSE, &projectionMatrix[0][0]);
