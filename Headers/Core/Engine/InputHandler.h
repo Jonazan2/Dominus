@@ -14,7 +14,7 @@
 
 class InputHandler {
 public:
-    virtual std::vector<Event*> * poolEvents() = 0;
+    virtual std::vector<std::shared_ptr<Event>> * poolEvents() = 0;
     virtual void init() = 0;
 };
 

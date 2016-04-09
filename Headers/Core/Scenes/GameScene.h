@@ -17,6 +17,6 @@ class GameScene {
 public:
     virtual void onSceneCreated( Scene* scene ) = 0;
     virtual void onUpdate( double delta ) = 0;
-    virtual void onCosumeInput( std::vector<Event*>* ) = 0;
+    virtual void onCosumeInput( std::vector<std::shared_ptr<Event>>* ) = 0;
 };
 #endif

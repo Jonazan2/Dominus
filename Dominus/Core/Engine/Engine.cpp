@@ -14,7 +14,7 @@ Engine::Engine() : running( true ){
 }
 
 Engine::~Engine(){
-
+    
 }
 
 void Engine::init() {
@@ -24,21 +24,23 @@ void Engine::init() {
     inputHandler->init();
     renderer = new Renderer( window->windowHandler() );
     renderer->init();
+    
     scene = new Scene( renderer );
+    
     gameScene = new RenderScene;
     gameScene->onSceneCreated( scene );
 }
 
 void Engine::processInput(){
-    std::vector<Event*> * events = inputHandler->poolEvents();
+    std::vector<std::shared_ptr<Event>> *events = inputHandler->poolEvents();
     consumeEvents( events );
     gameScene->onCosumeInput( events );
     events->clear();
 }
 
-void Engine::consumeEvents( std::vector<Event *> * events ) {
+void Engine::consumeEvents( std::vector<std::shared_ptr<Event>>* events ) {
     for ( int i = 0; i < events->size(); i++ ) {
-        Event* event = events->at( i );
+        std::shared_ptr<Event> event = events->at( i );
         if( event->type == ON_WINDOW_CLOSED ) {
             running = false;
             event->consumed = true;

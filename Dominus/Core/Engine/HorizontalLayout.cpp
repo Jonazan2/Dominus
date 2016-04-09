@@ -84,4 +84,6 @@ std::vector<glm::vec2> HorizontalLayout::weightDisposition() {
     return dispositionPoints;
 }
 
-HorizontalLayout::~HorizontalLayout() {}
+HorizontalLayout::~HorizontalLayout() {
+    std::cout << "Horizontal layout destroyed\n";
+}

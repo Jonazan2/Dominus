@@ -23,19 +23,19 @@ public:
     void updateProjection( glm::mat4 projection );
     void updateLightSource( glm::vec3 light );
     
-    void load( Node* node );
-    void draw( Node* node );
+    void load( std::shared_ptr<Node> node );
+    void draw( std::shared_ptr<Node> node );
 private:
     GLuint vao;
     
-    ShaderProgram* shaderProgram;
+    std::shared_ptr<ShaderProgram> shaderProgram;
     std::string positionAttributeKey;
     std::string textureAttributeKey;
     std::string mvpUniformKey;
     std::string textureDataUniformKey;
     
-    Buffer* uiVerticesBufer;
-    Buffer* uiUvsBuffer;
+    std::shared_ptr<Buffer> uiVerticesBufer;
+    std::shared_ptr<Buffer> uiUvsBuffer;
     
     std::unordered_map<int, long> offsetMap;
     int units;

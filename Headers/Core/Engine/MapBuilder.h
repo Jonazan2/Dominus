@@ -18,7 +18,7 @@ public:
     MapBuilder();
     ~MapBuilder();
 
-    Map* build( MapLoader* mapLoader, TilesLoader* tilesLoader );
+    std::shared_ptr<Map> build( MapLoader* mapLoader, TilesLoader* tilesLoader );
 };
 
 #endif /* MapBuilder_h */

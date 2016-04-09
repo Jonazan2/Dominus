@@ -9,9 +9,11 @@
 #ifndef INode_h
 #define INode_h
 
+#include <memory>
+
 class Scene;
 
-class INode {
+class INode : public std::enable_shared_from_this<INode> {
 public:
     virtual void onUpdate( ) = 0;
     virtual void onRestore( Scene* scene ) = 0;

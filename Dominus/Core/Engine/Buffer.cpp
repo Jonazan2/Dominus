@@ -13,7 +13,9 @@ Buffer::Buffer( GpuBuffer* buffer )
     bufferUID = buffer->genBuffer();
 }
 
-Buffer::~Buffer() { }
+Buffer::~Buffer() {
+    std::cout << "Buffer" << bufferUID << "deleted" << std::endl;
+}
 
 //TODO: Check if the gpu memory allocation can fail and handle error.
 void Buffer::reserve( GLsizeiptr size ) {

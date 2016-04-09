@@ -6,7 +6,7 @@ Button::Button( )
 }
 
 void Button::render( Renderer *renderer ) {
-    renderer->drawtexture( this );
+    renderer->drawtexture( shared_from_this() );
 }
 
 void Button::setTexture( std::shared_ptr< Texture >texture ) {

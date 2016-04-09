@@ -20,7 +20,7 @@ public:
     ShaderProgram();
     ~ShaderProgram();
     
-    void attachShader( Shader* shader  );
+    void attachShader( std::shared_ptr<Shader> shader  );
     void linkProgram();
     void registerAttribute( std::string attributeKey );
     void registerUnitform( std::string uniformKey );
@@ -34,7 +34,7 @@ private:
     GLuint uid;
     bool linked;
     bool active;
-    std::vector<Shader*> shaders;
+    std::vector<std::shared_ptr<Shader>> shaders;
     std::unordered_map<std::string, GLuint> attributes;
     std::unordered_map<std::string, GLuint> uniforms;
 };

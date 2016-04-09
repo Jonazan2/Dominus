@@ -12,6 +12,7 @@
 #include "RenderScene.h"
 #include "InputHandler.h"
 #include "Window.h"
+#include <memory>
 
 class Engine {
 public:
@@ -23,7 +24,7 @@ public:
     void update( double delta );
     void render();
     
-    void consumeEvents( std::vector<Event*> * );
+    void consumeEvents( std::vector<std::shared_ptr<Event>> * );
     
     bool isRunning();
 private:
@@ -33,8 +34,6 @@ private:
     InputHandler* inputHandler;
     
     Renderer* renderer;
-    Node* node;
-    std::vector<Node*> nodes;
     Window* window;
 };
 

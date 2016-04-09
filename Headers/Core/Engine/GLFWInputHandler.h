@@ -19,7 +19,7 @@ public:
     ~GLFWInputHandler();
     
     void init();
-    std::vector<Event*> * poolEvents();
+    std::vector<std::shared_ptr<Event>> * poolEvents();
 
     void onRightClickEvent( int action, double x, double y );
     void onLeftClickEvent( int action, double x, double y );
@@ -28,7 +28,7 @@ public:
     void onWindowClosed();
 private:
     GLFWwindow* window;
-    std::vector<Event*> events;
+    std::vector<std::shared_ptr<Event>> events;
 };
 
 #endif /* GLFWInputHandler_h */
