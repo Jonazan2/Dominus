@@ -135,5 +135,4 @@ std::shared_ptr<UIComponent> Layout::matchEvent( glm::vec2 position ) {
 }
 
 Layout::~Layout() {
-    std::cout << "layout destroyed\n";
 }

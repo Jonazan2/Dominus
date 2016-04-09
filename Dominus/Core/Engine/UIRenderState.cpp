@@ -19,12 +19,12 @@ UIRenderState::~UIRenderState() {
 
 void UIRenderState::init() {
     std::shared_ptr<Shader> vertexShader =
-        std::shared_ptr<Shader>( new Shader( "shaders/map_vertex_shader.glsl",
+        std::shared_ptr<Shader>( new Shader( "shaders/ui_vertex_shader.glsl",
                                         GL_VERTEX_SHADER ) );
     vertexShader->compile();
     
     std::shared_ptr<Shader> fragmentShader =
-        std::shared_ptr<Shader>( new Shader( "shaders/map_fragment_shader.glsl",
+        std::shared_ptr<Shader>( new Shader( "shaders/ui_fragment_shader.glsl",
                                         GL_FRAGMENT_SHADER ) );
     fragmentShader->compile();
     

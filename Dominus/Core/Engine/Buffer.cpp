@@ -14,7 +14,6 @@ Buffer::Buffer( GpuBuffer* buffer )
 }
 
 Buffer::~Buffer() {
-    std::cout << "Buffer" << bufferUID << "deleted" << std::endl;
 }
 
 //TODO: Check if the gpu memory allocation can fail and handle error.

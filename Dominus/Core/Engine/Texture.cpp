@@ -27,7 +27,7 @@ Texture::Texture( GpuTexture* gpuTexture, TextureLoader* loader )
 }
 
 Texture::~Texture() {
-    std::cout << "Texture deleted\n";
+
 }
 
 void Texture::load( std::string file ) {

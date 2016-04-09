@@ -58,5 +58,4 @@ Material Mesh::getMaterial() const {
 }
 
 Mesh::~Mesh() {
-    std::cout << "mesh deleted: \n" ;
 }

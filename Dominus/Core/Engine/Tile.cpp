@@ -13,7 +13,7 @@ Tile::Tile() : key( -1 )
 { }
 
 Tile::~Tile() {
-    std::cout << "Tile destroyed\n";
+
 }
 
 void Tile::onUpdate() {

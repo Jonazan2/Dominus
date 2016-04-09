@@ -23,7 +23,6 @@ Node::Node( std::shared_ptr<Mesh> mesh )
 }
 
 Node::~Node(){
-    std::cout << "Node" << id << "deleted" << std::endl;
 }
 
 int Node::getID() {

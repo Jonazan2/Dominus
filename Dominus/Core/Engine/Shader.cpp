@@ -19,7 +19,7 @@ Shader::Shader( std::string file, GLenum type )
 { }
 
 Shader::~Shader( ) {
-    std::cout << "Shader deleted\n";
+
 }
 
 const GLuint Shader::getUID() {

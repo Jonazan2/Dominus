@@ -15,7 +15,7 @@ ShaderProgram::ShaderProgram()
 }
 
 ShaderProgram::~ShaderProgram() {
-    std::cout << "SharedProgram deleted\n";
+
 }
 
 void ShaderProgram::attachShader( std::shared_ptr<Shader> shader ) {
