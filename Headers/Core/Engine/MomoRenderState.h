@@ -12,6 +12,7 @@
 #include "RenderState.h"
 #include "Buffer.h"
 #include "ShaderProgram.h"
+#include "VertexArrayObject.h"
 
 class MomoRenderState : public RenderState {
 public:
@@ -26,7 +27,7 @@ public:
     void load( std::shared_ptr<Node> node );
     void draw( std::shared_ptr<Node> node );
 private:
-    GLuint vao;
+    std::shared_ptr<VertexArrayObject> vao;
     std::shared_ptr<ShaderProgram> shaderProgram;
     
     glm::mat4 viewMatrix;

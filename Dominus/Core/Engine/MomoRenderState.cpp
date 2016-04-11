@@ -17,6 +17,8 @@ MomoRenderState::MomoRenderState()
     uvsBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
     normalBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
     
+    vao = std::make_shared<VertexArrayObject>( VertexArrayObject() );
+    
     shaderProgram = std::shared_ptr<ShaderProgram>( new ShaderProgram );
     
     textureUniformKey = "textureData";
@@ -72,32 +74,28 @@ void MomoRenderState::init() {
     shaderProgram->registerUnitform( lightUniformKey );
     shaderProgram->registerUnitform( textureUniformKey );
     
-    glGenVertexArrays ( 1, &vao );
-    glBindVertexArray ( vao );
+    vao->bind();
     
     verticesBuffer->bind();
-    glVertexAttribPointer( shaderProgram->getAttribute( positionAttributeKey ),
+    vao->mapAttribute( shaderProgram->getAttribute( positionAttributeKey ),
                           3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray( shaderProgram->getAttribute(positionAttributeKey) );
     verticesBuffer->unBind();
     
     normalBuffer->bind();
-    glVertexAttribPointer( shaderProgram->getAttribute( normalAttributeKey ),
+    vao->mapAttribute( shaderProgram->getAttribute( normalAttributeKey ),
                           3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray( shaderProgram->getAttribute( normalAttributeKey ) );
     normalBuffer->unBind();
     
     uvsBuffer->bind();
-    glVertexAttribPointer( shaderProgram->getAttribute( textureAttributeKey ),
+    vao->mapAttribute( shaderProgram->getAttribute( textureAttributeKey ),
                           2, GL_FLOAT, GL_FALSE, 0, NULL );
-    glEnableVertexAttribArray( shaderProgram->getAttribute( textureAttributeKey ) );
     uvsBuffer->unBind();
     
-    glBindVertexArray ( 0 );
+    vao->unBind();
 }
 
 void MomoRenderState::load( std::shared_ptr<Node> node ) {
-    glBindVertexArray ( vao );
+    vao->bind();
     std::shared_ptr<Mesh> mesh = node->getMesh();
     
     verticesBuffer->bind();
@@ -125,17 +123,17 @@ void MomoRenderState::load( std::shared_ptr<Node> node ) {
         texture->unbind();
     }
     
-    glBindVertexArray( 0 );
+    vao->unBind();
 }
 
 void MomoRenderState::draw( std::shared_ptr<Node> node ) {
     
     shaderProgram->useProgram();
+    vao->bind();
     glUniformMatrix4fv( shaderProgram->getUniform( projectionUniformKey ),
                         1, GL_FALSE, &projectionMatrix[0][0] );
     glUniform3fv( shaderProgram->getUniform( lightUniformKey ),
                   1, &lightPosition[0]);
-    glBindVertexArray ( vao );
     
     if( node->getMesh()->getTexture() != nullptr ) {
         node->getMesh()->getTexture()->bind();
@@ -150,15 +148,15 @@ void MomoRenderState::draw( std::shared_ptr<Node> node ) {
     glUniformMatrix3fv( shaderProgram->getUniform( normalUniformKey ),
                        1, GL_FALSE, &normalMat3[0][0] );
     
-    glDrawArrays (GL_TRIANGLES,
-                  (int)offsetMap[node->getID()],
-                  (int)node->getMesh()->getVertices().size() );
+    glDrawArrays ( GL_TRIANGLES,
+                   (int)offsetMap[node->getID()],
+                   (int)node->getMesh()->getVertices().size() );
 
     if( node->getMesh()->getTexture() != nullptr ) {
         node->getMesh()->getTexture()->unbind();
     }
 
     
-    glBindVertexArray( 0 );
+    vao->unBind();
     shaderProgram->closeProgram();
 }
