@@ -15,6 +15,7 @@ void RenderScene::onSceneCreated( Scene* scene ) {
 
 void RenderScene::populateScene( Scene* scene ) {
     this->scene = scene;
+   
     //Camera setup
     std::shared_ptr<Camera> camera( new Camera );
     camera->yaw = -45.0;
@@ -24,10 +25,9 @@ void RenderScene::populateScene( Scene* scene ) {
     
     std::shared_ptr<LightNode> lightNode( new LightNode );
     scene->setLightNode( lightNode );
-    //TODO: ObjLoader: memory leaked
-    std::shared_ptr<Mesh> momoMesh( new Mesh( new ObjLoader ) );
+    std::shared_ptr<Mesh> momoMesh( new Mesh( make_unique< ObjLoader >() ) );
     momoMesh->load( "momo.obj" );
-    //TODO: GLGpuTexture, PngTextureLoader : memory leaked
+
     std::shared_ptr<Texture> momoTexture( new Texture( make_unique<GLGpuTexture>(),
                                                        make_unique<PngTextureLoader>() ));
     momoTexture->load( "diffuse.png" );
