@@ -43,10 +43,14 @@ void ShaderProgram::linkProgram() {
 }
 
 void ShaderProgram::registerAttribute( std::string attributeKey ) {
-    //TODO: Check if the key has been succesfully retrieved
     if( linked ) {
-        attributes[ attributeKey ] = glGetAttribLocation( uid,
-                                                          attributeKey.c_str() );
+        int attributeUID = glGetAttribLocation( uid,
+                                                attributeKey.c_str() );
+        if( attributeUID != -1 ){
+            attributes[ attributeKey ] = attributeUID;
+        } else {
+            throw UnknowAttributeException( attributeKey.c_str() );
+        }
     }else {
         throw ProgramNotLinkedException( uid );
     }
@@ -54,8 +58,13 @@ void ShaderProgram::registerAttribute( std::string attributeKey ) {
 
 void ShaderProgram::registerUnitform( std::string uniformKey ) {
     if( linked ) {
-        uniforms[ uniformKey ] = glGetUniformLocation( uid,
-                                                       uniformKey.c_str() );
+        int uniformUID = glGetUniformLocation( uid,
+                                               uniformKey.c_str() );
+        if( uniformUID != -1 ) {
+            uniforms[ uniformKey ] = uniformUID;
+        } else {
+            throw UnknowAttributeException( uniformKey.c_str() );
+        }
     }else {
         throw ProgramNotLinkedException( uid );
     }

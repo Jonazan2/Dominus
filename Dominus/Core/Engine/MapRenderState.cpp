@@ -13,7 +13,6 @@
 
 MapRenderState::MapRenderState()
 : units(0) {
-    normalBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >() ));
     verticesBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >() ) );
     
     shaderProgram = std::shared_ptr<ShaderProgram>( new ShaderProgram );
@@ -22,7 +21,6 @@ MapRenderState::MapRenderState()
     projectionUniformKey = "projectionMatrix";
     modelViewUniformKey = "modelViewMatrix";
     positionAttributeKey = "vertex";
-    normalAttributeKey = "normal";
 }
 
 void MapRenderState::updateCamera( glm::mat4 camera ) {
@@ -54,7 +52,6 @@ void MapRenderState::init() {
     shaderProgram->linkProgram();
     
     shaderProgram->registerAttribute( positionAttributeKey );
-    shaderProgram->registerAttribute( normalAttributeKey );
     shaderProgram->registerUnitform( projectionUniformKey );
     shaderProgram->registerUnitform( modelViewUniformKey );
     shaderProgram->registerUnitform( colorUniformKey );
@@ -69,12 +66,6 @@ void MapRenderState::init() {
                            3, GL_FLOAT, GL_FALSE, 0, NULL) ;
     glEnableVertexAttribArray( shaderProgram->getAttribute(positionAttributeKey) );
     verticesBuffer->unBind();
-    
-    normalBuffer->bind();
-    glVertexAttribPointer( shaderProgram->getAttribute( normalAttributeKey ),
-                          3, GL_FLOAT, GL_FALSE, 0, NULL );
-    glEnableVertexAttribArray( shaderProgram->getAttribute( normalAttributeKey ) );
-    normalBuffer->unBind();
     
     glBindVertexArray ( 0 );
 }
@@ -91,12 +82,7 @@ void MapRenderState::load( std::shared_ptr<Node> node ) {
     offsetMap[node->getID()] = units;
     units += mesh->getVertices().size();
     verticesBuffer->unBind();
-    
-    normalBuffer->bind();
-    size = ( sizeof( GLfloat ) * 3 ) * mesh->getNormals().size();
-    normalBuffer->push( (float*) &mesh->getNormals()[0], size );
-    normalBuffer->unBind();
-    
+
     glBindVertexArray( 0 );
 }
 
