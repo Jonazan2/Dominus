@@ -31,7 +31,7 @@ void VertexArrayObject::mapAttribute( int attribute, int size,
                                       GLenum type, GLboolean normalized,
                                       GLsizei stride, const GLvoid *offset ) {
     if( binded ){
-        glVertexAttribPointer( attribute, 3, GL_FLOAT, GL_FALSE, 0, nullptr );
+        glVertexAttribPointer( attribute, size, type, normalized, stride, offset );
         glEnableVertexAttribArray( attribute );
     } else {
         throw UnbindException( attribute );

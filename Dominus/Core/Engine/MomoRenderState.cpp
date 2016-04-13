@@ -122,7 +122,6 @@ void MomoRenderState::load( std::shared_ptr<Node> node ) {
         texture->push();
         texture->unbind();
     }
-    
     vao->unBind();
 }
 
