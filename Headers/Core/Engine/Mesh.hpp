@@ -1,11 +1,3 @@
-//
-//  Mesh.hpp
-//  software-renderer
-//
-//  Created by Alvaro Chambi Campos on 5/12/15.
-//  Copyright © 2015 Alvaro Chambi Campos. All rights reserved.
-//
-
 #ifndef Mesh_hpp
 #define Mesh_hpp
 
@@ -18,7 +10,7 @@
 #include <istream>
 #include <sstream>
 #include <list>
-#include "Material.hpp"
+#include "Material.h"
 #include "Texture.h"
 #include "MeshLoader.h"
 
