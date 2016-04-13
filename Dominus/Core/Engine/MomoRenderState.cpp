@@ -129,22 +129,22 @@ void MomoRenderState::draw( std::shared_ptr<Node> node ) {
     
     shaderProgram->useProgram();
     vao->bind();
-    glUniformMatrix4fv( shaderProgram->getUniform( projectionUniformKey ),
+    vao->mapUniformMatrix4fv( shaderProgram->getUniform( projectionUniformKey ),
                         1, GL_FALSE, &projectionMatrix[0][0] );
-    glUniform3fv( shaderProgram->getUniform( lightUniformKey ),
+    vao->mapUniform3fv( shaderProgram->getUniform( lightUniformKey ),
                   1, &lightPosition[0]);
     
     if( node->getMesh()->getTexture() != nullptr ) {
         node->getMesh()->getTexture()->bind();
-        glUniform1i( shaderProgram->getUniform( textureUniformKey ) , 0);
+        vao->mapUniform1i( shaderProgram->getUniform( textureUniformKey ) , 0);
     }
     
     glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
     glm::mat4 normalMat = glm::transpose( glm::inverse( modelViewMatrix ) );
     glm::mat3 normalMat3 = glm::mat3( normalMat );
-    glUniformMatrix4fv( shaderProgram->getUniform( modelViewUniformKey ),
+    vao->mapUniformMatrix4fv( shaderProgram->getUniform( modelViewUniformKey ),
                        1, GL_FALSE, &modelViewMatrix[0][0] );
-    glUniformMatrix3fv( shaderProgram->getUniform( normalUniformKey ),
+    vao->mapUniformMatrix3fv( shaderProgram->getUniform( normalUniformKey ),
                        1, GL_FALSE, &normalMat3[0][0] );
     
     glDrawArrays ( GL_TRIANGLES,
@@ -157,5 +157,5 @@ void MomoRenderState::draw( std::shared_ptr<Node> node ) {
 
     
     vao->unBind();
-    shaderProgram->closeProgram();
+    shaderProgram->releaseProgram();
 }

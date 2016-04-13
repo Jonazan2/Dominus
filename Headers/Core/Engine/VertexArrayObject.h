@@ -18,12 +18,20 @@ public:
     
     void bind();
     void unBind();
+    /* Maps and enables the given attribute */
     void mapAttribute( int attribute, int size, GLenum type,
                        GLboolean normalized, GLsizei stride,
                        const GLvoid *offset );
+    void mapUniformMatrix4fv( GLint uniform, GLsizei count,
+                              GLboolean transpose, const GLfloat *value );
+    void mapUniformMatrix3fv( GLint uniform, GLsizei count,
+                              GLboolean transpose, const GLfloat *value );
+    void mapUniform3fv( GLint uniform, GLsizei count, const GLfloat *value );
+    void mapUniform1i( GLint uniform, GLint v0 );
 private:
     GLuint uid;
     bool binded;
 };
 
 #endif /* VertexArrayObject_h */
+

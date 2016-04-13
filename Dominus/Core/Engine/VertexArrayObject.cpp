@@ -37,3 +37,40 @@ void VertexArrayObject::mapAttribute( int attribute, int size,
         throw UnbindException( attribute );
     }
 }
+
+void VertexArrayObject::mapUniform1i( GLint uniform, GLint v0 ) {
+    if( binded ){
+        glUniform1i( uniform, v0 );
+    } else {
+        throw UnbindException( uniform );
+    }
+}
+
+void VertexArrayObject::mapUniform3fv( GLint uniform, GLsizei count,
+                                       const GLfloat *value ) {
+    if( binded ){
+        glUniform3fv( uniform, count, value );
+    } else {
+        throw UnbindException( uniform );
+    }
+}
+
+void VertexArrayObject::mapUniformMatrix3fv( GLint uniform, GLsizei count,
+                                             GLboolean transpose,
+                                            const GLfloat *value ) {
+    if( binded ){
+        glUniformMatrix3fv( uniform, count, transpose, value );
+    } else {
+        throw UnbindException( uniform );
+    }
+}
+
+void VertexArrayObject::mapUniformMatrix4fv( GLint uniform, GLsizei count,
+                                             GLboolean transpose,
+                                             const GLfloat *value ) {
+    if( binded ){
+        glUniformMatrix4fv( uniform, count, transpose, value );
+    } else {
+        throw UnbindException( uniform );
+    }
+}

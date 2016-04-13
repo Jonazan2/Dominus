@@ -12,6 +12,7 @@
 #include "RenderState.h"
 #include "ShaderProgram.h"
 #include "Buffer.h"
+#include "VertexArrayObject.h"
 
 class UIRenderState : public RenderState {
 public:
@@ -26,7 +27,7 @@ public:
     void load( std::shared_ptr<Node> node );
     void draw( std::shared_ptr<Node> node );
 private:
-    GLuint vao;
+    std::shared_ptr<VertexArrayObject> vao;
     
     std::shared_ptr<ShaderProgram> shaderProgram;
     std::string positionAttributeKey;
