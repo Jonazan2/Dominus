@@ -1,36 +1,20 @@
-//
-//  List.cpp
-//  ProjectWar
-//
-//  Created by Alvaro Chambi Campos on 14/8/15.
-//  Copyright (c) 2015 Alvaro Chambi Campos. All rights reserved.
-//
-
 #include "TextList.h"
-#include "Text.h"
 
-TextList::TextList()
-{
+TextList::TextList() {}
 
-}
+TextList::~TextList() {}
 
-TextList::~TextList()
-{
+void TextList::updateDataset() {}
 
-}
-
-void TextList::updateDataset()
-{
-
-}
-
-void TextList::setList(std::list<std::string> list)
-{
-    for (std::string item : list) {
+void TextList::setList( std::list<std::string> list ) {
+    for ( std::string item : list ) {
         Text* text = new Text();
         text->setTextResource(item);
-        text->setParams(Params(50,10,CENTER));
-        
+        Params params;
+        params.width = 50;
+        params.height = 10;
+        params.gravity = CENTER;
+        text->setParams(params);
         this->addComponent( std::shared_ptr< Text >( text ) );
     }
 }
