@@ -5,7 +5,6 @@
 #include <vector>
 #include <memory>
 
-#include "Params.h"
 #include "UIComponent.h"
 #include "Event.h"
 

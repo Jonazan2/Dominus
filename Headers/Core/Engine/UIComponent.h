@@ -1,23 +1,47 @@
-//
-//  UIComponent.h
-//  ProjectWar
-//
-//  Created by Alvaro Chambi Campos on 24/3/15.
-//  Copyright (c) 2015 Alvaro Chambi Campos. All rights reserved.
-//
-
-#ifndef ProjectWar_UIComponent_h
-#define ProjectWar_UIComponent_h
+#ifndef __Dominus_UIComponent_h__
+#define __Dominus_UIComponent_h__
 
 #include <memory>
 
 #include "Renderer.h"
-#include "Params.h"
 #include "Texture.h"
-#include "Frame.h"
 #include "Event.h"
 #include "OnItemClickedListener.h"
 #include "Mesh.hpp"
+
+constexpr int FILL = -1;
+constexpr int WRAP = -2;
+
+enum Gravity {
+    CENTER,
+    UP,
+    DOWN,
+    RIGHT,
+    CENTER_DOWN,
+};
+
+enum LayoutDisposition {
+    WEIGHT_DISPOSITION,
+    WRAP_DISPOSITION,
+};
+
+struct Params {
+    int width = FILL;
+    int height = FILL;
+    Gravity gravity = CENTER;
+    LayoutDisposition disposition = WRAP_DISPOSITION;
+    int marginLeft;
+    int marginRight;
+    int marginTop;
+    int marginDown;
+    int margin;
+};
+
+struct Frame {
+    glm::vec2 position;
+    int width;
+    int height;
+};
 
 class UIComponent : public std::enable_shared_from_this<UIComponent>{
 public:

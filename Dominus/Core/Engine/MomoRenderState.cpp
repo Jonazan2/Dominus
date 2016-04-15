@@ -1,21 +1,12 @@
-//
-//  MomoRenderState.cpp
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 2/4/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
-
 #include "MomoRenderState.h"
 #include "GLGpuBuffer.h"
 #include "Shader.h"
 
 MomoRenderState::MomoRenderState()
-: units( 0 ) {
-    //TODO: GLGPuBuffer: leaked memory
-    verticesBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
-    uvsBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
-    normalBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
+    : units( 0 ) {
+    verticesBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >() ) );
+    uvsBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >() ) );
+    normalBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >()  ) );
     
     vao = std::make_shared<VertexArrayObject>( VertexArrayObject() );
     
@@ -30,10 +21,6 @@ MomoRenderState::MomoRenderState()
     positionAttributeKey = "vp";
     textureAttributeKey = "textureCoord";
     normalAttributeKey = "normalAttribute";
-}
-
-MomoRenderState::~MomoRenderState() {
-
 }
 
 void MomoRenderState::updateCamera( glm::mat4 camera ) {
@@ -155,7 +142,10 @@ void MomoRenderState::draw( std::shared_ptr<Node> node ) {
         node->getMesh()->getTexture()->unbind();
     }
 
-    
     vao->unBind();
     shaderProgram->releaseProgram();
+}
+
+MomoRenderState::~MomoRenderState() {
+    
 }

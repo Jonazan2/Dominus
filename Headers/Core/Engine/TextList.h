@@ -5,6 +5,7 @@
 #include <string>
 #include <list>
 
+#include "Text.h"
 #include "VerticalLayout.h"
 
 class TextList : public VerticalLayout {

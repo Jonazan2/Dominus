@@ -1,13 +1,4 @@
 #include "RenderScene.h"
-#include "Log.hpp"
-#include "HorizontalLayout.h"
-#include "VerticalLayout.h"
-#include "Button.h"
-#include "PngTextureLoader.h"
-#include "GLGpuTexture.h"
-#include "ObjLoader.h"
-#include "MapBuilder.h"
-#include "MomoNode.h"
 
 RenderScene::RenderScene() {
     upPressed = false;
@@ -24,6 +15,7 @@ void RenderScene::onSceneCreated( Scene* scene ) {
 
 void RenderScene::populateScene( Scene* scene ) {
     this->scene = scene;
+   
     //Camera setup
     std::shared_ptr<Camera> camera( new Camera );
     camera->yaw = -45.0;
@@ -33,12 +25,11 @@ void RenderScene::populateScene( Scene* scene ) {
     
     std::shared_ptr<LightNode> lightNode( new LightNode );
     scene->setLightNode( lightNode );
-    //TODO: ObjLoader: memory leaked
-    std::shared_ptr<Mesh> momoMesh( new Mesh( new ObjLoader ) );
+    std::shared_ptr<Mesh> momoMesh( new Mesh( make_unique< ObjLoader >() ) );
     momoMesh->load( "momo.obj" );
-    //TODO: GLGpuTexture, PngTextureLoader : memory leaked
-    std::shared_ptr<Texture> momoTexture( new Texture( new GLGpuTexture,
-                                                       new PngTextureLoader ) );
+
+    std::shared_ptr<Texture> momoTexture( new Texture( make_unique<GLGpuTexture>(),
+                                                       make_unique<PngTextureLoader>() ));
     momoTexture->load( "diffuse.png" );
     momoMesh->setTexture( momoTexture );
     
@@ -72,12 +63,12 @@ void RenderScene::populateUI( Scene* scene ) {
     std::shared_ptr< Button > ptrButton2( new Button );
     ptrButton2->setWeight( 1 );
     
-    Texture* buttonTexture = new Texture( new GLGpuTexture,
-                                          new PngTextureLoader );
+    Texture* buttonTexture = new Texture( make_unique<GLGpuTexture>(),
+                                          make_unique<PngTextureLoader>() );
     std::shared_ptr< Texture > ptrTexture( buttonTexture );
-
-    Texture* button2Texture = new Texture( new GLGpuTexture,
-                                           new PngTextureLoader );
+    
+    Texture* button2Texture = new Texture( make_unique<GLGpuTexture>(),
+                                          make_unique<PngTextureLoader>() );
     std::shared_ptr< Texture > ptrTexture2( button2Texture );
 
     ptrTexture->load( "button.png" );

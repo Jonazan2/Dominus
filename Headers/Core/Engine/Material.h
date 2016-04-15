@@ -1,13 +1,14 @@
-#ifndef Material_hpp
-#define Material_hpp
+#ifndef __Dominus_Material_h__
+#define __Dominus_Material_h__
 
 #include <string>
-#include <OpenGL/gl3.h>
-#include <glm/glm.hpp>
 #include <iostream>
 #include <fstream>
 #include <istream>
 #include <sstream>
+
+#include <OpenGL/gl3.h>
+#include <glm/glm.hpp>
 
 class Material {
     
@@ -88,4 +89,4 @@ private:
     std::string stencilTextureMap;
 };
 
-#endif /* Material_hpp */
+#endif /* _MATERIAL_H_ */

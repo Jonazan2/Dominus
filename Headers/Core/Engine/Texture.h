@@ -1,24 +1,21 @@
-//
-//  Header.h
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 25/2/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
+#ifndef __Dominus_Texture_h__
+#define __Dominus_Texture_h__
 
-#ifndef Texture_h
-#define Texture_h
+#include <string>
 
 #include <OpenGL/OpenGL.h>
-#include <string>
+
 #include "TextureLoader.h"
 #include "GpuTexture.h"
+#include "Exception.h"
+#include "MemoryUtils.h"
 
 class Texture {
 public:
-    Texture( GpuTexture* gpuTexture, TextureLoader* loader );
-    Texture( GpuTexture* gpuTexture );
-    ~Texture( );
+    Texture( std::unique_ptr< GpuTexture >  gpuTexture,
+             std::unique_ptr< TextureLoader > loader );
+    Texture( std::unique_ptr< GpuTexture > gpuTexture );
+    ~Texture();
     
     GLubyte* getImageData();
     int getWidth();
@@ -26,8 +23,8 @@ public:
     void setWidth( int width );
     void setHeight( int height );
     void load( std::string file );
-    void push( );
-    void bind( );
+    void push();
+    void bind();
     void unbind();
     GLuint getUID();
 private:
@@ -39,11 +36,11 @@ private:
     int width;
     int height;
     bool hasAlpha;
-    TextureLoader* loader;
-    GpuTexture* gpuTexture;
+    std::unique_ptr< TextureLoader > loader;
+    std::unique_ptr< GpuTexture > gpuTexture;
     bool binded;
     bool loaded;
     GLuint textureUID;
 };
 
-#endif /* Texture_h */
+#endif /* _TEXTURE_H_ */
