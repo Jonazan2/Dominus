@@ -13,7 +13,7 @@
 
 MapRenderState::MapRenderState()
 : units(0) {
-    verticesBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
+    verticesBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >() ) );
     
     shaderProgram = std::shared_ptr<ShaderProgram>( new ShaderProgram );
     

@@ -1,33 +1,21 @@
-//
-//  Texture.cpp
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 25/2/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
-
 #include "Texture.h"
-#include "Exception.h"
 
 Texture::Texture( )
-: width(0), height(0), hasAlpha( false ),
-image( nullptr ), loader( nullptr ),
-gpuTexture( nullptr ), binded( false ), loaded( false )
-{ }
+    : width(0), height(0), hasAlpha( false ),
+    image( nullptr ), loader( nullptr ),
+    gpuTexture( nullptr ), binded( false ), loaded( false ) {
+}
 
-Texture::Texture( GpuTexture* gpuTexture )
+Texture::Texture( std::unique_ptr<GpuTexture> gpuTexture )
 : Texture() {
-    this->gpuTexture = gpuTexture;
-    textureUID = gpuTexture->genTexture();
+    this->gpuTexture = std::move(gpuTexture);
+    textureUID = this->gpuTexture->genTexture();
 }
 
-Texture::Texture( GpuTexture* gpuTexture, TextureLoader* loader )
-: Texture( gpuTexture ) {
-    this->loader = loader;
-}
-
-Texture::~Texture() {
-
+Texture::Texture( std::unique_ptr< GpuTexture > gpuTexture,
+                  std::unique_ptr< TextureLoader > loader )
+    : Texture( std::move(gpuTexture) ) {
+    this->loader = std::move( loader );
 }
 
 void Texture::load( std::string file ) {
@@ -71,4 +59,8 @@ int Texture::getWidth() {
 
 int Texture::getHeight() {
     return height;
+}
+
+Texture::~Texture() {
+    delete image;
 }

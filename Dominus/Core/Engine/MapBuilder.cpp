@@ -1,19 +1,6 @@
-//
-//  MapBuilder.cpp
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 31/3/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
-
 #include "MapBuilder.h"
-#include "ObjLoader.h"
 
 MapBuilder::MapBuilder() {
-
-}
-
-MapBuilder::~MapBuilder() {
 
 }
 
@@ -27,7 +14,7 @@ std::shared_ptr<Map> MapBuilder::build( MapLoader *mapLoader,
     for ( int i = 0 ; i < mapInfo->tilesKeys.size(); i++ ) {
         int tileKey = mapInfo->tilesKeys.at( i );
         std::shared_ptr<Mesh> mesh =
-            std::shared_ptr<Mesh>( new Mesh( new ObjLoader ) );
+            std::shared_ptr<Mesh>( new Mesh( make_unique< ObjLoader >() ) );
         mesh->load( tilesInfo.at( tileKey ) );
         
         std::shared_ptr<Tile> tile( new Tile );
@@ -39,4 +26,8 @@ std::shared_ptr<Map> MapBuilder::build( MapLoader *mapLoader,
     map->columns = mapInfo->width;
     map->rows = mapInfo->height;
     return map;
+}
+
+MapBuilder::~MapBuilder() {
+    
 }

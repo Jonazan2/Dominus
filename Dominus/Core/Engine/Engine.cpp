@@ -10,12 +10,9 @@
 #include "GLFWInputHandler.h"
 
 Engine::Engine() : running( true ){
-
-}
-
-Engine::~Engine(){
     
 }
+
 
 void Engine::init() {
     window = new Window( 640, 480 );
@@ -62,4 +59,12 @@ void Engine::render(){
 
 bool Engine::isRunning(){
     return running;
+}
+
+Engine::~Engine(){
+    delete scene;
+    delete gameScene;
+    delete inputHandler;
+    delete renderer;
+    delete window;
 }
