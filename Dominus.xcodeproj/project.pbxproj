@@ -148,9 +148,7 @@
 		9C2A0E881CADADB1004A45CA /* Tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Tile.cpp; path = Core/Engine/Tile.cpp; sourceTree = "<group>"; };
 		9C470C281C7F849F00558755 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		9C7D081A1C9EC06600804DF1 /* Button.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Button.h; path = Headers/Core/Engine/Button.h; sourceTree = "<group>"; };
-		9C7D081B1C9EC06600804DF1 /* Frame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Frame.h; path = Headers/Core/Engine/Frame.h; sourceTree = "<group>"; };
 		9C7D081D1C9EC06600804DF1 /* OnItemClickedListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OnItemClickedListener.h; path = Headers/Core/Engine/OnItemClickedListener.h; sourceTree = "<group>"; };
-		9C7D081E1C9EC06600804DF1 /* Params.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Params.h; path = Headers/Core/Engine/Params.h; sourceTree = "<group>"; };
 		9C7D081F1C9EC06600804DF1 /* Text.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Text.h; path = Headers/Core/Engine/Text.h; sourceTree = "<group>"; };
 		9C7D08201C9EC06600804DF1 /* TextList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextList.h; path = Headers/Core/Engine/TextList.h; sourceTree = "<group>"; };
 		9C7D08211C9EC06600804DF1 /* UIComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UIComponent.h; path = Headers/Core/Engine/UIComponent.h; sourceTree = "<group>"; };
@@ -373,9 +371,7 @@
 				9C7D08391C9EC61500804DF1 /* Layout.h */,
 				9C7D08371C9EC5FB00804DF1 /* HorizontalLayout.h */,
 				9C7D08381C9EC5FB00804DF1 /* VerticalLayout.h */,
-				9C7D081B1C9EC06600804DF1 /* Frame.h */,
 				9C7D081D1C9EC06600804DF1 /* OnItemClickedListener.h */,
-				9C7D081E1C9EC06600804DF1 /* Params.h */,
 				9C7D081F1C9EC06600804DF1 /* Text.h */,
 				9C7D08201C9EC06600804DF1 /* TextList.h */,
 				9C7D08211C9EC06600804DF1 /* UIComponent.h */,

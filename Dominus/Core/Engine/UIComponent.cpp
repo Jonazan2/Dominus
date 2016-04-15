@@ -1,11 +1,3 @@
-//
-//  UIComponent.cpp
-//  ProjectWar
-//
-//  Created by Alvaro Chambi Campos on 24/3/15.
-//  Copyright (c) 2015 Alvaro Chambi Campos. All rights reserved.
-//
-
 #include "UIComponent.h"
 
 UIComponent::UIComponent() : width(0), height(0), weight(0),hud(false), visible(true), texture(nullptr), parent(nullptr), listener(nullptr) {
