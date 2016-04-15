@@ -1,21 +1,14 @@
-//
-//  Buffer.h
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 23/3/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
+#ifndef __Dominus_Buffer_h__
+#define __Dominus_Buffer_h__
 
-#ifndef Buffer_h
-#define Buffer_h
+#include <glm/glm.hpp>
 
 #include "GpuBuffer.h"
 #include "Exception.h"
-#include <glm/glm.hpp>
 
 class Buffer {
 public:
-    Buffer( GpuBuffer* buffer );
+    Buffer( std::unique_ptr< GpuBuffer > buffer );
     ~Buffer();
     
     void requestBufferMemory( float* vector, GLsizeiptr vectorSize );
@@ -39,11 +32,11 @@ public:
     GLsizeiptr getSize();
     GLsizeiptr getPosition();
 private:
-    GpuBuffer* buffer;
+    std::unique_ptr< GpuBuffer > buffer;
     GLuint bufferUID;
     GLsizeiptr position;
     GLsizeiptr size;
     bool binded;
 };
 
-#endif /* Buffer_h */
+#endif /* _BUFFER_H_ */

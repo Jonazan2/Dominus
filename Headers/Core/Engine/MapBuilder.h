@@ -1,17 +1,10 @@
-//
-//  MapBuilder.h
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 31/3/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
-
-#ifndef MapBuilder_h
-#define MapBuilder_h
+#ifndef __Dominus_MapBuilder_h__
+#define __Dominus_MapBuilder_h__
 
 #include "Map.h"
 #include "MapLoader.h"
 #include "TilesLoader.h"
+#include "ObjLoader.h"
 
 class MapBuilder {
 public:
@@ -21,4 +14,4 @@ public:
     std::shared_ptr<Map> build( MapLoader* mapLoader, TilesLoader* tilesLoader );
 };
 
-#endif /* MapBuilder_h */
+#endif /* _MAP_BUILDER_H_ */

@@ -37,10 +37,9 @@ void Renderer::init(){
     vao = std::make_shared<VertexArrayObject>( VertexArrayObject() );
     
     currentState = states[MAP_RENDER_STATE];
-    
-    //TODO: GLGpuBuffer: leaked memory
-    uiVerticesBufer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
-    uiUvsBuffer = std::shared_ptr<Buffer>( new Buffer( new GLGpuBuffer ) );
+
+    uiVerticesBufer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >() ));
+    uiUvsBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >() ));
     
     states[MOMO_RENDER_STATE]->init();
     states[MAP_RENDER_STATE]->init();

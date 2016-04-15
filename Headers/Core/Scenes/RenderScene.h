@@ -1,15 +1,26 @@
-//
-//  RenderScene.h
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 15/2/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
-
 #ifndef RenderScene_h
 #define RenderScene_h
 
 #include "GameScene.h"
+#include "Log.hpp"
+#include "HorizontalLayout.h"
+#include "VerticalLayout.h"
+#include "Button.h"
+#include "PngTextureLoader.h"
+#include "GLGpuTexture.h"
+#include "ObjLoader.h"
+#include "MapBuilder.h"
+#include "MomoNode.h"
+#include "MemoryUtils.h"
+#include "Log.hpp"
+#include "HorizontalLayout.h"
+#include "VerticalLayout.h"
+#include "Button.h"
+#include "PngTextureLoader.h"
+#include "GLGpuTexture.h"
+#include "ObjLoader.h"
+#include "MapBuilder.h"
+#include "MomoNode.h"
 
 class RenderScene : public GameScene {
 public:

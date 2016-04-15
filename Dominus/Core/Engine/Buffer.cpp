@@ -1,16 +1,8 @@
-//
-//  Buffer.cpp
-//  Dominus
-//
-//  Created by Alvaro Chambi Campos on 23/3/16.
-//  Copyright © 2016 frikazos. All rights reserved.
-//
-
 #include "Buffer.h"
 
-Buffer::Buffer( GpuBuffer* buffer )
-: size( 0 ), position( 0 ), buffer( buffer ) {
-    bufferUID = buffer->genBuffer();
+Buffer::Buffer( std::unique_ptr< GpuBuffer > buffer )
+    : size( 0 ), position( 0 ), buffer( std::move( buffer ) ) {
+    bufferUID = this->buffer->genBuffer();
 }
 
 Buffer::~Buffer() {

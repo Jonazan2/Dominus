@@ -1,12 +1,11 @@
 #include "Mesh.hpp"
-#include <OpenGL/OpenGL.h>
 
 Mesh::Mesh()
-:texture( nullptr )
-{}
+    :texture( nullptr ) {
+}
 
-Mesh::Mesh( MeshLoader* loader ) : Mesh( ) {
-    this->loader = loader;
+Mesh::Mesh( std::unique_ptr< MeshLoader > loader ) : Mesh( ) {
+    this->loader = std::move( loader );
 }
 
 void Mesh::load( const std::string file ) {
