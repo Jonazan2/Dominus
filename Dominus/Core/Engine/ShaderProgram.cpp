@@ -95,7 +95,7 @@ void ShaderProgram::useProgram() {
     }
 }
 
-void ShaderProgram::closeProgram() {
+void ShaderProgram::releaseProgram() {
     glUseProgram( 0 );
     active = false;
 }

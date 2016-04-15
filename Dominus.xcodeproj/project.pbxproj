@@ -74,6 +74,8 @@
 		9CBA32431CB04D0D00FCF048 /* MomoRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32411CB04D0D00FCF048 /* MomoRenderState.cpp */; };
 		9CBA324A1CB12F4100FCF048 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */; };
 		9CBA324B1CB12F4100FCF048 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */; };
+		9CBA32681CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CBA32691CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CBA324E1CB6810F00FCF048 /* MomoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */; };
 		9CBA324F1CB6810F00FCF048 /* MomoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */; };
 		9CBA32521CB6D40000FCF048 /* UIRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */; };
@@ -190,6 +192,8 @@
 		9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MomoNode.cpp; path = Core/Engine/MomoNode.cpp; sourceTree = "<group>"; };
 		9CBA32501CB6D3ED00FCF048 /* UIRenderState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UIRenderState.h; path = Headers/Core/Engine/UIRenderState.h; sourceTree = "<group>"; };
 		9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIRenderState.cpp; path = Core/Engine/UIRenderState.cpp; sourceTree = "<group>"; };
+		9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VertexArrayObject.cpp; path = Core/Engine/VertexArrayObject.cpp; sourceTree = "<group>"; };
+		9CBA326A1CBC349100FCF048 /* VertexArrayObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VertexArrayObject.h; path = Headers/Core/Engine/VertexArrayObject.h; sourceTree = "<group>"; };
 		9CCB2F9D1C82F7FE0066C313 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = ../../../../Library/Frameworks/gtest.framework; sourceTree = "<group>"; };
 		9CCB2F9F1C82F8790066C313 /* gmock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gmock.framework; path = ../../../../Library/Frameworks/gmock.framework; sourceTree = "<group>"; };
 		9CCB2FA61C82F92D0066C313 /* UnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -456,6 +460,7 @@
 				9CBA32481CB12F3100FCF048 /* ShaderProgram.h */,
 				9CBA324C1CB680F900FCF048 /* MomoNode.h */,
 				9CBA32501CB6D3ED00FCF048 /* UIRenderState.h */,
+				9CBA326A1CBC349100FCF048 /* VertexArrayObject.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -491,6 +496,7 @@
 				9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */,
 				9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */,
 				9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */,
+				9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -590,6 +596,7 @@
 				9C7D083B1C9EC63A00804DF1 /* Layout.cpp in Sources */,
 				AB6398DA1C8CE49500CA0B3B /* Camera.cpp in Sources */,
 				9C222D591CA491C7003C1DC5 /* GLGpuBuffer.cpp in Sources */,
+				9CBA32681CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */,
 				AB6398DF1C8CE49500CA0B3B /* Mesh.cpp in Sources */,
 				AB6398DD1C8CE49500CA0B3B /* GLFWInputHandler.cpp in Sources */,
 				92E345411C64E04A00308A63 /* Log.cpp in Sources */,
@@ -642,6 +649,7 @@
 				9C80752F1CA1D1C80052086F /* UIComponentTest.cpp in Sources */,
 				9C80754F1CA313130052086F /* Buffer.cpp in Sources */,
 				9C2A0E781CAC4650004A45CA /* MapLoader.cpp in Sources */,
+				9CBA32691CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */,
 				9C8075301CA1D1C80052086F /* VerticalLayoutTest.cpp in Sources */,
 				9CBA32431CB04D0D00FCF048 /* MomoRenderState.cpp in Sources */,
 				9CBA324F1CB6810F00FCF048 /* MomoNode.cpp in Sources */,

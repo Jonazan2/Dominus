@@ -15,7 +15,9 @@ MapRenderState::MapRenderState()
 : units(0) {
     verticesBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >() ) );
     
-    shaderProgram = std::shared_ptr<ShaderProgram>( new ShaderProgram );
+    shaderProgram = std::make_shared<ShaderProgram>( ShaderProgram() );
+    
+    vao = std::make_shared<VertexArrayObject>( VertexArrayObject() );
     
     colorUniformKey = "color";
     projectionUniformKey = "projectionMatrix";
@@ -56,24 +58,21 @@ void MapRenderState::init() {
     shaderProgram->registerUnitform( modelViewUniformKey );
     shaderProgram->registerUnitform( colorUniformKey );
     
-    glGenVertexArrays ( 1, &vao );
-    glBindVertexArray ( vao );
+    vao->bind();
     
     //Setup vao with the given vbo
     verticesBuffer->bind();
-    //TODO: Dont allow this operation if the vao is not binded
-    glVertexAttribPointer ( shaderProgram->getAttribute( positionAttributeKey ),
+    vao->mapAttribute( shaderProgram->getAttribute( positionAttributeKey ),
                            3, GL_FLOAT, GL_FALSE, 0, NULL) ;
-    glEnableVertexAttribArray( shaderProgram->getAttribute(positionAttributeKey) );
     verticesBuffer->unBind();
     
-    glBindVertexArray ( 0 );
+    vao->unBind();
 }
 
 void MapRenderState::load( std::shared_ptr<Node> node ) {
     std::shared_ptr<Mesh> mesh = node->getMesh();
 
-    glBindVertexArray ( vao );
+    vao->bind();
     
     verticesBuffer->bind();
     GLsizeiptr size = ( sizeof( GLfloat ) * 3 ) * mesh->getVertices().size();
@@ -83,28 +82,28 @@ void MapRenderState::load( std::shared_ptr<Node> node ) {
     units += mesh->getVertices().size();
     verticesBuffer->unBind();
 
-    glBindVertexArray( 0 );
+    vao->unBind();
 }
 
 void MapRenderState::draw( std::shared_ptr<Node> node ) {
     shaderProgram->useProgram();
-    glUniformMatrix4fv( shaderProgram->getUniform( projectionUniformKey ) ,
-                       1, GL_FALSE, &projectionMatrix[0][0]);
-    glBindVertexArray ( vao );
+    vao->bind();
+    vao->mapUniformMatrix4fv( shaderProgram->getUniform( projectionUniformKey ) ,
+                              1, GL_FALSE, &projectionMatrix[0][0]);
     
     glm::vec3 color = glm::vec3( (node->getID() % 2) * 0.5f , 1.0f, 1.0f );
-    glUniform3fv( shaderProgram->getUniform( colorUniformKey ),
-                 1, &color[0] );
+    vao->mapUniform3fv( shaderProgram->getUniform( colorUniformKey ),
+                        1, &color[0] );
     
     glm::mat4 modelViewMatrix = viewMatrix * *node->getToWorldMatrix();
-    glUniformMatrix4fv( shaderProgram->getUniform( modelViewUniformKey ),
+    vao->mapUniformMatrix4fv( shaderProgram->getUniform( modelViewUniformKey ),
                        1, GL_FALSE,
                        &modelViewMatrix[0][0]);
     glDrawArrays ( GL_TRIANGLES,
                   (int)offsetMap[node->getID()],
                   (int)node->getMesh()->getVertices().size());
-    glBindVertexArray( 0 );
-    shaderProgram->closeProgram();
+    vao->unBind();
+    shaderProgram->releaseProgram();
 }
 
 MapRenderState::~MapRenderState() {}

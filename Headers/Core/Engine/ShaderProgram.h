@@ -29,7 +29,7 @@ public:
     GLuint getUniform( std::string uniformKey );
     
     void useProgram();
-    void closeProgram();
+    void releaseProgram();
 private:
     GLuint uid;
     bool linked;

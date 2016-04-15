@@ -17,6 +17,7 @@
 #include "GLGpuBuffer.h"
 #include "RenderState.h"
 #include "ShaderProgram.h"
+#include "VertexArrayObject.h"
 
 
 
@@ -54,8 +55,8 @@ private:
     
     static const GLuint BUFFER_SIZE = 100000 * 12;
     GLFWwindow* window;
-    GLuint vao;
     
+    std::shared_ptr<VertexArrayObject> vao;
     std::shared_ptr<ShaderProgram> shaderProgram;
     std::string positionAttributeKey;
     std::string textureAttributeKey;

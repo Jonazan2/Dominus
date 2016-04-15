@@ -10,7 +10,7 @@
 
 UIRenderState::UIRenderState() :
 units( 0 ) {
-
+    vao = std::make_shared<VertexArrayObject>( VertexArrayObject() );
 }
 
 UIRenderState::~UIRenderState() {
@@ -38,22 +38,19 @@ void UIRenderState::init() {
     shaderProgram->registerAttribute( positionAttributeKey );
     shaderProgram->registerAttribute( textureAttributeKey );
     
-    glGenVertexArrays ( 1, &vao );
-    glBindVertexArray( vao );
+    vao->bind();
     
     uiVerticesBufer->bind();
-    glVertexAttribPointer ( shaderProgram->getAttribute( positionAttributeKey ),
+    vao->mapAttribute( shaderProgram->getAttribute( positionAttributeKey ),
                            3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray( shaderProgram->getAttribute(positionAttributeKey) );
     uiUvsBuffer->bind();
     
     uiUvsBuffer->bind();
-    glVertexAttribPointer( shaderProgram->getAttribute( textureAttributeKey ),
+    vao->mapAttribute( shaderProgram->getAttribute( textureAttributeKey ),
                           2, GL_FLOAT, GL_FALSE, 0, NULL );
-    glEnableVertexAttribArray( shaderProgram->getAttribute( textureAttributeKey ) );
     uiUvsBuffer->unBind();
     
-    glBindVertexArray( 0 );
+    vao->unBind();
 }
 
 void UIRenderState::updateCamera( glm::mat4 camera ) {
@@ -69,7 +66,7 @@ void UIRenderState::updateLightSource( glm::vec3 light ) {
 }
 
 void UIRenderState::load( std::shared_ptr<Node> node ) {
-    glBindVertexArray ( vao );
+    vao->bind();
     std::shared_ptr<Mesh> mesh = node->getMesh();
     
     uiVerticesBufer->bind();
@@ -91,21 +88,21 @@ void UIRenderState::load( std::shared_ptr<Node> node ) {
         mesh->getTexture()->unbind();
     }
     
-    glBindVertexArray ( 0 );
+    vao->unBind();
 }
 
 void UIRenderState::draw( std::shared_ptr<Node> node ) {
     glm::mat4 orthoMatrix = glm::ortho( 0.0, 640.0, 480.0, 0.0 );
     shaderProgram->useProgram();
-    glBindVertexArray ( vao );
+    vao->bind();
     
     if( node->getMesh()->getTexture() != nullptr ) {
         node->getMesh()->getTexture()->bind();
-        glUniform1i( shaderProgram->getUniform( textureDataUniformKey ) , 0 );
+        vao->mapUniform1i( shaderProgram->getUniform( textureDataUniformKey ) , 0 );
     }
     
     glm::mat4 MVPMatrix = orthoMatrix;
-    glUniformMatrix4fv( shaderProgram->getUniform( mvpUniformKey ),
+    vao->mapUniformMatrix4fv( shaderProgram->getUniform( mvpUniformKey ),
                        1, GL_FALSE, &MVPMatrix[0][0] );
     
     glDrawArrays ( GL_TRIANGLES,
@@ -116,6 +113,6 @@ void UIRenderState::draw( std::shared_ptr<Node> node ) {
     }
 
     
-    glBindVertexArray( 0 );
-    shaderProgram->closeProgram();
+    vao->unBind();
+    shaderProgram->releaseProgram();
 }

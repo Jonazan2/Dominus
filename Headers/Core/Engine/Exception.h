@@ -16,17 +16,17 @@
 
 class UnbindException : public std::runtime_error {
 public:
-    UnbindException( int bufferUID )
-    : runtime_error( "Buffer unbinded" ), bufferUID( bufferUID )
+    UnbindException( int uid )
+    : runtime_error( "Buffer unbinded" ), uid( uid )
     {}
     
     virtual const char* what() const throw() {
         std::ostringstream message;
-        message << std::runtime_error::what() << " " << bufferUID;
+        message << std::runtime_error::what() << " " << uid;
         return message.str().c_str();
     }
 private:
-    int bufferUID;
+    int uid;
 };
 
 class InvalidTextureException : public std::runtime_error {
