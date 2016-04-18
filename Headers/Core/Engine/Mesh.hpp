@@ -13,6 +13,8 @@
 #include "Material.h"
 #include "Texture.h"
 #include "MeshLoader.h"
+#include "Shape.h"
+
 #include <OpenGL/OpenGL.h>
 
 class Mesh{
@@ -20,8 +22,6 @@ public:
     Mesh();
     Mesh( std::unique_ptr< MeshLoader > loader );
     ~Mesh();
-    
-    void load( const std::string file );
     
     glm::vec3 getPosition() const;
     void setPosition(glm::vec3 position);
@@ -40,18 +40,11 @@ public:
     void setTexture( std::shared_ptr<Texture> texture );
     std::shared_ptr<Texture> getTexture();
     
-    void normalize();
-    void unNormalize();
-    
 private:
-    glm::vec3 position;
-    std::vector<glm::vec3> vertices;
-    std::vector<glm::vec2> uvs;
-    std::vector<glm::vec3> normals;
+    std::vector<std::shared_ptr<Shape>> shapes;
     std::shared_ptr<Texture> texture;
     Material material;
     std::unique_ptr< MeshLoader > loader;
-    bool normalized;
 };
 
 #endif /* Mesh_hpp */

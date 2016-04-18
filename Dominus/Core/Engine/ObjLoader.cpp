@@ -22,97 +22,47 @@ ObjLoader::~ObjLoader() {
 
 }
 
-void ObjLoader::load( const std::string filePath,
-                      std::vector<glm::vec3>* outVertices,
-                      std::vector<glm::vec2>* outUvs,
-                      std::vector<glm::vec3>* outNormals ) {
+std::shared_ptr<Mesh> ObjLoader::load( const std::string filePath ) {
+    std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>( Mesh() );
     std::string line;
     std::ifstream file(filePath);
     
     if (file.is_open()) {
-        std::vector<glm::vec3*> *tempVertices = new std::vector<glm::vec3 *>;
-        std::vector<glm::vec2*> *tempTextureVertices = new std::vector<glm::vec2 *>;
-        std::vector<glm::vec3*> *tempNormalsVertices = new std::vector<glm::vec3 *>;
-        std::vector<int> *tempIndices = new std::vector<int>;
-        
         while (std::getline(file, line)) {
-            std::istringstream in(line);
-            
-            if (line.at(0) != '#') {
-                
-                float x, y, z;
-                std::string type;
-                in >> type;
-                
-                if( type == "v" ){
-                    in >> x >> y >> z;
-                    tempVertices->push_back( new glm::vec3(x,y,z) );
-                }else if( type == "vt" ){
-                    in >> x >> y;
-                    tempTextureVertices->push_back( new glm::vec2(x,y) );
-                }else if( type == "vn" ){
-                    in >> x >> y >> z;
-                    tempNormalsVertices->push_back( new glm::vec3(x,y,z) );
-                }else if( type == "f" ) {
-                    std::vector<std::string> triplets = split(line, ' ');
-                    for ( std::string triplet : triplets ) {
-                        std::vector<std::string> elements = split(triplet, '/');
-                        
-                        if (elements.size() == 2) {
-                            // Although we can parse v//vn we are not handling this case
-                            // while creating the final vertex list just yet
-                            tempIndices->push_back(std::stoi(elements.at(0))); // v
-                            tempIndices->push_back(std::stoi(elements.at(1))); // vn
-                        } else if (elements.size() == 3) {
-                            tempIndices->push_back(std::stoi(elements.at(0))); // v
-                            tempIndices->push_back(std::stoi(elements.at(1))); // vt
-                            tempIndices->push_back(std::stoi(elements.at(2))); // vn
-                        }
-                    }
-                } else if ( type == "mtlib" || type == "usemtl" ) {
-                    // We handle just one material per obj, but there could be
-                    // multiple ones
-                    std::string name;
-                    in >> name;
-                    //TODO: Parse material
-                    //material.loadMaterial(name);
-                }
+            if ( line.at( 0 ) != '#' ) {
+                //load shape
             }
         }
-        
-        // Reserve memory before hand for vertices
-        numTriangles = (int)tempIndices->size() / 9;
-        outVertices->reserve(numTriangles);
-        outUvs->reserve(numTriangles);
-        outNormals->reserve(numTriangles);
-        
-        // Traverse faces list and create sorted list of vertices
-        const int tempIndicesSize = (int) tempIndices->size();
-        for( int i = 0; i < tempIndicesSize; i++ ){
-            outVertices->push_back(*tempVertices->at(tempIndices->at(i) - 1));
-            outUvs->push_back( *tempTextureVertices->at(tempIndices->at(++i) - 1) );
-            outNormals->push_back( *tempNormalsVertices->at(tempIndices->at(++i) -1) );
-        }
-        
-        // Free temporary vectors
-        for ( auto vertex : *tempVertices ) {
-            delete vertex;
-        }
-        delete tempVertices;
-        
-        for ( auto vertex : *tempTextureVertices ) {
-            delete vertex;
-        }
-        delete tempTextureVertices;
-        
-        for ( auto vertex : *tempNormalsVertices ) {
-            delete vertex;
-        }
-        delete tempNormalsVertices;
-        
-        delete tempIndices;
     }
     file.close();
+    return mesh;
+}
+
+std::shared_ptr<Shape> ObjLoader::loadShape( std::ifstream file ) {
+    std::shared_ptr<Shape> shape = std::make_shared<Shape>( Shape() );
+    //Check if stream starts in 'o' // otherwise throw exception
+    std::string line;
+    bool shapeSpace = true;
+    while ( std::getline( file, line ) && shape ) {
+        //stop when we found the start of another shape
+        shapeSpace = ( line.at( 0 ) != 'o' );
+        if( shapeSpace ) {
+            std::istringstream in(line);
+            std::string type;
+            in >> type;
+            
+            if( type == "v" ) {
+                std::vector<glm::vec3> vertex = loadVertex( line );
+            }else if( type == "vt" ) {
+                std::vector<glm::vec2> uv = loadUv( line );
+            }else if( type == "vn" ){
+                std::vector<glm::vec3> normal = loadNormal( line );
+            }else if( type == "f" ) {
+                std::vector<int> index = loadIndex( line);
+            }
+        }
+    }
+    return shape;
 }
 
 std::vector<std::string> ObjLoader::split( const std::string s, const char delimiter ) const {
