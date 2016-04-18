@@ -18,6 +18,14 @@ ShaderProgram::~ShaderProgram() {
 
 }
 
+int ShaderProgram::getUID() {
+    return uid;
+}
+
+bool ShaderProgram::isLinked() {
+    return linked;
+}
+
 void ShaderProgram::attachShader( std::shared_ptr<Shader> shader ) {
     shaders.push_back( shader );
     glAttachShader( uid , shader->getUID() );

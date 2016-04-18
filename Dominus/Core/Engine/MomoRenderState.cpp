@@ -4,13 +4,18 @@
 
 MomoRenderState::MomoRenderState()
     : units( 0 ) {
-    verticesBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >() ) );
-    uvsBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >() ) );
-    normalBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >()  ) );
+    verticesBuffer = std::shared_ptr<Buffer>(
+                                new Buffer( make_unique< GLGpuBuffer >() ) );
+    uvsBuffer = std::shared_ptr<Buffer>(
+                                new Buffer( make_unique< GLGpuBuffer >() ) );
+    normalBuffer = std::shared_ptr<Buffer>(
+                                new Buffer( make_unique< GLGpuBuffer >() ) );
     
     vao = std::make_shared<VertexArrayObject>( VertexArrayObject() );
     
     shaderProgram = std::shared_ptr<ShaderProgram>( new ShaderProgram );
+        
+    drawer = std::make_shared<Drawer>( Drawer( vao, shaderProgram ) );
     
     textureUniformKey = "textureData";
     modelViewUniformKey = "modelViewMatrix";
@@ -134,9 +139,9 @@ void MomoRenderState::draw( std::shared_ptr<Node> node ) {
     vao->mapUniformMatrix3fv( shaderProgram->getUniform( normalUniformKey ),
                        1, GL_FALSE, &normalMat3[0][0] );
     
-    glDrawArrays ( GL_TRIANGLES,
-                   (int)offsetMap[node->getID()],
-                   (int)node->getMesh()->getVertices().size() );
+    drawer->draw( GL_TRIANGLES,
+                  (int)offsetMap[node->getID()],
+                  (int)node->getMesh()->getVertices().size() );
 
     if( node->getMesh()->getTexture() != nullptr ) {
         node->getMesh()->getTexture()->unbind();

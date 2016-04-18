@@ -18,9 +18,7 @@
 #include "RenderState.h"
 #include "ShaderProgram.h"
 #include "VertexArrayObject.h"
-
-
-
+#include "Drawer.h"
 
 class UIComponent;
 
@@ -56,6 +54,7 @@ private:
     static const GLuint BUFFER_SIZE = 100000 * 12;
     GLFWwindow* window;
     
+    std::shared_ptr<Drawer> drawer;
     std::shared_ptr<VertexArrayObject> vao;
     std::shared_ptr<ShaderProgram> shaderProgram;
     std::string positionAttributeKey;

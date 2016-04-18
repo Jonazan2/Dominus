@@ -17,7 +17,7 @@
 
 Renderer::Renderer( GLFWwindow* window )
 : window( window ), currentState( nullptr ) {
-    shaderProgram = std::shared_ptr<ShaderProgram>( new ShaderProgram );
+    
 }
 
 Renderer::~Renderer(){
@@ -35,6 +35,9 @@ void Renderer::init(){
     states[MAP_RENDER_STATE] = new MapRenderState;
     
     vao = std::make_shared<VertexArrayObject>( VertexArrayObject() );
+    shaderProgram = std::shared_ptr<ShaderProgram>( new ShaderProgram );
+    
+    drawer = std::make_shared<Drawer>( Drawer( vao, shaderProgram ) );
     
     currentState = states[MAP_RENDER_STATE];
 
@@ -210,7 +213,7 @@ void Renderer::drawUI(  ) {
         vao->mapUniformMatrix4fv( shaderProgram->getUniform( mvpUniformKey ),
                             1, GL_FALSE, &MVPMatrix[0][0] );
 
-        glDrawArrays ( GL_TRIANGLES,
+        drawer->draw( GL_TRIANGLES,
                       offset,
                       (int)component->getMesh()->getVertices().size() );
         offset += (int)component->getMesh()->getVertices().size();

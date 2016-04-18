@@ -13,6 +13,7 @@
 #include "ShaderProgram.h"
 #include "Buffer.h"
 #include "VertexArrayObject.h"
+#include "Drawer.h"
 
 class UIRenderState : public RenderState {
 public:
@@ -28,8 +29,9 @@ public:
     void draw( std::shared_ptr<Node> node );
 private:
     std::shared_ptr<VertexArrayObject> vao;
-    
     std::shared_ptr<ShaderProgram> shaderProgram;
+    std::shared_ptr<Drawer> drawer;
+    
     std::string positionAttributeKey;
     std::string textureAttributeKey;
     std::string mvpUniformKey;

@@ -13,11 +13,14 @@
 
 MapRenderState::MapRenderState()
 : units(0) {
-    verticesBuffer = std::shared_ptr<Buffer>( new Buffer( make_unique< GLGpuBuffer >() ) );
+    verticesBuffer = std::shared_ptr<Buffer>(
+                                new Buffer( make_unique< GLGpuBuffer >() ) );
     
     shaderProgram = std::make_shared<ShaderProgram>( ShaderProgram() );
     
     vao = std::make_shared<VertexArrayObject>( VertexArrayObject() );
+    
+    drawer = std::make_shared<Drawer>( Drawer( vao, shaderProgram ) );
     
     colorUniformKey = "color";
     projectionUniformKey = "projectionMatrix";
@@ -99,7 +102,7 @@ void MapRenderState::draw( std::shared_ptr<Node> node ) {
     vao->mapUniformMatrix4fv( shaderProgram->getUniform( modelViewUniformKey ),
                        1, GL_FALSE,
                        &modelViewMatrix[0][0]);
-    glDrawArrays ( GL_TRIANGLES,
+    drawer->draw( GL_TRIANGLES,
                   (int)offsetMap[node->getID()],
                   (int)node->getMesh()->getVertices().size());
     vao->unBind();
