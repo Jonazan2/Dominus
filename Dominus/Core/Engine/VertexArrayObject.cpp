@@ -17,6 +17,10 @@ VertexArrayObject::~VertexArrayObject() {
 
 }
 
+int VertexArrayObject::getUID() {
+    return uid;
+}
+
 void VertexArrayObject::bind() {
     glBindVertexArray ( uid );
     binded = true;
@@ -25,6 +29,10 @@ void VertexArrayObject::bind() {
 void VertexArrayObject::unBind() {
     glBindVertexArray( 0 );
     binded = false;
+}
+
+bool VertexArrayObject::isBinded() {
+    return binded;
 }
 
 void VertexArrayObject::mapAttribute( int attribute, int size,

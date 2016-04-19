@@ -13,6 +13,8 @@
 #include "Buffer.h"
 #include "ShaderProgram.h"
 #include "VertexArrayObject.h"
+#include "Drawer.h"
+
 #include <unordered_map>
 
 class MapRenderState : public RenderState {
@@ -34,6 +36,7 @@ private:
     glm::mat4 projectionMatrix;
     glm::mat4 viewMatrix;
     
+    std::shared_ptr<Drawer> drawer;
     std::shared_ptr<ShaderProgram> shaderProgram;
     std::shared_ptr<VertexArrayObject> vao;
     

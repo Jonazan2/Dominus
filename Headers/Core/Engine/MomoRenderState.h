@@ -13,6 +13,7 @@
 #include "Buffer.h"
 #include "ShaderProgram.h"
 #include "VertexArrayObject.h"
+#include "Drawer.h"
 
 class MomoRenderState : public RenderState {
 public:
@@ -27,6 +28,7 @@ public:
     void load( std::shared_ptr<Node> node );
     void draw( std::shared_ptr<Node> node );
 private:
+    std::shared_ptr<Drawer> drawer;
     std::shared_ptr<VertexArrayObject> vao;
     std::shared_ptr<ShaderProgram> shaderProgram;
     

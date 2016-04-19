@@ -16,6 +16,8 @@ public:
     VertexArrayObject();
     ~VertexArrayObject();
     
+    int getUID();
+    bool isBinded();
     void bind();
     void unBind();
     /* Maps and enables the given attribute */

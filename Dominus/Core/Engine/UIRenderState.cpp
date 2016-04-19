@@ -11,6 +11,9 @@
 UIRenderState::UIRenderState() :
 units( 0 ) {
     vao = std::make_shared<VertexArrayObject>( VertexArrayObject() );
+    shaderProgram = std::make_shared<ShaderProgram>( ShaderProgram() );
+    
+    drawer = std::make_shared<Drawer>( Drawer( vao, shaderProgram ) );
 }
 
 UIRenderState::~UIRenderState() {
@@ -105,7 +108,7 @@ void UIRenderState::draw( std::shared_ptr<Node> node ) {
     vao->mapUniformMatrix4fv( shaderProgram->getUniform( mvpUniformKey ),
                        1, GL_FALSE, &MVPMatrix[0][0] );
     
-    glDrawArrays ( GL_TRIANGLES,
+    drawer->draw( GL_TRIANGLES,
                   (int)offsetMap[node->getID()],
                   (int)node->getMesh()->getVertices().size() );
     if( node->getMesh()->getTexture() != nullptr ) {

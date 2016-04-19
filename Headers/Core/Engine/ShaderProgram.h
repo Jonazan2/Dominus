@@ -20,6 +20,8 @@ public:
     ShaderProgram();
     ~ShaderProgram();
     
+    int getUID();
+    bool isLinked();
     void attachShader( std::shared_ptr<Shader> shader  );
     void linkProgram();
     void registerAttribute( std::string attributeKey );
