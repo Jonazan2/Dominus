@@ -23,9 +23,6 @@ public:
     Mesh( std::unique_ptr< MeshLoader > loader );
     ~Mesh();
     
-    glm::vec3 getPosition() const;
-    void setPosition(glm::vec3 position);
-    
     std::vector<glm::vec3> getVertices() const;
     void setVertices(std::vector<glm::vec3> vertices);
     
@@ -33,9 +30,6 @@ public:
     std::vector<glm::vec2> getUvs() const;
     
     std::vector<glm::vec3> getNormals() const;
-    
-    void setMaterial( const Material material );
-    Material getMaterial() const;
     
     void setTexture( std::shared_ptr<Texture> texture );
     std::shared_ptr<Texture> getTexture();

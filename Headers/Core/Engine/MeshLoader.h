@@ -15,10 +15,10 @@
 
 class MeshLoader {
 public:
-    virtual void load( const std::string file,
-                       std::vector<glm::vec3>* vertices,
-                       std::vector<glm::vec2>* uvs,
-                       std::vector<glm::vec3>* normals ) = 0;
+//    virtual void load( const std::string file,
+//                       std::vector<glm::vec3>* vertices,
+//                       std::vector<glm::vec2>* uvs,
+//                       std::vector<glm::vec3>* normals ) = 0;
 };
 
 #endif /* MeshLoader_h */
