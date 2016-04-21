@@ -11,6 +11,7 @@
 
 #include "MeshLoader.h"
 #include "Mesh.hpp"
+#include <climits>
 
 class ObjLoader : public MeshLoader {
 public:
@@ -25,7 +26,12 @@ public:
     glm::vec3 loadVertex( std::string vertexLine );
     glm::vec2 loadUv( std::string uvLine );
     glm::vec3 loadNormal( std::string normalLine );
-    std::vector<int> loadIndex( std::string indexLine );
+    std::vector<std::vector<int>> loadIndexLine( std::string indexLine );
+    std::vector<int> loadIndex( std::string indexString );
+    
+    int V_KEY = 0;
+    int VT_KEY = 1;
+    int VN_KEY = 2;
 };
 
 #endif /* ObjLoader_h */

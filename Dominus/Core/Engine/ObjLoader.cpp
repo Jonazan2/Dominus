@@ -61,7 +61,7 @@ std::shared_ptr<Shape> ObjLoader::loadShape( std::ifstream file ) {
                 glm::vec3 normal = loadNormal( line );
                 shape->normals.push_back(normal);
             }else if( type == "f" ) {
-                std::vector<int> index = loadIndex( line);
+                shape->indices.push_back( loadIndexLine( line ) );
             }
         }
     }
@@ -95,20 +95,10 @@ glm::vec3 ObjLoader::loadNormal( std::string normalLine ) {
     return normal;
 }
 
-std::vector<int> ObjLoader::loadIndex( std::string indexLine ) {
-    std::vector<std::vector<int>> index;
-    std::vector<std::string> items;
+std::vector<std::vector<int>> ObjLoader::loadIndexLine( std::string indexLine ) {
+    std::vector<std::vector<int>> indexRow;
+    std::vector<std::string> indexComponents;
         /*
-        
-         item: v/vt/vn
-         1/1/1
-         
-         item: v/vt
-         1/1
-         
-         item: v//vn
-         1//1
-         
          //triangle
          [ item ] [ item ] [ item ]
          
@@ -116,52 +106,61 @@ std::vector<int> ObjLoader::loadIndex( std::string indexLine ) {
          [ item ] [ item ] [ item ] [ item ]
          
          */
-    items = split( indexLine, ' ' );
-    if( items.size() == 3 ) {
-        //triangle
-    } else if( items.size() == 4 ) {
-        //quad
+    indexComponents = split( indexLine, ' ' );
+    
+    for ( int i = 0; i < indexComponents.size(); i++ ) {
+        std::vector<std::string> itemValues;
+        //TODO: Check if the 3-4 index values has the same formatting
+        indexRow.push_back( loadIndex( itemValues.at( i ) ) );
     }
     
-    for ( int i = 0; i < items.size(); i++ ) {
-        std::vector<std::string> itemValues;
-        std::vector<int> indexValues;
-        
-        std::string item = items.at( i );
-        itemValues = split( item , '/' );
-        std::size_t found = item.find( "//" );
-        if ( found!=std::string::npos ) {
-            /*  v//vn  */
-            if( itemValues.size() == 2 ) {
-                indexValues.reserve( 2 );
-            }
+    return indexRow;
+}
+
+std::vector<int> ObjLoader::loadIndex( std::string indexString ) {
+    std::vector<int> index;
+    std::vector<std::string> indexComponents;
+    index.reserve( 3 );
+    
+    std::size_t found = indexString.find( "//" );
+    indexComponents = split ( indexString, '/' );
+    if ( found!=std::string::npos ) {
+        /*  v//vn  */
+        if( indexComponents.size() == 2 ) {
+            index.push_back( std::stoi( indexComponents.at( V_KEY ) ) );
+            index.push_back( INT_MAX );
+            index.push_back( std::stoi( indexComponents.at( VN_KEY ) ) );
         } else {
+            //formatting exception
+        }
+    } else {
+        if( indexComponents.size() == 2 ) {
             /*  v/vt  */
-            if( itemValues.size() == 2 ) {
-                indexValues.reserve( 2 );
-            }
+            index.push_back( std::stoi( indexComponents.at( V_KEY ) ) );
+            index.push_back( std::stoi( indexComponents.at( VT_KEY ) ) );
+            index.push_back( INT_MAX );
+        } else if( indexComponents.size() == 3 ) {
             /*  v/vt/vn  */
-            if( itemValues.size() == 3 ) {
-                indexValues.reserve( 3 );
-            }
+            index.push_back( std::stoi( indexComponents.at( V_KEY ) ) );
+            index.push_back( std::stoi( indexComponents.at( VT_KEY ) ) );
+            index.push_back( std::stoi( indexComponents.at( VN_KEY ) ) );
+        } else {
+            //formatting exception
         }
     }
-    
     return index;
 }
 
-std::vector<std::string> ObjLoader::split( const std::string s, char delimiter ) const {
+std::vector<std::string> ObjLoader::split( const std::string s,
+                                           char delimiter ) const {
     std::vector<std::string> elements;
     if ( !s.empty() ) {
-        std::stringstream ss(s);
+        std::stringstream ss( s );
         std::string token;
         
-        while(getline(ss, token, delimiter)) {
-            elements.push_back(token);
+        while( getline( ss, token, delimiter ) ) {
+            elements.push_back( token );
         }
-    } else {
-        elements.push_back(s);
     }
-    
     return elements;
 }

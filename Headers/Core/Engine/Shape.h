@@ -23,6 +23,8 @@ public:
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
     
+    std::vector<std::vector<std::vector<int>>> indices;
+    
     std::string material;
 };
 

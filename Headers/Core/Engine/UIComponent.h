@@ -109,7 +109,6 @@ public:
     void setFrame( const Frame frame );
     Frame getFrame();
     
-protected:
     UIComponent* parent;
     Params params;
     glm::vec2 position;
