@@ -8,6 +8,10 @@ Mesh::Mesh( std::unique_ptr< MeshLoader > loader ) : Mesh( ) {
     this->loader = std::move( loader );
 }
 
+void Mesh::addShape( std::shared_ptr<Shape> shape ) {
+    shapes.push_back( shape );
+}
+
 void Mesh::setTexture( std::shared_ptr<Texture> texture ){
     this->texture = texture;
 }

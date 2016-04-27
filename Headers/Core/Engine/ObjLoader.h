@@ -18,15 +18,15 @@ public:
     ObjLoader();
     ~ObjLoader();
     
-    //std::shared_ptr<Mesh> load( const std::string );
+    std::shared_ptr<Mesh> load( const std::string );
     std::vector<std::string> split( const std::string,
                                     const char ) const;
-    std::shared_ptr<Shape> loadShape( std::ifstream file );
+    std::shared_ptr<Shape> loadShape( std::ifstream* file );
     
-    glm::vec3 loadVertex( std::string vertexLine );
-    glm::vec2 loadUv( std::string uvLine );
-    glm::vec3 loadNormal( std::string normalLine );
-    std::vector<std::vector<int>> loadIndexLine( std::string indexLine );
+    glm::vec3 loadVertex( std::istringstream* vertexLine );
+    glm::vec2 loadUv( std::istringstream* uvLine );
+    glm::vec3 loadNormal( std::istringstream* normalLine );
+    std::vector<std::vector<int>> loadIndexLine( std::istringstream* indexLine );
     std::vector<int> loadIndex( std::string indexString );
     
     int V_KEY = 0;

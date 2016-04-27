@@ -53,6 +53,14 @@ GLubyte* Texture::getImageData( ) {
     return image;
 }
 
+void Texture::setWidth( int width ) {
+    this->width = width;
+}
+
+void Texture::setHeight( int height ) {
+    this->height = height;
+}
+
 int Texture::getWidth() {
     return width;
 }

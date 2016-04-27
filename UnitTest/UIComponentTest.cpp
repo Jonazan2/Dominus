@@ -66,7 +66,8 @@ namespace {
         layout->params.width = 640;
         layout->params.height = 480;
         
-        component->texture = std::make_shared<Texture>( Texture() );
+        Texture* texture= new Texture();
+        component->setTexture( std::shared_ptr<Texture>( texture ) );
         component->texture->setWidth(50);
         component->texture->setHeight(50);
         component->params.width = WRAP;

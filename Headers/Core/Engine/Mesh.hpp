@@ -34,6 +34,8 @@ public:
     void setTexture( std::shared_ptr<Texture> texture );
     std::shared_ptr<Texture> getTexture();
     
+    void addShape( std::shared_ptr<Shape> shape );
+    
 private:
     std::vector<std::shared_ptr<Shape>> shapes;
     std::shared_ptr<Texture> texture;

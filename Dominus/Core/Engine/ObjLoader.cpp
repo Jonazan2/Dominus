@@ -22,28 +22,29 @@ ObjLoader::~ObjLoader() {
 
 }
 
-//std::shared_ptr<Mesh> ObjLoader::load( const std::string filePath ) {
-//    std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>( Mesh() );
-//    std::string line;
-//    std::ifstream file(filePath);
-//    
-//    if (file.is_open()) {
-//        while (std::getline(file, line)) {
-//            if ( line.at( 0 ) != '#' ) {
-//                //load shape
-//            }
-//        }
-//    }
-//    file.close();
-//    return mesh;
-//}
+std::shared_ptr<Mesh> ObjLoader::load( const std::string filePath ) {
+    std::shared_ptr<Mesh> mesh = std::shared_ptr<Mesh>( new Mesh() );
+    std::string line;
+    std::ifstream file(filePath);
+    
+    if (file.is_open()) {
+        while (std::getline(file, line)) {
+            if ( line.at( 0 ) != '#' && line.at( 0 ) == 'o' ) {
+                //if shape found
+                mesh->addShape( loadShape( &file ) );
+            }
+        }
+    }
+    file.close();
+    return mesh;
+}
 
-std::shared_ptr<Shape> ObjLoader::loadShape( std::ifstream file ) {
+std::shared_ptr<Shape> ObjLoader::loadShape( std::ifstream* file ) {
     std::shared_ptr<Shape> shape = std::make_shared<Shape>( Shape() );
     //Check if stream starts in 'o' // otherwise throw exception
     std::string line;
     bool shapeSpace = true;
-    while ( std::getline( file, line ) && shape ) {
+    while ( std::getline( *file, line ) && shapeSpace ) {
         //stop when we found the start of another shape
         shapeSpace = ( line.at( 0 ) != 'o' );
         if( shapeSpace ) {
@@ -52,50 +53,54 @@ std::shared_ptr<Shape> ObjLoader::loadShape( std::ifstream file ) {
             in >> type;
             
             if( type == "v" ) {
-                glm::vec3 vertex = loadVertex( line );
+                glm::vec3 vertex = loadVertex( &in );
                 shape->vertices.push_back(vertex);
             }else if( type == "vt" ) {
-                glm::vec2 uv = loadUv( line );
+                glm::vec2 uv = loadUv( &in );
                 shape->uvs.push_back( uv );
             }else if( type == "vn" ){
-                glm::vec3 normal = loadNormal( line );
+                glm::vec3 normal = loadNormal( &in );
                 shape->normals.push_back(normal);
             }else if( type == "f" ) {
-                shape->indices.push_back( loadIndexLine( line ) );
+                shape->indices.push_back( loadIndexLine( &in ) );
             }
         }
     }
     return shape;
 }
 
-glm::vec3 ObjLoader::loadVertex( std::string vertexLine ) {
-    glm::vec3 vertex;
-    float x, y, z = 0;
-    std::istringstream in( vertexLine );
-    in >> x >> y >> z;
+glm::vec3 ObjLoader::loadVertex( std::istringstream* in ) {
+    float x, y, z = INT_MAX;
+    *in >> x >> y >> z;
     //Check x,y,z integrity
-    return vertex;
+    if( x == INT_MAX || y == INT_MAX || z == INT_MAX ) {
+        throw UnbindException(-1);
+    }
+    return glm::vec3( x, y, z );
 }
 
-glm::vec2 ObjLoader::loadUv( std::string uvLine ) {
-    glm::vec2 uv;
-    float x, y = 0;
-    std::istringstream in( uvLine );
-    in >> x >> y;
+glm::vec2 ObjLoader::loadUv( std::istringstream* in ) {
+    float x, y = INT_MAX;
+    *in >> x >> y;
     //Check x,y,z integrity
-    return uv;
+    if( x == INT_MAX || y == INT_MAX ) {
+        throw UnbindException(-1);
+    }
+    return  glm::vec2( x, y );
 }
 
-glm::vec3 ObjLoader::loadNormal( std::string normalLine ) {
-    glm::vec3 normal;
-    float x, y, z = 0;
-    std::istringstream in( normalLine );
-    in >> x >> y >> z;
+glm::vec3 ObjLoader::loadNormal( std::istringstream* in ) {
+    float x, y, z = INT_MAX;
+    *in >> x >> y >> z;
     //Check x,y,z integrity
-    return normal;
+    if( x == INT_MAX || y == INT_MAX || z == INT_MAX ) {
+        throw UnbindException(-1);
+    }
+    return  glm::vec3( x, y, z );;
 }
 
-std::vector<std::vector<int>> ObjLoader::loadIndexLine( std::string indexLine ) {
+std::vector<std::vector<int>> ObjLoader::loadIndexLine(
+                                            std::istringstream* indexLine ) {
     std::vector<std::vector<int>> indexRow;
     std::vector<std::string> indexComponents;
         /*
@@ -106,13 +111,14 @@ std::vector<std::vector<int>> ObjLoader::loadIndexLine( std::string indexLine ) 
          [ item ] [ item ] [ item ] [ item ]
          
          */
-    indexComponents = split( indexLine, ' ' );
-    
+    indexComponents = split( indexLine->str(), ' ' );
     for ( int i = 0; i < indexComponents.size(); i++ ) {
-        std::vector<std::string> itemValues;
         //TODO: Check if the 3-4 index values has the same formatting
-        indexRow.push_back( loadIndex( itemValues.at( i ) ) );
+        if( indexComponents.at(i) != "f" ) {
+            indexRow.push_back( loadIndex( indexComponents.at( i ) ) );
+        }
     }
+
     
     return indexRow;
 }
@@ -120,13 +126,13 @@ std::vector<std::vector<int>> ObjLoader::loadIndexLine( std::string indexLine ) 
 std::vector<int> ObjLoader::loadIndex( std::string indexString ) {
     std::vector<int> index;
     std::vector<std::string> indexComponents;
-    index.reserve( 3 );
     
     std::size_t found = indexString.find( "//" );
     indexComponents = split ( indexString, '/' );
     if ( found!=std::string::npos ) {
         /*  v//vn  */
-        if( indexComponents.size() == 2 ) {
+        if( indexComponents.size() == 3 ) {
+            // (v, - , vn)
             index.push_back( std::stoi( indexComponents.at( V_KEY ) ) );
             index.push_back( INT_MAX );
             index.push_back( std::stoi( indexComponents.at( VN_KEY ) ) );

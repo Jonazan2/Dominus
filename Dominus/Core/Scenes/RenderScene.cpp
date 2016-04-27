@@ -27,6 +27,9 @@ void RenderScene::populateScene( Scene* scene ) {
     scene->setLightNode( lightNode );
     std::shared_ptr<Mesh> momoMesh( new Mesh( make_unique< ObjLoader >() ) );
     //momoMesh->load( "momo.obj" );
+    
+    std::unique_ptr<ObjLoader> loader = make_unique<ObjLoader>( ObjLoader() );
+    std::shared_ptr<Mesh> unitMesh = loader->load("unit.obj");
 
     std::shared_ptr<Texture> momoTexture( new Texture( make_unique<GLGpuTexture>(),
                                                        make_unique<PngTextureLoader>() ));
