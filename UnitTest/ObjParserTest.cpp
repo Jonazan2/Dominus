@@ -71,3 +71,14 @@ TEST_F( ObjParserTest, LoadIndexLine4ItemsTest ) {
     std::vector<std::vector<int>> vec4 = loader->loadIndexLine( indexLine );
     ASSERT_EQ( 4, vec4.size() );
 }
+
+TEST_F( ObjParserTest, ParseShapeTest ) {
+    StringStream* file = new StringStream;
+    file->load( "shape1_parser_test.obj" );
+    std::shared_ptr<Shape> shape = loader->loadShape( file );
+    ASSERT_EQ( 2, shape->vertices.size() );
+    ASSERT_EQ( 2, shape->normals.size() );
+    ASSERT_EQ( 2, shape->uvs );
+    ASSERT_EQ( 3, shape->indices.size() );
+    ASSERT_TRUE( shape->material != "" );
+}

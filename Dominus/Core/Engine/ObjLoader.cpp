@@ -25,49 +25,55 @@ ObjLoader::~ObjLoader() {
 std::shared_ptr<Mesh> ObjLoader::load( const std::string filePath ) {
     std::shared_ptr<Mesh> mesh = std::shared_ptr<Mesh>( new Mesh() );
     std::string line;
-    std::ifstream file(filePath);
-    
-    if (file.is_open()) {
-        while (std::getline(file, line)) {
-            if ( line.at( 0 ) != '#' && line.at( 0 ) == 'o' ) {
-                //if shape found
-                mesh->addShape( loadShape( &file ) );
+    std::shared_ptr<StringStream> file =
+        std::shared_ptr<StringStream>( new StringStream );
+    file->load( filePath );
+    while ( file->getLine( line ) ) {
+        if( line.at( 0 ) != '#' ) {
+            if( line.at( 0 ) == 'o' ) {
+                mesh ->addShape( loadShape( file ) );
             }
         }
     }
-    file.close();
     return mesh;
 }
 
-std::shared_ptr<Shape> ObjLoader::loadShape( std::ifstream* file ) {
+std::shared_ptr<Shape> ObjLoader::loadShape(
+                        std::shared_ptr<StringStream> file ) {
     std::shared_ptr<Shape> shape = std::make_shared<Shape>( Shape() );
-    //Check if stream starts in 'o' // otherwise throw exception
     std::string line;
     bool shapeSpace = true;
-    while ( std::getline( *file, line ) && shapeSpace ) {
-        //stop when we found the start of another shape
-        shapeSpace = ( line.at( 0 ) != 'o' );
-        if( shapeSpace ) {
-            std::istringstream in(line);
-            std::string type;
-            in >> type;
-            
-            if( type == "v" ) {
-                glm::vec3 vertex = loadVertex( &in );
-                shape->vertices.push_back(vertex);
-            }else if( type == "vt" ) {
-                glm::vec2 uv = loadUv( &in );
-                shape->uvs.push_back( uv );
-            }else if( type == "vn" ){
-                glm::vec3 normal = loadNormal( &in );
-                shape->normals.push_back(normal);
-            }else if( type == "f" ) {
-                shape->indices.push_back( loadIndexLine( &in ) );
-            }
+    while ( file->getLine( line ) && shapeSpace ) {
+        std::istringstream in( line );
+        std::string type;
+        in >> type;
+        if( type == "v" ) {
+            glm::vec3 vertex = loadVertex( &in );
+            shape->vertices.push_back(vertex);
+        } else if( type == "vt" ) {
+            glm::vec2 uv = loadUv( &in );
+            shape->uvs.push_back( uv );
+        } else if( type == "vn" ){
+            glm::vec3 normal = loadNormal( &in );
+            shape->normals.push_back(normal);
+        } else if( type == "f" ) {
+            shape->indices.push_back( loadIndexLine( &in ) );
+        } else if ( type == "usemtl" ){
+            shape->material = parseMaterialName( &in );
+        }
+        
+        if( file->peekLine().at( 0 ) == 'o' ){
+            shapeSpace = false;
         }
     }
     return shape;
 }
+
+std::string ObjLoader::parseMaterialName( std::istringstream *materiallLine ) {
+    //TODO: implement
+    return "material";
+}
+
 
 glm::vec3 ObjLoader::loadVertex( std::istringstream* in ) {
     float x, y, z = INT_MAX;
