@@ -10,7 +10,7 @@
 #include "MemoryUtils.h"
 
 StringStream::StringStream()
-: fileStream( nullptr ), filePath( nullptr ) {
+: fileStream( nullptr ), filePath( "" ) {
 
 }
 
@@ -36,11 +36,12 @@ std::istream& StringStream::getLine( std::string& line ) {
 }
 
 std::string StringStream::peekLine() {
-    std::string line;
-    if( fileStream != nullptr && fileStream->is_open() ) {
+    std::string line = "";
+    if( !fileStream->eof() ) {
         long current = fileStream->tellg();
         std::getline( *fileStream, line );
         // Return to position before "Read line".
+        fileStream->std::__1::ios_base::clear();
         fileStream->seekg( current ,std::ios_base::beg );
     } else {
         //throw exception

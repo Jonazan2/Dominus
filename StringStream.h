@@ -25,10 +25,10 @@ public:
     
     std::istream& getLine( std::string& );
     std::string peekLine( );
-    
+    std::unique_ptr<std::ifstream> fileStream;
 private:
     std::string filePath;
-    std::unique_ptr<std::ifstream> fileStream;
+    
 };
 
 #endif

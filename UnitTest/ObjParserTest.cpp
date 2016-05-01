@@ -62,23 +62,25 @@ TEST_F( ObjParserTest, LoadIndexVertexNormalTest ) {
 
 TEST_F( ObjParserTest, LoadIndexLine3ItemsTest ) {
     std::string indexLine = "1/2/3 1/2/3 1/2/3";
-    std::vector<std::vector<int>> vec3 = loader->loadIndexLine( indexLine );
+    std::istringstream in( indexLine );
+    std::vector<std::vector<int>> vec3 = loader->loadIndexLine( &in );
     ASSERT_EQ( 3, vec3.size() );
 }
 
 TEST_F( ObjParserTest, LoadIndexLine4ItemsTest ) {
     std::string indexLine = "1/2/3 1/2/3 1/2/3 1/2/3";
-    std::vector<std::vector<int>> vec4 = loader->loadIndexLine( indexLine );
+    std::istringstream in( indexLine );
+    std::vector<std::vector<int>> vec4 = loader->loadIndexLine( &in );
     ASSERT_EQ( 4, vec4.size() );
 }
 
 TEST_F( ObjParserTest, ParseShapeTest ) {
-    StringStream* file = new StringStream;
+    std::shared_ptr<StringStream> file = std::shared_ptr<StringStream>( new StringStream);
     file->load( "shape1_parser_test.obj" );
     std::shared_ptr<Shape> shape = loader->loadShape( file );
     ASSERT_EQ( 2, shape->vertices.size() );
     ASSERT_EQ( 2, shape->normals.size() );
-    ASSERT_EQ( 2, shape->uvs );
+    ASSERT_EQ( 2, shape->uvs.size() );
     ASSERT_EQ( 3, shape->indices.size() );
-    ASSERT_TRUE( shape->material != "" );
+    ASSERT_TRUE( !shape->material.empty() );
 }

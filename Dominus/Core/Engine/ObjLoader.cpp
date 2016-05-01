@@ -44,6 +44,7 @@ std::shared_ptr<Shape> ObjLoader::loadShape(
     std::string line;
     bool shapeSpace = true;
     while ( file->getLine( line ) && shapeSpace ) {
+//    while ( std::getline( *file->fileStream, line ) ) {
         std::istringstream in( line );
         std::string type;
         in >> type;
@@ -62,9 +63,11 @@ std::shared_ptr<Shape> ObjLoader::loadShape(
             shape->material = parseMaterialName( &in );
         }
         
-        if( file->peekLine().at( 0 ) == 'o' ){
+        std::string peekLine = file->peekLine();
+        if( !peekLine.empty() &&  peekLine.at( 0 ) == 'o' ){
             shapeSpace = false;
         }
+        std::cout << line << std::endl;
     }
     return shape;
 }
