@@ -137,5 +137,20 @@ public:
 private:
     const char* key;
 };
+        
+class ParseException : public std::runtime_error {
+public:
+    ParseException( const char* message )
+    : runtime_error( "Parse Exception" ), key( message )
+    {}
+    
+    virtual const char* what() const throw() {
+        std::ostringstream message;
+        message << key;
+        return message.str().c_str();
+    }
+private:
+    const char* key;
+};
 
 #endif /* Exception_h */

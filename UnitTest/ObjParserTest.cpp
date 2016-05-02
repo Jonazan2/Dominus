@@ -75,7 +75,7 @@ TEST_F( ObjParserTest, LoadIndexLine4ItemsTest ) {
 }
 
 TEST_F( ObjParserTest, ParseShapeTest ) {
-    std::shared_ptr<StringStream> file = std::shared_ptr<StringStream>( new StringStream);
+    std::shared_ptr<StringStream> file = std::shared_ptr<StringStream>( new StringStream );
     file->load( "shape1_parser_test.obj" );
     std::shared_ptr<Shape> shape = loader->loadShape( file );
     ASSERT_EQ( 2, shape->vertices.size() );
@@ -86,7 +86,7 @@ TEST_F( ObjParserTest, ParseShapeTest ) {
 }
 
 TEST_F( ObjParserTest, ParseShapeFinishBeforeEOF ) {
-    std::shared_ptr<StringStream> file = std::shared_ptr<StringStream>( new StringStream);
+    std::shared_ptr<StringStream> file = std::shared_ptr<StringStream>( new StringStream );
     file->load( "shape2_parser_test.obj" );
     std::shared_ptr<Shape> shape = loader->loadShape( file );
     ASSERT_EQ( 2, shape->vertices.size() );
@@ -94,4 +94,53 @@ TEST_F( ObjParserTest, ParseShapeFinishBeforeEOF ) {
     ASSERT_EQ( 2, shape->uvs.size() );
     ASSERT_EQ( 3, shape->indices.size() );
     ASSERT_TRUE( !shape->material.empty() );
+}
+
+TEST_F( ObjParserTest, ParseVertexTest ) {
+    std::string line = "1 1.2 1.3";
+    std::istringstream in( line );
+    glm::vec3 vertex = loader->loadVertex( &in );
+    ASSERT_EQ( 1, vertex.x );
+    ASSERT_EQ( 1.2f, vertex.y );
+    ASSERT_EQ( 1.3f, vertex.z );
+}
+
+TEST_F( ObjParserTest, ParseVertex2floats ) {
+    std::string line = "1 1.2";
+    std::istringstream in( line );
+    glm::vec3 vertex;
+    try {
+        vertex = loader->loadVertex( &in );
+    } catch ( ParseException e ) {
+        std::string errorCode( e.what() );
+        ASSERT_TRUE( !errorCode.empty() );
+    }
+    ASSERT_EQ( 0, vertex.x );
+    ASSERT_EQ( 0, vertex.y );
+    ASSERT_EQ( 0, vertex.z );
+}
+
+TEST_F( ObjParserTest, ParseVertex4floats ) {
+    std::string line = "1 1.2 1.3 1.4";
+    std::istringstream in( line );
+    glm::vec3 vertex;
+    vertex = loader->loadVertex( &in );
+    ASSERT_EQ( 1, vertex.x );
+    ASSERT_EQ( 1.2f, vertex.y );
+    ASSERT_EQ( 1.3f, vertex.z );
+}
+
+TEST_F( ObjParserTest, ParseVertexBadFormat ) {
+    std::string line = "as1 1.2 1eee ";
+    std::istringstream in( line );
+    glm::vec3 vertex;
+    try {
+        vertex = loader->loadVertex( &in );
+    } catch ( ParseException e ) {
+        std::string errorCode( e.what() );
+        ASSERT_TRUE( !errorCode.empty() );
+    }
+    ASSERT_EQ( 0, vertex.x );
+    ASSERT_EQ( 0, vertex.y );
+    ASSERT_EQ( 0, vertex.z );
 }

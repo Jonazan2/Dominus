@@ -44,7 +44,6 @@ std::shared_ptr<Shape> ObjLoader::loadShape(
     std::string line;
     bool shapeSpace = true;
     while ( file->getLine( line ) && shapeSpace ) {
-//    while ( std::getline( *file->fileStream, line ) ) {
         std::istringstream in( line );
         std::string type;
         in >> type;
@@ -67,23 +66,26 @@ std::shared_ptr<Shape> ObjLoader::loadShape(
         if( !peekLine.empty() &&  peekLine.at( 0 ) == 'o' ){
             shapeSpace = false;
         }
-        std::cout << line << std::endl;
     }
     return shape;
 }
 
 std::string ObjLoader::parseMaterialName( std::istringstream *materiallLine ) {
-    //TODO: implement
-    return "material";
+    std::string material = "";
+    *materiallLine >> material;
+    if( material.empty() ) {
+        throw ParseException( "MATERIAL_BAD_FORMAT" );
+    }
+    
+    return material;
 }
 
 
 glm::vec3 ObjLoader::loadVertex( std::istringstream* in ) {
     float x, y, z = INT_MAX;
     *in >> x >> y >> z;
-    //Check x,y,z integrity
     if( x == INT_MAX || y == INT_MAX || z == INT_MAX ) {
-        throw UnbindException(-1);
+        throw ParseException( "VERTEX_BAD_FORMAT" );
     }
     return glm::vec3( x, y, z );
 }
@@ -91,9 +93,8 @@ glm::vec3 ObjLoader::loadVertex( std::istringstream* in ) {
 glm::vec2 ObjLoader::loadUv( std::istringstream* in ) {
     float x, y = INT_MAX;
     *in >> x >> y;
-    //Check x,y,z integrity
     if( x == INT_MAX || y == INT_MAX ) {
-        throw UnbindException(-1);
+        throw ParseException( "UV_BAD_FORMAT" );
     }
     return  glm::vec2( x, y );
 }
@@ -101,9 +102,8 @@ glm::vec2 ObjLoader::loadUv( std::istringstream* in ) {
 glm::vec3 ObjLoader::loadNormal( std::istringstream* in ) {
     float x, y, z = INT_MAX;
     *in >> x >> y >> z;
-    //Check x,y,z integrity
     if( x == INT_MAX || y == INT_MAX || z == INT_MAX ) {
-        throw UnbindException(-1);
+        throw ParseException( "NORMAL_BAD_FORMAT" );
     }
     return  glm::vec3( x, y, z );;
 }
@@ -112,14 +112,6 @@ std::vector<std::vector<int>> ObjLoader::loadIndexLine(
                                             std::istringstream* indexLine ) {
     std::vector<std::vector<int>> indexRow;
     std::vector<std::string> indexComponents;
-        /*
-         //triangle
-         [ item ] [ item ] [ item ]
-         
-         //quad
-         [ item ] [ item ] [ item ] [ item ]
-         
-         */
     indexComponents = split( indexLine->str(), ' ' );
     for ( int i = 0; i < indexComponents.size(); i++ ) {
         //TODO: Check if the 3-4 index values has the same formatting
