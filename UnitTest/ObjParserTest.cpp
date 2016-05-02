@@ -84,3 +84,14 @@ TEST_F( ObjParserTest, ParseShapeTest ) {
     ASSERT_EQ( 3, shape->indices.size() );
     ASSERT_TRUE( !shape->material.empty() );
 }
+
+TEST_F( ObjParserTest, ParseShapeFinishBeforeEOF ) {
+    std::shared_ptr<StringStream> file = std::shared_ptr<StringStream>( new StringStream);
+    file->load( "shape2_parser_test.obj" );
+    std::shared_ptr<Shape> shape = loader->loadShape( file );
+    ASSERT_EQ( 2, shape->vertices.size() );
+    ASSERT_EQ( 2, shape->normals.size() );
+    ASSERT_EQ( 2, shape->uvs.size() );
+    ASSERT_EQ( 3, shape->indices.size() );
+    ASSERT_TRUE( !shape->material.empty() );
+}
