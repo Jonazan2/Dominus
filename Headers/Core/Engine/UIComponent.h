@@ -92,7 +92,7 @@ public:
     int getHeight() const;
     
     void setWeight( const int weight );
-    int getWeight() const;
+    float getWeight() const;
     
     void setVisible( bool visible );
     bool isVisible();
@@ -103,13 +103,12 @@ public:
     void setMesh( Mesh* mesh );
     Mesh* getMesh() const;
     
-    void setTexture( std::shared_ptr< Texture > texture );
+    void setTexture( std::shared_ptr<Texture> texture );
     std::shared_ptr< Texture > getTexture() const;
     
     void setFrame( const Frame frame );
     Frame getFrame();
     
-protected:
     UIComponent* parent;
     Params params;
     glm::vec2 position;

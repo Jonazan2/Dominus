@@ -7,7 +7,7 @@
 //
 
 #include "Drawer.h"
-#include "Exception.h"
+#include "OpenGLExceptions.h"
 
 #include <OpenGL/gl3.h>
 

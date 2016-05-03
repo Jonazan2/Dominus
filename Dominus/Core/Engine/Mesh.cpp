@@ -8,36 +8,8 @@ Mesh::Mesh( std::unique_ptr< MeshLoader > loader ) : Mesh( ) {
     this->loader = std::move( loader );
 }
 
-void Mesh::load( const std::string file ) {
-    loader->load( file, &vertices, &uvs, &normals );
-}
-
-glm::vec3 Mesh::getPosition() const {
-    return position;
-}
-
-void Mesh::setPosition( glm::vec3 position ) {
-    this->position = position;
-}
-
-std::vector<glm::vec3> Mesh::getVertices() const {
-    return vertices;
-}
-
-void Mesh::setUvs( std::vector<glm::vec2> uvs ) {
-    this->uvs = uvs;
-}
-
-void Mesh::setVertices( std::vector<glm::vec3> vertices ) {
-    this->vertices = vertices;
-}
-
-std::vector<glm::vec2> Mesh::getUvs() const {
-    return uvs;
-}
-
-std::vector<glm::vec3> Mesh::getNormals() const {
-    return normals;
+void Mesh::addShape( std::shared_ptr<Shape> shape ) {
+    shapes.push_back( shape );
 }
 
 void Mesh::setTexture( std::shared_ptr<Texture> texture ){
@@ -48,12 +20,19 @@ std::shared_ptr<Texture> Mesh::getTexture() {
     return texture;
 }
 
-void Mesh::setMaterial( const Material material ) {
-    this->material = material;
+std::vector<glm::vec3> Mesh::getVertices() const {
+    std::vector<glm::vec3> result;
+    return result;
 }
 
-Material Mesh::getMaterial() const {
-    return material;
+std::vector<glm::vec2> Mesh::getUvs() const {
+    std::vector<glm::vec2> result;
+    return result;
+}
+
+std::vector<glm::vec3> Mesh::getNormals() const {
+    std::vector<glm::vec3> result;
+    return result;
 }
 
 Mesh::~Mesh() {

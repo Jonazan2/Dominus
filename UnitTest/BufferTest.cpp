@@ -9,6 +9,8 @@
 #include "MockGPUBuffer.h"
 #include "gtest/gtest.h"
 #include "Buffer.h"
+#include "MemoryUtils.h"
+#include "OpenGLExceptions.h"
 
 using ::testing::Return;
 
@@ -17,7 +19,7 @@ class BufferTest : public ::testing::Test
 public:
     
     BufferTest() {
-        buffer = new Buffer( &mockGpuBuffer );
+        buffer = new Buffer( make_unique< MockGPUBuffer >() );
     }
     
     virtual void SetUp() {
@@ -27,10 +29,10 @@ public:
     
     virtual void TearDown() {
         MockGPUBuffer mockGpuBuffer;
-        buffer = new Buffer( &mockGpuBuffer );
+        buffer = new Buffer( make_unique< MockGPUBuffer >() );
     }
     
-    MockGPUBuffer mockGpuBuffer;
+    std::unique_ptr<GpuBuffer> mockGpuBuffer;
     Buffer* buffer;
 };
 

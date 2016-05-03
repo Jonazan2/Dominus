@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A0779981CD3805000B8C065 /* StringStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A0779971CD3805000B8C065 /* StringStream.cpp */; };
+		3A0779991CD3805000B8C065 /* StringStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3A0779971CD3805000B8C065 /* StringStream.cpp */; };
 		3A7AA0B21C577E9F00C45A2A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */; };
 		3AC1547B1C85994500FBE71C /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AC1547A1C85994500FBE71C /* libz.1.2.5.dylib */; };
 		92677A7D1C5665F900899024 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92677A7C1C5665F900899024 /* main.cpp */; };
@@ -28,6 +30,7 @@
 		9C2A0E861CADAD4E004A45CA /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E841CADAD4E004A45CA /* Map.cpp */; };
 		9C2A0E891CADADB1004A45CA /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E881CADADB1004A45CA /* Tile.cpp */; };
 		9C2A0E8A1CADADB1004A45CA /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2A0E881CADADB1004A45CA /* Tile.cpp */; };
+		9C4511231CC962AC0070CD0F /* ObjParserTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C4511221CC962AC0070CD0F /* ObjParserTest.cpp */; };
 		9C470C291C7F849F00558755 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C470C281C7F849F00558755 /* libz.1.2.5.tbd */; };
 		9C777FC11C84E2BF005C48A5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */; };
 		9C7D08271C9EC0C500804DF1 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7D08221C9EC0C500804DF1 /* Button.cpp */; };
@@ -78,10 +81,10 @@
 		9CBA324F1CB6810F00FCF048 /* MomoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */; };
 		9CBA32521CB6D40000FCF048 /* UIRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */; };
 		9CBA32531CB6D40000FCF048 /* UIRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */; };
-		9CBA32681CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */; settings = {ASSET_TAGS = (); }; };
-		9CBA32691CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */; settings = {ASSET_TAGS = (); }; };
-		9CBA326D1CC555B900FCF048 /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA326C1CC555B900FCF048 /* Drawer.cpp */; settings = {ASSET_TAGS = (); }; };
-		9CBA326E1CC555B900FCF048 /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA326C1CC555B900FCF048 /* Drawer.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CBA32681CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */; };
+		9CBA32691CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */; };
+		9CBA326D1CC555B900FCF048 /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA326C1CC555B900FCF048 /* Drawer.cpp */; };
+		9CBA326E1CC555B900FCF048 /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA326C1CC555B900FCF048 /* Drawer.cpp */; };
 		9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FA81C82F92D0066C313 /* main.cpp */; };
 		9CCB2FAF1C82F95E0066C313 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9D1C82F7FE0066C313 /* gtest.framework */; };
 		9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9F1C82F8790066C313 /* gmock.framework */; };
@@ -122,6 +125,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3A0779961CD3803900B8C065 /* StringStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringStream.h; sourceTree = "<group>"; };
+		3A0779971CD3805000B8C065 /* StringStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StringStream.cpp; path = Core/Engine/StringStream.cpp; sourceTree = "<group>"; };
+		3A07799B1CD8A50E00B8C065 /* IOExceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IOExceptions.h; path = Headers/Core/Engine/IOExceptions.h; sourceTree = "<group>"; };
+		3A07799C1CD8A52C00B8C065 /* OpenGLExceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OpenGLExceptions.h; path = Headers/Core/Engine/OpenGLExceptions.h; sourceTree = "<group>"; };
 		3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		3AC1547A1C85994500FBE71C /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		9226C9351CBE476D0018386E /* MemoryUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MemoryUtils.h; path = Headers/Core/System/MemoryUtils.h; sourceTree = "<group>"; };
@@ -150,6 +157,7 @@
 		9C2A0E841CADAD4E004A45CA /* Map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Map.cpp; path = Core/Engine/Map.cpp; sourceTree = "<group>"; };
 		9C2A0E871CADADA0004A45CA /* Tile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Tile.h; path = Headers/Core/Engine/Tile.h; sourceTree = "<group>"; };
 		9C2A0E881CADADB1004A45CA /* Tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Tile.cpp; path = Core/Engine/Tile.cpp; sourceTree = "<group>"; };
+		9C4511221CC962AC0070CD0F /* ObjParserTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjParserTest.cpp; sourceTree = "<group>"; };
 		9C470C281C7F849F00558755 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		9C7D081A1C9EC06600804DF1 /* Button.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Button.h; path = Headers/Core/Engine/Button.h; sourceTree = "<group>"; };
 		9C7D081D1C9EC06600804DF1 /* OnItemClickedListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OnItemClickedListener.h; path = Headers/Core/Engine/OnItemClickedListener.h; sourceTree = "<group>"; };
@@ -419,6 +427,7 @@
 				9C80752C1CA1D1C80052086F /* VerticalLayoutTest.cpp */,
 				9C8075561CA31ED60052086F /* BufferTest.cpp */,
 				9C222D561CA49071003C1DC5 /* MockGPUBuffer.h */,
+				9C4511221CC962AC0070CD0F /* ObjParserTest.cpp */,
 			);
 			path = UnitTest;
 			sourceTree = "<group>";
@@ -466,6 +475,9 @@
 				9CBA32501CB6D3ED00FCF048 /* UIRenderState.h */,
 				9CBA326A1CBC349100FCF048 /* VertexArrayObject.h */,
 				9CBA326B1CC555A500FCF048 /* Drawer.h */,
+				3A0779961CD3803900B8C065 /* StringStream.h */,
+				3A07799B1CD8A50E00B8C065 /* IOExceptions.h */,
+				3A07799C1CD8A52C00B8C065 /* OpenGLExceptions.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -503,6 +515,7 @@
 				9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */,
 				9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */,
 				9CBA326C1CC555B900FCF048 /* Drawer.cpp */,
+				3A0779971CD3805000B8C065 /* StringStream.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -595,6 +608,7 @@
 				9C80754B1CA1FC5D0052086F /* LightNode.cpp in Sources */,
 				AB6398E21C8CE49500CA0B3B /* Shader.cpp in Sources */,
 				9C7D08331C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */,
+				3A0779981CD3805000B8C065 /* StringStream.cpp in Sources */,
 				9CB320121CA735E00058482C /* GLGpuTexture.cpp in Sources */,
 				AB6398E11C8CE49500CA0B3B /* Renderer.cpp in Sources */,
 				9C7D08351C9EC57600804DF1 /* VerticalLayout.cpp in Sources */,
@@ -635,6 +649,7 @@
 			files = (
 				9C2A0E861CADAD4E004A45CA /* Map.cpp in Sources */,
 				9C8075441CA1D6A70052086F /* Scene.cpp in Sources */,
+				9C4511231CC962AC0070CD0F /* ObjParserTest.cpp in Sources */,
 				9C8075451CA1D6A70052086F /* Node.cpp in Sources */,
 				9C8075461CA1D6A70052086F /* Shader.cpp in Sources */,
 				9C8075471CA1D6A70052086F /* Window.cpp in Sources */,
@@ -653,6 +668,7 @@
 				9CBA324B1CB12F4100FCF048 /* ShaderProgram.cpp in Sources */,
 				9CBA326E1CC555B900FCF048 /* Drawer.cpp in Sources */,
 				9C7D083C1C9EC63A00804DF1 /* Layout.cpp in Sources */,
+				3A0779991CD3805000B8C065 /* StringStream.cpp in Sources */,
 				9CBA323F1CB0346A00FCF048 /* MapRenderState.cpp in Sources */,
 				9C80752F1CA1D1C80052086F /* UIComponentTest.cpp in Sources */,
 				9C80754F1CA313130052086F /* Buffer.cpp in Sources */,

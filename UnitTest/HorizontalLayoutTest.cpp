@@ -17,9 +17,9 @@ public:
     HorizontalLayoutTest()
     {
         horizontalLayout = new HorizontalLayout;
-        component0 = new UIComponent;
-        component1 = new UIComponent;
-        component2 = new UIComponent;
+        component0 = std::make_shared<UIComponent>( UIComponent() );
+        component1 = std::make_shared<UIComponent>( UIComponent() );
+        component2 = std::make_shared<UIComponent>( UIComponent() );
     }
     
     virtual void SetUp()
@@ -32,15 +32,15 @@ public:
     {
         horizontalLayout->components.clear();
         points.clear();
-        component0 = new UIComponent;
-        component1 = new UIComponent;
+        component0 = std::make_shared<UIComponent>( UIComponent() );
+        component1 = std::make_shared<UIComponent>( UIComponent() );
     }
     
     HorizontalLayout* horizontalLayout;
     std::vector<glm::vec2> points;
-    UIComponent* component0;
-    UIComponent* component1;
-    UIComponent* component2;
+    std::shared_ptr<UIComponent> component0;
+    std::shared_ptr<UIComponent> component1;
+    std::shared_ptr<UIComponent> component2;
 };
 
 TEST_F(HorizontalLayoutTest, WrapComponentsFitInContainer)

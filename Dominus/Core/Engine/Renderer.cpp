@@ -158,8 +158,9 @@ void Renderer::drawtexture( std::shared_ptr<UIComponent> component ){
         uvs.push_back( uvTopLeft );
         uvs.push_back( uvBottomRight );
         uvs.push_back( uvTopRight );
-        component->getMesh()->setVertices( vertices );
-        component->getMesh()->setUvs( uvs );
+        //TODO:
+        //component->getMesh()->setVertices( vertices );
+        //component->getMesh()->setUvs( uvs );
         
         uiComponents.push_back( std::shared_ptr< UIComponent >( component ) );
     }

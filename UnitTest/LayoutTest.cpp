@@ -21,8 +21,8 @@ public:
     
     virtual void SetUp()
     {
-        layout->components.push_back(new UIComponent);
-        layout->components.push_back(new UIComponent);
+        layout->components.push_back(std::make_shared<UIComponent>(UIComponent()));
+        layout->components.push_back(std::make_shared<UIComponent>(UIComponent()));
     }
     
     virtual void TearDown()
@@ -69,7 +69,7 @@ TEST_F(LayoutTest, assignFramesTest)
     
     layout->assignFrames(dispositionPoints);
 
-    UIComponent* component = layout->components.front();
+    std::shared_ptr<UIComponent> component = layout->components.front();
     layout->components.pop_front();
     
     ASSERT_EQ(0, component->frame.position.x);

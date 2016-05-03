@@ -1,4 +1,6 @@
 #include "Texture.h"
+#include "Exception.h"
+#include "OpenGLExceptions.h"
 
 Texture::Texture( )
     : width(0), height(0), hasAlpha( false ),
@@ -51,6 +53,14 @@ GLuint Texture::getUID() {
 
 GLubyte* Texture::getImageData( ) {
     return image;
+}
+
+void Texture::setWidth( int width ) {
+    this->width = width;
+}
+
+void Texture::setHeight( int height ) {
+    this->height = height;
 }
 
 int Texture::getWidth() {

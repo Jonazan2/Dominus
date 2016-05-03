@@ -238,7 +238,7 @@ void UIComponent::setWeight( const int weight ) {
     this->weight = weight;
 }
 
-int UIComponent::getWeight() const {
+float UIComponent::getWeight() const {
     return this->weight;
 }
 
@@ -267,5 +267,5 @@ Frame UIComponent::getFrame() {
 }
 
 UIComponent::~UIComponent() {
-    std::cout << "UIComponent destroyed \n";
+
 }

@@ -12,7 +12,7 @@
 #include <fstream>
 #include <istream>
 #include <sstream>
-#include "Exception.h"
+#include "IOExceptions.h"
 
 Shader::Shader( std::string file, GLenum type )
 : filePath( file ),type( type )

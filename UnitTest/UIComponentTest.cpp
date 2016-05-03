@@ -66,7 +66,8 @@ namespace {
         layout->params.width = 640;
         layout->params.height = 480;
         
-        component->texture = new Texture;
+        Texture* texture= new Texture();
+        component->setTexture( std::shared_ptr<Texture>( texture ) );
         component->texture->setWidth(50);
         component->texture->setHeight(50);
         component->params.width = WRAP;
@@ -85,7 +86,11 @@ namespace {
         layout->width = 640;
         layout->height = 480;
         
-        component->setParams(Params(50,50,CENTER));
+        Params params;
+        params.width = 50;
+        params.height = 50;
+        params.gravity = CENTER;
+        component->setParams(params);
         component->setParent(layout);
         component->measureDimension();
         
@@ -99,7 +104,11 @@ namespace {
         layout->width = 0;
         layout->height = -5;
         
-        component->setParams(Params(FILL,FILL,CENTER));
+        Params params;
+        params.width = FILL;
+        params.height = FILL;
+        params.gravity = CENTER;
+        component->setParams(params);
         component->setParent(layout);
         component->measureDimension();
         
@@ -113,7 +122,11 @@ namespace {
         layout->width = 640;
         layout->height = 480;
         
-        component->setParams(Params(-50,0,CENTER));
+        Params params;
+        params.width = -50;
+        params.height = 0;
+        params.gravity = CENTER;
+        component->setParams(params);
         component->setParent(layout);
         component->measureDimension();
         

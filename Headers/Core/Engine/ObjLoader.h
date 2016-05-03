@@ -10,20 +10,33 @@
 #define ObjLoader_h
 
 #include "MeshLoader.h"
+#include "Mesh.hpp"
+#include "StringStream.h"
+#include <climits>
+#include <memory>
 
 class ObjLoader : public MeshLoader {
 public:
-    ObjLoader();
+    ObjLoader(  );
     ~ObjLoader();
     
-    void load( const std::string file,
-               std::vector<glm::vec3>* vertices,
-               std::vector<glm::vec2>* uvs,
-               std::vector<glm::vec3>* normals );
+    std::shared_ptr<Mesh> load( const std::string );
     std::vector<std::string> split( const std::string,
                                     const char ) const;
-private:
-    int numTriangles;
+    
+    std::shared_ptr<Shape> loadShape( std::shared_ptr<StringStream> file );
+    
+    glm::vec3 loadVertex( std::istringstream* vertexLine );
+    glm::vec2 loadUv( std::istringstream* uvLine );
+    glm::vec3 loadNormal( std::istringstream* normalLine );
+    std::string parseMaterialName( std::istringstream* materiallLine );
+    std::vector<std::vector<int>> loadIndexLine( std::istringstream* indexLine );
+    std::vector<int> loadIndex( std::string indexString );
+    
+    int V_KEY = 0;
+    int VT_KEY = 1;
+    int VN_KEY = 2;
+    
 };
 
 #endif /* ObjLoader_h */

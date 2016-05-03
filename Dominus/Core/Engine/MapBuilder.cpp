@@ -15,7 +15,7 @@ std::shared_ptr<Map> MapBuilder::build( MapLoader *mapLoader,
         int tileKey = mapInfo->tilesKeys.at( i );
         std::shared_ptr<Mesh> mesh =
             std::shared_ptr<Mesh>( new Mesh( make_unique< ObjLoader >() ) );
-        mesh->load( tilesInfo.at( tileKey ) );
+        //mesh->load( tilesInfo.at( tileKey ) );
         
         std::shared_ptr<Tile> tile( new Tile );
         tile->key = tileKey;

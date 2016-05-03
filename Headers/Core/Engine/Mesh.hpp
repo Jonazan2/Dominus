@@ -13,18 +13,29 @@
 #include "Material.h"
 #include "Texture.h"
 #include "MeshLoader.h"
+
 #include <OpenGL/OpenGL.h>
+
+struct Shape {
+public:
+    Shape() : material( "" ) {
+    
+    }
+    
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec2> uvs;
+    std::vector<glm::vec3> normals;
+    
+    std::vector<std::vector<std::vector<int>>> indices;
+    
+    std::string material;
+};
 
 class Mesh{
 public:
     Mesh();
     Mesh( std::unique_ptr< MeshLoader > loader );
     ~Mesh();
-    
-    void load( const std::string file );
-    
-    glm::vec3 getPosition() const;
-    void setPosition(glm::vec3 position);
     
     std::vector<glm::vec3> getVertices() const;
     void setVertices(std::vector<glm::vec3> vertices);
@@ -34,24 +45,16 @@ public:
     
     std::vector<glm::vec3> getNormals() const;
     
-    void setMaterial( const Material material );
-    Material getMaterial() const;
-    
     void setTexture( std::shared_ptr<Texture> texture );
     std::shared_ptr<Texture> getTexture();
     
-    void normalize();
-    void unNormalize();
+    void addShape( std::shared_ptr<Shape> shape );
     
 private:
-    glm::vec3 position;
-    std::vector<glm::vec3> vertices;
-    std::vector<glm::vec2> uvs;
-    std::vector<glm::vec3> normals;
+    std::vector<std::shared_ptr<Shape>> shapes;
     std::shared_ptr<Texture> texture;
     Material material;
     std::unique_ptr< MeshLoader > loader;
-    bool normalized;
 };
 
 #endif /* Mesh_hpp */

@@ -1,4 +1,5 @@
 #include "Buffer.h"
+#include "OpenGLExceptions.h"
 
 Buffer::Buffer( std::unique_ptr< GpuBuffer > buffer )
     : size( 0 ), position( 0 ), buffer( std::move( buffer ) ) {

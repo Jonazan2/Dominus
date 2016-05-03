@@ -7,11 +7,11 @@
 
 #include "TextureLoader.h"
 #include "GpuTexture.h"
-#include "Exception.h"
 #include "MemoryUtils.h"
 
 class Texture {
 public:
+    Texture( );
     Texture( std::unique_ptr< GpuTexture >  gpuTexture,
              std::unique_ptr< TextureLoader > loader );
     Texture( std::unique_ptr< GpuTexture > gpuTexture );
@@ -28,7 +28,6 @@ public:
     void unbind();
     GLuint getUID();
 private:
-    Texture( );
     bool loadPngImage( const char *name,
                       int &outWidth, int &outHeight,bool &outHasAlpha,
                       GLubyte **outData );

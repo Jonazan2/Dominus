@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include <list>
 #include <memory>
 
 #include "UIComponent.h"
@@ -32,9 +33,7 @@ public:
                               std::vector< std::shared_ptr< UIComponent >> components );
     
     std::vector< glm::vec2 > layoutDisposition();
-    
-protected:
-    std::vector< std::shared_ptr< UIComponent > > components;
+    std::list< std::shared_ptr< UIComponent > > components;
     
 private:
     std::shared_ptr< Texture > backgroundTexture;
