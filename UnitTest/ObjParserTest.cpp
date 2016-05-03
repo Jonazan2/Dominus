@@ -10,6 +10,7 @@
 #include "gtest/gtest.h"
 #include "ObjLoader.h"
 #include <climits>
+#include "IOExceptions.h"
 
 class ObjParserTest : public ::testing::Test
 {

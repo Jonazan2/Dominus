@@ -10,6 +10,7 @@
 #include "gtest/gtest.h"
 #include "Buffer.h"
 #include "MemoryUtils.h"
+#include "OpenGLExceptions.h"
 
 using ::testing::Return;
 
