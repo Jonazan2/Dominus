@@ -145,3 +145,18 @@ TEST_F( ObjParserTest, ParseVertexBadFormat ) {
     ASSERT_EQ( 0, vertex.y );
     ASSERT_EQ( 0, vertex.z );
 }
+
+TEST_F( ObjParserTest, ObjFileParseTest ) {
+    std::shared_ptr<ObjInfo> objInfo = loader->load( "objFileParseTest.obj" );
+    ASSERT_EQ( 3, objInfo->shapes.size() );
+    ASSERT_TRUE( !objInfo->materialLib.empty() );
+}
+
+TEST_F( ObjParserTest, ObjFilerParseFNFTest ) {
+    try {
+        std::shared_ptr<ObjInfo> objInfo = loader->load( "FileNotFound.obj" );
+    } catch( FileNotFoundException e ) {
+        std::string error( e.what() );
+        ASSERT_TRUE( !error.empty() );
+    }
+}

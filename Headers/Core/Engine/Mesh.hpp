@@ -31,6 +31,13 @@ public:
     std::string material;
 };
 
+struct ObjInfo {
+    ObjInfo() : materialLib( "" ) {
+    }
+    std::vector<std::shared_ptr<Shape>> shapes;
+    std::string materialLib;
+};
+
 class Mesh{
 public:
     Mesh();
