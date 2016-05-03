@@ -16,23 +16,24 @@ void Mesh::setTexture( std::shared_ptr<Texture> texture ){
     this->texture = texture;
 }
 
+std::vector<std::shared_ptr<Shape>> Mesh::getShapes() {
+    return shapes;
+}
+
 std::shared_ptr<Texture> Mesh::getTexture() {
     return texture;
 }
 
 std::vector<glm::vec3> Mesh::getVertices() const {
-    std::vector<glm::vec3> result;
-    return result;
+    return vertices;
 }
 
 std::vector<glm::vec2> Mesh::getUvs() const {
-    std::vector<glm::vec2> result;
-    return result;
+    return uvs;
 }
 
 std::vector<glm::vec3> Mesh::getNormals() const {
-    std::vector<glm::vec3> result;
-    return result;
+    return normals;
 }
 
 Mesh::~Mesh() {

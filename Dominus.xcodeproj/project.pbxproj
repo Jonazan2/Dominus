@@ -67,6 +67,8 @@
 		9C80754E1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
 		9C80754F1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
 		9C8075571CA31ED60052086F /* BufferTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C8075561CA31ED60052086F /* BufferTest.cpp */; };
+		9CA4FD4A1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CA4FD4B1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CB3200C1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; };
 		9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; };
 		9CB320121CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; };
@@ -184,6 +186,8 @@
 		9C8075501CA313250052086F /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Buffer.h; path = Headers/Core/Engine/Buffer.h; sourceTree = "<group>"; };
 		9C8075561CA31ED60052086F /* BufferTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BufferTest.cpp; sourceTree = "<group>"; };
 		9C922E851C975F9D00D66C8F /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MeshBuilder.cpp; path = Core/Engine/MeshBuilder.cpp; sourceTree = "<group>"; };
+		9CA4FD4C1CD9331600A5F940 /* MeshBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MeshBuilder.h; path = Headers/Core/Engine/MeshBuilder.h; sourceTree = "<group>"; };
 		9CB320091CA724370058482C /* TextureLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextureLoader.h; path = Headers/Core/Engine/TextureLoader.h; sourceTree = "<group>"; };
 		9CB3200A1CA725C10058482C /* PngTextureLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PngTextureLoader.h; path = Headers/Core/Engine/PngTextureLoader.h; sourceTree = "<group>"; };
 		9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PngTextureLoader.cpp; path = Core/Engine/PngTextureLoader.cpp; sourceTree = "<group>"; };
@@ -478,6 +482,7 @@
 				3A0779961CD3803900B8C065 /* StringStream.h */,
 				3A07799B1CD8A50E00B8C065 /* IOExceptions.h */,
 				3A07799C1CD8A52C00B8C065 /* OpenGLExceptions.h */,
+				9CA4FD4C1CD9331600A5F940 /* MeshBuilder.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -516,6 +521,7 @@
 				9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */,
 				9CBA326C1CC555B900FCF048 /* Drawer.cpp */,
 				3A0779971CD3805000B8C065 /* StringStream.cpp */,
+				9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -601,6 +607,7 @@
 				92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */,
 				9C2A0E7D1CADA87D004A45CA /* TilesLoader.cpp in Sources */,
 				9CBA324A1CB12F4100FCF048 /* ShaderProgram.cpp in Sources */,
+				9CA4FD4A1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */,
 				AB6398DB1C8CE49500CA0B3B /* Engine.cpp in Sources */,
 				AB6398CE1C8CE48400CA0B3B /* Scene.cpp in Sources */,
 				AB6398DC1C8CE49500CA0B3B /* Event.cpp in Sources */,
@@ -666,6 +673,7 @@
 				9C80753D1CA1D1DF0052086F /* Texture.cpp in Sources */,
 				9C2A0E701CAC450B004A45CA /* LuaScript.cpp in Sources */,
 				9CBA324B1CB12F4100FCF048 /* ShaderProgram.cpp in Sources */,
+				9CA4FD4B1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */,
 				9CBA326E1CC555B900FCF048 /* Drawer.cpp in Sources */,
 				9C7D083C1C9EC63A00804DF1 /* Layout.cpp in Sources */,
 				3A0779991CD3805000B8C065 /* StringStream.cpp in Sources */,

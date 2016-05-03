@@ -27,6 +27,12 @@ void MomoNode::onUpdate() {
 
 void MomoNode::onRestore( Scene *scene ) {
     Node::onRestore( scene );
+    std::shared_ptr<Mesh> mesh = this->getMesh();
+    std::shared_ptr<Shape> shape = mesh->getShapes().at( 0 );
+    mesh->vertices = shape->vertices;
+    mesh->uvs = shape->uvs;
+    mesh->normals = shape->normals;
+    
     scene->load( std::static_pointer_cast<Node>( shared_from_this() ),
                  Renderer::MOMO_RENDER_STATE );
 }
