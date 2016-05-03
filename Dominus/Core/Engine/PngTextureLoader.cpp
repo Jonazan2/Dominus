@@ -12,6 +12,7 @@
 #include <png.h>
 #include <iostream>
 #include "Exception.h"
+#include "IOExceptions.h"
 
 PngTextureLoader::PngTextureLoader() {
 

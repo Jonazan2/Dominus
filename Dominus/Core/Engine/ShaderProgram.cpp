@@ -7,7 +7,7 @@
 //
 
 #include "ShaderProgram.h"
-#include "Exception.h"
+#include "OpenGLExceptions.h"
 
 ShaderProgram::ShaderProgram()
 : active( false ), linked( false ) {

@@ -7,7 +7,7 @@
 //
 
 #include "VertexArrayObject.h"
-#include "Exception.h"
+#include "OpenGLExceptions.h"
 
 VertexArrayObject::VertexArrayObject() : binded( false ) {
     glGenVertexArrays ( 1, &uid );

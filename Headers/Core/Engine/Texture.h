@@ -7,7 +7,6 @@
 
 #include "TextureLoader.h"
 #include "GpuTexture.h"
-#include "Exception.h"
 #include "MemoryUtils.h"
 
 class Texture {

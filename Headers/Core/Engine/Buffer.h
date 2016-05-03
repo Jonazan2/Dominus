@@ -2,9 +2,8 @@
 #define __Dominus_Buffer_h__
 
 #include <glm/glm.hpp>
-
+#include <memory>
 #include "GpuBuffer.h"
-#include "Exception.h"
 
 class Buffer {
 public:

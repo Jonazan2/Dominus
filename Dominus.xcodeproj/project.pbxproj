@@ -85,8 +85,6 @@
 		9CBA32691CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */; };
 		9CBA326D1CC555B900FCF048 /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA326C1CC555B900FCF048 /* Drawer.cpp */; };
 		9CBA326E1CC555B900FCF048 /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA326C1CC555B900FCF048 /* Drawer.cpp */; };
-		9CBA32711CC5652400FCF048 /* Shape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32701CC5652400FCF048 /* Shape.cpp */; };
-		9CBA32721CC5652400FCF048 /* Shape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32701CC5652400FCF048 /* Shape.cpp */; };
 		9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCB2FA81C82F92D0066C313 /* main.cpp */; };
 		9CCB2FAF1C82F95E0066C313 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9D1C82F7FE0066C313 /* gtest.framework */; };
 		9CCB2FB01C82F96C0066C313 /* gmock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB2F9F1C82F8790066C313 /* gmock.framework */; };
@@ -129,6 +127,8 @@
 /* Begin PBXFileReference section */
 		3A0779961CD3803900B8C065 /* StringStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StringStream.h; sourceTree = "<group>"; };
 		3A0779971CD3805000B8C065 /* StringStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StringStream.cpp; path = Core/Engine/StringStream.cpp; sourceTree = "<group>"; };
+		3A07799B1CD8A50E00B8C065 /* IOExceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IOExceptions.h; path = Headers/Core/Engine/IOExceptions.h; sourceTree = "<group>"; };
+		3A07799C1CD8A52C00B8C065 /* OpenGLExceptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OpenGLExceptions.h; path = Headers/Core/Engine/OpenGLExceptions.h; sourceTree = "<group>"; };
 		3A7AA0B11C577E9F00C45A2A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		3AC1547A1C85994500FBE71C /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		9226C9351CBE476D0018386E /* MemoryUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MemoryUtils.h; path = Headers/Core/System/MemoryUtils.h; sourceTree = "<group>"; };
@@ -206,8 +206,6 @@
 		9CBA326A1CBC349100FCF048 /* VertexArrayObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VertexArrayObject.h; path = Headers/Core/Engine/VertexArrayObject.h; sourceTree = "<group>"; };
 		9CBA326B1CC555A500FCF048 /* Drawer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Drawer.h; path = Headers/Core/Engine/Drawer.h; sourceTree = "<group>"; };
 		9CBA326C1CC555B900FCF048 /* Drawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Drawer.cpp; path = Core/Engine/Drawer.cpp; sourceTree = "<group>"; };
-		9CBA326F1CC5650E00FCF048 /* Shape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Shape.h; path = Headers/Core/Engine/Shape.h; sourceTree = "<group>"; };
-		9CBA32701CC5652400FCF048 /* Shape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shape.cpp; path = Core/Engine/Shape.cpp; sourceTree = "<group>"; };
 		9CCB2F9D1C82F7FE0066C313 /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = ../../../../Library/Frameworks/gtest.framework; sourceTree = "<group>"; };
 		9CCB2F9F1C82F8790066C313 /* gmock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gmock.framework; path = ../../../../Library/Frameworks/gmock.framework; sourceTree = "<group>"; };
 		9CCB2FA61C82F92D0066C313 /* UnitTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnitTest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -477,8 +475,9 @@
 				9CBA32501CB6D3ED00FCF048 /* UIRenderState.h */,
 				9CBA326A1CBC349100FCF048 /* VertexArrayObject.h */,
 				9CBA326B1CC555A500FCF048 /* Drawer.h */,
-				9CBA326F1CC5650E00FCF048 /* Shape.h */,
 				3A0779961CD3803900B8C065 /* StringStream.h */,
+				3A07799B1CD8A50E00B8C065 /* IOExceptions.h */,
+				3A07799C1CD8A52C00B8C065 /* OpenGLExceptions.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -516,7 +515,6 @@
 				9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */,
 				9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */,
 				9CBA326C1CC555B900FCF048 /* Drawer.cpp */,
-				9CBA32701CC5652400FCF048 /* Shape.cpp */,
 				3A0779971CD3805000B8C065 /* StringStream.cpp */,
 			);
 			name = Engine;
@@ -610,7 +608,6 @@
 				9C80754B1CA1FC5D0052086F /* LightNode.cpp in Sources */,
 				AB6398E21C8CE49500CA0B3B /* Shader.cpp in Sources */,
 				9C7D08331C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */,
-				9CBA32711CC5652400FCF048 /* Shape.cpp in Sources */,
 				3A0779981CD3805000B8C065 /* StringStream.cpp in Sources */,
 				9CB320121CA735E00058482C /* GLGpuTexture.cpp in Sources */,
 				AB6398E11C8CE49500CA0B3B /* Renderer.cpp in Sources */,
@@ -662,7 +659,6 @@
 				9C8075431CA1D68B0052086F /* Renderer.cpp in Sources */,
 				9C2A0E6D1CA972E1004A45CA /* ObjLoader.cpp in Sources */,
 				9C8075421CA1D6730052086F /* Event.cpp in Sources */,
-				9CBA32721CC5652400FCF048 /* Shape.cpp in Sources */,
 				9CB320131CA735E00058482C /* GLGpuTexture.cpp in Sources */,
 				9C8075401CA1D6510052086F /* Material.cpp in Sources */,
 				9C8075411CA1D6510052086F /* Mesh.cpp in Sources */,
