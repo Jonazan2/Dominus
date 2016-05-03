@@ -13,6 +13,7 @@
 #include <fstream>
 #include <istream>
 #include <sstream>
+#include "IOExceptions.h"
 
 ObjLoader::ObjLoader() {
 

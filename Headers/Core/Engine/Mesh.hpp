@@ -13,9 +13,23 @@
 #include "Material.h"
 #include "Texture.h"
 #include "MeshLoader.h"
-#include "Shape.h"
 
 #include <OpenGL/OpenGL.h>
+
+struct Shape {
+public:
+    Shape() : material( "" ) {
+    
+    }
+    
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec2> uvs;
+    std::vector<glm::vec3> normals;
+    
+    std::vector<std::vector<std::vector<int>>> indices;
+    
+    std::string material;
+};
 
 class Mesh{
 public:

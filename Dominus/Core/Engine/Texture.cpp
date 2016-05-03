@@ -1,4 +1,6 @@
 #include "Texture.h"
+#include "Exception.h"
+#include "OpenGLExceptions.h"
 
 Texture::Texture( )
     : width(0), height(0), hasAlpha( false ),
