@@ -37,7 +37,7 @@ std::shared_ptr<ObjInfo> ObjLoader::load( const std::string filePath ) {
         if( line.at( 0 ) != '#' ) {
             if( line.at( 0 ) == 'o' ) {
                 objInfo->shapes.push_back( loadShape( file ) );
-            } if ( tag.compare( "mtlib" ) ) {
+            } if ( tag == "mtlib" ) {
                 //if there's more than one mtlib it'll overrided with the last one
                 objInfo->materialLib = parseMaterialLib( &in );
             }
