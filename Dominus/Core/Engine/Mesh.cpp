@@ -4,6 +4,26 @@ Mesh::Mesh()
     :texture( nullptr ) {
 }
 
+Shape::Shape() {
+
+}
+
+Shape::~Shape() {
+
+}
+
+long Shape::vecticesBufferSize() {
+    return ( sizeof( GLfloat ) * 3 ) * vertices.size();
+}
+
+long Shape::uvsBufferSize() {
+    return ( sizeof( GLfloat ) * 2 ) * uvs.size();
+}
+
+long Shape::normalsBufferSize() {
+    return ( sizeof( GLfloat ) * 3 ) * normals.size();
+}
+
 Mesh::Mesh( std::unique_ptr< MeshLoader > loader ) : Mesh( ) {
     this->loader = std::move( loader );
 }

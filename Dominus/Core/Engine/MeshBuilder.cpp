@@ -8,6 +8,7 @@
 
 #include "MeshBuilder.h"
 #include "Mesh.hpp"
+#include "Exception.h"
 
 MeshBuilder::MeshBuilder() {
 
@@ -17,21 +18,15 @@ std::shared_ptr<Mesh> MeshBuilder::buildMesh(
                                     std::shared_ptr<ObjLoader> objParser ) {
     std::shared_ptr<Mesh> mesh = std::shared_ptr<Mesh>( new Mesh );
     std::shared_ptr<ObjInfo> objInfo = objParser->load( );
-    for ( std::shared_ptr<Shape> shape :  objInfo->shapes ) {
+    for ( std::shared_ptr<ShapeInfo> shapeInfo :  objInfo->shapes ) {
         std::shared_ptr<Shape> meshShape = std::shared_ptr<Shape>( new Shape );
-        for ( int i = 0;  i < shape->indices.size(); i++ ) {
-            std::vector<std::vector<int>> indices = shape->indices.at( i );
+        for ( int i = 0;  i < shapeInfo->indices.size(); i++ ) {
+            std::vector<std::vector<int>> indices = shapeInfo->indices.at( i );
             if( indices.size() == 3 ) {
-                for ( std::vector<int> triplet : indices ) {
-                    int vIndex = triplet.at( ObjLoader::V_KEY ) - 1;
-                    int vtIndex = triplet.at( ObjLoader::VT_KEY ) - 1;
-                    int vnIndex = triplet.at( ObjLoader::VN_KEY ) - 1;
-                    meshShape->vertices.push_back( shape->vertices.at( vIndex ) );
-                    meshShape->uvs.push_back( shape->uvs.at( vtIndex ) );
-                    meshShape->normals.push_back( shape->normals.at( vnIndex ) );
-                }
+                mapValues( indices, shapeInfo, meshShape );
             } else if( indices.size() == 4 ) {
                 std::vector<std::vector<int>> tripletLine0, tripletLine1;
+                //counterclockwise
                 tripletLine0.push_back( indices.at( 0 ) );
                 tripletLine0.push_back( indices.at( 1 ) );
                 tripletLine0.push_back( indices.at( 2 ) );
@@ -39,26 +34,37 @@ std::shared_ptr<Mesh> MeshBuilder::buildMesh(
                 tripletLine1.push_back( indices.at( 0 ) );
                 tripletLine1.push_back( indices.at( 2 ) );
                 tripletLine1.push_back( indices.at( 3 ) );
-                for ( std::vector<int> triplet : tripletLine0 ) {
-                    int vIndex = triplet.at( ObjLoader::V_KEY ) - 1;
-                    int vtIndex = triplet.at( ObjLoader::VT_KEY ) - 1;
-                    int vnIndex = triplet.at( ObjLoader::VN_KEY ) - 1;
-                    meshShape->vertices.push_back( shape->vertices.at( vIndex ) );
-                    meshShape->uvs.push_back( shape->uvs.at( vtIndex ) );
-                    meshShape->normals.push_back( shape->normals.at( vnIndex ) );
-                }
-                
-                for ( std::vector<int> triplet : tripletLine1 ) {
-                    int vIndex = triplet.at( ObjLoader::V_KEY ) - 1;
-                    int vtIndex = triplet.at( ObjLoader::VT_KEY ) - 1;
-                    int vnIndex = triplet.at( ObjLoader::VN_KEY ) - 1;
-                    meshShape->vertices.push_back( shape->vertices.at( vIndex ) );
-                    meshShape->uvs.push_back( shape->uvs.at( vtIndex ) );
-                    meshShape->normals.push_back( shape->normals.at( vnIndex ) );
-                }
+                mapValues( tripletLine0, shapeInfo, meshShape );
+                mapValues( tripletLine1, shapeInfo, meshShape );
             }
         }
         mesh->addShape( meshShape );
     }
     return mesh;
+}
+
+void MeshBuilder::mapValues( const std::vector<std::vector<int>> vectorRow,
+                             const std::shared_ptr<ShapeInfo> shapeInfo,
+                             std::shared_ptr<Shape> shape ) {
+    for ( std::vector<int> vector : vectorRow ) {
+        int vIndex = vector.at( ObjLoader::V_KEY ) - 1;
+        int vtIndex = vector.at( ObjLoader::VT_KEY ) - 1;
+        int vnIndex = vector.at( ObjLoader::VN_KEY ) - 1;
+        
+        if( shapeInfo->vertices.empty() &&
+            shapeInfo->uvs.empty() &&
+            shapeInfo->normals.empty() ) {
+            throw ObjFormatException( "corrupted info" );
+        }
+
+        if ( vnIndex < shapeInfo->vertices.size() ) {
+            shape->vertices.push_back( shapeInfo->vertices.at( vIndex ) );
+        }
+        if ( vtIndex < shapeInfo->uvs.size() ) {
+            shape->uvs.push_back( shapeInfo->uvs.at( vtIndex ) );
+        }
+        if ( vnIndex < shapeInfo->normals.size() ) {
+            shape->normals.push_back( shapeInfo->normals.at( vnIndex ) );
+        }
+    }
 }

@@ -11,6 +11,7 @@
 #include "ObjLoader.h"
 #include <climits>
 #include "IOExceptions.h"
+#include "Mesh.hpp"
 
 class ObjParserTest : public ::testing::Test
 {
@@ -78,7 +79,7 @@ TEST_F( ObjParserTest, LoadIndexLine4ItemsTest ) {
 TEST_F( ObjParserTest, ParseShapeTest ) {
     std::shared_ptr<StringStream> file = std::shared_ptr<StringStream>( new StringStream );
     file->load( "shape1_parser_test.obj" );
-    std::shared_ptr<Shape> shape = loader->loadShape( file );
+    std::shared_ptr<ShapeInfo> shape = loader->loadShape( file );
     ASSERT_EQ( 2, shape->vertices.size() );
     ASSERT_EQ( 2, shape->normals.size() );
     ASSERT_EQ( 2, shape->uvs.size() );
@@ -89,7 +90,7 @@ TEST_F( ObjParserTest, ParseShapeTest ) {
 TEST_F( ObjParserTest, ParseShapeFinishBeforeEOF ) {
     std::shared_ptr<StringStream> file = std::shared_ptr<StringStream>( new StringStream );
     file->load( "shape2_parser_test.obj" );
-    std::shared_ptr<Shape> shape = loader->loadShape( file );
+    std::shared_ptr<ShapeInfo> shape = loader->loadShape( file );
     ASSERT_EQ( 2, shape->vertices.size() );
     ASSERT_EQ( 2, shape->normals.size() );
     ASSERT_EQ( 2, shape->uvs.size() );

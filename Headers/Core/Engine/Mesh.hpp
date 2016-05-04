@@ -17,9 +17,9 @@
 
 #include <OpenGL/OpenGL.h>
 
-struct Shape {
+struct ShapeInfo {
 public:
-    Shape() : material( "" ) {
+    ShapeInfo() : material( "" ) {
     
     }
     
@@ -35,8 +35,22 @@ public:
 struct ObjInfo {
     ObjInfo() : materialLib( "" ) {
     }
-    std::vector<std::shared_ptr<Shape>> shapes;
+    std::vector<std::shared_ptr<ShapeInfo>> shapes;
     std::string materialLib;
+};
+
+class Shape {
+public:
+    Shape();
+    ~Shape();
+    
+    long vecticesBufferSize();
+    long uvsBufferSize();
+    long normalsBufferSize();
+    
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec2> uvs;
+    std::vector<glm::vec3> normals;
 };
 
 class Mesh {

@@ -69,6 +69,7 @@
 		9C8075571CA31ED60052086F /* BufferTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C8075561CA31ED60052086F /* BufferTest.cpp */; };
 		9CA4FD4A1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CA4FD4B1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CA4FD4E1CDA863400A5F940 /* MeshBuilderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD4D1CDA863400A5F940 /* MeshBuilderTest.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CB3200C1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; };
 		9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; };
 		9CB320121CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; };
@@ -188,6 +189,7 @@
 		9C922E851C975F9D00D66C8F /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MeshBuilder.cpp; path = Core/Engine/MeshBuilder.cpp; sourceTree = "<group>"; };
 		9CA4FD4C1CD9331600A5F940 /* MeshBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MeshBuilder.h; path = Headers/Core/Engine/MeshBuilder.h; sourceTree = "<group>"; };
+		9CA4FD4D1CDA863400A5F940 /* MeshBuilderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeshBuilderTest.cpp; sourceTree = "<group>"; };
 		9CB320091CA724370058482C /* TextureLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextureLoader.h; path = Headers/Core/Engine/TextureLoader.h; sourceTree = "<group>"; };
 		9CB3200A1CA725C10058482C /* PngTextureLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PngTextureLoader.h; path = Headers/Core/Engine/PngTextureLoader.h; sourceTree = "<group>"; };
 		9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PngTextureLoader.cpp; path = Core/Engine/PngTextureLoader.cpp; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 				9C8075561CA31ED60052086F /* BufferTest.cpp */,
 				9C222D561CA49071003C1DC5 /* MockGPUBuffer.h */,
 				9C4511221CC962AC0070CD0F /* ObjParserTest.cpp */,
+				9CA4FD4D1CDA863400A5F940 /* MeshBuilderTest.cpp */,
 			);
 			path = UnitTest;
 			sourceTree = "<group>";
@@ -690,6 +693,7 @@
 				9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */,
 				9C2A0E7E1CADA87D004A45CA /* TilesLoader.cpp in Sources */,
 				9C2A0E821CADACA7004A45CA /* MapBuilder.cpp in Sources */,
+				9CA4FD4E1CDA863400A5F940 /* MeshBuilderTest.cpp in Sources */,
 				9C7D08361C9EC57600804DF1 /* VerticalLayout.cpp in Sources */,
 				9C7D08341C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */,
 				9CBA32531CB6D40000FCF048 /* UIRenderState.cpp in Sources */,

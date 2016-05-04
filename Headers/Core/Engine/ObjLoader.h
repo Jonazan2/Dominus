@@ -14,7 +14,7 @@
 #include <climits>
 #include <memory>
 class ObjInfo;
-class Shape;
+class ShapeInfo;
 class ObjLoader : public MeshLoader {
 public:
     ObjLoader();
@@ -26,7 +26,7 @@ public:
     std::vector<std::string> split( const std::string,
                                     const char ) const;
     
-    std::shared_ptr<Shape> loadShape( std::shared_ptr<StringStream> file );
+    std::shared_ptr<ShapeInfo> loadShape( std::shared_ptr<StringStream> file );
     
     glm::vec3 loadVertex( std::istringstream* vertexLine );
     glm::vec2 loadUv( std::istringstream* uvLine );

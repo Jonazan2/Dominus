@@ -12,12 +12,15 @@
 #include "ObjLoader.h"
 
 class Mesh;
+class Shape;
 class MeshBuilder {
 public:
     MeshBuilder();
     
     std::shared_ptr<Mesh> buildMesh( std::shared_ptr<ObjLoader> objParser );
-    
+    void mapValues( std::vector<std::vector<int>> vectorRow,
+                                std::shared_ptr<ShapeInfo> shapeInfo,
+                                std::shared_ptr<Shape> shape );
 };
 
 #endif /* MeshBuilder_h */
