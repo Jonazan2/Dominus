@@ -14,6 +14,7 @@
 #include <istream>
 #include <sstream>
 #include "IOExceptions.h"
+#include "Exception.h"
 
 ObjLoader::ObjLoader() {
 
@@ -23,28 +24,44 @@ ObjLoader::~ObjLoader() {
 
 }
 
-std::shared_ptr<Mesh> ObjLoader::load( const std::string filePath ) {
-    std::shared_ptr<Mesh> mesh = std::shared_ptr<Mesh>( new Mesh() );
+std::shared_ptr<ObjInfo> ObjLoader::load( const std::string filePath ) {
+    std::shared_ptr<ObjInfo> objInfo = std::shared_ptr<ObjInfo>( new ObjInfo );
     std::string line;
     std::shared_ptr<StringStream> file =
         std::shared_ptr<StringStream>( new StringStream );
     file->load( filePath );
     while ( file->getLine( line ) ) {
+        std::istringstream in( line );
+        std::string tag;
+        in >> tag;
         if( line.at( 0 ) != '#' ) {
             if( line.at( 0 ) == 'o' ) {
-                mesh ->addShape( loadShape( file ) );
+                objInfo->shapes.push_back( loadShape( file ) );
+            } if ( tag == "mtlib" ) {
+                //if there's more than one mtlib it'll overrided with the last one
+                objInfo->materialLib = parseMaterialLib( &in );
             }
         }
     }
-    return mesh;
+    return objInfo;
 }
 
-std::shared_ptr<Shape> ObjLoader::loadShape(
+std::string ObjLoader::parseMaterialLib( std::istringstream *mtlibLine ) {
+    std::string material = "";
+    *mtlibLine >> material;
+    if( material.empty() ) {
+        throw ParseException( "MATERIAL_BAD_FORMAT" );
+    }
+    
+    return material;
+}
+
+std::shared_ptr<ShapeInfo> ObjLoader::loadShape(
                         std::shared_ptr<StringStream> file ) {
-    std::shared_ptr<Shape> shape = std::make_shared<Shape>( Shape() );
+    std::shared_ptr<ShapeInfo> shape = std::shared_ptr<ShapeInfo>( new ShapeInfo() );
     std::string line;
     bool shapeSpace = true;
-    while ( file->getLine( line ) && shapeSpace ) {
+    while ( shapeSpace && file->getLine( line ) ) {
         std::istringstream in( line );
         std::string type;
         in >> type;
@@ -139,7 +156,7 @@ std::vector<int> ObjLoader::loadIndex( std::string indexString ) {
             index.push_back( INT_MAX );
             index.push_back( std::stoi( indexComponents.at( VN_KEY ) ) );
         } else {
-            //formatting exception
+            throw ObjFormatException( indexString.c_str() );
         }
     } else {
         if( indexComponents.size() == 2 ) {
@@ -153,7 +170,7 @@ std::vector<int> ObjLoader::loadIndex( std::string indexString ) {
             index.push_back( std::stoi( indexComponents.at( VT_KEY ) ) );
             index.push_back( std::stoi( indexComponents.at( VN_KEY ) ) );
         } else {
-            //formatting exception
+            throw ObjFormatException( indexString.c_str() );
         }
     }
     return index;

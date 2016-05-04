@@ -48,4 +48,19 @@ private:
     const char* error;
 };
         
+class ObjFormatException : public std::runtime_error {
+public:
+    ObjFormatException( const char* error )
+    : runtime_error( "Bad format parsing Obj " ), error( error )
+    {}
+    
+    virtual const char* what() const throw() {
+        std::ostringstream message;
+        message << std::runtime_error::what() << ": " << error;
+        return message.str().c_str();
+    }
+private:
+    const char* error;
+};
+        
 #endif /* Exception_h */

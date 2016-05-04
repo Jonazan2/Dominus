@@ -78,7 +78,7 @@ TEST_F( ObjParserTest, LoadIndexLine4ItemsTest ) {
 TEST_F( ObjParserTest, ParseShapeTest ) {
     std::shared_ptr<StringStream> file = std::shared_ptr<StringStream>( new StringStream );
     file->load( "shape1_parser_test.obj" );
-    std::shared_ptr<Shape> shape = loader->loadShape( file );
+    std::shared_ptr<ShapeInfo> shape = loader->loadShape( file );
     ASSERT_EQ( 2, shape->vertices.size() );
     ASSERT_EQ( 2, shape->normals.size() );
     ASSERT_EQ( 2, shape->uvs.size() );
@@ -89,7 +89,7 @@ TEST_F( ObjParserTest, ParseShapeTest ) {
 TEST_F( ObjParserTest, ParseShapeFinishBeforeEOF ) {
     std::shared_ptr<StringStream> file = std::shared_ptr<StringStream>( new StringStream );
     file->load( "shape2_parser_test.obj" );
-    std::shared_ptr<Shape> shape = loader->loadShape( file );
+    std::shared_ptr<ShapeInfo> shape = loader->loadShape( file );
     ASSERT_EQ( 2, shape->vertices.size() );
     ASSERT_EQ( 2, shape->normals.size() );
     ASSERT_EQ( 2, shape->uvs.size() );
@@ -144,4 +144,19 @@ TEST_F( ObjParserTest, ParseVertexBadFormat ) {
     ASSERT_EQ( 0, vertex.x );
     ASSERT_EQ( 0, vertex.y );
     ASSERT_EQ( 0, vertex.z );
+}
+
+TEST_F( ObjParserTest, ObjFileParseTest ) {
+    std::shared_ptr<ObjInfo> objInfo = loader->load( "objFileParseTest.obj" );
+    ASSERT_EQ( 3, objInfo->shapes.size() );
+    ASSERT_TRUE( !objInfo->materialLib.empty() );
+}
+
+TEST_F( ObjParserTest, ObjFilerParseFNFTest ) {
+    try {
+        std::shared_ptr<ObjInfo> objInfo = loader->load( "FileNotFound.obj" );
+    } catch( FileNotFoundException e ) {
+        std::string error( e.what() );
+        ASSERT_TRUE( !error.empty() );
+    }
 }

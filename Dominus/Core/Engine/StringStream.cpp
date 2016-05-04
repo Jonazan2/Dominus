@@ -8,6 +8,7 @@
 
 #include "StringStream.h"
 #include "MemoryUtils.h"
+#include "IOExceptions.h"
 
 StringStream::StringStream()
 : fileStream( nullptr ), filePath( "" ) {
@@ -22,6 +23,9 @@ void StringStream::load( std::string filePath ) {
     this->filePath = filePath;
     this->fileStream =
         make_unique<std::ifstream>( std::ifstream( filePath ) );
+    if( fileStream->fail() ) {
+        throw FileNotFoundException( filePath.c_str() );
+    }
 }
 
 std::istream& StringStream::getLine( std::string& line ) {
