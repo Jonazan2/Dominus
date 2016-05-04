@@ -56,9 +56,9 @@ std::string ObjLoader::parseMaterialLib( std::istringstream *mtlibLine ) {
     return material;
 }
 
-std::shared_ptr<Shape> ObjLoader::loadShape(
+std::shared_ptr<ShapeInfo> ObjLoader::loadShape(
                         std::shared_ptr<StringStream> file ) {
-    std::shared_ptr<Shape> shape = std::make_shared<Shape>( Shape() );
+    std::shared_ptr<ShapeInfo> shape = std::shared_ptr<ShapeInfo>( new ShapeInfo() );
     std::string line;
     bool shapeSpace = true;
     while ( shapeSpace && file->getLine( line ) ) {
