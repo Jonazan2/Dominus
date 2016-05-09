@@ -67,9 +67,9 @@
 		9C80754E1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
 		9C80754F1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
 		9C8075571CA31ED60052086F /* BufferTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C8075561CA31ED60052086F /* BufferTest.cpp */; };
-		9CA4FD4A1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */; settings = {ASSET_TAGS = (); }; };
-		9CA4FD4B1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */; settings = {ASSET_TAGS = (); }; };
-		9CA4FD4E1CDA863400A5F940 /* MeshBuilderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD4D1CDA863400A5F940 /* MeshBuilderTest.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CA4FD4A1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */; };
+		9CA4FD4B1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */; };
+		9CA4FD4E1CDA863400A5F940 /* MeshBuilderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD4D1CDA863400A5F940 /* MeshBuilderTest.cpp */; };
 		9CB3200C1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; };
 		9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; };
 		9CB320121CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; };
@@ -82,8 +82,6 @@
 		9CBA324B1CB12F4100FCF048 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */; };
 		9CBA324E1CB6810F00FCF048 /* MomoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */; };
 		9CBA324F1CB6810F00FCF048 /* MomoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */; };
-		9CBA32521CB6D40000FCF048 /* UIRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */; };
-		9CBA32531CB6D40000FCF048 /* UIRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */; };
 		9CBA32681CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */; };
 		9CBA32691CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */; };
 		9CBA326D1CC555B900FCF048 /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA326C1CC555B900FCF048 /* Drawer.cpp */; };
@@ -206,8 +204,6 @@
 		9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderProgram.cpp; path = Core/Engine/ShaderProgram.cpp; sourceTree = "<group>"; };
 		9CBA324C1CB680F900FCF048 /* MomoNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MomoNode.h; path = Headers/Core/Engine/MomoNode.h; sourceTree = "<group>"; };
 		9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MomoNode.cpp; path = Core/Engine/MomoNode.cpp; sourceTree = "<group>"; };
-		9CBA32501CB6D3ED00FCF048 /* UIRenderState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UIRenderState.h; path = Headers/Core/Engine/UIRenderState.h; sourceTree = "<group>"; };
-		9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIRenderState.cpp; path = Core/Engine/UIRenderState.cpp; sourceTree = "<group>"; };
 		9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VertexArrayObject.cpp; path = Core/Engine/VertexArrayObject.cpp; sourceTree = "<group>"; };
 		9CBA326A1CBC349100FCF048 /* VertexArrayObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VertexArrayObject.h; path = Headers/Core/Engine/VertexArrayObject.h; sourceTree = "<group>"; };
 		9CBA326B1CC555A500FCF048 /* Drawer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Drawer.h; path = Headers/Core/Engine/Drawer.h; sourceTree = "<group>"; };
@@ -479,7 +475,6 @@
 				9CBA32401CB04CF400FCF048 /* MomoRenderState.h */,
 				9CBA32481CB12F3100FCF048 /* ShaderProgram.h */,
 				9CBA324C1CB680F900FCF048 /* MomoNode.h */,
-				9CBA32501CB6D3ED00FCF048 /* UIRenderState.h */,
 				9CBA326A1CBC349100FCF048 /* VertexArrayObject.h */,
 				9CBA326B1CC555A500FCF048 /* Drawer.h */,
 				3A0779961CD3803900B8C065 /* StringStream.h */,
@@ -520,7 +515,6 @@
 				9CBA32411CB04D0D00FCF048 /* MomoRenderState.cpp */,
 				9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */,
 				9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */,
-				9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */,
 				9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */,
 				9CBA326C1CC555B900FCF048 /* Drawer.cpp */,
 				3A0779971CD3805000B8C065 /* StringStream.cpp */,
@@ -648,7 +642,6 @@
 				9C7D082B1C9EC0C500804DF1 /* Text.cpp in Sources */,
 				9C80754E1CA313130052086F /* Buffer.cpp in Sources */,
 				9CBA323E1CB0346A00FCF048 /* MapRenderState.cpp in Sources */,
-				9CBA32521CB6D40000FCF048 /* UIRenderState.cpp in Sources */,
 				AB6398CD1C8CE48400CA0B3B /* RenderScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -696,7 +689,6 @@
 				9CA4FD4E1CDA863400A5F940 /* MeshBuilderTest.cpp in Sources */,
 				9C7D08361C9EC57600804DF1 /* VerticalLayout.cpp in Sources */,
 				9C7D08341C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */,
-				9CBA32531CB6D40000FCF048 /* UIRenderState.cpp in Sources */,
 				9C7D08301C9EC0C500804DF1 /* UIComponent.cpp in Sources */,
 				9C80752E1CA1D1C80052086F /* LayoutTest.cpp in Sources */,
 				9C80752D1CA1D1C80052086F /* HorizontalLayoutTest.cpp in Sources */,

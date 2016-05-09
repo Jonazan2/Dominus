@@ -78,11 +78,11 @@ void MapRenderState::load( std::shared_ptr<Node> node ) {
     vao->bind();
     
     verticesBuffer->bind();
-    GLsizeiptr size = ( sizeof( GLfloat ) * 3 ) * mesh->getVertices().size();
-    verticesBuffer->push( (float*) &mesh->getVertices()[0], size );
+    GLsizeiptr size = ( sizeof( GLfloat ) * 3 ) * mesh->vertices.size();
+    verticesBuffer->push( (float*) &mesh->vertices[0], size );
     //TODO: this should be automatic...
     offsetMap[node->getID()] = units;
-    units += mesh->getVertices().size();
+    units += mesh->vertices.size();
     verticesBuffer->unBind();
 
     vao->unBind();
@@ -104,7 +104,7 @@ void MapRenderState::draw( std::shared_ptr<Node> node ) {
                        &modelViewMatrix[0][0]);
     drawer->draw( GL_TRIANGLES,
                   (int)offsetMap[node->getID()],
-                  (int)node->getMesh()->getVertices().size());
+                  (int)node->getMesh()->vertices.size());
     vao->unBind();
     shaderProgram->releaseProgram();
 }

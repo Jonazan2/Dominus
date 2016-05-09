@@ -59,12 +59,6 @@ public:
     Mesh( std::unique_ptr< MeshLoader > loader );
     ~Mesh();
     
-    std::vector<glm::vec3> getVertices() const;
-
-    std::vector<glm::vec2> getUvs() const;
-    
-    std::vector<glm::vec3> getNormals() const;
-    
     void setTexture( std::shared_ptr<Texture> texture );
     std::shared_ptr<Texture> getTexture();
     
@@ -80,7 +74,6 @@ private:
     std::shared_ptr<Texture> texture;
     Material material;
     std::unique_ptr< MeshLoader > loader;
-    
 };
 
 #endif /* Mesh_hpp */

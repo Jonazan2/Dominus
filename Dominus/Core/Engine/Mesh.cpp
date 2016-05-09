@@ -44,17 +44,5 @@ std::shared_ptr<Texture> Mesh::getTexture() {
     return texture;
 }
 
-std::vector<glm::vec3> Mesh::getVertices() const {
-    return vertices;
-}
-
-std::vector<glm::vec2> Mesh::getUvs() const {
-    return uvs;
-}
-
-std::vector<glm::vec3> Mesh::getNormals() const {
-    return normals;
-}
-
 Mesh::~Mesh() {
 }

@@ -25,8 +25,6 @@ void RenderScene::populateScene( Scene* scene ) {
     
     std::shared_ptr<LightNode> lightNode( new LightNode );
     scene->setLightNode( lightNode );
-    //std::shared_ptr<Mesh> momoMesh( new Mesh( make_unique< ObjLoader >() ) );
-    //momoMesh->load( "momo.obj" );
     
     std::shared_ptr<ObjLoader> loader =
         std::make_shared<ObjLoader>( ObjLoader( "momo.obj" ) );
