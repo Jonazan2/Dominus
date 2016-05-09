@@ -27,6 +27,7 @@ void MomoNode::onUpdate() {
 
 void MomoNode::onRestore( Scene *scene ) {
     Node::onRestore( scene );
+    //TODO: provisional, will be implemented in futures user stories
     std::shared_ptr<Mesh> mesh = this->getMesh();
     std::shared_ptr<Shape> shape = mesh->getShapes().at( 0 );
     mesh->vertices = shape->vertices;

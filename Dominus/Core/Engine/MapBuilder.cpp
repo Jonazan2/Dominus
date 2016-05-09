@@ -1,9 +1,11 @@
 #include "MapBuilder.h"
+#include "MeshBuilder.h"
 
 MapBuilder::MapBuilder() {
 
 }
 
+//TODO: provide mesh builder
 std::shared_ptr<Map> MapBuilder::build( MapLoader *mapLoader,
                                         TilesLoader *tilesLoader ) {
     std::shared_ptr<Map> map( new Map );
@@ -14,8 +16,14 @@ std::shared_ptr<Map> MapBuilder::build( MapLoader *mapLoader,
     for ( int i = 0 ; i < mapInfo->tilesKeys.size(); i++ ) {
         int tileKey = mapInfo->tilesKeys.at( i );
         std::shared_ptr<Mesh> mesh =
-            std::shared_ptr<Mesh>( new Mesh( make_unique< ObjLoader >() ) );
-        //mesh->load( tilesInfo.at( tileKey ) );
+            std::shared_ptr<Mesh>( new Mesh( ) );
+        
+        std::shared_ptr<ObjLoader> loader =
+        std::make_shared<ObjLoader>( ObjLoader( tilesInfo.at( tileKey ) ) );
+        std::shared_ptr<MeshBuilder> meshBuilder =
+            std::make_shared<MeshBuilder>( MeshBuilder() );
+        
+        mesh = meshBuilder->buildMesh( loader );
         
         std::shared_ptr<Tile> tile( new Tile );
         tile->key = tileKey;

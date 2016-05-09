@@ -71,6 +71,7 @@ public:
     void addShape( std::shared_ptr<Shape> shape );
     std::vector<std::shared_ptr<Shape>> getShapes();
     
+    //TODO: will be removed in a future user story
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;
