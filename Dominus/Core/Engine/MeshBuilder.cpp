@@ -57,7 +57,7 @@ void MeshBuilder::mapValues( const std::vector<std::vector<int>> vectorRow,
             throw ObjFormatException( "corrupted info" );
         }
 
-        if ( vnIndex < shapeInfo->vertices.size() ) {
+        if ( vIndex < shapeInfo->vertices.size() ) {
             shape->vertices.push_back( shapeInfo->vertices.at( vIndex ) );
         }
         if ( vtIndex < shapeInfo->uvs.size() ) {
