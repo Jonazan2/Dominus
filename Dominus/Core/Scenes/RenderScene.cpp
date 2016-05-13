@@ -25,13 +25,15 @@ void RenderScene::populateScene( Scene* scene ) {
     
     std::shared_ptr<LightNode> lightNode( new LightNode );
     scene->setLightNode( lightNode );
-    std::shared_ptr<Mesh> momoMesh( new Mesh( make_unique< ObjLoader >() ) );
-    //momoMesh->load( "momo.obj" );
     
-    std::unique_ptr<ObjLoader> loader = make_unique<ObjLoader>( ObjLoader() );
+    std::shared_ptr<ObjLoader> loader =
+        std::make_shared<ObjLoader>( ObjLoader( "momo.obj" ) );
+    std::shared_ptr<MeshBuilder> meshBuilder =
+        std::make_shared<MeshBuilder>( MeshBuilder() );
+    std::shared_ptr<Mesh> momoMesh = meshBuilder->buildMesh( loader );
 
     std::shared_ptr<Texture> momoTexture( new Texture( make_unique<GLGpuTexture>(),
-                                                       make_unique<PngTextureLoader>() ));
+                                                       make_unique<PngTextureLoader>() ) );
     momoTexture->load( "diffuse.png" );
     momoMesh->setTexture( momoTexture );
     

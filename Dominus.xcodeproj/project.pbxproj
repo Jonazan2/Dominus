@@ -67,6 +67,9 @@
 		9C80754E1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
 		9C80754F1CA313130052086F /* Buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C80754D1CA313130052086F /* Buffer.cpp */; };
 		9C8075571CA31ED60052086F /* BufferTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C8075561CA31ED60052086F /* BufferTest.cpp */; };
+		9CA4FD4A1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */; };
+		9CA4FD4B1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */; };
+		9CA4FD4E1CDA863400A5F940 /* MeshBuilderTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CA4FD4D1CDA863400A5F940 /* MeshBuilderTest.cpp */; };
 		9CB3200C1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; };
 		9CB3200D1CA725D90058482C /* PngTextureLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */; };
 		9CB320121CA735E00058482C /* GLGpuTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB320111CA735E00058482C /* GLGpuTexture.cpp */; };
@@ -79,8 +82,6 @@
 		9CBA324B1CB12F4100FCF048 /* ShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */; };
 		9CBA324E1CB6810F00FCF048 /* MomoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */; };
 		9CBA324F1CB6810F00FCF048 /* MomoNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */; };
-		9CBA32521CB6D40000FCF048 /* UIRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */; };
-		9CBA32531CB6D40000FCF048 /* UIRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */; };
 		9CBA32681CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */; };
 		9CBA32691CBC347B00FCF048 /* VertexArrayObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */; };
 		9CBA326D1CC555B900FCF048 /* Drawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CBA326C1CC555B900FCF048 /* Drawer.cpp */; };
@@ -184,6 +185,9 @@
 		9C8075501CA313250052086F /* Buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Buffer.h; path = Headers/Core/Engine/Buffer.h; sourceTree = "<group>"; };
 		9C8075561CA31ED60052086F /* BufferTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BufferTest.cpp; sourceTree = "<group>"; };
 		9C922E851C975F9D00D66C8F /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MeshBuilder.cpp; path = Core/Engine/MeshBuilder.cpp; sourceTree = "<group>"; };
+		9CA4FD4C1CD9331600A5F940 /* MeshBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MeshBuilder.h; path = Headers/Core/Engine/MeshBuilder.h; sourceTree = "<group>"; };
+		9CA4FD4D1CDA863400A5F940 /* MeshBuilderTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeshBuilderTest.cpp; sourceTree = "<group>"; };
 		9CB320091CA724370058482C /* TextureLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextureLoader.h; path = Headers/Core/Engine/TextureLoader.h; sourceTree = "<group>"; };
 		9CB3200A1CA725C10058482C /* PngTextureLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PngTextureLoader.h; path = Headers/Core/Engine/PngTextureLoader.h; sourceTree = "<group>"; };
 		9CB3200B1CA725D90058482C /* PngTextureLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PngTextureLoader.cpp; path = Core/Engine/PngTextureLoader.cpp; sourceTree = "<group>"; };
@@ -200,8 +204,6 @@
 		9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderProgram.cpp; path = Core/Engine/ShaderProgram.cpp; sourceTree = "<group>"; };
 		9CBA324C1CB680F900FCF048 /* MomoNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MomoNode.h; path = Headers/Core/Engine/MomoNode.h; sourceTree = "<group>"; };
 		9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MomoNode.cpp; path = Core/Engine/MomoNode.cpp; sourceTree = "<group>"; };
-		9CBA32501CB6D3ED00FCF048 /* UIRenderState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UIRenderState.h; path = Headers/Core/Engine/UIRenderState.h; sourceTree = "<group>"; };
-		9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIRenderState.cpp; path = Core/Engine/UIRenderState.cpp; sourceTree = "<group>"; };
 		9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VertexArrayObject.cpp; path = Core/Engine/VertexArrayObject.cpp; sourceTree = "<group>"; };
 		9CBA326A1CBC349100FCF048 /* VertexArrayObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VertexArrayObject.h; path = Headers/Core/Engine/VertexArrayObject.h; sourceTree = "<group>"; };
 		9CBA326B1CC555A500FCF048 /* Drawer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Drawer.h; path = Headers/Core/Engine/Drawer.h; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 				9C8075561CA31ED60052086F /* BufferTest.cpp */,
 				9C222D561CA49071003C1DC5 /* MockGPUBuffer.h */,
 				9C4511221CC962AC0070CD0F /* ObjParserTest.cpp */,
+				9CA4FD4D1CDA863400A5F940 /* MeshBuilderTest.cpp */,
 			);
 			path = UnitTest;
 			sourceTree = "<group>";
@@ -472,12 +475,12 @@
 				9CBA32401CB04CF400FCF048 /* MomoRenderState.h */,
 				9CBA32481CB12F3100FCF048 /* ShaderProgram.h */,
 				9CBA324C1CB680F900FCF048 /* MomoNode.h */,
-				9CBA32501CB6D3ED00FCF048 /* UIRenderState.h */,
 				9CBA326A1CBC349100FCF048 /* VertexArrayObject.h */,
 				9CBA326B1CC555A500FCF048 /* Drawer.h */,
 				3A0779961CD3803900B8C065 /* StringStream.h */,
 				3A07799B1CD8A50E00B8C065 /* IOExceptions.h */,
 				3A07799C1CD8A52C00B8C065 /* OpenGLExceptions.h */,
+				9CA4FD4C1CD9331600A5F940 /* MeshBuilder.h */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -512,10 +515,10 @@
 				9CBA32411CB04D0D00FCF048 /* MomoRenderState.cpp */,
 				9CBA32491CB12F4100FCF048 /* ShaderProgram.cpp */,
 				9CBA324D1CB6810F00FCF048 /* MomoNode.cpp */,
-				9CBA32511CB6D40000FCF048 /* UIRenderState.cpp */,
 				9CBA32671CBC347B00FCF048 /* VertexArrayObject.cpp */,
 				9CBA326C1CC555B900FCF048 /* Drawer.cpp */,
 				3A0779971CD3805000B8C065 /* StringStream.cpp */,
+				9CA4FD491CD932EB00A5F940 /* MeshBuilder.cpp */,
 			);
 			name = Engine;
 			sourceTree = "<group>";
@@ -601,6 +604,7 @@
 				92E3453E1C639EAC00308A63 /* Logger.hpp in Sources */,
 				9C2A0E7D1CADA87D004A45CA /* TilesLoader.cpp in Sources */,
 				9CBA324A1CB12F4100FCF048 /* ShaderProgram.cpp in Sources */,
+				9CA4FD4A1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */,
 				AB6398DB1C8CE49500CA0B3B /* Engine.cpp in Sources */,
 				AB6398CE1C8CE48400CA0B3B /* Scene.cpp in Sources */,
 				AB6398DC1C8CE49500CA0B3B /* Event.cpp in Sources */,
@@ -638,7 +642,6 @@
 				9C7D082B1C9EC0C500804DF1 /* Text.cpp in Sources */,
 				9C80754E1CA313130052086F /* Buffer.cpp in Sources */,
 				9CBA323E1CB0346A00FCF048 /* MapRenderState.cpp in Sources */,
-				9CBA32521CB6D40000FCF048 /* UIRenderState.cpp in Sources */,
 				AB6398CD1C8CE48400CA0B3B /* RenderScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -666,6 +669,7 @@
 				9C80753D1CA1D1DF0052086F /* Texture.cpp in Sources */,
 				9C2A0E701CAC450B004A45CA /* LuaScript.cpp in Sources */,
 				9CBA324B1CB12F4100FCF048 /* ShaderProgram.cpp in Sources */,
+				9CA4FD4B1CD932EB00A5F940 /* MeshBuilder.cpp in Sources */,
 				9CBA326E1CC555B900FCF048 /* Drawer.cpp in Sources */,
 				9C7D083C1C9EC63A00804DF1 /* Layout.cpp in Sources */,
 				3A0779991CD3805000B8C065 /* StringStream.cpp in Sources */,
@@ -682,9 +686,9 @@
 				9CCB2FA91C82F92D0066C313 /* main.cpp in Sources */,
 				9C2A0E7E1CADA87D004A45CA /* TilesLoader.cpp in Sources */,
 				9C2A0E821CADACA7004A45CA /* MapBuilder.cpp in Sources */,
+				9CA4FD4E1CDA863400A5F940 /* MeshBuilderTest.cpp in Sources */,
 				9C7D08361C9EC57600804DF1 /* VerticalLayout.cpp in Sources */,
 				9C7D08341C9EC57600804DF1 /* HorizontalLayout.cpp in Sources */,
-				9CBA32531CB6D40000FCF048 /* UIRenderState.cpp in Sources */,
 				9C7D08301C9EC0C500804DF1 /* UIComponent.cpp in Sources */,
 				9C80752E1CA1D1C80052086F /* LayoutTest.cpp in Sources */,
 				9C80752D1CA1D1C80052086F /* HorizontalLayoutTest.cpp in Sources */,

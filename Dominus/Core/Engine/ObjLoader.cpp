@@ -15,13 +15,27 @@
 #include <sstream>
 #include "IOExceptions.h"
 #include "Exception.h"
+#include "Mesh.hpp"
 
-ObjLoader::ObjLoader() {
+ObjLoader::ObjLoader()
+: filePath( "" ){
 
+}
+
+ObjLoader::ObjLoader( std::string filePath )
+:filePath( filePath ) {
+    
 }
 
 ObjLoader::~ObjLoader() {
 
+}
+
+std::shared_ptr<ObjInfo> ObjLoader::load( ) {
+    if( filePath.empty() ) {
+        throw FileNotFoundException( "" );
+    }
+    return load( filePath );
 }
 
 std::shared_ptr<ObjInfo> ObjLoader::load( const std::string filePath ) {

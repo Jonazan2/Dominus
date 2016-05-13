@@ -11,6 +11,7 @@
 #include "ObjLoader.h"
 #include <climits>
 #include "IOExceptions.h"
+#include "Mesh.hpp"
 
 class ObjParserTest : public ::testing::Test
 {

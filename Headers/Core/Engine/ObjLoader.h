@@ -10,17 +10,19 @@
 #define ObjLoader_h
 
 #include "MeshLoader.h"
-#include "Mesh.hpp"
 #include "StringStream.h"
 #include <climits>
 #include <memory>
-
+class ObjInfo;
+class ShapeInfo;
 class ObjLoader : public MeshLoader {
 public:
-    ObjLoader(  );
+    ObjLoader();
+    ObjLoader( std::string file );
     ~ObjLoader();
     
     std::shared_ptr<ObjInfo> load( const std::string );
+    std::shared_ptr<ObjInfo> load( );
     std::vector<std::string> split( const std::string,
                                     const char ) const;
     
@@ -34,10 +36,11 @@ public:
     std::vector<std::vector<int>> loadIndexLine( std::istringstream* indexLine );
     std::vector<int> loadIndex( std::string indexString );
     
-    int V_KEY = 0;
-    int VT_KEY = 1;
-    int VN_KEY = 2;
+    static const int V_KEY = 0;
+    static const int VT_KEY = 1;
+    static const int VN_KEY = 2;
     
+    std::string filePath;
 };
 
 #endif /* ObjLoader_h */

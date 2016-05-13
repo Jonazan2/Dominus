@@ -1,6 +1,7 @@
 # Blender v2.76 (sub 0) OBJ File: ''
 # www.blender.org
 mtllib tile0.mtl
+o cube0
 v 1.000000 -1.000000 -1.000000
 v 1.000000 -1.000000 1.000000
 v -1.000000 -1.000000 1.000000

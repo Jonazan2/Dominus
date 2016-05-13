@@ -91,20 +91,20 @@ void MomoRenderState::load( std::shared_ptr<Node> node ) {
     std::shared_ptr<Mesh> mesh = node->getMesh();
     
     verticesBuffer->bind();
-    verticesBuffer->push( (float*) &mesh->getVertices()[0],
-                         ( sizeof( GLfloat ) * 3 ) * mesh->getVertices().size() );
+    verticesBuffer->push( (float*) &mesh->vertices[0],
+                         ( sizeof( GLfloat ) * 3 ) * mesh->vertices.size() );
     offsetMap[node->getID()] = units;
-    units += mesh->getVertices().size();
+    units += mesh->vertices.size();
     verticesBuffer->unBind();
     
     normalBuffer->bind();
-    normalBuffer->push( (float*)&mesh->getNormals()[0],
-                       ( sizeof ( GLfloat ) * 3 ) * mesh->getNormals().size() );
+    normalBuffer->push( (float*)&mesh->normals[0],
+                       ( sizeof ( GLfloat ) * 3 ) * mesh->normals.size() );
     normalBuffer->unBind();
     
     uvsBuffer->bind();
-    uvsBuffer->push( (float*)&mesh->getUvs()[0],
-                    ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size() );
+    uvsBuffer->push( (float*)&mesh->uvs[0],
+                    ( sizeof ( GLfloat ) * 2 ) * mesh->uvs.size() );
     uvsBuffer->unBind();
     
     //Texture loading
@@ -141,7 +141,7 @@ void MomoRenderState::draw( std::shared_ptr<Node> node ) {
     
     drawer->draw( GL_TRIANGLES,
                   (int)offsetMap[node->getID()],
-                  (int)node->getMesh()->getVertices().size() );
+                  (int)node->getMesh()->vertices.size() );
 
     if( node->getMesh()->getTexture() != nullptr ) {
         node->getMesh()->getTexture()->unbind();

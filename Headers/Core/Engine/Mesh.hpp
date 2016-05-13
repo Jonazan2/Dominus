@@ -13,6 +13,7 @@
 #include "Material.h"
 #include "Texture.h"
 #include "MeshLoader.h"
+#include "MeshBuilder.h"
 
 #include <OpenGL/OpenGL.h>
 
@@ -58,19 +59,16 @@ public:
     Mesh( std::unique_ptr< MeshLoader > loader );
     ~Mesh();
     
-    std::vector<glm::vec3> getVertices() const;
-    void setVertices(std::vector<glm::vec3> vertices);
-    
-    void setUvs(std::vector<glm::vec2> uvs);
-    std::vector<glm::vec2> getUvs() const;
-    
-    std::vector<glm::vec3> getNormals() const;
-    
     void setTexture( std::shared_ptr<Texture> texture );
     std::shared_ptr<Texture> getTexture();
     
     void addShape( std::shared_ptr<Shape> shape );
+    std::vector<std::shared_ptr<Shape>> getShapes();
     
+    //TODO: will be removed in a future user story
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec2> uvs;
+    std::vector<glm::vec3> normals;
 private:
     std::vector<std::shared_ptr<Shape>> shapes;
     std::shared_ptr<Texture> texture;

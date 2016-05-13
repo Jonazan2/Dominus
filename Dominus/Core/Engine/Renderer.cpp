@@ -158,9 +158,8 @@ void Renderer::drawtexture( std::shared_ptr<UIComponent> component ){
         uvs.push_back( uvTopLeft );
         uvs.push_back( uvBottomRight );
         uvs.push_back( uvTopRight );
-        //TODO:
-        //component->getMesh()->setVertices( vertices );
-        //component->getMesh()->setUvs( uvs );
+        component->mesh->vertices = vertices;
+        component->mesh->uvs = uvs;
         
         uiComponents.push_back( std::shared_ptr< UIComponent >( component ) );
     }
@@ -172,16 +171,16 @@ void Renderer::loadUI(  ) {
     uiVerticesBufer->bind();
     for ( int i = 0; i < uiComponents.size(); i++ ) {
         Mesh* mesh = uiComponents.at(i)->getMesh();
-        GLsizeiptr size = ( sizeof ( GLfloat ) * 3 ) * mesh->getVertices().size();
-        uiVerticesBufer->push( (float*)&mesh->getVertices()[0], size );
+        GLsizeiptr size = ( sizeof ( GLfloat ) * 3 ) * mesh->vertices.size();
+        uiVerticesBufer->push( (float*)&mesh->vertices[0], size );
     }
     uiVerticesBufer->unBind();
     
     uiUvsBuffer->bind();
     for ( int i = 0; i < uiComponents.size(); i++ ) {
         Mesh* mesh = uiComponents.at(i)->getMesh();
-        GLsizeiptr size = ( sizeof ( GLfloat ) * 2 ) * mesh->getUvs().size();
-        uiUvsBuffer->push( (float*)&mesh->getUvs()[0], size );
+        GLsizeiptr size = ( sizeof ( GLfloat ) * 2 ) * mesh->uvs.size();
+        uiUvsBuffer->push( (float*)&mesh->uvs[0], size );
     }
     uiUvsBuffer->unBind();
 
@@ -216,8 +215,8 @@ void Renderer::drawUI(  ) {
 
         drawer->draw( GL_TRIANGLES,
                       offset,
-                      (int)component->getMesh()->getVertices().size() );
-        offset += (int)component->getMesh()->getVertices().size();
+                      (int)component->getMesh()->vertices.size() );
+        offset += (int)component->getMesh()->vertices.size();
         if( component->getTexture() != nullptr ) {
             component->getTexture()->unbind();
         }
